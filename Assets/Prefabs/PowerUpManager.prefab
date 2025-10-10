@@ -1,0 +1,96 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6904387356058027306
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6768196814634303997}
+  - component: {fileID: 8019914280705265050}
+  - component: {fileID: 3523800871966972785}
+  - component: {fileID: 3179940395268594482}
+  m_Layer: 0
+  m_Name: PowerUpManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6768196814634303997
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6904387356058027306}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10.92, y: -13.9, z: -16.26}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8019914280705265050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6904387356058027306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eea899aa21942e640bb60d030e9dd077, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryManagement
+  itemsPositions:
+  - {x: 10.686, y: -14.961, z: -14.159}
+  - {x: 10.686, y: -14.714, z: -14.159}
+  - {x: 10.686, y: -14.514, z: -14.159}
+  - {x: 10.686, y: -14.314, z: -14.159}
+  inventory: {fileID: 0}
+  outlineColor: {r: 0.4, g: 0, b: 0.7, a: 1}
+  outlineWidth: 5
+  _powerUps: []
+  inInventory: 0
+--- !u!114 &3523800871966972785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6904387356058027306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1166a121cb4caf84286cd2b680bf7b71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MoneyManagement
+  currentAmount: 100
+--- !u!114 &3179940395268594482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6904387356058027306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e26a2745bd58944daae4adcfc3dde04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PowerUpShop
+  spaceOffset: 0.2
+  powerUpCount: 3
+  powerUpPrefabs:
+  - {fileID: 8224986128605362163, guid: 4a8768af97a8e404581dde384850f227, type: 3}
+  - {fileID: 3028148127703228018, guid: 6f190f7d4f43386499ff713f18cfcdb8, type: 3}
+  - {fileID: 350394636145776360, guid: 26311cadca51342468cc2c7ebee48b7e, type: 3}
+  - {fileID: 5018282671496741563, guid: b78cfe389c593454c81d4ee1d8523cdc, type: 3}
+  - {fileID: 7723194947337648236, guid: a172e2874f255854b946352a647fe220, type: 3}
+  - {fileID: 981487110158306035, guid: 2ae1700d0e2bf144c920d944d54520d9, type: 3}
+  outlineColor: {r: 0.4, g: 0, b: 0.7, a: 1}
+  outlineWidth: 5
+  disappearTime: 1
+  hasSelected: 0

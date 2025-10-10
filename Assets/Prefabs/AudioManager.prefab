@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5036363664628651963
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5549978102516293586}
+  - component: {fileID: 4375733557009657759}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5549978102516293586
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5036363664628651963}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 12.56285, y: -19.03003, z: -19.73484}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4375733557009657759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5036363664628651963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef7980deefcf83a4dbcaafe7db313de6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioTriggers
+  sound:
+  - clip: {fileID: 8300000, guid: 33c1a43d853c13e48ab637402001993c, type: 3}
+    name: knifeAudio
+    volume: 0
+    pitch: 0
+    source: {fileID: 0}
+  - clip: {fileID: 8300000, guid: f0271bb58beec2d478a38156465af527, type: 3}
+    name: cardDeal
+    volume: 0
+    pitch: 0
+    source: {fileID: 0}
+  - clip: {fileID: 8300000, guid: 93472ac6da2dab84a9a0d06b2bf43f94, type: 3}
+    name: prayerAudio
+    volume: 0
+    pitch: 0
+    source: {fileID: 0}
+  - clip: {fileID: 8300000, guid: 520efff899b943c4c8dd4d78c91cf588, type: 3}
+    name: scissorsAudio
+    volume: 0
+    pitch: 0
+    source: {fileID: 0}
+  - clip: {fileID: 8300000, guid: 8b0e3c30ddbe2b34fa677becc90d496a, type: 3}
+    name: sunglassesAudio
+    volume: 0
+    pitch: 0
+    source: {fileID: 0}
+  - clip: {fileID: 8300000, guid: fd452e22fc414e84892d77aea9590fa4, type: 3}
+    name: brokeBitch
+    volume: 0
+    pitch: 0
+    source: {fileID: 0}
