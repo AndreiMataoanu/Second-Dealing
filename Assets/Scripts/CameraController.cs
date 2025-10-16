@@ -25,7 +25,7 @@ public class CameraController : MonoBehaviour
     private Vector3 targetPos;
     private Quaternion targetRot;
     private bool isMoving = false;
-    private const float moveThreshold = 0.05f;
+    private const float moveThreshold = 0.001f;
     private const float rotThreshold = 0.25f;
 
     private PowerUpShop _powerUpShop;
@@ -44,20 +44,21 @@ public class CameraController : MonoBehaviour
         _powerUpShop = powerUpManager.GetComponent<PowerUpShop>();
         _inventoryManagement = powerUpManager.GetComponent<InventoryManagement>();
         _blackjackGame = blackjackManager.GetComponent<BlackjackGame>();
-        
-        EnterShop();
-        StartCoroutine(OpenShop());
+
+        //EnterShop();
+        //StartCoroutine(OpenShop());
+        EnterDefault();
     }
 
     void Update()
     {
         //mouseLook
-        float x = Input.GetAxis("Mouse X");
-        float y = Input.GetAxis("Mouse Y");
-        transform.Rotate(-y * sensitivity * Time.deltaTime, x * sensitivity * Time.deltaTime, 0);
-        Vector3 angles = transform.eulerAngles;
-        angles.z = 0;
-        transform.eulerAngles = angles;
+        //float x = Input.GetAxis("Mouse X");
+        //float y = Input.GetAxis("Mouse Y");
+        //transform.Rotate(-y * sensitivity * Time.deltaTime, x * sensitivity * Time.deltaTime, 0);
+        //Vector3 angles = transform.eulerAngles;
+        //angles.z = 0;
+        //transform.eulerAngles = angles;
 
         //move camera
         if (!lookingAtItemBox && !lookingAtShop && Input.GetKeyDown(KeyCode.D) && _blackjackGame.isRoundActive)
@@ -90,7 +91,7 @@ public class CameraController : MonoBehaviour
             {
                 transform.localPosition = targetPos;
                 transform.localRotation = targetRot;
-                //isMoving = false;
+                isMoving = false;
             }
         }
     }

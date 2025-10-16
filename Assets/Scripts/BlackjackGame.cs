@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static BlackjackGame;
 
 public class BlackjackGame : MonoBehaviour
 {
@@ -206,6 +207,8 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private Transform deckPosition;
 
     [SerializeField] private float cardSpacing = 30.0f;
+    [SerializeField] private float cardRotationAngle = 5.0f;
+    private float cardArcHeight = 0f;
     private const float zOverlap = 0.01f;
     private const float cardAnimationDuration = 0.25f;
 
@@ -248,12 +251,12 @@ public class BlackjackGame : MonoBehaviour
         {
             if(Input.GetKeyDown(KeyCode.H))
             {
-                Hit();
+                StartCoroutine(HitCoroutine());
             }
 
             if(Input.GetKeyDown(KeyCode.S))
             {
-                Stand();
+                StartCoroutine(StandCoroutine());
             }
 
             if(Input.GetKeyDown(KeyCode.Alpha1) && IsKnifeAvailable)
@@ -558,39 +561,27 @@ public class BlackjackGame : MonoBehaviour
 
     private void UpdateHandVisuals(List<CardInstance> hand)
     {
-        int count = hand.Count;
+        int cardCount = hand.Count;
 
-        if(count < 2)
+        if(cardCount == 0) return;
+
+        float midPoint = (cardCount - 1) / 2.0f;
+
+        for(int i = 0; i < cardCount; i++)
         {
-            if(count == 1)
-            {
-                hand[0].displayComponent.transform.localPosition = new Vector3(0f, 0, 0f);
-                hand[0].displayComponent.transform.localRotation = Quaternion.identity;
-            }
+            CardInstance cardInstance = hand[i];
 
-            return;
-        }
+            float xPos = (i - (cardCount - 1)) * cardSpacing;
+            float distanceFromCenter = i - midPoint;
+            float rotationAngle = distanceFromCenter * -cardRotationAngle;
 
-        float anchorPos1X = 0f;
-        float anchorPos2X = cardSpacing;
+            Quaternion targetRotation = Quaternion.Euler(0, 0, rotationAngle);
 
-        float zPosCard2 = 2 * zOverlap;
-        hand[count - 1].displayComponent.transform.localPosition = new Vector3(anchorPos2X, 0, zPosCard2);
-        hand[count - 1].displayComponent.transform.localRotation = Quaternion.identity;
+            float yPos = (midPoint * midPoint - distanceFromCenter * distanceFromCenter) * cardArcHeight;
+            float zPos = i * zOverlap;
 
-        float zPosCard1 = 1 * zOverlap;
-        hand[count - 2].displayComponent.transform.localPosition = new Vector3(anchorPos1X, 0, zPosCard1);
-        hand[count - 2].displayComponent.transform.localRotation = Quaternion.identity;
-
-        for(int i = 0; i < count - 2; i++)
-        {
-            CardInstance card = hand[i];
-
-            float xPos = (i + 1) * -cardSpacing;
-            float zPos = i * -zOverlap;
-
-            card.displayComponent.transform.localPosition = new Vector3(xPos, 0, zPos);
-            card.displayComponent.transform.localRotation = Quaternion.identity;
+            cardInstance.displayComponent.transform.localPosition = new Vector3(xPos, yPos, zPos);
+            cardInstance.displayComponent.transform.localRotation = targetRotation;
         }
     }
 
@@ -646,6 +637,43 @@ public class BlackjackGame : MonoBehaviour
         cardTransform.position = targetPosition;
         cardTransform.rotation = targetRotation;
         cardTransform.localScale = targetScale;
+    }
+
+    //Flip animation for revealing the hidden card.
+    private IEnumerator FlipCardCoroutine(CardDisplay cardDisplay, float duration)
+    {
+        Transform cardTransform = cardDisplay.transform;
+
+        Quaternion startRotation = cardTransform.localRotation;
+        Quaternion ninetyDegrees = Quaternion.Euler(0, 90f, startRotation.eulerAngles.z);
+
+        float halfDuration = duration / 2.0f;
+        float elapsedTime = 0;
+
+        while(elapsedTime < halfDuration)
+        {
+            cardTransform.localRotation = Quaternion.Slerp(startRotation, ninetyDegrees, elapsedTime / halfDuration);
+            elapsedTime += Time.deltaTime;
+
+            yield return null;
+        }
+
+        cardDisplay.SetHidden(false);
+
+        Quaternion flippedStartRotation = Quaternion.Euler(0, -90f, startRotation.eulerAngles.z);
+
+        cardTransform.localRotation = flippedStartRotation;
+        elapsedTime = 0;
+
+        while(elapsedTime < halfDuration)
+        {
+            cardTransform.localRotation = Quaternion.Slerp(flippedStartRotation, startRotation, elapsedTime / halfDuration);
+            elapsedTime += Time.deltaTime;
+
+            yield return null;
+        }
+
+        cardTransform.localRotation = startRotation;
     }
 
     private IEnumerator DealCardToPlayerCoroutine()
@@ -813,9 +841,11 @@ public class BlackjackGame : MonoBehaviour
         currentBustCoroutine = null;
     }
 
-    public void Hit()
+    private IEnumerator HitCoroutine()
     {
-        if(!isRoundActive || isActionLocked) return;
+        if(!isRoundActive || isActionLocked) yield break;
+
+        isActionLocked = true;
 
         if(hitHandAnimator != null)
         {
@@ -823,6 +853,8 @@ public class BlackjackGame : MonoBehaviour
         }
 
         statusText.text = "";
+
+        yield return new WaitForSeconds(1f);
 
         StartCoroutine(DealCardToPlayerCoroutine());
 
@@ -833,11 +865,16 @@ public class BlackjackGame : MonoBehaviour
             int originalValue = visibleDealerCard.cardData.GetValue();
             int halvedValue = Mathf.CeilToInt((float)originalValue / 2f);
         }
+
+        if(CalculateHandValue(playerHand) <= 21)
+        {
+            isActionLocked = false;
+        }
     }
 
-    public void Stand()
+    private IEnumerator StandCoroutine()
     {
-        if(!isRoundActive || isActionLocked) return;
+        if(!isRoundActive || isActionLocked) yield break;
 
         isActionLocked = true;
 
@@ -847,6 +884,8 @@ public class BlackjackGame : MonoBehaviour
         }
 
         statusText.text = "";
+
+        yield return new WaitForSeconds(1.5f);
 
         StartCoroutine(DealerTurnCoroutine());
     }
@@ -860,8 +899,9 @@ public class BlackjackGame : MonoBehaviour
 
         if(hiddenCard != null)
         {
+            yield return StartCoroutine(FlipCardCoroutine(hiddenCard.displayComponent, 0.4f));
+
             hiddenCard.isHidden = false;
-            hiddenCard.displayComponent.SetHidden(false);
 
             UpdateUI(false);
             UpdateHandVisuals(dealerHand);
