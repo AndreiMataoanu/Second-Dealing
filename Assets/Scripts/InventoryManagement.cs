@@ -46,6 +46,7 @@ public class InventoryManagement : MonoBehaviour
         _powerUps.Remove(powerUp);
         Destroy(powerUp);
         ArrangeItems();
+        TooltipManager.Instance.HideTooltip();
     }
 
     public void ArrangeItems()
