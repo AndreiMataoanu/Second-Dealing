@@ -163,9 +163,12 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private Animator standHandAnimator;
     [SerializeField] private Animator hitHandAnimator;
 
-    [Header("Betting UI")]
+    [Header("UI")]
     [SerializeField] private TMPro.TextMeshProUGUI moneyText;
     [SerializeField] private TMPro.TextMeshProUGUI betText;
+    [SerializeField] private TMPro.TextMeshProUGUI statusText;
+    [SerializeField] private TMPro.TextMeshProUGUI playerTotalText;
+    [SerializeField] private TMPro.TextMeshProUGUI dealerTotalText;
 
     //Betting Variables
     private int playerMoney = 500;
@@ -173,7 +176,7 @@ public class BlackjackGame : MonoBehaviour
     private const int betStep = 100;
     private const int minBet = 100;
 
-    public bool isRoundActive = false;
+    [HideInInspector] public bool isRoundActive = false;
     private bool isActionLocked = false;
 
     private Coroutine currentBustCoroutine = null;
@@ -464,6 +467,8 @@ public class BlackjackGame : MonoBehaviour
 
         gameDeck.Shuffle();
 
+        statusText.text = "Place your bet...";
+
         isRoundActive = false;
         isActionLocked = false;
 
@@ -475,6 +480,9 @@ public class BlackjackGame : MonoBehaviour
         IsPrayerBeadsAvailable = true;
         isPrayerBeadsActive = false;
         IsSunglassesAvailable = true;
+
+        playerTotalText.text = "";
+        dealerTotalText.text = "";
 
         //Set bet to the last valid bet
         if(currentBet > PlayerMoney)
@@ -500,10 +508,12 @@ public class BlackjackGame : MonoBehaviour
     {
         if(isRoundActive || currentBet < minBet || PlayerMoney < currentBet || isActionLocked) yield break;
 
+        statusText.text = "Dealing cards...";
+
         isActionLocked = true;
 
-        if (powerUpShop.hasSelected)
-            powerUpShop.DestroyPowerUps();
+        if(powerUpShop.hasSelected) powerUpShop.DestroyPowerUps();
+
         isRoundActive = true;
 
         yield return StartCoroutine(DealCardToPlayerCoroutine());
@@ -512,19 +522,27 @@ public class BlackjackGame : MonoBehaviour
         yield return StartCoroutine(DealCardToDealerCoroutine(true));
 
         UpdateUI();
-        CheckBlackjack();
+
+        statusText.text = "";
+
+        yield return new WaitForSeconds(1.0f);
+
+        if(CalculateHandValue(playerHand) == 21)
+        {
+            statusText.text = "Blackjack!";
+
+            yield return new WaitForSeconds(2.0f);
+
+            StartCoroutine(DealerTurnCoroutine(true));
+        }
+        else
+        {
+            isActionLocked = false;
+        }
 
         if(CalculateHandValue(playerHand) < 21)
         {
             isActionLocked = false;
-        }
-    }
-
-    private void CheckBlackjack()
-    {
-        if(CalculateHandValue(playerHand) == 21)
-        {
-            StartCoroutine(DealerTurnCoroutine(true));
         }
     }
 
@@ -788,10 +806,27 @@ public class BlackjackGame : MonoBehaviour
     {
         int playerValue = CalculateHandValue(playerHand);
 
-        //Show only the value of the dealer's visible cards
-        int dealerVisibleValue = dealerHidden && dealerHand.Count > 1
-            ? CalculateHandValue(dealerHand.Where(x => !x.isHidden).ToList()) //Calculate only visible cards
-            : CalculateHandValue(dealerHand); //Calculate all cards
+        playerTotalText.text = playerValue > 0 ? playerValue.ToString() : "";
+
+        if(dealerHand.Count > 0)
+        {
+            if(dealerHidden && dealerHand.Count > 1)
+            {
+                int dealerVisibleValue = CalculateHandValue(dealerHand.Where(x => !x.isHidden).ToList());
+
+                dealerTotalText.text = $"{dealerVisibleValue} + ?";
+            }
+            else
+            {
+                int dealerFullValue = CalculateHandValue(dealerHand);
+
+                dealerTotalText.text = dealerFullValue.ToString();
+            }
+        }
+        else
+        {
+            dealerTotalText.text = "";
+        }
 
         UpdateBettingUI();
 
@@ -803,6 +838,8 @@ public class BlackjackGame : MonoBehaviour
 
     private IEnumerator BustCheckCoroutine()
     {
+        statusText.text = "Bust! You lose.";
+
         yield return new WaitForSeconds(2f);
 
         EndGame("Bust! You lose.");
@@ -845,6 +882,8 @@ public class BlackjackGame : MonoBehaviour
 
         isActionLocked = true;
 
+        statusText.text = "You stand";
+
         if(standHandAnimator != null)
         {
             standHandAnimator.SetTrigger("standTrigger");
@@ -857,6 +896,10 @@ public class BlackjackGame : MonoBehaviour
 
     private IEnumerator DealerTurnCoroutine(bool playerHasBlackjack = false)
     {
+        statusText.text = "Dealer's turn...";
+
+        yield return new WaitForSeconds(1.0f);
+
         //Reveals the dealers hidden card.
         CardInstance hiddenCard = dealerHand.FirstOrDefault(x => x.isHidden);
 
@@ -877,13 +920,17 @@ public class BlackjackGame : MonoBehaviour
 
         if(playerHasBlackjack && dealerValue != 21)
         {
-            EndGame("Blackjack! You win!");
+            EndGame("Blackjack! You win");
 
             yield break;
         }
         else if(playerHasBlackjack && dealerValue == 21)
         {
-            EndGame("Both have Blackjack! It's a tie.");
+            statusText.text = "Dealer also has Blackjack!";
+
+            yield return new WaitForSeconds(1.5f);
+
+            EndGame("Both have Blackjack! It's a tie");
 
             yield break;
         }
@@ -904,9 +951,18 @@ public class BlackjackGame : MonoBehaviour
 
                 yield return new WaitForSeconds(2f);
             }
+
+            if(!isKnifeActive && dealerValue <= 21)
+            {
+                statusText.text = "Dealer stands";
+
+                yield return new WaitForSeconds(1.5f);
+            }
         }
 
         string resultMessage = DetermineWinner(playerValue, dealerValue);
+
+        statusText.text = resultMessage;
 
         yield return new WaitForSeconds(2f);
 
@@ -917,23 +973,23 @@ public class BlackjackGame : MonoBehaviour
     {
         if(playerValue > 21)
         {
-            return "Bust! You lose.";
+            return "Bust... You lose";
         }
         else if(dealerValue > 21)
         {
-            return "Dealer busts! You win!";
+            return "Dealer busts... You win";
         }
         else if(playerValue > dealerValue)
         {
-            return "You win!";
+            return "You win";
         }
         else if(dealerValue > playerValue)
         {
-            return "Dealer wins.";
+            return "Dealer wins";
         }
         else
         {
-            return "It's a tie.";
+            return "It's a tie";
         }
     }
 
