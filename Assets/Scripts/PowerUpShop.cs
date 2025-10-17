@@ -149,7 +149,7 @@ public class PowerUpShop : MonoBehaviour
     {
         if(_blackjackGame.PlayerMoney < selectionInfo.price)
         {
-            _audioManager.Play("brokeBitch");
+            _audioManager.Play("Broke");
             _selection = null;
             hasSelected = false;
 

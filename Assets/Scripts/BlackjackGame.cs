@@ -382,8 +382,6 @@ public class BlackjackGame : MonoBehaviour
 
         peekedCardObject.transform.localScale = cardScaleVector;
 
-        //AudioManager.instance.Play("CardPeek");
-
         StartCoroutine(CardAnimationCoroutine(
             peekedCardObject.transform,
             sunglassesCardPosition.position,
