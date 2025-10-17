@@ -16,8 +16,10 @@ public class InventoryManagement : MonoBehaviour
     public List<GameObject> _powerUps;
 
     [HideInInspector] public bool inInventory = false;
+
     private Transform _highlight;
     private Transform _selection;
+
     private RaycastHit _raycastHit;
     
     private void Update()
@@ -28,10 +30,12 @@ public class InventoryManagement : MonoBehaviour
 
     public bool AddItem(GameObject powerUp)
     {
-        if (!powerUp) Debug.Log("Power-up is null.");
-        if (itemsPositions.Length < _powerUps.Count + 1) return false;
+        if(!powerUp) Debug.Log("Power-up is null.");
+
+        if(itemsPositions.Length < _powerUps.Count + 1) return false;
         
         _powerUps.Add(powerUp);
+
         powerUp.transform.position = itemsPositions[_powerUps.Count - 1];
         powerUp.transform.Rotate(Vector3.up, 90);
         powerUp.transform.SetParent(inventory.transform, true);
@@ -42,16 +46,20 @@ public class InventoryManagement : MonoBehaviour
     public void UseItem(GameObject powerUp)
     {
         powerUp.GetComponent<PowerUpInfo>().Activate();
+
         audioManager.Play(powerUp.name);
         _powerUps.Remove(powerUp);
+
         Destroy(powerUp);
         ArrangeItems();
-        TooltipManager.Instance.HideTooltip();
+
+        TooltipManager.instance.HideTooltip();
+        CameraController.instance.EnterDefault();
     }
 
     public void ArrangeItems()
     {
-        for (int i = 0; i < _powerUps.Count; i++)
+        for(int i = 0; i < _powerUps.Count; i++)
         {
             _powerUps[i].transform.position = itemsPositions[i];
         }
@@ -59,52 +67,58 @@ public class InventoryManagement : MonoBehaviour
     
     private void HighlightPowerUp()
     {
-        if (!inInventory) return;
+        if(!inInventory) return;
         
-        if (_highlight)
+        if(_highlight)
         {
             _highlight.gameObject.GetComponent<Outline>().enabled = false;
             _highlight = null;
         }
         
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-        if (!EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(ray, out _raycastHit))
+
+        if(!EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(ray, out _raycastHit))
         {
             _highlight = _raycastHit.transform;
-            if (_highlight.CompareTag($"Selectable") && _highlight != _selection)
+
+            if(_highlight.CompareTag($"Selectable") && _highlight != _selection)
             {
                 var outline = _highlight.gameObject.GetComponent<Outline>();
-                if (outline) outline.enabled = true;
+
+                if(outline)
+                {
+                    outline.enabled = true;
+                }
                 else
                 {
                     outline = _highlight.gameObject.AddComponent<Outline>();
                     outline.enabled = true;
-                    
                     outline = _highlight.gameObject.GetComponent<Outline>();
                     outline.OutlineColor = outlineColor;
                     outline.OutlineWidth = outlineWidth;
                 }
             }
-            else _highlight = null;
+            else
+            {
+                _highlight = null;
+            }
         }
     }
     
     private void SelectPowerUp()
     {
-        if (!inInventory) return;
+        if(!inInventory) return;
         
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        if(Mouse.current.leftButton.wasPressedThisFrame)
         {
-            if (_highlight)
+            if(_highlight)
             {
                 _selection = _raycastHit.transform;
                 _selection.gameObject.GetComponent<Outline>().enabled = false;
                 _highlight = null;
 
                 UseItem(_selection.gameObject);
-                // TODO: After using, change camera direction
             }
         }
     }
-    
 }

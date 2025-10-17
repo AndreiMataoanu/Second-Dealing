@@ -382,6 +382,8 @@ public class BlackjackGame : MonoBehaviour
 
         peekedCardObject.transform.localScale = cardScaleVector;
 
+        //AudioManager.instance.Play("CardPeek");
+
         StartCoroutine(CardAnimationCoroutine(
             peekedCardObject.transform,
             sunglassesCardPosition.position,
@@ -464,6 +466,8 @@ public class BlackjackGame : MonoBehaviour
     public void StartGame()
     {
         ClearTable();
+
+        AudioManager.instance.Play("Shuffle");
 
         gameDeck.Shuffle();
 
@@ -637,6 +641,8 @@ public class BlackjackGame : MonoBehaviour
         float halfDuration = duration / 2.0f;
         float elapsedTime = 0;
 
+        AudioManager.instance.Play("Flip");
+
         while(elapsedTime < halfDuration)
         {
             cardTransform.localRotation = Quaternion.Slerp(startRotation, ninetyDegrees, elapsedTime / halfDuration);
@@ -734,6 +740,8 @@ public class BlackjackGame : MonoBehaviour
 
         CardInstance newCardInstance = DealCardInstance(newCardData, playerHand, playerCardPosition, false);
 
+        AudioManager.instance.Play("CardHit");
+
         if(newCardInstance != null)
         {
             UpdateHandVisuals(playerHand);
@@ -774,6 +782,8 @@ public class BlackjackGame : MonoBehaviour
         Card newCardData = gameDeck.DealCard();
 
         CardInstance newCardInstance = DealCardInstance(newCardData, dealerHand, dealerCardPosition, isHidden);
+
+        AudioManager.instance.Play("CardHit");
 
         if(newCardInstance != null)
         {

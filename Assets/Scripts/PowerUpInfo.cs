@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PowerUpInfo : MonoBehaviour
 {
@@ -11,34 +9,30 @@ public class PowerUpInfo : MonoBehaviour
 
     public void Activate()
     {
-        if (!_blackjackGame)
+        if(!_blackjackGame)
         {
             Debug.Log("No blackjack game");
+
             return;
         }
         
-        switch (type)
+        switch(type)
         {
-            // TODO: Implement power-up methods
-            
             case PowerUpType.Knife:
                 _blackjackGame.ActivateKnife();
-                break;
+            break;
+
             case PowerUpType.Scissors:
                 _blackjackGame.ActivateScissors();
-                break;
+            break;
+
             case PowerUpType.Crucifix:
                 _blackjackGame.ActivatePrayerBeads();
-                break;
-            case PowerUpType.Glove:
-                Debug.Log("Glove used");
-                break;
+            break;
+
             case PowerUpType.Sunglasses:
                 _blackjackGame.ActivateSunglasses();
-                break;
-            case PowerUpType.Cuffs:
-                Debug.Log("Cuffs used");
-                break;
+            break;
         }
     }
 

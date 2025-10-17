@@ -3,20 +3,22 @@ using TMPro;
 
 public class TooltipManager : MonoBehaviour
 {
-    public static TooltipManager Instance;
+    public static TooltipManager instance;
 
     [SerializeField] private GameObject tooltipObject;
     [SerializeField] private TextMeshProUGUI tooltipText;
 
     private void Awake()
     {
-        if(Instance == null)
+        if(instance == null)
         {
-            Instance = this;
+            instance = this;
         }
         else
         {
             Destroy(gameObject);
+
+            return;
         }
 
         tooltipObject.SetActive(false);

@@ -8,11 +8,11 @@ public class TooltipTrigger : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        TooltipManager.Instance.ShowTooltip(tooltipMessage);
+        TooltipManager.instance.ShowTooltip(tooltipMessage);
     }
 
     private void OnMouseExit()
     {
-        TooltipManager.Instance.HideTooltip();
+        TooltipManager.instance.HideTooltip();
     }
 }

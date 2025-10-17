@@ -1,9 +1,7 @@
-using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 public class PowerUpShop : MonoBehaviour
 {
@@ -21,24 +19,26 @@ public class PowerUpShop : MonoBehaviour
 
     private Transform _highlight;
     private Transform _selection;
+
     private RaycastHit _raycastHit;
-    [HideInInspector] public bool hasSelected;
+
     private BlackjackGame _blackjackGame;
     private InventoryManagement _inventoryManagement;
-    private bool _hasSpawned = false;
     private AudioManager _audioManager;
-    
+
+    [HideInInspector] public bool hasSelected;
+    private bool _hasSpawned = false;
+
     private void Awake()
     {
         _blackjackGame = blackjackGameManager.GetComponent<BlackjackGame>();
         _inventoryManagement = GetComponent<InventoryManagement>();
         _audioManager = audioManagerGameObject.GetComponent<AudioManager>();
         
-        if (powerUpPrefabs == null || powerUpPrefabs.Count() < powerUpCount)
-            Debug.Log("Not enough power up prefabs added!");
+        if(powerUpPrefabs == null || powerUpPrefabs.Count() < powerUpCount) Debug.Log("Not enough power up prefabs added!");
     }
 
-    void Update()
+    private void Update()
     {
         HighlightPowerUp();
         SelectPowerUp();
@@ -46,24 +46,28 @@ public class PowerUpShop : MonoBehaviour
 
     public void SpawnPowerUps()
     {
-        if (_hasSpawned || powerUpPrefabs == null || powerUpPrefabs.Count() < powerUpCount) return;
+        if(_hasSpawned || powerUpPrefabs == null || powerUpPrefabs.Count() < powerUpCount) return;
         
-        for (int i = 0; i < powerUpCount; i++)
+        for(int i = 0; i < powerUpCount; i++)
         {
             int randomIndex = Random.Range(0, powerUpPrefabs.Length);
+
             Vector3 prefabPosition = transform.position + Vector3.up * (i * spaceOffset);
+
             GameObject prefab = Instantiate(powerUpPrefabs[randomIndex], prefabPosition, Quaternion.identity, transform);
+
             prefab.GetComponent<PowerUpInfo>().SetBlackjackGame(_blackjackGame);
         }
-
+        
         _hasSpawned = true;
     }
 
     public void DestroyPowerUps()
     {
-        for (int i = 0; i < powerUpCount - 1; i++)
+        for(int i = 0; i < powerUpCount - 1; i++)
         {
             GameObject powerUp = gameObject.transform.GetChild(i).gameObject;
+
             Destroy(powerUp);
         }
 
@@ -73,51 +77,61 @@ public class PowerUpShop : MonoBehaviour
 
     private void HighlightPowerUp()
     {
-        if (_inventoryManagement.inInventory || hasSelected) return;
+        if(_inventoryManagement.inInventory || hasSelected) return;
         
-        if (_highlight)
+        if(_highlight)
         {
             _highlight.gameObject.GetComponent<Outline>().enabled = false;
             _highlight = null;
         }
         
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-        if (!EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(ray, out _raycastHit))
+
+        if(!EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(ray, out _raycastHit))
         {
             _highlight = _raycastHit.transform;
-            if (_highlight.CompareTag($"Selectable") && _highlight != _selection)
+
+            if(_highlight.CompareTag($"Selectable") && _highlight != _selection)
             {
                 var outline = _highlight.gameObject.GetComponent<Outline>();
-                if (outline) outline.enabled = true;
+
+                if(outline)
+                {
+                    outline.enabled = true;
+                }
                 else
                 {
                     outline = _highlight.gameObject.AddComponent<Outline>();
                     outline.enabled = true;
-                    
                     outline = _highlight.gameObject.GetComponent<Outline>();
                     outline.OutlineColor = outlineColor;
                     outline.OutlineWidth = outlineWidth;
                 }
             }
-            else _highlight = null;
+            else
+            {
+                _highlight = null;
+            }
         }
     }
 
     private void SelectPowerUp()
     {
-        if (_inventoryManagement.inInventory) return;
+        if(_inventoryManagement.inInventory) return;
         
-        if (!hasSelected && Mouse.current.leftButton.wasPressedThisFrame)
+        if(!hasSelected && Mouse.current.leftButton.wasPressedThisFrame)
         {
-            if (_highlight)
+            if(_highlight)
             {
                 _selection = _raycastHit.transform;
                 _selection.gameObject.GetComponent<Outline>().enabled = false;
                 _highlight = null;
                 
                 BuySelectedPowerUp();
+
                 _blackjackGame.UpdateBettingUI();
-                // TODO: After buying, change camera direction
+
+                CameraController.instance.EnterDefault();
             }
         }
     }
@@ -125,23 +139,25 @@ public class PowerUpShop : MonoBehaviour
     private void BuySelectedPowerUp()
     {
         var selectionInfo = _selection.gameObject.GetComponent<PowerUpInfo>();
-        if (!HasEnoughMoney(selectionInfo)) return;
+
+        if(!HasEnoughMoney(selectionInfo)) return;
         
-        if (_inventoryManagement.AddItem(_selection.gameObject))
-            _blackjackGame.LoseAmount(selectionInfo.price);
+        if(_inventoryManagement.AddItem(_selection.gameObject)) _blackjackGame.LoseAmount(selectionInfo.price);
     }
 
     private bool HasEnoughMoney(PowerUpInfo selectionInfo)
     {
-        if (_blackjackGame.PlayerMoney < selectionInfo.price)
+        if(_blackjackGame.PlayerMoney < selectionInfo.price)
         {
             _audioManager.Play("brokeBitch");
             _selection = null;
             hasSelected = false;
+
             return false;
         }
 
         hasSelected = true;
+
         return true;
     }
 }
