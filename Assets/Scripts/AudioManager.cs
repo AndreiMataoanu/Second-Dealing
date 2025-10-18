@@ -21,11 +21,17 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        gameObject.AddComponent<AudioSource>();
-
         foreach(Sound s in sounds)
         {
-            s.source = GetComponent<AudioSource>();
+            s.source = gameObject.AddComponent<AudioSource>();
+
+            if(s.clips.Length > 0)
+            {
+                s.source.clip = s.clips[0];
+            }
+
+            s.source.volume = s.volume;
+            s.source.pitch = s.pitch;
         }
     }
 

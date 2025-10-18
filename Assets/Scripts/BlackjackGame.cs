@@ -295,15 +295,20 @@ public class BlackjackGame : MonoBehaviour
     {
         if(isRoundActive) return;
 
-        int nextBet = currentBet + betStep;
+        if(currentBet < PlayerMoney)
+        {
+            AudioManager.instance.Play("BetUp");
 
-        if(nextBet > PlayerMoney)
-        {
-            currentBet = PlayerMoney;
-        }
-        else
-        {
-            currentBet = nextBet;
+            int nextBet = currentBet + betStep;
+
+            if(nextBet > PlayerMoney)
+            {
+                currentBet = PlayerMoney;
+            }
+            else
+            {
+                currentBet = nextBet;
+            }
         }
 
         UpdateBettingUI();
@@ -315,6 +320,8 @@ public class BlackjackGame : MonoBehaviour
 
         if(currentBet > minBet)
         {
+            AudioManager.instance.Play("BetDown");
+
             currentBet -= betStep;
         }
 
@@ -850,7 +857,7 @@ public class BlackjackGame : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
 
-        EndGame("Bust! You lose.");
+        StartCoroutine(EndGameCoroutine("Bust! You lose."));
 
         currentBustCoroutine = null;
     }
@@ -928,7 +935,7 @@ public class BlackjackGame : MonoBehaviour
 
         if(playerHasBlackjack && dealerValue != 21)
         {
-            EndGame("Blackjack! You win");
+            StartCoroutine(EndGameCoroutine("Blackjack! You win"));
 
             yield break;
         }
@@ -938,7 +945,7 @@ public class BlackjackGame : MonoBehaviour
 
             yield return new WaitForSeconds(1.5f);
 
-            EndGame("Both have Blackjack! It's a tie");
+            StartCoroutine(EndGameCoroutine("Both have Blackjack! It's a tie"));
 
             yield break;
         }
@@ -974,7 +981,7 @@ public class BlackjackGame : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
 
-        EndGame(resultMessage);
+        StartCoroutine(EndGameCoroutine(resultMessage));
     }
 
     private string DetermineWinner(int playerValue, int dealerValue)
@@ -1001,34 +1008,50 @@ public class BlackjackGame : MonoBehaviour
         }
     }
 
-    private void EndGame(string message)
+    private IEnumerator EndGameCoroutine(string message)
     {
         isRoundActive = false;
 
         if(message.Contains("You win") || message.Contains("Blackjack! You win"))
         {
             PlayerMoney += currentBet;
+
+            AudioManager.instance.Play("MoneyGained");
+
+            yield return new WaitForSeconds(3f);
         }
         else if(message.Contains("It's a tie"))
         {
-            
+
         }
         else
         {
             PlayerMoney -= currentBet;
+
+            AudioManager.instance.Play("MoneyLost");
         }
 
         UpdateUI(false);
 
         isActionLocked = false;
 
-        if(PlayerMoney < minBet) SceneManager.LoadSceneAsync(0); //lose
+        if(PlayerMoney < minBet)
+        {
+            SceneManager.LoadSceneAsync(0);
 
-        if(PlayerMoney >= 10000) SceneManager.LoadSceneAsync(0); //win
+            yield break;
+        }
+
+        if(PlayerMoney >= 10000)
+        {
+            SceneManager.LoadSceneAsync(0);
+
+            yield break;
+        }
 
         StartGame();
     }
-    
+
     public void LoseAmount(int amount)
     {
         playerMoney -= amount;
