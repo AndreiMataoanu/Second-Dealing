@@ -1,6 +1,6 @@
 public struct Card
 {
-    public enum Rank { None = 0, Ace, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Jack, Queen, King }
+    public enum Rank { None = 0, Ace, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Jack, Queen, King, Joker }
     public enum Suit { Clubs, Diamonds, Hearts, Spades }
 
     public Rank rank;
@@ -11,6 +11,7 @@ public struct Card
     {
         if(rank >= Rank.Ten && rank <= Rank.King) return 10;
         if(rank == Rank.Ace) return 11;
+        if(rank == Rank.Joker) return 0;
 
         return (int)rank;
     }

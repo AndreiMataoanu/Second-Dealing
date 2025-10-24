@@ -6,6 +6,8 @@ public class CardInstance
 
     public bool isHidden;
 
+    public int jokerValue = 0;
+
     public CardInstance(Card card, CardDisplay display, bool hidden = false)
     {
         cardData = card;

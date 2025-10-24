@@ -45,10 +45,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BlackjackGame
   powerUpManager: {fileID: 0}
+  eventThresholds:
+  - severityToTrigger: 0
+    moneyAmount: 0
+  - severityToTrigger: 1
+    moneyAmount: 700
+  - severityToTrigger: 2
+    moneyAmount: 1500
+  lowSeverityEvents:
+  - {fileID: 11400000, guid: 16f803c2a8c8cae4b83d83c657ad3736, type: 2}
+  mediumSeverityEvents: []
+  highSeverityEvents: []
   standHandAnimator: {fileID: 0}
   hitHandAnimator: {fileID: 0}
   moneyText: {fileID: 0}
   betText: {fileID: 0}
+  statusText: {fileID: 0}
+  playerTotalText: {fileID: 0}
+  dealerTotalText: {fileID: 0}
   isRoundActive: 0
   cardPrefabs:
   - rank: 1
@@ -207,8 +221,21 @@ MonoBehaviour:
   - rank: 13
     suit: 3
     cardPrefab: {fileID: 7390946069232093434, guid: 2e583a1d31df3c749b4ed82b56da9c3f, type: 3}
+  - rank: 14
+    suit: 0
+    cardPrefab: {fileID: 7082712968241337282, guid: d21cc77187c5b404eb0cd739790ddaf0, type: 3}
+  - rank: 14
+    suit: 3
+    cardPrefab: {fileID: 7082712968241337282, guid: d21cc77187c5b404eb0cd739790ddaf0, type: 3}
+  - rank: 14
+    suit: 1
+    cardPrefab: {fileID: 7082712968241337282, guid: 2ea1c53c3c1277a45a1354b2d4bfd2d5, type: 3}
+  - rank: 14
+    suit: 2
+    cardPrefab: {fileID: 7082712968241337282, guid: 2ea1c53c3c1277a45a1354b2d4bfd2d5, type: 3}
   playerCardPosition: {fileID: 0}
   dealerCardPosition: {fileID: 0}
   sunglassesCardPosition: {fileID: 0}
   deckPosition: {fileID: 0}
   cardSpacing: 0.05
+  cardRotationAngle: 5

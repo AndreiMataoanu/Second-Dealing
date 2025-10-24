@@ -7,6 +7,8 @@ public class Deck
     private List<Card.Rank> removedRanks = new List<Card.Rank>();
     private List<Card.Suit> removedSuits = new List<Card.Suit>();
 
+    private bool jokersInDeck = false;
+
     public Deck()
     {
         InitializeDeck();
@@ -20,8 +22,6 @@ public class Deck
         {
             if(removedSuits.Contains(s)) continue;
 
-
-
             for(int r = (int)Card.Rank.Ace; r <= (int)Card.Rank.King; r++)
             {
                 Card.Rank rank = (Card.Rank)r;
@@ -29,6 +29,17 @@ public class Deck
                 if(removedRanks.Contains(rank)) continue;
 
                 cards.Add(new Card { rank = rank, suit = s });
+            }
+        }
+
+        if(jokersInDeck)
+        {
+            foreach(Card.Suit s in System.Enum.GetValues(typeof(Card.Suit)))
+            {
+                if(!removedSuits.Contains(s))
+                {
+                    cards.Add(new Card { rank = Card.Rank.Joker, suit = s });
+                }
             }
         }
     }
@@ -116,5 +127,16 @@ public class Deck
 
         InitializeDeck();
         Shuffle();
+    }
+
+    public void AddJokersToDeck()
+    {
+        if(!jokersInDeck)
+        {
+            jokersInDeck = true;
+
+            InitializeDeck();
+            Shuffle();
+        }
     }
 }
