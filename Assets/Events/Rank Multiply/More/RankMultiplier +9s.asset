@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e2c6106f697c704797bc53a31c014dd, type: 3}
-  m_Name: AddJokers
-  m_EditorClassIdentifier: Assembly-CSharp::AddJokersEvent
-  eventName: Adding Jokers
-  severity: 2
+  m_Script: {fileID: 11500000, guid: c1a9b643cf3771d4384821295430f2c9, type: 3}
+  m_Name: RankMultiplier +9s
+  m_EditorClassIdentifier: Assembly-CSharp::RankMultiplierEvent
+  eventName: 9s are double
+  severity: 1
+  rankToModify: 9
+  multiplier: 2

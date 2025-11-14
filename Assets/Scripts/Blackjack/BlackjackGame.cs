@@ -1213,7 +1213,7 @@ public class BlackjackGame : MonoBehaviour
             yield break;
         }
 
-        if(PlayerMoney >= 10000)
+        if(PlayerMoney >= 100000)
         {
             SceneManager.LoadSceneAsync(0);
 
