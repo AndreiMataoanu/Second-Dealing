@@ -13,7 +13,7 @@ public class PowerUpShop : MonoBehaviour
     [Header("Power Up Selection")]
     [SerializeField] private Color outlineColor = new Color(0.4f, 0.0f, 0.7f);
     [SerializeField] private float outlineWidth = 5.0f;
-    [SerializeField] private float disappearTime = 1.0f;
+    //[SerializeField] private float disappearTime = 1.0f;
     [SerializeField] private GameObject blackjackGameManager;
     [SerializeField] private GameObject audioManagerGameObject;
 

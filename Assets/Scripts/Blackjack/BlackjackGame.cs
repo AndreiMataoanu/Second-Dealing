@@ -49,6 +49,8 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI playerTotalText;
     [SerializeField] private TMPro.TextMeshProUGUI dealerTotalText;
 
+    [SerializeField] private GameObject dealerSmile;
+
     //Betting Variables
     private int playerMoney = 500;
     private int currentBet = 100;
@@ -1215,11 +1217,15 @@ public class BlackjackGame : MonoBehaviour
         else if(message.Contains("It's a tie")) { }
         else
         {
+            dealerSmile.SetActive(true);
+
             PlayerMoney -= currentBet;
 
             AudioManager.instance.Play("MoneyLost");
 
             yield return new WaitForSeconds(3f);
+
+            dealerSmile.SetActive(false);
         }
 
         if(revealHand)

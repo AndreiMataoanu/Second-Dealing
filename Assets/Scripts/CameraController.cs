@@ -26,6 +26,7 @@ public class CameraController : MonoBehaviour
     private bool lookingAtItemBox = false;
     private bool lookingAtShop = false;
     private bool isMoving = false;
+    private bool isDefault = false;
 
     private Quaternion targetRot;
     
@@ -119,6 +120,7 @@ public class CameraController : MonoBehaviour
 
     public void EnterItemBox()
     {
+        isDefault = false;
         //Inventory
         _inventoryManagement.inInventory = true;
         
@@ -135,6 +137,7 @@ public class CameraController : MonoBehaviour
     
     public void EnterShop()
     {
+        isDefault = false;
         _inventoryManagement.inInventory = false;
         lookingAtShop = true;
         targetPos = shopPos;
@@ -148,6 +151,7 @@ public class CameraController : MonoBehaviour
 
     public void EnterDefault()
     {
+        isDefault = true;
         lookingAtItemBox = false;
         lookingAtShop = false;
         targetPos = defaultPos;
@@ -195,5 +199,10 @@ public class CameraController : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
+    }
+
+    public bool GetIsDefault()
+    {
+        return isDefault;
     }
 }

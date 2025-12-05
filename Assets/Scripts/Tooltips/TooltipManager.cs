@@ -37,4 +37,11 @@ public class TooltipManager : MonoBehaviour
 
         tooltipText.text = "";
     }
+
+    public void EnableTooltip()
+    {
+        tooltipObject.SetActive(true);
+
+        tooltipText.text = "";
+    }
 }
