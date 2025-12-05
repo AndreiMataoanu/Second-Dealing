@@ -4,8 +4,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
-
 public class BlackjackGame : MonoBehaviour
 {
     #region Attributes
@@ -94,7 +92,12 @@ public class BlackjackGame : MonoBehaviour
     private const float zOverlap = 0.01f;
     private const float cardAnimationDuration = 0.25f;
 
+    private float nextKeyBetTime = 0f;
+    private float keyRepeatDelay = 0.5f;
+    private float keyRepeatRate = 0.1f;
+
     private readonly Vector3 cardScaleVector = Vector3.one * 0.05f;
+
     private PowerUpShop powerUpShop;
     #endregion
 
@@ -123,13 +126,34 @@ public class BlackjackGame : MonoBehaviour
 
         if(!isRoundActive)
         {
-            if(Input.GetKeyDown(KeyCode.UpArrow)) IncreaseBet();
+            if(Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                IncreaseBet();
 
-            if(Input.GetKeyDown(KeyCode.DownArrow)) DecreaseBet();
+                nextKeyBetTime = Time.time + keyRepeatDelay;
+            }
+            else if(Input.GetKey(KeyCode.UpArrow) && Time.time >= nextKeyBetTime)
+            {
+                IncreaseBet();
+
+                nextKeyBetTime = Time.time + keyRepeatRate;
+            }
+
+            if(Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                DecreaseBet();
+
+                nextKeyBetTime = Time.time + keyRepeatDelay;
+            }
+            else if(Input.GetKey(KeyCode.DownArrow) && Time.time >= nextKeyBetTime)
+            {
+                DecreaseBet();
+                nextKeyBetTime = Time.time + keyRepeatRate;
+            }
 
             bool canDeal = PlayerMoney >= currentBet;
 
-            if(Input.GetKeyDown(KeyCode.Space) && canDeal) StartCoroutine(DealRoundCoroutine());
+            if(Input.GetKeyDown(KeyCode.H) && canDeal) StartCoroutine(DealRoundCoroutine());
         }
         else //Handle playing actions.
         {
@@ -1091,7 +1115,7 @@ public class BlackjackGame : MonoBehaviour
 
         if(isKnifeActive)
         {
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(0.2f);
         }
         else
         {
@@ -1197,6 +1221,8 @@ public class BlackjackGame : MonoBehaviour
             PlayerMoney -= currentBet;
 
             AudioManager.instance.Play("MoneyLost");
+
+            yield return new WaitForSeconds(3f);
         }
 
         if(revealHand)
