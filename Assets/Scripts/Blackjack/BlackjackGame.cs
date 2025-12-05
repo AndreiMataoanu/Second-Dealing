@@ -1010,10 +1010,9 @@ public class BlackjackGame : MonoBehaviour
             yield return new WaitForSeconds(2.5f);
         }
 
-        statusText.text = "Bust! You lose";
+        statusText.text = "Bust... You lose";
 
-        yield return new WaitForSeconds(1.5f);
-        yield return StartCoroutine(EndGameCoroutine("Bust! You lose", false));
+        yield return StartCoroutine(EndGameCoroutine("Bust... You lose", false));
 
         currentBustCoroutine = null;
     }
@@ -1027,7 +1026,6 @@ public class BlackjackGame : MonoBehaviour
         if(hitHandAnimator != null) hitHandAnimator.SetTrigger("hitTrigger");
 
         yield return new WaitForSeconds(1f);
-
         yield return StartCoroutine(DealCardToPlayerCoroutine());
 
         UpdateUI(true);
@@ -1186,14 +1184,13 @@ public class BlackjackGame : MonoBehaviour
 
         statusText.text = resultMessage;
 
-        yield return new WaitForSeconds(1.5f);
         yield return StartCoroutine(EndGameCoroutine(resultMessage));
     }
 
     private string DetermineWinner(int playerValue, int dealerValue)
     {
         if(playerValue > 21 && !IsBlackjack(playerValue)) return "Bust... You lose";
-        else if(dealerValue > 21 && !IsBlackjack(dealerValue)) return "Dealer busts... You win"; //fix for blackjack event
+        else if(dealerValue > 21 && !IsBlackjack(dealerValue)) return "Dealer busts... You win";
         else if(playerValue > dealerValue) return "You win";
         else if(dealerValue > playerValue) return "Dealer wins";
         else
@@ -1207,7 +1204,7 @@ public class BlackjackGame : MonoBehaviour
     {
         isRoundActive = false;
 
-        if(message.Contains("You win") || message.Contains("Blackjack! You win"))
+        if(message.Contains("You win"))
         {
             PlayerMoney += currentBet;
 
@@ -1232,7 +1229,7 @@ public class BlackjackGame : MonoBehaviour
 
         yield return StartCoroutine(CheckForEventTriggerCoroutine());
 
-        if(PlayerMoney < minBet)
+        if(PlayerMoney <= 0)
         {
             SceneManager.LoadSceneAsync(0);
 
