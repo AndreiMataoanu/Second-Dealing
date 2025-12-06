@@ -15,7 +15,6 @@ public class PowerUpShop : MonoBehaviour
     [SerializeField] private float outlineWidth = 5.0f;
     //[SerializeField] private float disappearTime = 1.0f;
     [SerializeField] private GameObject blackjackGameManager;
-    [SerializeField] private GameObject audioManagerGameObject;
 
     private Transform _highlight;
     private Transform _selection;
@@ -24,17 +23,19 @@ public class PowerUpShop : MonoBehaviour
 
     private BlackjackGame _blackjackGame;
     private InventoryManagement _inventoryManagement;
-    private AudioManager _audioManager;
+
+    private float denySoundCooldown = 0.3f;
+    private float nextDenyTime = 0f;
 
     [HideInInspector] public bool hasSelected;
     private bool _hasSpawned = false;
+    private bool itemBought = false;
 
     private void Awake()
     {
         _blackjackGame = blackjackGameManager.GetComponent<BlackjackGame>();
         _inventoryManagement = GetComponent<InventoryManagement>();
-        _audioManager = audioManagerGameObject.GetComponent<AudioManager>();
-        
+
         if(powerUpPrefabs == null || powerUpPrefabs.Count() < powerUpCount) Debug.Log("Not enough power up prefabs added!");
     }
 
@@ -47,7 +48,7 @@ public class PowerUpShop : MonoBehaviour
     public void SpawnPowerUps()
     {
         if(_hasSpawned || powerUpPrefabs == null || powerUpPrefabs.Count() < powerUpCount) return;
-        
+
         for(int i = 0; i < powerUpCount; i++)
         {
             int randomIndex = Random.Range(0, powerUpPrefabs.Length);
@@ -58,20 +59,20 @@ public class PowerUpShop : MonoBehaviour
 
             prefab.GetComponent<PowerUpInfo>().SetBlackjackGame(_blackjackGame);
         }
-        
+
         _hasSpawned = true;
+        itemBought = false;
     }
 
     public void DestroyPowerUps()
     {
-        for(int i = 0; i < powerUpCount - 1; i++)
+        foreach(Transform child in transform)
         {
-            GameObject powerUp = gameObject.transform.GetChild(i).gameObject;
-
-            Destroy(powerUp);
+            Destroy(child.gameObject);
         }
 
         hasSelected = false;
+        itemBought = false;
         _hasSpawned = false;
     }
 
@@ -118,10 +119,22 @@ public class PowerUpShop : MonoBehaviour
     private void SelectPowerUp()
     {
         if(_inventoryManagement.inInventory) return;
-        
-        if(!hasSelected && Mouse.current.leftButton.wasPressedThisFrame)
+
+        if(Mouse.current.leftButton.wasPressedThisFrame)
         {
-            if(_highlight)
+            if(itemBought)
+            {
+                if(Time.time >= nextDenyTime)
+                {
+                    AudioManager.instance.Play("ItemDeny");
+
+                    nextDenyTime = Time.time + denySoundCooldown;
+                }
+
+                return;
+            }
+
+            if(!hasSelected && _highlight)
             {
                 _selection = _raycastHit.transform;
                 _selection.gameObject.GetComponent<Outline>().enabled = false;
@@ -141,15 +154,24 @@ public class PowerUpShop : MonoBehaviour
         var selectionInfo = _selection.gameObject.GetComponent<PowerUpInfo>();
 
         if(!HasEnoughMoney(selectionInfo)) return;
-        
-        if(_inventoryManagement.AddItem(_selection.gameObject)) _blackjackGame.LoseAmount(selectionInfo.price);
+
+        if(_inventoryManagement.AddItem(_selection.gameObject))
+        {
+            AudioManager.instance.Play("ItemBuy");
+
+            _blackjackGame.LoseAmount(selectionInfo.price);
+
+            itemBought = true;
+            hasSelected = true;
+        }
     }
 
     private bool HasEnoughMoney(PowerUpInfo selectionInfo)
     {
-        if(_blackjackGame.PlayerMoney < selectionInfo.price)
+        if(_blackjackGame.PlayerMoney <= selectionInfo.price)
         {
-            _audioManager.Play("Broke");
+            AudioManager.instance.Play("ItemDeny");
+
             _selection = null;
             hasSelected = false;
 

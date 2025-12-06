@@ -59,6 +59,9 @@ public class MenusController : MonoBehaviour
 
         darkImage.SetActive(true);
 
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
         isPaused = true;
 
         Time.timeScale = 0;
@@ -71,6 +74,9 @@ public class MenusController : MonoBehaviour
         pausePanel.SetActive(false);
 
         darkImage.SetActive(false);
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
 
         isPaused = false;
 

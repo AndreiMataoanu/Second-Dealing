@@ -56,6 +56,115 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 01abb6228c228a9459b4f883817b7498, type: 3}
     name: CardHit
     volume: 1
-    pitch: 0
+    pitch: 1
+    pitchVariance: 0.2
+    loop: 0
+    source: {fileID: 0}
+  - clips:
+    - {fileID: 8300000, guid: b334d650a934ce145bf3c083284e4ad5, type: 3}
+    - {fileID: 8300000, guid: 2aec3e62a4a2f254ab0069900c1a5d66, type: 3}
+    name: Shuffle
+    volume: 1
+    pitch: 1
+    pitchVariance: 0.2
+    loop: 0
+    source: {fileID: 0}
+  - clips:
+    - {fileID: 8300000, guid: 9d4ea43ad3a1a4d40b84ec0376664c74, type: 3}
+    - {fileID: 8300000, guid: d3d5ae71dcc9eea4a840acf7fe0b70cf, type: 3}
+    name: Flip
+    volume: 1
+    pitch: 1
+    pitchVariance: 0.2
+    loop: 0
+    source: {fileID: 0}
+  - clips:
+    - {fileID: 8300000, guid: 793f0d641a3ae27459d5486b20c18681, type: 3}
+    name: Sunglasses(Clone)
+    volume: 0.5
+    pitch: 1
+    pitchVariance: 0.2
+    loop: 0
+    source: {fileID: 0}
+  - clips:
+    - {fileID: 8300000, guid: 520efff899b943c4c8dd4d78c91cf588, type: 3}
+    name: Scissors(Clone)
+    volume: 1
+    pitch: 1
+    pitchVariance: 0.2
+    loop: 0
+    source: {fileID: 0}
+  - clips:
+    - {fileID: 8300000, guid: 030359f77d1909b468cbf3b0b08733e3, type: 3}
+    name: Crucifix(Clone)
+    volume: 0.5
+    pitch: 1
+    pitchVariance: 0.2
+    loop: 0
+    source: {fileID: 0}
+  - clips:
+    - {fileID: 8300000, guid: 2bc5a9cae4d3db74ba5008aff8b7a482, type: 3}
+    name: Knife(Clone)
+    volume: 0.8
+    pitch: 1
+    pitchVariance: 0.2
+    loop: 0
+    source: {fileID: 0}
+  - clips:
+    - {fileID: 8300000, guid: fc43791cc679eb848a3f11b22bdb2fc2, type: 3}
+    name: MoneyGained
+    volume: 1
+    pitch: 1
+    pitchVariance: 0.2
+    loop: 0
+    source: {fileID: 0}
+  - clips:
+    - {fileID: 8300000, guid: a3332387ceb2c7c4da6ecfbe260f8491, type: 3}
+    - {fileID: 8300000, guid: 8156a8aa9950c5f46be76dbc31ab865f, type: 3}
+    name: BetUp
+    volume: 1
+    pitch: 1.5
+    pitchVariance: 0.2
+    loop: 0
+    source: {fileID: 0}
+  - clips:
+    - {fileID: 8300000, guid: 5a3f8c5bce1c89b46ac9e717359a193b, type: 3}
+    - {fileID: 8300000, guid: 05c79d7e9aa518e438ad51daf8de88ca, type: 3}
+    name: BetDown
+    volume: 1
+    pitch: 1.5
+    pitchVariance: 0.2
+    loop: 0
+    source: {fileID: 0}
+  - clips:
+    - {fileID: 8300000, guid: f0d4a4dbd901de847af0974661ffa62c, type: 3}
+    name: MainTheme
+    volume: 0.7
+    pitch: 1
     pitchVariance: 0
+    loop: 1
+    source: {fileID: 0}
+  - clips:
+    - {fileID: 8300000, guid: fd452e22fc414e84892d77aea9590fa4, type: 3}
+    name: MoneyLost
+    volume: 0.4
+    pitch: 1
+    pitchVariance: 0.2
+    loop: 0
+    source: {fileID: 0}
+  - clips:
+    - {fileID: 8300000, guid: 777c92521f456ce4788d8e72aea792a7, type: 3}
+    name: ItemBuy
+    volume: 1
+    pitch: 1
+    pitchVariance: 0.2
+    loop: 0
+    source: {fileID: 0}
+  - clips:
+    - {fileID: 8300000, guid: e373d467f9677f0408b46ead4958673b, type: 3}
+    name: ItemDeny
+    volume: 1
+    pitch: 1
+    pitchVariance: 0.2
+    loop: 0
     source: {fileID: 0}

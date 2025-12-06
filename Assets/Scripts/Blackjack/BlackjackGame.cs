@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class BlackjackGame : MonoBehaviour
@@ -41,6 +42,7 @@ public class BlackjackGame : MonoBehaviour
 
     [SerializeField] private Animator standHandAnimator;
     [SerializeField] private Animator hitHandAnimator;
+    [SerializeField] private Animator doorAnimator;
 
     [Header("UI")]
     [SerializeField] private TMPro.TextMeshProUGUI moneyText;
@@ -536,6 +538,8 @@ public class BlackjackGame : MonoBehaviour
     {
         ClearTable();
 
+        doorAnimator.SetBool("open", false);
+
         AudioManager.instance.Play("Shuffle");
 
         gameDeck.Shuffle();
@@ -575,6 +579,8 @@ public class BlackjackGame : MonoBehaviour
         isActionLocked = true;
 
         if(powerUpShop.hasSelected) powerUpShop.DestroyPowerUps();
+
+        doorAnimator.SetBool("open", true);
 
         isRoundActive = true;
 
@@ -1237,6 +1243,9 @@ public class BlackjackGame : MonoBehaviour
 
         if(PlayerMoney <= 0)
         {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
             SceneManager.LoadSceneAsync(0);
 
             yield break;
@@ -1244,6 +1253,9 @@ public class BlackjackGame : MonoBehaviour
 
         if(PlayerMoney >= 100000)
         {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
             SceneManager.LoadSceneAsync(0);
 
             yield break;

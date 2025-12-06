@@ -15,6 +15,10 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Transform shopShoulder;
     [SerializeField] private Transform shopElbow;
 
+    [Header("UI")]
+    [SerializeField] private TMPro.TextMeshProUGUI shopText;
+    [SerializeField] private TMPro.TextMeshProUGUI inventoryText;
+
     private Vector3 defaultRot = new Vector3(20f, -60f, 0f);
     private Vector3 defaultPos = new Vector3(0f, -0.5f, 0.5f);
     private Vector3 itemBoxRot = new Vector3(20f, -60f, 0f); //rotation when looking at item box
@@ -65,26 +69,14 @@ public class CameraController : MonoBehaviour
         sensitivity = defaultSensitivity;
 
         CursorLock(false);
-
-        //EnterShop();
-        //StartCoroutine(OpenShop());
         EnterDefault();
     }
 
     void Update()
     {
-        //mouseLook
-        //float x = Input.GetAxis("Mouse X");
-        //float y = Input.GetAxis("Mouse Y");
-        //transform.Rotate(-y * sensitivity * Time.deltaTime, x * sensitivity * Time.deltaTime, 0);
-        //Vector3 angles = transform.eulerAngles;
-        //angles.z = 0;
-        //transform.eulerAngles = angles;
-
-        //move camera
         if(!lookingAtItemBox && !lookingAtShop && Input.GetKeyDown(KeyCode.D) && _blackjackGame.isRoundActive)
         {
-            EnterItemBox();
+            EnterInventory();
         }
         else if(lookingAtItemBox && Input.GetKeyDown(KeyCode.A))
         {
@@ -118,14 +110,12 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    public void EnterItemBox()
+    public void EnterInventory()
     {
         isDefault = false;
-        //Inventory
         _inventoryManagement.inInventory = true;
-        
-        //Camera
         lookingAtItemBox = true;
+        inventoryText.text = "inventory";
         targetPos = itemBoxPos;
         targetRot = Quaternion.Euler(itemBoxRot);
         sensitivity = 30f;
@@ -140,6 +130,7 @@ public class CameraController : MonoBehaviour
         isDefault = false;
         _inventoryManagement.inInventory = false;
         lookingAtShop = true;
+        shopText.text = "shop";
         targetPos = shopPos;
         targetRot = Quaternion.Euler(shopRot);
         sensitivity = 30f;
@@ -154,11 +145,13 @@ public class CameraController : MonoBehaviour
         isDefault = true;
         lookingAtItemBox = false;
         lookingAtShop = false;
+        inventoryText.text = "";
+        shopText.text = "";
         targetPos = defaultPos;
         targetRot = Quaternion.Euler(defaultRot);
         sensitivity = defaultSensitivity;
 
-        CursorLock(false);
+        CursorLock(true);
 
         isMoving = true;
     }

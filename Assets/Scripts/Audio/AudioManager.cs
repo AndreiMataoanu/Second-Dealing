@@ -32,6 +32,7 @@ public class AudioManager : MonoBehaviour
 
             s.source.volume = s.volume;
             s.source.pitch = s.pitch;
+            s.source.loop = s.loop;
         }
     }
 
@@ -45,6 +46,7 @@ public class AudioManager : MonoBehaviour
 
         s.source.clip = randomClip;
         s.source.volume = s.volume;
+        s.source.loop = s.loop;
 
         float randomPitch = UnityEngine.Random.Range(s.pitch - s.pitchVariance, s.pitch + s.pitchVariance);
 
