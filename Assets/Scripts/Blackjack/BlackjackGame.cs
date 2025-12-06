@@ -50,6 +50,9 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI statusText;
     [SerializeField] private TMPro.TextMeshProUGUI playerTotalText;
     [SerializeField] private TMPro.TextMeshProUGUI dealerTotalText;
+    [SerializeField] private GameObject greenParticlePrefab;
+    [SerializeField] private GameObject redParticlePrefab;
+    [SerializeField] private Transform particleSpawnPoint;
 
     [SerializeField] private GameObject dealerSmile;
 
@@ -1218,6 +1221,8 @@ public class BlackjackGame : MonoBehaviour
 
             AudioManager.instance.Play("MoneyGained");
 
+            Instantiate(greenParticlePrefab, particleSpawnPoint.position, Quaternion.identity);
+
             yield return new WaitForSeconds(3f);
         }
         else if(message.Contains("It's a tie")) { }
@@ -1228,6 +1233,8 @@ public class BlackjackGame : MonoBehaviour
             PlayerMoney -= currentBet;
 
             AudioManager.instance.Play("MoneyLost");
+
+            Instantiate(redParticlePrefab, particleSpawnPoint.position, Quaternion.identity);
 
             yield return new WaitForSeconds(3f);
 
