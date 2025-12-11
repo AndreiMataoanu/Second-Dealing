@@ -1265,7 +1265,7 @@ public class BlackjackGame : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
-            SceneManager.LoadSceneAsync(0);
+            SceneManager.LoadSceneAsync(3);
 
             yield break;
         }
@@ -1275,7 +1275,7 @@ public class BlackjackGame : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
-            SceneManager.LoadSceneAsync(0);
+            SceneManager.LoadSceneAsync(2);
 
             yield break;
         }
