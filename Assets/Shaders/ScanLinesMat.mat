@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_dithering
-  m_Shader: {fileID: -6465566751694194690, guid: 21cee3ac0d4a41a44a8a836b439a3f6b, type: 3}
+  m_Name: ScanLinesMat
+  m_Shader: {fileID: -6465566751694194690, guid: 23e7a054d3951374da5bee08ba8229a6, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -37,8 +37,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _colorResolution: 16
-    - _ditherSpread: 0.03
-    m_Colors: []
+    - _BlinkSpeed: 10
+    - _NoiseAmount: 0.01
+    - _NoiseScale: 100
+    - _ScanLineSpeed: 1
+    - _ScanLines: 10
+    - _ScanLinesAmount: 0.003
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _NoiseSpeed: {r: 0, g: 0.05, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

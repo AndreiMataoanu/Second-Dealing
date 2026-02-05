@@ -19,8 +19,8 @@ public class CameraController : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI shopText;
     [SerializeField] private TMPro.TextMeshProUGUI inventoryText;
 
-    private Vector3 defaultRot = new Vector3(20f, -60f, 0f);
-    private Vector3 defaultPos = new Vector3(0f, -0.5f, 0.5f);
+    private Vector3 defaultRot = new Vector3(15f, -60f, 0f);
+    private Vector3 defaultPos = new Vector3(-0.05f, -0.5f, 0.525f);
     private Vector3 itemBoxRot = new Vector3(20f, -60f, 0f); //rotation when looking at item box
     private Vector3 itemBoxPos = new Vector3(0f, -1f, 1f); //position when looking at item box
     private Vector3 shopRot = new Vector3(10f, -140f, 0f); //rotation when looking at shop
