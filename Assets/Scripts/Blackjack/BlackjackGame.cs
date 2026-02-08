@@ -29,6 +29,7 @@ public class BlackjackGame : MonoBehaviour
     private bool dealerWinsTies = false;
     private Dictionary<Card.Rank, float> rankMultipliers = new Dictionary<Card.Rank, float>();
     private int alternateBlackjackValue = 0;
+    private List<Card.Suit> negativeSuits = new List<Card.Suit>();
 
     private List<BlackjackEvent> availableLowEvents;
     private List<BlackjackEvent> availableMediumEvents;
@@ -412,6 +413,11 @@ public class BlackjackGame : MonoBehaviour
     {
         gameDeck.AddJokersToDeck();
     }
+
+    public void SetNegativeSuit(Card.Suit suit)
+    {
+        negativeSuits.Add(suit);
+    }
     #endregion
 
     //Calculates the total value of a hand. Aces are 1 or 11.
@@ -459,6 +465,11 @@ public class BlackjackGame : MonoBehaviour
             else
             {
                 cardValue = (int)card.rank;
+            }
+
+            if(negativeSuits.Contains(card.suit))
+            {
+                cardValue *= -1;
             }
 
             if(rankMultipliers.ContainsKey(card.rank))
@@ -532,6 +543,11 @@ public class BlackjackGame : MonoBehaviour
             else
             {
                 cardValue = (int)card.rank;
+            }
+
+            if(negativeSuits.Contains(card.suit))
+            {
+                cardValue *= -1;
             }
 
             if(rankMultipliers.ContainsKey(card.rank))
@@ -1082,7 +1098,7 @@ public class BlackjackGame : MonoBehaviour
 
         UpdateBettingUI();
 
-        if(playerValue > 21 && isRoundActive && currentBustCoroutine == null)
+        if((playerValue > 21 || playerValue < -21 ) && isRoundActive && currentBustCoroutine == null)
         {
             currentBustCoroutine = StartCoroutine(BustCheckCoroutine());
         }
@@ -1144,10 +1160,10 @@ public class BlackjackGame : MonoBehaviour
 
         if(playerHand.Count == 7 && playerValue <= 21)
         {
-            statusText.text = "Lucky 7! You win";
+            statusText.text = "Lucky 7  You win";
 
             yield return new WaitForSeconds(2.0f);
-            yield return StartCoroutine(EndGameCoroutine("Lucky 7! You win", true));
+            yield return StartCoroutine(EndGameCoroutine("Lucky 7  You win", true));
         }
         else if(playerValue <= 21)
         {
@@ -1225,13 +1241,17 @@ public class BlackjackGame : MonoBehaviour
             }
             else
             {
-                while(dealerAIValue < 17 && dealerAIValue <= playerAIValue)
+                int dealerDiff = Mathf.Abs(Mathf.Abs(dealerAIValue) - 21);
+                int playerDiff = Mathf.Abs(Mathf.Abs(playerAIValue) - 21);
+
+                while(Mathf.Abs(dealerAIValue) < 17 && dealerDiff >= playerDiff)
                 {
                     yield return StartCoroutine(DealCardToDealerCoroutine(false));
 
                     UpdateUI(true);
 
                     dealerAIValue = CalculateHandValueForDealer(dealerHand);
+                    dealerDiff = Mathf.Abs(Mathf.Abs(dealerAIValue) - 21);
 
                     yield return new WaitForSeconds(2f);
                 }
@@ -1291,15 +1311,22 @@ public class BlackjackGame : MonoBehaviour
 
     private string DetermineWinner(int playerValue, int dealerValue)
     {
-        if(playerValue > 21 && !IsBlackjack(playerValue)) return "Bust... You lose";
-        else if(dealerValue > 21 && !IsBlackjack(dealerValue)) return "Dealer busts... You win";
-        else if(playerValue > dealerValue) return "You win";
-        else if(dealerValue > playerValue) return "Dealer wins";
-        else
-        {
-            if(dealerWinsTies) return "Dealer wins on tie";
-            else return "It's a tie";
-        }
+        bool playerBust = (playerValue > 21 || playerValue < -21) && !IsBlackjack(playerValue);
+        bool dealerBust = (dealerValue > 21 || dealerValue < -21) && !IsBlackjack(dealerValue);
+        int playerDiff = Mathf.Abs(Mathf.Abs(playerValue) - 21);
+        int dealerDiff = Mathf.Abs(Mathf.Abs(dealerValue) - 21);
+
+        if(playerBust) return "Bust... You lose";
+
+        if(dealerBust) return "Dealer busts... You win";
+
+        if(playerDiff < dealerDiff) return "You win";
+
+        if(dealerDiff < playerDiff) return "Dealer wins";
+
+        if(dealerWinsTies) return "Dealer wins on tie";
+        
+        return "It's a tie";
     }
 
     private IEnumerator EndGameCoroutine(string message, bool revealHand = true)
@@ -1317,7 +1344,10 @@ public class BlackjackGame : MonoBehaviour
 
             yield return new WaitForSeconds(3f);
         }
-        else if(message.Contains("It's a tie")) { }
+        else if(message.Contains("It's a tie"))
+        {
+            yield return new WaitForSeconds(3f);
+        }
         else
         {
             dealerSmile.SetActive(true);
@@ -1376,7 +1406,7 @@ public class BlackjackGame : MonoBehaviour
 
     private bool IsBlackjack(int handValue)
     {
-        if(handValue == 21) return true;
+        if(handValue == 21 || handValue == -21) return true;
 
         if(alternateBlackjackValue > 0 && handValue == alternateBlackjackValue) return true;
 
