@@ -27,6 +27,8 @@ public class BlackjackGame : MonoBehaviour
     private AceValueRule currentAceRule = AceValueRule.Flexible;
     public enum AceValueRule { Flexible, Always1, Always11 }
     private bool dealerWinsTies = false;
+    private bool isDoubleLowActive = false;
+    private bool isHalfHighActive = false;
     private Dictionary<Card.Rank, float> rankMultipliers = new Dictionary<Card.Rank, float>();
     private int alternateBlackjackValue = 0;
     private List<Card.Suit> negativeSuits = new List<Card.Suit>();
@@ -303,7 +305,27 @@ public class BlackjackGame : MonoBehaviour
 
         CardInstance visibleDealerCard = dealerHand[1];
 
-        int originalValue = visibleDealerCard.cardData.GetValue();
+        int originalValue;
+
+        if(visibleDealerCard.cardData.rank == Card.Rank.Joker)
+        {
+            originalValue = 0;
+        }
+        else
+        {
+            originalValue = visibleDealerCard.cardData.GetValue();
+
+            if(isDoubleLowActive && originalValue < 6)
+            {
+                originalValue *= 2;
+            }
+
+            if(isHalfHighActive && originalValue > 5)
+            {
+                originalValue = Mathf.CeilToInt(originalValue / 2f);
+            }
+        }
+
         int halvedValue = Mathf.CeilToInt((float)originalValue / 2f);
 
         scissorsValueReduction = originalValue - halvedValue;
@@ -418,6 +440,16 @@ public class BlackjackGame : MonoBehaviour
     {
         negativeSuits.Add(suit);
     }
+
+    public void SetDoubleLowActive(bool active)
+    {
+        isDoubleLowActive = active;
+    }
+
+    public void SetHalfHighActive(bool active)
+    {
+        isHalfHighActive = active;
+    }
     #endregion
 
     //Calculates the total value of a hand. Aces are 1 or 11.
@@ -465,6 +497,16 @@ public class BlackjackGame : MonoBehaviour
             else
             {
                 cardValue = (int)card.rank;
+            }
+
+            if(isDoubleLowActive && cardValue < 6 && card.rank != Card.Rank.Joker)
+            {
+                cardValue *= 2;
+            }
+
+            if(isHalfHighActive && cardValue > 5 && card.rank != Card.Rank.Joker)
+            {
+                cardValue = Mathf.CeilToInt(cardValue / 2f);
             }
 
             if(negativeSuits.Contains(card.suit))
@@ -543,6 +585,16 @@ public class BlackjackGame : MonoBehaviour
             else
             {
                 cardValue = (int)card.rank;
+            }
+
+            if(isDoubleLowActive && cardValue < 6 && card.rank != Card.Rank.Joker)
+            {
+                cardValue *= 2;
+            }
+
+            if(isHalfHighActive && cardValue > 5 && card.rank != Card.Rank.Joker)
+            {
+                cardValue = Mathf.CeilToInt(cardValue / 2f);
             }
 
             if(negativeSuits.Contains(card.suit))
