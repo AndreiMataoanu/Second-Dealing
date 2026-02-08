@@ -11,12 +11,8 @@ public class PowerUpShop : MonoBehaviour
     [SerializeField] private GameObject[] powerUpPrefabs;
 
     [Header("Power Up Selection")]
-    [SerializeField] private Color outlineColor = new Color(0.4f, 0.0f, 0.7f);
-    [SerializeField] private float outlineWidth = 5.0f;
-    //[SerializeField] private float disappearTime = 1.0f;
     [SerializeField] private GameObject blackjackGameManager;
 
-    private Transform _highlight;
     private Transform _selection;
 
     private RaycastHit _raycastHit;
@@ -41,7 +37,6 @@ public class PowerUpShop : MonoBehaviour
 
     private void Update()
     {
-        HighlightPowerUp();
         SelectPowerUp();
     }
 
@@ -143,17 +138,20 @@ public class PowerUpShop : MonoBehaviour
                 return;
             }
 
-            if(!hasSelected && _highlight)
+            Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+            if(!hasSelected && !EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(ray, out _raycastHit))
             {
-                _selection = _raycastHit.transform;
-                _selection.gameObject.GetComponent<Outline>().enabled = false;
-                _highlight = null;
-                
-                BuySelectedPowerUp();
+                if(_raycastHit.transform.CompareTag("Selectable"))
+                {
+                    _selection = _raycastHit.transform;
 
-                _blackjackGame.UpdateBettingUI();
+                    BuySelectedPowerUp();
 
-                CameraController.instance.EnterDefault();
+                    _blackjackGame.UpdateBettingUI();
+
+                    CameraController.instance.EnterDefault();
+                }
             }
         }
     }
