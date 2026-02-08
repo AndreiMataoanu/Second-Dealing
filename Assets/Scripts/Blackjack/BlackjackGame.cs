@@ -654,6 +654,7 @@ public class BlackjackGame : MonoBehaviour
         AudioManager.instance.Play("Shuffle");
 
         gameDeck.Shuffle();
+        powerUpShop.RefreshShop();
 
         statusText.text = "Place your bet...";
 
@@ -670,8 +671,8 @@ public class BlackjackGame : MonoBehaviour
         isCrucifixActive = false;
         IsSunglassesAvailable = true;
 
-        playerTotalText.text = "";
-        dealerTotalText.text = "";
+        playerTotalText.text = "Your hand: ";
+        dealerTotalText.text = "Dealer hand: ";
 
         //Set bet to the last valid bet
         if(PlayerMoney < minBet) currentBet = PlayerMoney;
@@ -1089,18 +1090,18 @@ public class BlackjackGame : MonoBehaviour
 
         if(playerHand.Count == 0)
         {
-            playerTotalText.text = "";
+            playerTotalText.text = "Your hand: ";
         }
         else if(revealJokers || !playerHasJoker)
         {
-            playerTotalText.text = playerValue.ToString();
+            playerTotalText.text = "Your hand: " + playerValue.ToString();
         }
         else
         {
             int jokerSum = playerHand.Where(c => c.cardData.rank == Card.Rank.Joker).Sum(c => c.jokerValue);
             int baseValue = playerValue - jokerSum;
 
-            playerTotalText.text = $"{baseValue} + ?";
+            playerTotalText.text = "Your hand: " + $"{baseValue} + ?";
         }
 
         if(dealerHand.Count > 0)
@@ -1110,7 +1111,6 @@ public class BlackjackGame : MonoBehaviour
                 List<CardInstance> visibleCards = dealerHand.Where(x => !x.isHidden).ToList();
 
                 int dealerVisibleValue = CalculateHandValue(visibleCards);
-
                 bool dealerHasVisibleJoker = visibleCards.Any(c => c.cardData.rank == Card.Rank.Joker);
 
                 if(dealerHasVisibleJoker)
@@ -1118,11 +1118,11 @@ public class BlackjackGame : MonoBehaviour
                     int jokerSum = visibleCards.Where(c => c.cardData.rank == Card.Rank.Joker).Sum(c => c.jokerValue);
                     int baseValue = dealerVisibleValue - jokerSum;
 
-                    dealerTotalText.text = $"{baseValue} + ? + ?";
+                    dealerTotalText.text = "Dealer hand: " + $"{baseValue} + ? + ?";
                 }
                 else
                 {
-                    dealerTotalText.text = $"{dealerVisibleValue} + ?";
+                    dealerTotalText.text = "Dealer hand: " + $"{dealerVisibleValue} + ?";
                 }
             }
             else
@@ -1132,20 +1132,20 @@ public class BlackjackGame : MonoBehaviour
 
                 if(revealJokers || !dealerHasJoker)
                 {
-                    dealerTotalText.text = dealerFullValue.ToString();
+                    dealerTotalText.text = "Dealer hand: " + dealerFullValue.ToString();
                 }
                 else
                 {
                     int jokerSum = dealerHand.Where(c => c.cardData.rank == Card.Rank.Joker).Sum(c => c.jokerValue);
                     int baseValue = dealerFullValue - jokerSum;
 
-                    dealerTotalText.text = $"{baseValue} + ?";
+                    dealerTotalText.text = "Dealer hand: " + $"{baseValue} + ?";
                 }
             }
         }
         else
         {
-            dealerTotalText.text = "";
+            dealerTotalText.text = "Dealer hand: ";
         }
 
         UpdateBettingUI();

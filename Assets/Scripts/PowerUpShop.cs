@@ -45,6 +45,12 @@ public class PowerUpShop : MonoBehaviour
         SelectPowerUp();
     }
 
+    public void RefreshShop()
+    {
+        DestroyPowerUps();
+        SpawnPowerUps();
+    }
+
     public void SpawnPowerUps()
     {
         if(_hasSpawned || powerUpPrefabs == null || powerUpPrefabs.Count() < powerUpCount) return;
