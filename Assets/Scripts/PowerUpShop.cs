@@ -50,19 +50,41 @@ public class PowerUpShop : MonoBehaviour
     {
         if(_hasSpawned || powerUpPrefabs == null || powerUpPrefabs.Count() < powerUpCount) return;
 
+        int totalWeight = 0;
+
+        foreach(var item in powerUpPrefabs)
+        {
+            totalWeight += item.GetComponent<PowerUpInfo>().spawnWeight;
+        }
+
         for(int i = 0; i < powerUpCount; i++)
         {
-            int randomIndex = Random.Range(0, powerUpPrefabs.Length);
+            GameObject selectedPrefab = GetWeightedRandomPrefab(totalWeight);
 
             Vector3 prefabPosition = transform.position + Vector3.up * (i * spaceOffset);
 
-            GameObject prefab = Instantiate(powerUpPrefabs[randomIndex], prefabPosition, Quaternion.identity, transform);
+            GameObject prefab = Instantiate(selectedPrefab, prefabPosition, Quaternion.identity, transform);
 
             prefab.GetComponent<PowerUpInfo>().SetBlackjackGame(_blackjackGame);
         }
 
         _hasSpawned = true;
         itemBought = false;
+    }
+
+    private GameObject GetWeightedRandomPrefab(int totalWeight)
+    {
+        int roll = Random.Range(0, totalWeight);
+        int cursor = 0;
+
+        foreach(var prefab in powerUpPrefabs)
+        {
+            cursor += prefab.GetComponent<PowerUpInfo>().spawnWeight;
+
+            if(roll < cursor) return prefab;
+        }
+
+        return powerUpPrefabs[0];
     }
 
     public void DestroyPowerUps()
