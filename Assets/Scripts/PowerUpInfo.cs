@@ -27,7 +27,7 @@ public class PowerUpInfo : MonoBehaviour
             break;
 
             case PowerUpType.Crucifix:
-                _blackjackGame.ActivatePrayerBeads();
+                _blackjackGame.ActivateCrucifix();
             break;
 
             case PowerUpType.Sunglasses:

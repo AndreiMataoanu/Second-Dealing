@@ -78,11 +78,11 @@ public class BlackjackGame : MonoBehaviour
     //Abilities
     private bool isKnifeActive = false;
     private int scissorsValueReduction = 0;
-    private bool isPrayerBeadsActive = false;
+    private bool isCrucifixActive = false;
     private GameObject peekedCardObject = null;
     public bool IsKnifeAvailable { get; private set; } = true;
     public bool IsScissorsAvailable { get; private set; } = true;
-    public bool IsPrayerBeadsAvailable { get; private set; } = true;
+    public bool IsCrucifixAvailable { get; private set; } = true;
     public bool IsSunglassesAvailable { get; private set; } = true;
 
     public int PlayerMoney
@@ -306,20 +306,19 @@ public class BlackjackGame : MonoBehaviour
         int halvedValue = Mathf.CeilToInt((float)originalValue / 2f);
 
         scissorsValueReduction = originalValue - halvedValue;
-
         IsScissorsAvailable = false;
 
         UpdateUI(true);
     }
 
-    public void ActivatePrayerBeads()
+    public void ActivateCrucifix()
     {
-        if(!isRoundActive || isPrayerBeadsActive || !IsPrayerBeadsAvailable) return;
+        if(!isRoundActive || isCrucifixActive || !IsCrucifixAvailable) return;
 
         if(CalculateHandValue(playerHand) > 21) return;
 
-        isPrayerBeadsActive = true;
-        IsPrayerBeadsAvailable = false;
+        isCrucifixActive = true;
+        IsCrucifixAvailable = false;
     }
 
     public void ActivateSunglasses()
@@ -337,7 +336,6 @@ public class BlackjackGame : MonoBehaviour
         if(!cardPrefabLookup.TryGetValue((newCardData.rank, newCardData.suit), out GameObject cardPrefabToUse)) return;
 
         peekedCardObject = Instantiate(cardPrefabToUse, deckPosition);
-
         peekedCardObject.transform.localScale = cardScaleVector;
 
         StartCoroutine(CardAnimationCoroutine(
@@ -356,7 +354,6 @@ public class BlackjackGame : MonoBehaviour
         }
 
         activeCardObjects.Add(peekedCardObject);
-
         IsSunglassesAvailable = false;
     }
     #endregion
@@ -374,9 +371,9 @@ public class BlackjackGame : MonoBehaviour
         UpdateBettingUI();
     }
 
-    public void RemoveRankFromDeck(Card.Rank rank)
+    public void RemoveValueFromDeck(Card.Rank rank)
     {
-        gameDeck.AddRemovedRank(rank);
+        gameDeck.AddRemovedValue(rank);
     }
 
     public void RemoveSuitFromDeck(Card.Suit suit)
@@ -601,8 +598,8 @@ public class BlackjackGame : MonoBehaviour
         IsKnifeAvailable = true;
         IsScissorsAvailable = true;
         scissorsValueReduction = 0;
-        IsPrayerBeadsAvailable = true;
-        isPrayerBeadsActive = false;
+        IsCrucifixAvailable = true;
+        isCrucifixActive = false;
         IsSunglassesAvailable = true;
 
         playerTotalText.text = "";
@@ -625,13 +622,11 @@ public class BlackjackGame : MonoBehaviour
         EnableCamera(playingCamera);
 
         statusText.text = "Dealing cards...";
-
         isActionLocked = true;
 
         if(powerUpShop.hasSelected) powerUpShop.DestroyPowerUps();
 
         doorAnimator.SetBool("open", true);
-
         isRoundActive = true;
         cursorDetection.OnRoundActive();
 
@@ -653,7 +648,6 @@ public class BlackjackGame : MonoBehaviour
         else
         {
             statusText.text = "";
-
             isActionLocked = false;
         }
     }
@@ -850,6 +844,28 @@ public class BlackjackGame : MonoBehaviour
         cardTransform.localRotation = startRotation;
     }
 
+    private Card.Rank GetBestRankForValue(int bestValue)
+    {
+        if(bestValue >= 11 || bestValue == 1)
+        {
+            return Card.Rank.Ace;
+        }
+
+        switch(bestValue)
+        {
+            case 10: return Card.Rank.Ten;
+            case 9: return Card.Rank.Nine;
+            case 8: return Card.Rank.Eight;
+            case 7: return Card.Rank.Seven;
+            case 6: return Card.Rank.Six;
+            case 5: return Card.Rank.Five;
+            case 4: return Card.Rank.Four;
+            case 3: return Card.Rank.Three;
+            case 2: return Card.Rank.Two;
+            default: return Card.Rank.None;
+        }
+    }
+
     private IEnumerator DealCardToPlayerCoroutine()
     {
         var savedPosition = deckPosition.position;
@@ -864,57 +880,66 @@ public class BlackjackGame : MonoBehaviour
             peekedCardObject = null;
         }
 
-        Card newCardData;
+        Card newCardData = new Card { rank = Card.Rank.None };
 
-        if(isPrayerBeadsActive)
+        bool cardFound = false;
+
+        if(isCrucifixActive)
         {
-            isPrayerBeadsActive = false;
+            isCrucifixActive = false;
 
             int playerValue = CalculateHandValue(playerHand);
             int idealValue = 21 - playerValue;
-            int searchMaxValue = Mathf.Min(idealValue, 10); //Max value it can find is 10
 
             Card? dealtCard = null;
+            Card.Rank targetRank = GetBestRankForValue(idealValue);
 
-            //Searches for the highest possible card that doesn't bust the player
-            for(int value = searchMaxValue; value >= 2; value--)
+            dealtCard = gameDeck.DealSpecificCard(targetRank);
+
+            if(!dealtCard.HasValue)
             {
-                if(value == 11 || value == 1) continue;
+                int searchStart = Mathf.Min(idealValue, 10);
 
-                if(value >= 10)
+                for(int v = searchStart; v >= 2; v--)
                 {
-                    Card.Rank[] faceRanks = { Card.Rank.Ten, Card.Rank.Jack, Card.Rank.Queen, Card.Rank.King };
-
-                    foreach(var faceRank in faceRanks)
+                    if(v == 10)
                     {
-                        dealtCard = gameDeck.DealSpecificCard(faceRank);
+                        Card.Rank[] faces = { Card.Rank.Ten, Card.Rank.Jack, Card.Rank.Queen, Card.Rank.King };
 
-                        if(dealtCard.HasValue) break;
+                        foreach(var f in faces)
+                        {
+                            dealtCard = gameDeck.DealSpecificCard(f);
+
+                            if(dealtCard.HasValue) break;
+                        }
                     }
-                }
-                else
-                {
-                    Card.Rank rankToSearch = (Card.Rank)value;
+                    else
+                    {
+                        dealtCard = gameDeck.DealSpecificCard((Card.Rank)v);
+                    }
 
-                    dealtCard = gameDeck.DealSpecificCard(rankToSearch);
+                    if(dealtCard.HasValue) break;
                 }
-
-                if(dealtCard.HasValue) break; //Found a benificial card
             }
 
-            //If no suitable card was found, try to get an Ace
-            if(!dealtCard.HasValue) dealtCard = gameDeck.DealSpecificCard(Card.Rank.Ace);
+            if(!dealtCard.HasValue)
+            {
+                dealtCard = gameDeck.DealSpecificCard(Card.Rank.Ace);
+            }
 
-            if(dealtCard.HasValue) newCardData = dealtCard.Value;
-            else newCardData = gameDeck.DealCard();
+            if(dealtCard.HasValue)
+            {
+                newCardData = dealtCard.Value;
+                cardFound = true;
+            }
         }
-        else //Normal hit, deal a random card
+
+        if(!cardFound)
         {
             newCardData = gameDeck.DealCard();
         }
 
         CardInstance newCardInstance = DealCardInstance(newCardData, playerHand, playerCardPosition, false);
-
         AudioManager.instance.Play("CardHit");
 
         if(newCardInstance != null)
@@ -959,7 +984,6 @@ public class BlackjackGame : MonoBehaviour
         Card newCardData = gameDeck.DealCard();
 
         CardInstance newCardInstance = DealCardInstance(newCardData, dealerHand, dealerCardPosition, isHidden);
-
         AudioManager.instance.Play("CardHit");
 
         if(newCardInstance != null)
@@ -992,7 +1016,6 @@ public class BlackjackGame : MonoBehaviour
     private void UpdateUI(bool dealerHidden = true)
     {
         int playerValue = CalculateHandValue(playerHand);
-
         bool revealJokers = !dealerHidden;
         bool playerHasJoker = playerHand.Any(c => c.cardData.rank == Card.Rank.Joker);
 
