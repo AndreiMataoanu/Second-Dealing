@@ -7772,7 +7772,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 529091244}
         m_TargetAssemblyTypeName: BlackjackGame, Assembly-CSharp
-        m_MethodName: OnStand
+        m_MethodName: OnHit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9919,7 +9919,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 529091244}
         m_TargetAssemblyTypeName: BlackjackGame, Assembly-CSharp
-        m_MethodName: OnHit
+        m_MethodName: OnStand
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13432,6 +13432,10 @@ PrefabInstance:
       propertyPath: shopText
       value: 
       objectReference: {fileID: 837071509}
+    - target: {fileID: 2900606047954242745, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2900606047954242745, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
       propertyPath: shopElbow
       value: 
