@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class BlackjackGame : MonoBehaviour
@@ -286,7 +285,7 @@ public class BlackjackGame : MonoBehaviour
         camera.Priority = 0;
     }
 
-    #region Ability Methods
+    #region Item Methods
     public void ActivateKnife()
     {
         if(!isRoundActive || isKnifeActive || !IsKnifeAvailable) return;
@@ -299,7 +298,7 @@ public class BlackjackGame : MonoBehaviour
     {
         if(!isRoundActive || !IsScissorsAvailable) return;
 
-        if(CalculateHandValue(playerHand) > 21) return;
+        if(CalculateHandValue(playerHand, true) > 21) return;
 
         if(dealerHand.Count < 2) return;
 
@@ -338,7 +337,7 @@ public class BlackjackGame : MonoBehaviour
     {
         if(!isRoundActive || isCrucifixActive || !IsCrucifixAvailable) return;
 
-        if(CalculateHandValue(playerHand) > 21) return;
+        if(CalculateHandValue(playerHand, true) > 21) return;
 
         isCrucifixActive = true;
         IsCrucifixAvailable = false;
@@ -348,7 +347,7 @@ public class BlackjackGame : MonoBehaviour
     {
         if(!isRoundActive || !IsSunglassesAvailable || peekedCardObject != null) return;
 
-        if(CalculateHandValue(playerHand) > 21) return;
+        if(CalculateHandValue(playerHand, true) > 21) return;
 
         Card? nextCard = gameDeck.PeekCard();
 
@@ -453,7 +452,7 @@ public class BlackjackGame : MonoBehaviour
     #endregion
 
     //Calculates the total value of a hand. Aces are 1 or 11.
-    private int CalculateHandValue(List<CardInstance> hand)
+    private int CalculateHandValue(List<CardInstance> hand, bool isPlayer)
     {
         float value = 0f;
         int aceCount = 0;
@@ -475,95 +474,14 @@ public class BlackjackGame : MonoBehaviour
 
             if(card.rank == Card.Rank.Joker)
             {
-                cardValue = cardInstance.jokerValue;
-            }
-            else if(card.rank == Card.Rank.Ace)
-            {
-                aceCount++;
-
-                if(currentAceRule == AceValueRule.Always1)
+                if(isPlayer)
                 {
-                    cardValue = 1;
+                    cardValue = cardInstance.jokerValue;
                 }
                 else
                 {
-                    cardValue = 11;
+                    cardValue = 0;
                 }
-            }
-            else if(card.rank >= Card.Rank.Ten && card.rank <= Card.Rank.King)
-            {
-                cardValue = 10;
-            }
-            else
-            {
-                cardValue = (int)card.rank;
-            }
-
-            if(isDoubleLowActive && cardValue < 6 && card.rank != Card.Rank.Joker)
-            {
-                cardValue *= 2;
-            }
-
-            if(isHalfHighActive && cardValue > 5 && card.rank != Card.Rank.Joker)
-            {
-                cardValue = Mathf.CeilToInt(cardValue / 2f);
-            }
-
-            if(negativeSuits.Contains(card.suit))
-            {
-                cardValue *= -1;
-            }
-
-            if(rankMultipliers.ContainsKey(card.rank))
-            {
-                cardValue *= rankMultipliers[card.rank];
-            }
-
-            if(targetedCardInstance != null && cardInstance == targetedCardInstance)
-            {
-                cardValue -= scissorsValueReduction;
-            }
-
-            value += cardValue;
-        }
-
-        //adjust aces
-        if(currentAceRule == AceValueRule.Flexible)
-        {
-            while(value > 21 && aceCount > 0)
-            {
-                value -= 10;
-                aceCount--;
-            }
-        }
-
-        return Mathf.RoundToInt(value);
-    }
-
-    //Calculates the total value of a hand. Aces are 1 or 11. Jokers are treated as 0.
-    private int CalculateHandValueForDealer(List<CardInstance> hand)
-    {
-        float value = 0f;
-        int aceCount = 0;
-
-        CardInstance targetedCardInstance = null;
-
-        if(scissorsValueReduction > 0 && dealerHand.Count > 1)
-        {
-            targetedCardInstance = dealerHand[1];
-        }
-
-        for(int i = 0; i < hand.Count; i++)
-        {
-            CardInstance cardInstance = hand[i];
-
-            Card card = cardInstance.cardData;
-
-            float cardValue = card.GetValue();
-
-            if(card.rank == Card.Rank.Joker)
-            {
-                cardValue = 0;
             }
             else if(card.rank == Card.Rank.Ace)
             {
@@ -706,7 +624,7 @@ public class BlackjackGame : MonoBehaviour
 
         UpdateUI();
 
-        if(IsBlackjack(CalculateHandValue(playerHand)))
+        if(IsBlackjack(CalculateHandValue(playerHand, true)))
         {
             statusText.text = "Blackjack!";
 
@@ -957,7 +875,7 @@ public class BlackjackGame : MonoBehaviour
         {
             isCrucifixActive = false;
 
-            int playerValue = CalculateHandValue(playerHand);
+            int playerValue = CalculateHandValue(playerHand, true);
             int idealValue = 21 - playerValue;
 
             Card? dealtCard = null;
@@ -1084,7 +1002,7 @@ public class BlackjackGame : MonoBehaviour
     //Updates the score, money, and checks for busts.
     private void UpdateUI(bool dealerHidden = true)
     {
-        int playerValue = CalculateHandValue(playerHand);
+        int playerValue = CalculateHandValue(playerHand, true);
         bool revealJokers = !dealerHidden;
         bool playerHasJoker = playerHand.Any(c => c.cardData.rank == Card.Rank.Joker);
 
@@ -1110,7 +1028,7 @@ public class BlackjackGame : MonoBehaviour
             {
                 List<CardInstance> visibleCards = dealerHand.Where(x => !x.isHidden).ToList();
 
-                int dealerVisibleValue = CalculateHandValue(visibleCards);
+                int dealerVisibleValue = CalculateHandValue(visibleCards, true); ////////////////////////////////////////
                 bool dealerHasVisibleJoker = visibleCards.Any(c => c.cardData.rank == Card.Rank.Joker);
 
                 if(dealerHasVisibleJoker)
@@ -1127,7 +1045,7 @@ public class BlackjackGame : MonoBehaviour
             }
             else
             {
-                int dealerFullValue = CalculateHandValue(dealerHand);
+                int dealerFullValue = CalculateHandValue(dealerHand, true); ///////////////////
                 bool dealerHasJoker = dealerHand.Any(c => c.cardData.rank == Card.Rank.Joker);
 
                 if(revealJokers || !dealerHasJoker)
@@ -1208,7 +1126,7 @@ public class BlackjackGame : MonoBehaviour
             int halvedValue = Mathf.CeilToInt((float)originalValue / 2f);
         }
 
-        int playerValue = CalculateHandValue(playerHand);
+        int playerValue = CalculateHandValue(playerHand, true);
 
         if(playerHand.Count == 7 && playerValue <= 21)
         {
@@ -1258,8 +1176,8 @@ public class BlackjackGame : MonoBehaviour
             yield return new WaitForSeconds(2f);
         }
 
-        int dealerValue = CalculateHandValue(dealerHand);
-        int playerValue = CalculateHandValue(playerHand);
+        int dealerValue = CalculateHandValue(dealerHand, false);
+        int playerValue = CalculateHandValue(playerHand, true);
 
         if(playerHasBlackjack && !IsBlackjack(dealerValue))
         {
@@ -1278,8 +1196,8 @@ public class BlackjackGame : MonoBehaviour
             yield break;
         }
 
-        int dealerAIValue = CalculateHandValueForDealer(dealerHand);
-        int playerAIValue = CalculateHandValueForDealer(playerHand);
+        int dealerAIValue = CalculateHandValue(dealerHand, false);
+        int playerAIValue = CalculateHandValue(playerHand, true);
 
         if(isKnifeActive)
         {
@@ -1302,7 +1220,7 @@ public class BlackjackGame : MonoBehaviour
 
                     UpdateUI(true);
 
-                    dealerAIValue = CalculateHandValueForDealer(dealerHand);
+                    dealerAIValue = CalculateHandValue(dealerHand, false);
                     dealerDiff = Mathf.Abs(Mathf.Abs(dealerAIValue) - 21);
 
                     yield return new WaitForSeconds(2f);
@@ -1344,15 +1262,15 @@ public class BlackjackGame : MonoBehaviour
         {
             statusText.text = revealMessage;
 
-            yield return new WaitForSeconds(2.5f);
+            yield return new WaitForSeconds(4f);
         }
         else
         {
             yield return new WaitForSeconds(1.5f);
         }
 
-        dealerValue = CalculateHandValue(dealerHand);
-        playerValue = CalculateHandValue(playerHand);
+        dealerValue = CalculateHandValue(dealerHand, true);
+        playerValue = CalculateHandValue(playerHand, true);
 
         string resultMessage = DetermineWinner(playerValue, dealerValue);
 
