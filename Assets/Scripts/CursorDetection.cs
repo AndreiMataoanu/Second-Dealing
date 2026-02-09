@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CursorDetection : MonoBehaviour
 {
-    [SerializeField] private Camera camera;
+    [SerializeField] private new Camera camera;
 
     private void Update()
     {
@@ -14,16 +14,8 @@ public class CursorDetection : MonoBehaviour
             RaycastHit raycastHit;
 
             bool hasHit = Physics.Raycast(ray, out raycastHit);
-
             if (hasHit)
-            {
-                Debug.Log("Detected something");
-                raycastHit.transform.GetComponent<MeshRenderer>().material.color = Color.red;
-            }
-            else
-            {
-                Debug.Log("Nothing detected");
-            }
+                raycastHit.transform.GetComponent<Clickable>()?.OnClick();
         }
     }
 }

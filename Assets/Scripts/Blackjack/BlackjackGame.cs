@@ -164,13 +164,37 @@ public class BlackjackGame : MonoBehaviour
         }
         else //Handle playing actions.
         {
+            // TODO: Delete after adding click-only gameplay
+            
             if(Input.GetKeyDown(KeyCode.H)) StartCoroutine(HitCoroutine());
 
             if(Input.GetKeyDown(KeyCode.S)) StartCoroutine(StandCoroutine());
         }
     }
     #endregion
+    
+    #region Player Actions
+    
+        // These methods will be added as unity events in the Clickable components
+        public void OnHit()
+        {
+            if (!isRoundActive && PlayerMoney >= currentBet)
+            {
+                StartCoroutine(DealRoundCoroutine());
+                return;
+            }
 
+            StartCoroutine(HitCoroutine());
+        }
+        
+        public void OnStand() => StartCoroutine(StandCoroutine());
+
+        public void OnIncreaseBet() => IncreaseBet();
+        
+        public void OnDecreaseBet() => DecreaseBet();
+
+    #endregion
+    
     private void ClearTable()
     {
         foreach(GameObject cardObject in activeCardObjects)
@@ -1042,6 +1066,7 @@ public class BlackjackGame : MonoBehaviour
 
     private IEnumerator HitCoroutine()
     {
+        Debug.Log("HIT");
         if(!isRoundActive || isActionLocked) yield break;
 
         isActionLocked = true;
@@ -1078,6 +1103,8 @@ public class BlackjackGame : MonoBehaviour
 
     private IEnumerator StandCoroutine()
     {
+        Debug.Log("STAND");
+        
         if(!isRoundActive || isActionLocked) yield break;
 
         isActionLocked = true;
