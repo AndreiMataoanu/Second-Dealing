@@ -1066,7 +1066,6 @@ public class BlackjackGame : MonoBehaviour
 
     private IEnumerator HitCoroutine()
     {
-        Debug.Log("HIT");
         if(!isRoundActive || isActionLocked) yield break;
 
         isActionLocked = true;
@@ -1103,8 +1102,6 @@ public class BlackjackGame : MonoBehaviour
 
     private IEnumerator StandCoroutine()
     {
-        Debug.Log("STAND");
-        
         if(!isRoundActive || isActionLocked) yield break;
 
         isActionLocked = true;
