@@ -28,6 +28,8 @@ public class BlackjackGame : MonoBehaviour
     private bool dealerWinsTies = false;
     private bool isDoubleLowActive = false;
     private bool isHalfHighActive = false;
+    private bool isRouletteBlackjackActive = false;
+    private int blackjackGoal = 21;
     private Dictionary<Card.Rank, float> rankMultipliers = new Dictionary<Card.Rank, float>();
     private int alternateBlackjackValue = 0;
     private List<Card.Suit> negativeSuits = new List<Card.Suit>();
@@ -298,7 +300,7 @@ public class BlackjackGame : MonoBehaviour
     {
         if(!isRoundActive || !IsScissorsAvailable) return;
 
-        if(CalculateHandValue(playerHand, true) > 21) return;
+        if(CalculateHandValue(playerHand, true) > blackjackGoal) return;
 
         if(dealerHand.Count < 2) return;
 
@@ -337,7 +339,7 @@ public class BlackjackGame : MonoBehaviour
     {
         if(!isRoundActive || isCrucifixActive || !IsCrucifixAvailable) return;
 
-        if(CalculateHandValue(playerHand, true) > 21) return;
+        if(CalculateHandValue(playerHand, true) > blackjackGoal) return;
 
         isCrucifixActive = true;
         IsCrucifixAvailable = false;
@@ -347,7 +349,7 @@ public class BlackjackGame : MonoBehaviour
     {
         if(!isRoundActive || !IsSunglassesAvailable || peekedCardObject != null) return;
 
-        if(CalculateHandValue(playerHand, true) > 21) return;
+        if(CalculateHandValue(playerHand, true) > blackjackGoal) return;
 
         Card? nextCard = gameDeck.PeekCard();
 
@@ -377,6 +379,29 @@ public class BlackjackGame : MonoBehaviour
 
         activeCardObjects.Add(peekedCardObject);
         IsSunglassesAvailable = false;
+    }
+
+    //Helper method for Crucifix.
+    private Card.Rank GetBestRankForValue(int bestValue)
+    {
+        if(bestValue >= 11 || bestValue == 1)
+        {
+            return Card.Rank.Ace;
+        }
+
+        switch(bestValue)
+        {
+            case 10: return Card.Rank.Ten;
+            case 9: return Card.Rank.Nine;
+            case 8: return Card.Rank.Eight;
+            case 7: return Card.Rank.Seven;
+            case 6: return Card.Rank.Six;
+            case 5: return Card.Rank.Five;
+            case 4: return Card.Rank.Four;
+            case 3: return Card.Rank.Three;
+            case 2: return Card.Rank.Two;
+            default: return Card.Rank.None;
+        }
     }
     #endregion
 
@@ -448,6 +473,16 @@ public class BlackjackGame : MonoBehaviour
     public void SetHalfHighActive(bool active)
     {
         isHalfHighActive = active;
+    }
+
+    public void SetRouletteBlackjackActive(bool active)
+    {
+        isRouletteBlackjackActive = active;
+    }
+
+    private void RandomizeBlackjackGoal()
+    {
+        blackjackGoal = Random.Range(21, 37); //from 21 to 36
     }
     #endregion
 
@@ -536,7 +571,7 @@ public class BlackjackGame : MonoBehaviour
         //adjust aces
         if(currentAceRule == AceValueRule.Flexible)
         {
-            while(value > 21 && aceCount > 0)
+            while(value > blackjackGoal && aceCount > 0)
             {
                 value -= 10;
                 aceCount--;
@@ -566,6 +601,11 @@ public class BlackjackGame : MonoBehaviour
         ClearTable();
         DisableCamera(playingCamera);
         EnableCamera(sittingCamera);
+
+        if(isRouletteBlackjackActive)
+        {
+            RandomizeBlackjackGoal();
+        }
 
         doorAnimator.SetBool("open", false);
 
@@ -604,6 +644,13 @@ public class BlackjackGame : MonoBehaviour
     public IEnumerator DealRoundCoroutine()
     {
         if(isRoundActive || PlayerMoney < currentBet || isActionLocked) yield break;
+
+        if(isRouletteBlackjackActive)
+        {
+            statusText.text = $"New Blackjack goal: {blackjackGoal}";
+
+            yield return new WaitForSeconds(3.0f);
+        }
 
         DisableCamera(sittingCamera);
         EnableCamera(playingCamera);
@@ -831,28 +878,6 @@ public class BlackjackGame : MonoBehaviour
         cardTransform.localRotation = startRotation;
     }
 
-    private Card.Rank GetBestRankForValue(int bestValue)
-    {
-        if(bestValue >= 11 || bestValue == 1)
-        {
-            return Card.Rank.Ace;
-        }
-
-        switch(bestValue)
-        {
-            case 10: return Card.Rank.Ten;
-            case 9: return Card.Rank.Nine;
-            case 8: return Card.Rank.Eight;
-            case 7: return Card.Rank.Seven;
-            case 6: return Card.Rank.Six;
-            case 5: return Card.Rank.Five;
-            case 4: return Card.Rank.Four;
-            case 3: return Card.Rank.Three;
-            case 2: return Card.Rank.Two;
-            default: return Card.Rank.None;
-        }
-    }
-
     private IEnumerator DealCardToPlayerCoroutine()
     {
         var savedPosition = deckPosition.position;
@@ -876,7 +901,7 @@ public class BlackjackGame : MonoBehaviour
             isCrucifixActive = false;
 
             int playerValue = CalculateHandValue(playerHand, true);
-            int idealValue = 21 - playerValue;
+            int idealValue = blackjackGoal - playerValue;
 
             Card? dealtCard = null;
             Card.Rank targetRank = GetBestRankForValue(idealValue);
@@ -1028,7 +1053,7 @@ public class BlackjackGame : MonoBehaviour
             {
                 List<CardInstance> visibleCards = dealerHand.Where(x => !x.isHidden).ToList();
 
-                int dealerVisibleValue = CalculateHandValue(visibleCards, true); ////////////////////////////////////////
+                int dealerVisibleValue = CalculateHandValue(visibleCards, true);
                 bool dealerHasVisibleJoker = visibleCards.Any(c => c.cardData.rank == Card.Rank.Joker);
 
                 if(dealerHasVisibleJoker)
@@ -1045,7 +1070,7 @@ public class BlackjackGame : MonoBehaviour
             }
             else
             {
-                int dealerFullValue = CalculateHandValue(dealerHand, true); ///////////////////
+                int dealerFullValue = CalculateHandValue(dealerHand, true);
                 bool dealerHasJoker = dealerHand.Any(c => c.cardData.rank == Card.Rank.Joker);
 
                 if(revealJokers || !dealerHasJoker)
@@ -1068,7 +1093,7 @@ public class BlackjackGame : MonoBehaviour
 
         UpdateBettingUI();
 
-        if((playerValue > 21 || playerValue < -21 ) && isRoundActive && currentBustCoroutine == null)
+        if((playerValue > blackjackGoal || playerValue < -blackjackGoal ) && isRoundActive && currentBustCoroutine == null)
         {
             currentBustCoroutine = StartCoroutine(BustCheckCoroutine());
         }
@@ -1128,14 +1153,14 @@ public class BlackjackGame : MonoBehaviour
 
         int playerValue = CalculateHandValue(playerHand, true);
 
-        if(playerHand.Count == 7 && playerValue <= 21)
+        if(playerHand.Count == 7 && playerValue <= blackjackGoal)
         {
             statusText.text = "Lucky 7  You win";
 
             yield return new WaitForSeconds(2.0f);
             yield return StartCoroutine(EndGameCoroutine("Lucky 7  You win", true));
         }
-        else if(playerValue <= 21)
+        else if(playerValue <= blackjackGoal)
         {
             isActionLocked = false;
         }
@@ -1205,29 +1230,29 @@ public class BlackjackGame : MonoBehaviour
         }
         else
         {
-            if(playerValue > 21)
+            if(playerValue > blackjackGoal)
             {
                 yield return new WaitForSeconds(1f);
             }
             else
             {
-                int dealerDiff = Mathf.Abs(Mathf.Abs(dealerAIValue) - 21);
-                int playerDiff = Mathf.Abs(Mathf.Abs(playerAIValue) - 21);
+                int dealerDiff = Mathf.Abs(Mathf.Abs(dealerAIValue) - blackjackGoal);
+                int playerDiff = Mathf.Abs(Mathf.Abs(playerAIValue) - blackjackGoal);
 
-                while(Mathf.Abs(dealerAIValue) < 17 && dealerDiff >= playerDiff)
+                while(Mathf.Abs(dealerAIValue) < (blackjackGoal - 4) && dealerDiff >= playerDiff)
                 {
                     yield return StartCoroutine(DealCardToDealerCoroutine(false));
 
                     UpdateUI(true);
 
                     dealerAIValue = CalculateHandValue(dealerHand, false);
-                    dealerDiff = Mathf.Abs(Mathf.Abs(dealerAIValue) - 21);
+                    dealerDiff = Mathf.Abs(Mathf.Abs(dealerAIValue) - blackjackGoal);
 
                     yield return new WaitForSeconds(2f);
                 }
             }
 
-            if(!isKnifeActive && dealerAIValue <= 21)
+            if(!isKnifeActive && dealerAIValue <= blackjackGoal)
             {
                 statusText.text = "Dealer stands";
 
@@ -1281,10 +1306,10 @@ public class BlackjackGame : MonoBehaviour
 
     private string DetermineWinner(int playerValue, int dealerValue)
     {
-        bool playerBust = (playerValue > 21 || playerValue < -21) && !IsBlackjack(playerValue);
-        bool dealerBust = (dealerValue > 21 || dealerValue < -21) && !IsBlackjack(dealerValue);
-        int playerDiff = Mathf.Abs(Mathf.Abs(playerValue) - 21);
-        int dealerDiff = Mathf.Abs(Mathf.Abs(dealerValue) - 21);
+        bool playerBust = (playerValue > blackjackGoal || playerValue < -blackjackGoal) && !IsBlackjack(playerValue);
+        bool dealerBust = (dealerValue > blackjackGoal || dealerValue < -blackjackGoal) && !IsBlackjack(dealerValue);
+        int playerDiff = Mathf.Abs(Mathf.Abs(playerValue) - blackjackGoal);
+        int dealerDiff = Mathf.Abs(Mathf.Abs(dealerValue) - blackjackGoal);
 
         if(playerBust) return "Bust... You lose";
 
@@ -1344,7 +1369,6 @@ public class BlackjackGame : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-
             SceneManager.LoadSceneAsync(3);
 
             yield break;
@@ -1354,7 +1378,6 @@ public class BlackjackGame : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-
             SceneManager.LoadSceneAsync(2);
 
             yield break;
@@ -1376,7 +1399,7 @@ public class BlackjackGame : MonoBehaviour
 
     private bool IsBlackjack(int handValue)
     {
-        if(handValue == 21 || handValue == -21) return true;
+        if(handValue == blackjackGoal || handValue == -blackjackGoal) return true;
 
         if(alternateBlackjackValue > 0 && handValue == alternateBlackjackValue) return true;
 
