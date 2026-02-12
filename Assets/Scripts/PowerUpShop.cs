@@ -85,33 +85,36 @@ public class PowerUpShop : MonoBehaviour
             _highlight.gameObject.GetComponent<Outline>().enabled = false;
             _highlight = null;
         }
-        
-        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 
-        if(!EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(ray, out _raycastHit))
+        if (Camera.main)
         {
-            _highlight = _raycastHit.transform;
+            Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 
-            if(_highlight.CompareTag($"Selectable") && _highlight != _selection)
+            if(!EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(ray, out _raycastHit))
             {
-                var outline = _highlight.gameObject.GetComponent<Outline>();
+                _highlight = _raycastHit.transform;
 
-                if(outline)
+                if(_highlight.CompareTag($"Selectable") && _highlight != _selection)
                 {
-                    outline.enabled = true;
+                    var outline = _highlight.gameObject.GetComponent<Outline>();
+
+                    if(outline)
+                    {
+                        outline.enabled = true;
+                    }
+                    else
+                    {
+                        outline = _highlight.gameObject.AddComponent<Outline>();
+                        outline.enabled = true;
+                        outline = _highlight.gameObject.GetComponent<Outline>();
+                        outline.OutlineColor = outlineColor;
+                        outline.OutlineWidth = outlineWidth;
+                    }
                 }
                 else
                 {
-                    outline = _highlight.gameObject.AddComponent<Outline>();
-                    outline.enabled = true;
-                    outline = _highlight.gameObject.GetComponent<Outline>();
-                    outline.OutlineColor = outlineColor;
-                    outline.OutlineWidth = outlineWidth;
+                    _highlight = null;
                 }
-            }
-            else
-            {
-                _highlight = null;
             }
         }
     }

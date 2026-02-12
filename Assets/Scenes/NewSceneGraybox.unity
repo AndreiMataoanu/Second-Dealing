@@ -235,6 +235,72 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1986868646426404256, guid: 37cb37e8090ded54399f8d66b341e3ec, type: 3}
   m_PrefabInstance: {fileID: 1268948868}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &109737085
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1823405866}
+    m_Modifications:
+    - target: {fileID: 1162278168114388781, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
+      propertyPath: m_Name
+      value: CursorDetectionManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 3107838438023376873, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
+      propertyPath: camera
+      value: 
+      objectReference: {fileID: 1365003152}
+    - target: {fileID: 4390543728078954121, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 12.288751
+      objectReference: {fileID: 0}
+    - target: {fileID: 4390543728078954121, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -14.10368
+      objectReference: {fileID: 0}
+    - target: {fileID: 4390543728078954121, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -14.83722
+      objectReference: {fileID: 0}
+    - target: {fileID: 4390543728078954121, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4390543728078954121, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4390543728078954121, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4390543728078954121, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4390543728078954121, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4390543728078954121, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4390543728078954121, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
+--- !u!4 &109737086 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4390543728078954121, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
+  m_PrefabInstance: {fileID: 109737085}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &132275047
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1229,6 +1295,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b3066e898b79bfe4f9f3f4517c069889, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1591684526}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b3066e898b79bfe4f9f3f4517c069889, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1591684530}
   m_SourcePrefab: {fileID: 100100000, guid: b3066e898b79bfe4f9f3f4517c069889, type: 3}
 --- !u!1 &595901486
 GameObject:
@@ -1309,6 +1378,33 @@ Animation:
   m_AnimatePhysics: 0
   m_UpdateMode: 0
   m_CullingType: 0
+--- !u!114 &622241188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 622241182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d422c2c37986cba47a02ba5d00153fe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Clickable
+  clickEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1343293108}
+        m_TargetAssemblyTypeName: BlackjackGame, Assembly-CSharp
+        m_MethodName: OnHit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &635600847
 GameObject:
   m_ObjectHideFlags: 0
@@ -1557,6 +1653,38 @@ Transform:
   - {fileID: 2009587374}
   m_Father: {fileID: 884163235}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &741130242 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1306737366646871006, guid: 8624eb4fc2049944a9faf1ceea35c0c1, type: 3}
+  m_PrefabInstance: {fileID: 2114879419}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &741130246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 741130242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d422c2c37986cba47a02ba5d00153fe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Clickable
+  clickEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1343293108}
+        m_TargetAssemblyTypeName: BlackjackGame, Assembly-CSharp
+        m_MethodName: OnDecreaseBet
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &743592357
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4514,6 +4642,33 @@ Animation:
   m_AnimatePhysics: 0
   m_UpdateMode: 0
   m_CullingType: 0
+--- !u!114 &1591684530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1591684524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d422c2c37986cba47a02ba5d00153fe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Clickable
+  clickEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1343293108}
+        m_TargetAssemblyTypeName: BlackjackGame, Assembly-CSharp
+        m_MethodName: OnStand
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &1632085900 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7831834114360917797, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
@@ -5117,6 +5272,38 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7413489089995624087, guid: d2f9a27b990ef7d478d22ecaee4e5e05, type: 3}
   m_PrefabInstance: {fileID: 1696486895}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1712160660 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6266607957284480553, guid: 8624eb4fc2049944a9faf1ceea35c0c1, type: 3}
+  m_PrefabInstance: {fileID: 2114879419}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1712160664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1712160660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d422c2c37986cba47a02ba5d00153fe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Clickable
+  clickEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1343293108}
+        m_TargetAssemblyTypeName: BlackjackGame, Assembly-CSharp
+        m_MethodName: IncreaseBet
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1719409847
 GameObject:
   m_ObjectHideFlags: 0
@@ -5319,6 +5506,7 @@ Transform:
   - {fileID: 1465918178}
   - {fileID: 1343293109}
   - {fileID: 1661726546}
+  - {fileID: 109737086}
   m_Father: {fileID: 2097837783}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1830901945
@@ -5395,6 +5583,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b3066e898b79bfe4f9f3f4517c069889, type: 3}
       insertIndex: -1
       addedObject: {fileID: 622241184}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b3066e898b79bfe4f9f3f4517c069889, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 622241188}
   m_SourcePrefab: {fileID: 100100000, guid: b3066e898b79bfe4f9f3f4517c069889, type: 3}
 --- !u!1001 &1853208364
 PrefabInstance:
@@ -6283,6 +6474,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2097837783}
     m_Modifications:
+    - target: {fileID: 1306737366646871006, guid: 8624eb4fc2049944a9faf1ceea35c0c1, type: 3}
+      propertyPath: m_Name
+      value: arrow_down
+      objectReference: {fileID: 0}
     - target: {fileID: 2841673505419267782, guid: 8624eb4fc2049944a9faf1ceea35c0c1, type: 3}
       propertyPath: m_text
       value: 
@@ -6371,10 +6566,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6266607957284480553, guid: 8624eb4fc2049944a9faf1ceea35c0c1, type: 3}
+      propertyPath: m_Name
+      value: arrow_up
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6266607957284480553, guid: 8624eb4fc2049944a9faf1ceea35c0c1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1712160664}
+    - targetCorrespondingSourceObject: {fileID: 1306737366646871006, guid: 8624eb4fc2049944a9faf1ceea35c0c1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 741130246}
   m_SourcePrefab: {fileID: 100100000, guid: 8624eb4fc2049944a9faf1ceea35c0c1, type: 3}
 --- !u!4 &2114879420 stripped
 Transform:
