@@ -251,6 +251,34 @@ PrefabInstance:
       propertyPath: camera
       value: 
       objectReference: {fileID: 1365003152}
+    - target: {fileID: 3107838438023376873, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
+      propertyPath: roundActiveClickables.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3107838438023376873, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
+      propertyPath: roundInactiveClickables.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3107838438023376873, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
+      propertyPath: 'roundActiveClickables.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1591684530}
+    - target: {fileID: 3107838438023376873, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
+      propertyPath: 'roundActiveClickables.Array.data[1]'
+      value: 
+      objectReference: {fileID: 622241188}
+    - target: {fileID: 3107838438023376873, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
+      propertyPath: 'roundInactiveClickables.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1031495594}
+    - target: {fileID: 3107838438023376873, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
+      propertyPath: 'roundInactiveClickables.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1712160664}
+    - target: {fileID: 3107838438023376873, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
+      propertyPath: 'roundInactiveClickables.Array.data[2]'
+      value: 
+      objectReference: {fileID: 741130246}
     - target: {fileID: 4390543728078954121, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 12.288751
@@ -2609,6 +2637,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1031495594}
+        m_TargetAssemblyTypeName: Clickable, Assembly-CSharp
+        m_MethodName: OnRemoveOutline
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
 --- !u!1 &1034307192
 GameObject:
@@ -3389,6 +3429,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37cb37e8090ded54399f8d66b341e3ec, type: 3}
+--- !u!114 &1306894128 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3107838438023376873, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
+  m_PrefabInstance: {fileID: 109737085}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac2842b2bcd548f43bd221857b337f5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CursorDetection
 --- !u!1 &1335890945
 GameObject:
   m_ObjectHideFlags: 0
@@ -3552,6 +3603,10 @@ PrefabInstance:
       propertyPath: powerUpManager
       value: 
       objectReference: {fileID: 1661726547}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: cursorDetection
+      value: 
+      objectReference: {fileID: 1306894128}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: dealerTotalText
       value: 

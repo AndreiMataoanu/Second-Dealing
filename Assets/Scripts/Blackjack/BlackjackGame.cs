@@ -62,6 +62,7 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private Transform particleSpawnPoint;
 
     [SerializeField] private GameObject dealerSmile;
+    [SerializeField] private CursorDetection cursorDetection;
 
     //Betting Variables
     private int playerMoney = 500;
@@ -591,6 +592,7 @@ public class BlackjackGame : MonoBehaviour
 
         statusText.text = "Place your bet...";
 
+        cursorDetection.OnRoundInactive();
         isRoundActive = false;
         isActionLocked = false;
 
@@ -631,6 +633,7 @@ public class BlackjackGame : MonoBehaviour
         doorAnimator.SetBool("open", true);
 
         isRoundActive = true;
+        cursorDetection.OnRoundActive();
 
         yield return StartCoroutine(DealCardToPlayerCoroutine());
         yield return StartCoroutine(DealCardToDealerCoroutine(false));
@@ -1279,6 +1282,7 @@ public class BlackjackGame : MonoBehaviour
     private IEnumerator EndGameCoroutine(string message, bool revealHand = true)
     {
         isRoundActive = false;
+        cursorDetection.OnRoundInactive();
 
         if(message.Contains("You win"))
         {
