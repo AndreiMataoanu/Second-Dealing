@@ -68,7 +68,9 @@ public class CameraController : MonoBehaviour
         transform.localEulerAngles = defaultRot;
         sensitivity = defaultSensitivity;
 
-        CursorLock(false);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
         EnterDefault();
     }
 
@@ -120,8 +122,6 @@ public class CameraController : MonoBehaviour
         targetRot = Quaternion.Euler(itemBoxRot);
         sensitivity = 30f;
 
-        CursorLock(false);
-
         isMoving = true;
     }
     
@@ -134,8 +134,6 @@ public class CameraController : MonoBehaviour
         targetPos = shopPos;
         targetRot = Quaternion.Euler(shopRot);
         sensitivity = 30f;
-
-        CursorLock(false);
 
         isMoving = true;
     }
@@ -150,8 +148,6 @@ public class CameraController : MonoBehaviour
         targetPos = defaultPos;
         targetRot = Quaternion.Euler(defaultRot);
         sensitivity = defaultSensitivity;
-
-        CursorLock(true);
 
         isMoving = true;
     }
@@ -178,20 +174,6 @@ public class CameraController : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
 
         shopElbow.localEulerAngles = new Vector3(0f, -90f, 0f);
-    }
-
-    private void CursorLock(bool locked)
-    {
-        if(locked)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
     }
 
     public bool GetIsDefault()

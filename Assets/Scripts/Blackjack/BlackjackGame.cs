@@ -62,6 +62,7 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private Transform particleSpawnPoint;
 
     [SerializeField] private GameObject dealerSmile;
+    [SerializeField] private CursorDetection cursorDetection;
 
     //Betting Variables
     private int playerMoney = 500;
@@ -173,13 +174,34 @@ public class BlackjackGame : MonoBehaviour
         }
         else //Handle playing actions.
         {
+            // TODO: Delete after adding click-only gameplay
+            
             if(Input.GetKeyDown(KeyCode.H)) StartCoroutine(HitCoroutine());
 
             if(Input.GetKeyDown(KeyCode.S)) StartCoroutine(StandCoroutine());
         }
     }
     #endregion
+    
+    #region Player Actions
+    
+        // These methods will be added as unity events in the Clickable components
+        public void OnStartGame()
+        {
+            if (!isRoundActive && PlayerMoney >= currentBet)
+                StartCoroutine(DealRoundCoroutine());
+        }
+        
+        public void OnHit() => StartCoroutine(HitCoroutine());
+        
+        public void OnStand() => StartCoroutine(StandCoroutine());
 
+        public void OnIncreaseBet() => IncreaseBet();
+        
+        public void OnDecreaseBet() => DecreaseBet();
+
+    #endregion
+    
     private void ClearTable()
     {
         foreach(GameObject cardObject in activeCardObjects)
@@ -570,6 +592,7 @@ public class BlackjackGame : MonoBehaviour
 
         statusText.text = "Place your bet...";
 
+        cursorDetection.OnRoundInactive();
         isRoundActive = false;
         isActionLocked = false;
 
@@ -610,6 +633,7 @@ public class BlackjackGame : MonoBehaviour
         doorAnimator.SetBool("open", true);
 
         isRoundActive = true;
+        cursorDetection.OnRoundActive();
 
         yield return StartCoroutine(DealCardToPlayerCoroutine());
         yield return StartCoroutine(DealCardToDealerCoroutine(false));
@@ -1258,6 +1282,7 @@ public class BlackjackGame : MonoBehaviour
     private IEnumerator EndGameCoroutine(string message, bool revealHand = true)
     {
         isRoundActive = false;
+        cursorDetection.OnRoundInactive();
 
         if(message.Contains("You win"))
         {
