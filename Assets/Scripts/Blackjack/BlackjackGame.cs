@@ -185,16 +185,13 @@ public class BlackjackGame : MonoBehaviour
     #region Player Actions
     
         // These methods will be added as unity events in the Clickable components
-        public void OnHit()
+        public void OnStartGame()
         {
             if (!isRoundActive && PlayerMoney >= currentBet)
-            {
                 StartCoroutine(DealRoundCoroutine());
-                return;
-            }
-
-            StartCoroutine(HitCoroutine());
         }
+        
+        public void OnHit() => StartCoroutine(HitCoroutine());
         
         public void OnStand() => StartCoroutine(StandCoroutine());
 
