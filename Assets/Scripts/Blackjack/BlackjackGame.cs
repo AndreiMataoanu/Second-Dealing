@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -43,6 +44,12 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private Animator standHandAnimator;
     [SerializeField] private Animator hitHandAnimator;
     [SerializeField] private Animator doorAnimator;
+
+    [Header("Camera")]
+    [SerializeField] private CinemachineBrain cinemachineBrain;
+    [SerializeField] private CinemachineCamera sittingCamera;
+    [SerializeField] private CinemachineCamera playingCamera;
+    [SerializeField] private float cameraTransitionTime;
 
     [Header("UI")]
     [SerializeField] private TMPro.TextMeshProUGUI moneyText;
@@ -120,6 +127,8 @@ public class BlackjackGame : MonoBehaviour
         availableLowEvents = new List<BlackjackEvent>(lowSeverityEvents);
         availableMediumEvents = new List<BlackjackEvent>(mediumSeverityEvents);
         availableHighEvents = new List<BlackjackEvent>(highSeverityEvents);
+
+        cinemachineBrain.DefaultBlend.Time = cameraTransitionTime;
 
         InitializeCardLookup();
         StartGame();
@@ -266,6 +275,16 @@ public class BlackjackGame : MonoBehaviour
         UpdateBettingUI();
     }
 
+    private void EnableCamera(CinemachineCamera camera)
+    {
+        camera.Priority = 10;
+    }
+
+    private void DisableCamera(CinemachineCamera camera)
+    {
+        camera.Priority = 0;
+    }
+
     #region Ability Methods
     public void ActivateKnife()
     {
@@ -326,7 +345,7 @@ public class BlackjackGame : MonoBehaviour
         StartCoroutine(CardAnimationCoroutine(
             peekedCardObject.transform,
             sunglassesCardPosition.position,
-            Quaternion.identity,
+            sunglassesCardPosition.rotation,
             cardScaleVector,
             cardAnimationDuration
         ));
@@ -564,6 +583,8 @@ public class BlackjackGame : MonoBehaviour
     public void StartGame()
     {
         ClearTable();
+        DisableCamera(playingCamera);
+        EnableCamera(sittingCamera);
 
         doorAnimator.SetBool("open", false);
 
@@ -600,6 +621,9 @@ public class BlackjackGame : MonoBehaviour
     public IEnumerator DealRoundCoroutine()
     {
         if(isRoundActive || PlayerMoney < currentBet || isActionLocked) yield break;
+
+        DisableCamera(sittingCamera);
+        EnableCamera(playingCamera);
 
         statusText.text = "Dealing cards...";
 
@@ -728,6 +752,9 @@ public class BlackjackGame : MonoBehaviour
 
             if(eventPool != null && eventPool.Count > 0)
             {
+                DisableCamera(playingCamera);
+                EnableCamera(sittingCamera);
+
                 int randomIndex = Random.Range(0, eventPool.Count);
 
                 BlackjackEvent chosenEvent = eventPool[randomIndex];
@@ -825,8 +852,11 @@ public class BlackjackGame : MonoBehaviour
 
     private IEnumerator DealCardToPlayerCoroutine()
     {
+        var savedPosition = deckPosition.position;
+
         if(peekedCardObject != null)
         {
+            deckPosition.position = sunglassesCardPosition.position;
             activeCardObjects.Remove(peekedCardObject);
 
             Destroy(peekedCardObject);
@@ -911,6 +941,8 @@ public class BlackjackGame : MonoBehaviour
 
             UpdateUI(true);
         }
+
+        deckPosition.position = savedPosition;
     }
 
     private IEnumerator DealCardToDealerCoroutine(bool isHidden)
@@ -1257,7 +1289,7 @@ public class BlackjackGame : MonoBehaviour
 
             AudioManager.instance.Play("MoneyGained");
 
-            Instantiate(greenParticlePrefab, particleSpawnPoint.position, Quaternion.identity);
+            Instantiate(greenParticlePrefab, particleSpawnPoint.position, particleSpawnPoint.rotation);
 
             yield return new WaitForSeconds(3f);
         }
@@ -1270,7 +1302,7 @@ public class BlackjackGame : MonoBehaviour
 
             AudioManager.instance.Play("MoneyLost");
 
-            Instantiate(redParticlePrefab, particleSpawnPoint.position, Quaternion.identity);
+            Instantiate(redParticlePrefab, particleSpawnPoint.position, particleSpawnPoint.rotation);
 
             yield return new WaitForSeconds(3f);
 
