@@ -57,7 +57,7 @@ public class PowerUpShop : MonoBehaviour
 
             GameObject prefab = Instantiate(powerUpPrefabs[randomIndex], prefabPosition, Quaternion.identity, transform);
 
-            prefab.GetComponent<PowerUpInfo>().SetBlackjackGame(_blackjackGame);
+            prefab.GetComponent<Item>().SetBlackjackGame(_blackjackGame);
         }
 
         _hasSpawned = true;
@@ -154,7 +154,7 @@ public class PowerUpShop : MonoBehaviour
 
     private void BuySelectedPowerUp()
     {
-        var selectionInfo = _selection.gameObject.GetComponent<PowerUpInfo>();
+        var selectionInfo = _selection.gameObject.GetComponent<Item>();
 
         if(!HasEnoughMoney(selectionInfo)) return;
 
@@ -169,7 +169,7 @@ public class PowerUpShop : MonoBehaviour
         }
     }
 
-    private bool HasEnoughMoney(PowerUpInfo selectionInfo)
+    private bool HasEnoughMoney(Item selectionInfo)
     {
         if(_blackjackGame.PlayerMoney <= selectionInfo.price)
         {

@@ -44,7 +44,7 @@ public class InventoryManagement : MonoBehaviour
 
     public void UseItem(GameObject powerUp)
     {
-        powerUp.GetComponent<PowerUpInfo>().Activate();
+        powerUp.GetComponent<Item>().Activate();
 
         AudioManager.instance.Play(powerUp.name);
         _powerUps.Remove(powerUp);

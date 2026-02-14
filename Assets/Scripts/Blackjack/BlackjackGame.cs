@@ -10,6 +10,7 @@ public class BlackjackGame : MonoBehaviour
 {
     #region Attributes
     [SerializeField] private GameObject powerUpManager;
+    [SerializeField] private ItemManager itemManager;
     
     [System.Serializable]
     public class EventThreshold
@@ -593,6 +594,7 @@ public class BlackjackGame : MonoBehaviour
         statusText.text = "Place your bet...";
 
         cursorDetection.OnRoundInactive();
+        itemManager.SpawnPowerUps();
         isRoundActive = false;
         isActionLocked = false;
 
@@ -634,6 +636,7 @@ public class BlackjackGame : MonoBehaviour
 
         isRoundActive = true;
         cursorDetection.OnRoundActive();
+        itemManager.DespawnPowerUps();
 
         yield return StartCoroutine(DealCardToPlayerCoroutine());
         yield return StartCoroutine(DealCardToDealerCoroutine(false));

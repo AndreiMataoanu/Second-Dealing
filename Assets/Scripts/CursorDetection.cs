@@ -17,7 +17,9 @@ public class CursorDetection : MonoBehaviour
 
             bool hasHit = Physics.Raycast(ray, out raycastHit);
             if (hasHit)
+            {
                 raycastHit.transform.GetComponent<Clickable>()?.OnClick();
+            }
         }
     }
 

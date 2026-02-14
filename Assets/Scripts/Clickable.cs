@@ -36,7 +36,7 @@ public class Clickable : MonoBehaviour
         OnRemoveOutline();
     }
 
-    private void OnRemoveOutline()
+    public void OnRemoveOutline()
     {
         if (!outline) return;
         
@@ -45,5 +45,5 @@ public class Clickable : MonoBehaviour
         meshRenderer.materials = materials.ToArray();
     }
     
-    public void OnClick() => clickEvent?.Invoke();
+    public virtual void OnClick() => clickEvent?.Invoke();
 }
