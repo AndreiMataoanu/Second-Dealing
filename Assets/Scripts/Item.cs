@@ -4,7 +4,9 @@ using UnityEngine;
 public class Item : Clickable
 {
     [SerializeField] public int price;
-    [SerializeField] public PowerUpType type;
+    [SerializeField] public ItemType type;
+    [Tooltip("Higher number means more common.")]
+    [SerializeField] public int spawnWeight = 10;
 
     private Action<Item> itemAction;
     private BlackjackGame blackjackGame;
@@ -22,16 +24,16 @@ public class Item : Clickable
         
         switch(type)
         {
-            case PowerUpType.Knife:
+            case ItemType.Knife:
                 blackjackGame.ActivateKnife();
                 break;
-            case PowerUpType.Scissors:
+            case ItemType.Scissors:
                 blackjackGame.ActivateScissors();
                 break;
-            case PowerUpType.Crucifix:
-                blackjackGame.ActivatePrayerBeads();
+            case ItemType.Crucifix:
+                blackjackGame.ActivateCrucifix();
                 break;
-            case PowerUpType.Sunglasses:
+            case ItemType.Sunglasses:
                 blackjackGame.ActivateSunglasses();
                 break;
         }

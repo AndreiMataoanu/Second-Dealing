@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -16,17 +17,26 @@ public class ItemManager : MonoBehaviour
     [SerializeField] private float denySoundCooldown = 0.3f;
 
     private int inventoryItems = 0;
-    private float nextDenyTime = 0f;
+    private float nextDenyTime = 0;
+    private int totalWeight = 0;
     
+    private void Awake()
+    {
+        foreach(var item in powerUpPrefabs)
+        {
+            totalWeight += item.GetComponent<Item>().spawnWeight;
+        }
+    }
+
     public void SpawnPowerUps()
     {
         if (powerUpPrefabs == null || powerUpPrefabs.Count == 0 || inventoryItems == useSpawnPoints.Count) return;
 
         foreach (var buySpawnPoint in buySpawnPoints.ToList())
         {
-            var randomIndex = Random.Range(0, powerUpPrefabs.Count);
-            var prefab = Instantiate(powerUpPrefabs[randomIndex], buySpawnPoint.transform);
-            var item = prefab.GetComponent<Item>();
+            var prefab = GetWeightedRandomPrefab(totalWeight);
+            var prefabInstance = Instantiate(prefab, buySpawnPoint.transform);
+            var item = prefabInstance.GetComponent<Item>();
             item.SetBlackjackGame(blackjackGame);
             item.SetActive(true);
             item.AddAction(OnBuy);
@@ -57,34 +67,30 @@ public class ItemManager : MonoBehaviour
     
     private void Activate(Item item)
     {
-        if (!blackjackGame) return;
-        
-        switch(item.type)
-        {
-            case PowerUpType.Knife:
-                blackjackGame.ActivateKnife();
-                break;
-            case PowerUpType.Scissors:
-                blackjackGame.ActivateScissors();
-                break;
-            case PowerUpType.Crucifix:
-                blackjackGame.ActivatePrayerBeads();
-                break;
-            case PowerUpType.Sunglasses:
-                blackjackGame.ActivateSunglasses();
-                break;
-            default:
-                return;
-        }
-
-        inventoryItems--;
+        item.Activate();
         AudioManager.instance.Play(item.name);
         TooltipManager.instance.HideTooltip();
         Destroy(item.gameObject);
+        inventoryItems--;
     }
 
     #region Helper Methods
 
+    private GameObject GetWeightedRandomPrefab(int totalWeight)
+    {
+        int roll = Random.Range(0, totalWeight);
+        int cursor = 0;
+
+        foreach(var prefab in powerUpPrefabs)
+        {
+            cursor += prefab.GetComponent<Item>().spawnWeight;
+
+            if(roll < cursor) return prefab;
+        }
+
+        return powerUpPrefabs[0];
+    }
+    
     private void AddToInventory(Item item)
     {
         AudioManager.instance.Play("ItemBuy");

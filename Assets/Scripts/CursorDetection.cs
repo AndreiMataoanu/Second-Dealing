@@ -7,6 +7,12 @@ public class CursorDetection : MonoBehaviour
     [SerializeField] private List<Clickable> roundActiveClickables;
     [SerializeField] private List<Clickable> roundInactiveClickables;
     
+    private void Awake()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
