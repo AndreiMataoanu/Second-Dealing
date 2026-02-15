@@ -99,49 +99,6 @@ public class PowerUpShop : MonoBehaviour
         _hasSpawned = false;
     }
 
-    private void HighlightPowerUp()
-    {
-        if(_inventoryManagement.inInventory || hasSelected) return;
-        
-        if(_highlight)
-        {
-            _highlight.gameObject.GetComponent<Outline>().enabled = false;
-            _highlight = null;
-        }
-
-        if (Camera.main)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-
-            if(!EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(ray, out _raycastHit))
-            {
-                _highlight = _raycastHit.transform;
-
-                if(_highlight.CompareTag($"Selectable") && _highlight != _selection)
-                {
-                    var outline = _highlight.gameObject.GetComponent<Outline>();
-
-                    if(outline)
-                    {
-                        outline.enabled = true;
-                    }
-                    else
-                    {
-                        outline = _highlight.gameObject.AddComponent<Outline>();
-                        outline.enabled = true;
-                        outline = _highlight.gameObject.GetComponent<Outline>();
-                        outline.OutlineColor = outlineColor;
-                        outline.OutlineWidth = outlineWidth;
-                    }
-                }
-                else
-                {
-                    _highlight = null;
-                }
-            }
-        }
-    }
-
     private void SelectPowerUp()
     {
         if(_inventoryManagement.inInventory) return;
