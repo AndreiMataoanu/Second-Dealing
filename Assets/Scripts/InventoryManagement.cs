@@ -10,20 +10,16 @@ public class InventoryManagement : MonoBehaviour
     [SerializeField] private GameObject inventory;
 
     [Header("Power-up Selection")]
-    [SerializeField] private Color outlineColor = new Color(0.4f, 0.0f, 0.7f);
-    [SerializeField] private float outlineWidth = 5.0f;
     public List<GameObject> _powerUps;
 
     [HideInInspector] public bool inInventory = false;
 
-    private Transform _highlight;
     private Transform _selection;
 
     private RaycastHit _raycastHit;
     
     private void Update()
     {
-        HighlightPowerUp();
         SelectPowerUp();
     }
 
@@ -64,59 +60,22 @@ public class InventoryManagement : MonoBehaviour
         }
     }
     
-    private void HighlightPowerUp()
-    {
-        if(!inInventory) return;
-        
-        if(_highlight)
-        {
-            _highlight.gameObject.GetComponent<Outline>().enabled = false;
-            _highlight = null;
-        }
-        
-        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-
-        if(!EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(ray, out _raycastHit))
-        {
-            _highlight = _raycastHit.transform;
-
-            if(_highlight.CompareTag($"Selectable") && _highlight != _selection)
-            {
-                var outline = _highlight.gameObject.GetComponent<Outline>();
-
-                if(outline)
-                {
-                    outline.enabled = true;
-                }
-                else
-                {
-                    outline = _highlight.gameObject.AddComponent<Outline>();
-                    outline.enabled = true;
-                    outline = _highlight.gameObject.GetComponent<Outline>();
-                    outline.OutlineColor = outlineColor;
-                    outline.OutlineWidth = outlineWidth;
-                }
-            }
-            else
-            {
-                _highlight = null;
-            }
-        }
-    }
-    
     private void SelectPowerUp()
     {
         if(!inInventory) return;
         
         if(Mouse.current.leftButton.wasPressedThisFrame)
         {
-            if(_highlight)
-            {
-                _selection = _raycastHit.transform;
-                _selection.gameObject.GetComponent<Outline>().enabled = false;
-                _highlight = null;
+            Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 
-                UseItem(_selection.gameObject);
+            if(!EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(ray, out _raycastHit))
+            {
+                if(_raycastHit.transform.CompareTag("Selectable"))
+                {
+                    _selection = _raycastHit.transform;
+
+                    UseItem(_selection.gameObject);
+                }
             }
         }
     }
