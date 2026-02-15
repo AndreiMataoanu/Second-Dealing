@@ -44,7 +44,9 @@ public class Item : Clickable
 
     public override void OnClick()
     {
+        if (!IsActive) return;
+        
         base.OnClick();
-        itemAction.Invoke(this);
+        itemAction?.Invoke(this);
     }
 }

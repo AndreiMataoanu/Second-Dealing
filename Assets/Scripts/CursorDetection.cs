@@ -1,10 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CursorDetection : MonoBehaviour
 {
     [SerializeField] private new Camera camera;
-    [SerializeField] private Clickable[] roundActiveClickables;
-    [SerializeField] private Clickable[] roundInactiveClickables;
+    [SerializeField] private List<Clickable> roundActiveClickables;
+    [SerializeField] private List<Clickable> roundInactiveClickables;
     
     private void Update()
     {
@@ -35,9 +36,14 @@ public class CursorDetection : MonoBehaviour
         SetClickables(roundInactiveClickables, true);
     }
 
-    private void SetClickables(Clickable[] clickables, bool isActive)
+    private void SetClickables(List<Clickable> clickables, bool isActive)
     {
         foreach (var clickable in clickables)
             clickable.SetActive(isActive);
+    }
+
+    public void AddRoundActiveClickable(Clickable clickable)
+    {
+        roundActiveClickables.Add(clickable);
     }
 }
