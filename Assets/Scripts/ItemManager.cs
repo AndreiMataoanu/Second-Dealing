@@ -17,7 +17,7 @@ public class ItemManager : MonoBehaviour
     
     public void SpawnPowerUps()
     {
-        if (powerUpPrefabs == null || powerUpPrefabs.Count == 0) return;
+        if (powerUpPrefabs == null || powerUpPrefabs.Count == 0 || inventoryItems == useSpawnPoints.Count) return;
 
         foreach (var buySpawnPoint in buySpawnPoints.ToList())
         {
@@ -49,7 +49,7 @@ public class ItemManager : MonoBehaviour
         item.SetActive(false);
         cursorDetection.AddRoundActiveClickable(item);
 
-        inventoryItems++;
+        DeactivateShopItems();
     }
     
     private void Activate(Item item)
@@ -75,7 +75,6 @@ public class ItemManager : MonoBehaviour
         }
 
         inventoryItems--;
-        Debug.Log("used " + item.name);
         Destroy(item.gameObject);
     }
 
@@ -99,7 +98,23 @@ public class ItemManager : MonoBehaviour
         item.transform.localPosition = pos;
         item.transform.localRotation = rot;
         item.transform.localScale = scale;
+        
+        inventoryItems++;
     }
 
+    private void DeactivateShopItems()
+    {
+        if (inventoryItems < useSpawnPoints.Count) return;
+        
+        foreach (var spawnPoint in buySpawnPoints)
+        {
+            if (spawnPoint.transform.childCount != 0)
+            {
+                var item = spawnPoint.transform.GetChild(0).GetComponent<Item>();
+                item.SetActive(false);
+                item.OnRemoveOutline();
+            }
+        }
+    }
     #endregion
 }

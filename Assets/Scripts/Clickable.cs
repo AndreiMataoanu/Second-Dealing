@@ -9,6 +9,7 @@ public class Clickable : MonoBehaviour
     
     private MeshCollider meshCollider;
     private MeshRenderer meshRenderer;
+    private bool hasOutline;
     
     protected bool IsActive;
 
@@ -29,6 +30,7 @@ public class Clickable : MonoBehaviour
         
         var materials = new List<Material>(meshRenderer.materials) { outline };
         meshRenderer.materials = materials.ToArray();
+        hasOutline = true;
     }
 
     private void OnMouseExit()
@@ -39,15 +41,18 @@ public class Clickable : MonoBehaviour
 
     public void OnRemoveOutline()
     {
-        if (!outline) return;
+        if (!outline || !hasOutline) return;
         
         var materials = new List<Material>(meshRenderer.materials);
         materials.RemoveAt(materials.Count - 1);
         meshRenderer.materials = materials.ToArray();
+        hasOutline = false;
     }
 
     public virtual void OnClick()
     {
-        if (IsActive) clickEvent?.Invoke();
+        if (!IsActive) return;
+        clickEvent?.Invoke();
+        OnRemoveOutline();
     }
 }

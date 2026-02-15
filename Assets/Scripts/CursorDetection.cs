@@ -36,10 +36,19 @@ public class CursorDetection : MonoBehaviour
         SetClickables(roundInactiveClickables, true);
     }
 
+    public void OnDealerTurn()
+    {
+        SetClickables(roundActiveClickables, false);
+        SetClickables(roundInactiveClickables, false);
+    }
+
     private void SetClickables(List<Clickable> clickables, bool isActive)
     {
         foreach (var clickable in clickables)
+        {
             clickable.SetActive(isActive);
+            clickable.OnRemoveOutline();
+        }
     }
 
     public void AddRoundActiveClickable(Clickable clickable)
