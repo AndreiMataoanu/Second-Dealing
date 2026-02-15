@@ -66,7 +66,6 @@ public class Deck
         if(cards.Count == 0)
         {
             InitializeDeck();
-
             Shuffle();
         }
 
@@ -113,7 +112,7 @@ public class Deck
         return null;
     }
 
-    public void AddRemovedRank(Card.Rank rank)
+    public void AddRemovedValue(Card.Rank rank)
     {
         if(!removedRanks.Contains(rank)) removedRanks.Add(rank);
 

@@ -4,6 +4,8 @@ public class PowerUpInfo : MonoBehaviour
 {
     [SerializeField] public int price;
     [SerializeField] public PowerUpType type;
+    [Tooltip("Higher number means more common.")]
+    [SerializeField] public int spawnWeight = 10;
 
     private BlackjackGame _blackjackGame;
 
@@ -27,7 +29,7 @@ public class PowerUpInfo : MonoBehaviour
             break;
 
             case PowerUpType.Crucifix:
-                _blackjackGame.ActivatePrayerBeads();
+                _blackjackGame.ActivateCrucifix();
             break;
 
             case PowerUpType.Sunglasses:

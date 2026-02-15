@@ -11,12 +11,8 @@ public class PowerUpShop : MonoBehaviour
     [SerializeField] private GameObject[] powerUpPrefabs;
 
     [Header("Power Up Selection")]
-    [SerializeField] private Color outlineColor = new Color(0.4f, 0.0f, 0.7f);
-    [SerializeField] private float outlineWidth = 5.0f;
-    //[SerializeField] private float disappearTime = 1.0f;
     [SerializeField] private GameObject blackjackGameManager;
 
-    private Transform _highlight;
     private Transform _selection;
 
     private RaycastHit _raycastHit;
@@ -41,27 +37,54 @@ public class PowerUpShop : MonoBehaviour
 
     private void Update()
     {
-        HighlightPowerUp();
         SelectPowerUp();
+    }
+
+    public void RefreshShop()
+    {
+        DestroyPowerUps();
+        SpawnPowerUps();
     }
 
     public void SpawnPowerUps()
     {
         if(_hasSpawned || powerUpPrefabs == null || powerUpPrefabs.Count() < powerUpCount) return;
 
+        int totalWeight = 0;
+
+        foreach(var item in powerUpPrefabs)
+        {
+            totalWeight += item.GetComponent<PowerUpInfo>().spawnWeight;
+        }
+
         for(int i = 0; i < powerUpCount; i++)
         {
-            int randomIndex = Random.Range(0, powerUpPrefabs.Length);
+            GameObject selectedPrefab = GetWeightedRandomPrefab(totalWeight);
 
             Vector3 prefabPosition = transform.position + Vector3.up * (i * spaceOffset);
 
-            GameObject prefab = Instantiate(powerUpPrefabs[randomIndex], prefabPosition, Quaternion.identity, transform);
+            GameObject prefab = Instantiate(selectedPrefab, prefabPosition, Quaternion.identity, transform);
 
             prefab.GetComponent<PowerUpInfo>().SetBlackjackGame(_blackjackGame);
         }
 
         _hasSpawned = true;
         itemBought = false;
+    }
+
+    private GameObject GetWeightedRandomPrefab(int totalWeight)
+    {
+        int roll = Random.Range(0, totalWeight);
+        int cursor = 0;
+
+        foreach(var prefab in powerUpPrefabs)
+        {
+            cursor += prefab.GetComponent<PowerUpInfo>().spawnWeight;
+
+            if(roll < cursor) return prefab;
+        }
+
+        return powerUpPrefabs[0];
     }
 
     public void DestroyPowerUps()
@@ -74,49 +97,6 @@ public class PowerUpShop : MonoBehaviour
         hasSelected = false;
         itemBought = false;
         _hasSpawned = false;
-    }
-
-    private void HighlightPowerUp()
-    {
-        if(_inventoryManagement.inInventory || hasSelected) return;
-        
-        if(_highlight)
-        {
-            _highlight.gameObject.GetComponent<Outline>().enabled = false;
-            _highlight = null;
-        }
-
-        if (Camera.main)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-
-            if(!EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(ray, out _raycastHit))
-            {
-                _highlight = _raycastHit.transform;
-
-                if(_highlight.CompareTag($"Selectable") && _highlight != _selection)
-                {
-                    var outline = _highlight.gameObject.GetComponent<Outline>();
-
-                    if(outline)
-                    {
-                        outline.enabled = true;
-                    }
-                    else
-                    {
-                        outline = _highlight.gameObject.AddComponent<Outline>();
-                        outline.enabled = true;
-                        outline = _highlight.gameObject.GetComponent<Outline>();
-                        outline.OutlineColor = outlineColor;
-                        outline.OutlineWidth = outlineWidth;
-                    }
-                }
-                else
-                {
-                    _highlight = null;
-                }
-            }
-        }
     }
 
     private void SelectPowerUp()
@@ -137,17 +117,20 @@ public class PowerUpShop : MonoBehaviour
                 return;
             }
 
-            if(!hasSelected && _highlight)
+            Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+            if(!hasSelected && !EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(ray, out _raycastHit))
             {
-                _selection = _raycastHit.transform;
-                _selection.gameObject.GetComponent<Outline>().enabled = false;
-                _highlight = null;
-                
-                BuySelectedPowerUp();
+                if(_raycastHit.transform.CompareTag("Selectable"))
+                {
+                    _selection = _raycastHit.transform;
 
-                _blackjackGame.UpdateBettingUI();
+                    BuySelectedPowerUp();
 
-                CameraController.instance.EnterDefault();
+                    _blackjackGame.UpdateBettingUI();
+
+                    CameraController.instance.EnterDefault();
+                }
             }
         }
     }
