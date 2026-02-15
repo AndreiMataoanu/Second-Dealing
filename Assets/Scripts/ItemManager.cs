@@ -5,15 +5,18 @@ using Random = UnityEngine.Random;
 
 public class ItemManager : MonoBehaviour
 {
+    [Header("Managers")]
     [SerializeField] private BlackjackGame blackjackGame;
     [SerializeField] private CursorDetection cursorDetection;
     
-    [Header("Spawn power ups")] 
+    [Header("Power ups")]
     [SerializeField] private List<GameObject> buySpawnPoints;
     [SerializeField] private List<GameObject> useSpawnPoints;
     [SerializeField] private List<GameObject> powerUpPrefabs;
+    [SerializeField] private float denySoundCooldown = 0.3f;
 
     private int inventoryItems = 0;
+    private float nextDenyTime = 0f;
     
     public void SpawnPowerUps()
     {
@@ -41,7 +44,7 @@ public class ItemManager : MonoBehaviour
     
     private void OnBuy(Item item)
     {
-        if (inventoryItems >= useSpawnPoints.Count) return;
+        if (inventoryItems >= useSpawnPoints.Count || !HasEnoughMoney(item)) return;
         
         AddToInventory(item);
         item.RemoveAction(OnBuy);
@@ -75,6 +78,8 @@ public class ItemManager : MonoBehaviour
         }
 
         inventoryItems--;
+        AudioManager.instance.Play(item.name);
+        TooltipManager.instance.HideTooltip();
         Destroy(item.gameObject);
     }
 
@@ -82,6 +87,9 @@ public class ItemManager : MonoBehaviour
 
     private void AddToInventory(Item item)
     {
+        AudioManager.instance.Play("ItemBuy");
+        blackjackGame.LoseAmount(item.price);
+        
         var pos = item.transform.localPosition;
         var rot = item.transform.localRotation;
         var scale = item.transform.localScale;
@@ -116,5 +124,18 @@ public class ItemManager : MonoBehaviour
             }
         }
     }
+
+    private bool HasEnoughMoney(Item item)
+    {
+        if (blackjackGame.PlayerMoney > item.price) return true;
+
+        if (Time.time >= nextDenyTime)
+        {
+            AudioManager.instance.Play("ItemDeny");
+            nextDenyTime = Time.time + denySoundCooldown;
+        }
+        return false;
+    }
+    
     #endregion
 }

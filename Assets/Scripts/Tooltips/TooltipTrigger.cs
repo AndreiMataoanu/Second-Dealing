@@ -8,8 +8,6 @@ public class TooltipTrigger : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        if(CameraController.instance.GetIsDefault() == true) return;
-
         TooltipManager.instance.ShowTooltip(tooltipMessage);
     }
 
