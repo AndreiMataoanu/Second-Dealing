@@ -47,7 +47,7 @@ public class BlackjackGame : MonoBehaviour
 
     [SerializeField] private Animator standHandAnimator;
     [SerializeField] private Animator hitHandAnimator;
-    [SerializeField] private Animator doorAnimator;
+    //[SerializeField] private Animator doorAnimator;
 
     [Header("Camera")]
     [SerializeField] private CinemachineBrain cinemachineBrain;
@@ -601,7 +601,7 @@ public class BlackjackGame : MonoBehaviour
             RandomizeBlackjackGoal();
         }
 
-        doorAnimator.SetBool("open", false);
+        //doorAnimator.SetBool("open", false);
 
         AudioManager.instance.Play("Shuffle");
 
@@ -651,7 +651,7 @@ public class BlackjackGame : MonoBehaviour
         statusText.text = "Dealing cards...";
         isActionLocked = true;
 
-        doorAnimator.SetBool("open", true);
+        //doorAnimator.SetBool("open", true);
         isRoundActive = true;
         cursorDetection.OnRoundActive();
         itemManager.DespawnPowerUps();
