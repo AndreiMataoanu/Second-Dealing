@@ -25,10 +25,13 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private List<BlackjackEvent> highSeverityEvents;
     private AceValueRule currentAceRule = AceValueRule.Flexible;
     public enum AceValueRule { Flexible, Always1, Always11 }
+    private bool dealerWinsTies = false;
     private bool isDoubleLowActive = false;
     private bool isHalfHighActive = false;
     private bool isRouletteBlackjackActive = false;
     private int blackjackGoal = 21;
+    private Dictionary<Card.Rank, float> rankMultipliers = new Dictionary<Card.Rank, float>();
+    private int alternateBlackjackValue = 0;
     private List<Card.Suit> negativeSuits = new List<Card.Suit>();
 
     private List<BlackjackEvent> availableLowEvents;
@@ -44,6 +47,7 @@ public class BlackjackGame : MonoBehaviour
 
     [SerializeField] private Animator standHandAnimator;
     [SerializeField] private Animator hitHandAnimator;
+    //[SerializeField] private Animator doorAnimator;
 
     [Header("Camera")]
     [SerializeField] private CinemachineBrain cinemachineBrain;
@@ -104,7 +108,7 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private float cardSpacing = 30.0f;
     [SerializeField] private float cardRotationAngle = 5.0f;
     private float cardArcHeight = 0f;
-    private const float zOverlap = 0.001f;
+    private const float zOverlap = 0.01f;
     private const float cardAnimationDuration = 0.25f;
 
     private float nextKeyBetTime = 0f;
@@ -396,6 +400,18 @@ public class BlackjackGame : MonoBehaviour
     #endregion
 
     #region Event Methods
+    public void IncreaseMinimumBet(int amount)
+    {
+        minBet += amount;
+
+        if(currentBet < minBet)
+        {
+            currentBet = minBet;
+        }
+
+        UpdateBettingUI();
+    }
+
     public void RemoveValueFromDeck(Card.Rank rank)
     {
         gameDeck.AddRemovedValue(rank);
@@ -409,6 +425,28 @@ public class BlackjackGame : MonoBehaviour
     public void SetAceRule(AceValueRule newRule)
     {
         currentAceRule = newRule;
+    }
+
+    public void SetDealerWinsTies(bool newRule)
+    {
+        dealerWinsTies = newRule;
+    }
+
+    public void SetRankMultiplier(Card.Rank rank, float multiplier)
+    {
+        if(rankMultipliers.ContainsKey(rank))
+        {
+            rankMultipliers[rank] = multiplier;
+        }
+        else
+        {
+            rankMultipliers.Add(rank, multiplier);
+        }
+    }
+
+    public void SetAlternateBlackjackValue(int value)
+    {
+        alternateBlackjackValue = value;
     }
 
     public void AddJokers()
@@ -509,6 +547,11 @@ public class BlackjackGame : MonoBehaviour
             if(negativeSuits.Contains(card.suit))
             {
                 cardValue *= -1;
+            }
+
+            if(rankMultipliers.ContainsKey(card.rank))
+            {
+                cardValue *= rankMultipliers[card.rank];
             }
 
             if(targetedCardInstance != null && cardInstance == targetedCardInstance)
@@ -739,7 +782,7 @@ public class BlackjackGame : MonoBehaviour
                 chosenEvent.Apply(this);
                 eventPool.RemoveAt(randomIndex);
 
-                statusText.text = "Lets make it more interesting";
+                statusText.text = "Let's make it more interesting";
 
                 AudioManager.instance.Play("Laugh");
 
@@ -1132,7 +1175,7 @@ public class BlackjackGame : MonoBehaviour
 
     private IEnumerator DealerTurnCoroutine(bool playerHasBlackjack = false)
     {
-        statusText.text = "Dealer turn...";
+        statusText.text = "Dealer's turn...";
 
         yield return new WaitForSeconds(1.0f);
 
@@ -1165,7 +1208,7 @@ public class BlackjackGame : MonoBehaviour
 
             yield return new WaitForSeconds(1.5f);
 
-            StartCoroutine(EndGameCoroutine("Both have Blackjack! Its a tie", true));
+            StartCoroutine(EndGameCoroutine("Both have Blackjack! It's a tie", true));
 
             yield break;
         }
@@ -1227,7 +1270,7 @@ public class BlackjackGame : MonoBehaviour
 
         if(dealerJokers.Count > 0)
         {
-            revealMessage += "Dealer Joker(s): ";
+            revealMessage += "Dealer's Joker(s): ";
             revealMessage += string.Join(", ", dealerJokers.Select(j => j.jokerValue.ToString()));
             revealMessage += ".";
         }
@@ -1267,8 +1310,10 @@ public class BlackjackGame : MonoBehaviour
         if(playerDiff < dealerDiff) return "You win";
 
         if(dealerDiff < playerDiff) return "Dealer wins";
+
+        if(dealerWinsTies) return "Dealer wins on tie";
         
-        return "Its a tie";
+        return "It's a tie";
     }
 
     private IEnumerator EndGameCoroutine(string message, bool revealHand = true)
@@ -1286,7 +1331,7 @@ public class BlackjackGame : MonoBehaviour
 
             yield return new WaitForSeconds(3f);
         }
-        else if(message.Contains("Its a tie"))
+        else if(message.Contains("It's a tie"))
         {
             yield return new WaitForSeconds(3f);
         }
@@ -1347,6 +1392,8 @@ public class BlackjackGame : MonoBehaviour
     private bool IsBlackjack(int handValue)
     {
         if(handValue == blackjackGoal || handValue == -blackjackGoal) return true;
+
+        if(alternateBlackjackValue > 0 && handValue == alternateBlackjackValue) return true;
 
         return false;
     }
