@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &573635959399455684
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 871413723769252787}
+  - component: {fileID: 1819999903971304338}
+  m_Layer: 0
+  m_Name: ItemManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &871413723769252787
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 573635959399455684}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1819999903971304338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 573635959399455684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a95d577b361219646b9a6394856cf59b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemManager
+  blackjackGame: {fileID: 0}
+  cursorDetection: {fileID: 0}
+  buySpawnPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  useSpawnPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  powerUpPrefabs:
+  - {fileID: 9090495121263625931, guid: 67a688aecdef10547bb6132e7ef51989, type: 3}
+  - {fileID: 3247029996075764086, guid: 0e1526c2b64e7f04aa27b1188867eddd, type: 3}
+  - {fileID: 5236995200358048506, guid: f8467e78843de0b498187d77324636f5, type: 3}
+  - {fileID: 6929943178110708876, guid: 96176d5594c1c0e4c953255859f5fe50, type: 3}
+  denySoundCooldown: 0.3

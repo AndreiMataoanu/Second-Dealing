@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class BlackjackGame : MonoBehaviour
 {
     #region Attributes
-    [SerializeField] private GameObject powerUpManager;
+    [SerializeField] private ItemManager itemManager;
     
     [System.Serializable]
     public class EventThreshold
@@ -116,15 +116,9 @@ public class BlackjackGame : MonoBehaviour
     private float keyRepeatRate = 0.1f;
 
     private readonly Vector3 cardScaleVector = Vector3.one * 0.05f;
-
-    private PowerUpShop powerUpShop;
     #endregion
 
     #region Monobehaviour Methods
-    private void Awake()
-    {
-        powerUpShop = powerUpManager.GetComponent<PowerUpShop>();
-    }
 
     private void Start()
     {
@@ -612,11 +606,10 @@ public class BlackjackGame : MonoBehaviour
         AudioManager.instance.Play("Shuffle");
 
         gameDeck.Shuffle();
-        powerUpShop.RefreshShop();
-
         statusText.text = "Place your bet...";
 
         cursorDetection.OnRoundInactive();
+        itemManager.SpawnPowerUps();
         isRoundActive = false;
         isActionLocked = false;
 
@@ -658,11 +651,10 @@ public class BlackjackGame : MonoBehaviour
         statusText.text = "Dealing cards...";
         isActionLocked = true;
 
-        if(powerUpShop.hasSelected) powerUpShop.DestroyPowerUps();
-
         doorAnimator.SetBool("open", true);
         isRoundActive = true;
         cursorDetection.OnRoundActive();
+        itemManager.DespawnPowerUps();
 
         yield return StartCoroutine(DealCardToPlayerCoroutine());
         yield return StartCoroutine(DealCardToDealerCoroutine(false));

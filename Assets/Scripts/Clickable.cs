@@ -9,9 +9,11 @@ public class Clickable : MonoBehaviour
     
     private MeshCollider meshCollider;
     private MeshRenderer meshRenderer;
-    private bool isActive;
+    private bool hasOutline;
+    
+    protected bool IsActive;
 
-    public void SetActive(bool active) => isActive = active;
+    public void SetActive(bool active) => IsActive = active;
     
     private void Awake()
     {
@@ -24,26 +26,33 @@ public class Clickable : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        if (!outline || !isActive) return;
+        if (!outline || !IsActive) return;
         
         var materials = new List<Material>(meshRenderer.materials) { outline };
         meshRenderer.materials = materials.ToArray();
+        hasOutline = true;
     }
 
     private void OnMouseExit()
     {
-        if (!isActive) return;
+        if (!IsActive) return;
         OnRemoveOutline();
     }
 
-    private void OnRemoveOutline()
+    public void OnRemoveOutline()
     {
-        if (!outline) return;
+        if (!outline || !hasOutline) return;
         
         var materials = new List<Material>(meshRenderer.materials);
         materials.RemoveAt(materials.Count - 1);
         meshRenderer.materials = materials.ToArray();
+        hasOutline = false;
     }
-    
-    public void OnClick() => clickEvent?.Invoke();
+
+    public virtual void OnClick()
+    {
+        if (!IsActive) return;
+        clickEvent?.Invoke();
+        OnRemoveOutline();
+    }
 }

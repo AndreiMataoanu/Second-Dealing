@@ -1,4 +1,4 @@
-public enum PowerUpType
+public enum ItemType
 {
     Knife,
     Scissors,
