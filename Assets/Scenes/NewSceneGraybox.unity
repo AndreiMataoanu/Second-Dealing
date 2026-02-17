@@ -3786,6 +3786,58 @@ PrefabInstance:
       propertyPath: sunglassesCardPosition
       value: 
       objectReference: {fileID: 1934868213}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: lowSeverityEvents.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: 'lowSeverityEvents.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 2dc03149c01ac4d4488d5a8f15b31c36, type: 2}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: 'lowSeverityEvents.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 474aaa61c37bc374384ce45c3db390d2, type: 2}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: 'lowSeverityEvents.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: afea2f41da830234381ee2148e0ed747, type: 2}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: 'lowSeverityEvents.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 898d7592c2e56784d80d5cf6fdc7b203, type: 2}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: mediumSeverityEvents.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: 'mediumSeverityEvents.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 2c8cce2d0e09e354fa259a7d81357cc0, type: 2}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: 'mediumSeverityEvents.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: f9969251b08054a4b9f872af95840548, type: 2}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: eventThresholds.Array.data[0].moneyAmount
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: eventThresholds.Array.data[1].moneyAmount
+      value: 600
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: eventThresholds.Array.data[2].moneyAmount
+      value: 700
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: eventThresholds.Array.data[3].moneyAmount
+      value: 800
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: eventThresholds.Array.data[3].severityToTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5546812090285593363, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
