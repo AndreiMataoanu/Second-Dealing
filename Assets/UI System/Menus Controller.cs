@@ -56,12 +56,7 @@ public class MenusController : MonoBehaviour
     public void PauseGame()
     {
         pausePanel.SetActive(true);
-
         darkImage.SetActive(true);
-
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-
         isPaused = true;
 
         Time.timeScale = 0;
@@ -72,12 +67,7 @@ public class MenusController : MonoBehaviour
         BackToPauseMenu();
 
         pausePanel.SetActive(false);
-
         darkImage.SetActive(false);
-
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-
         isPaused = false;
 
         Time.timeScale = 1;
