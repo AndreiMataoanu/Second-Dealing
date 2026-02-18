@@ -729,8 +729,6 @@ public class BlackjackGame : MonoBehaviour
 
             if(eventPool != null && eventPool.Count > 0)
             {
-                
-
                 int randomIndex = Random.Range(0, eventPool.Count);
 
                 BlackjackEvent chosenEvent = eventPool[randomIndex];
