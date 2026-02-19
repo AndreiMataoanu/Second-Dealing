@@ -1273,6 +1273,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7831834114360917797, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
       insertIndex: 2
       addedObject: {fileID: 933582556}
+    - targetCorrespondingSourceObject: {fileID: 7831834114360917797, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
+      insertIndex: 3
+      addedObject: {fileID: 1297500281}
     - targetCorrespondingSourceObject: {fileID: 5174602870265667018, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1591684525}
@@ -1650,7 +1653,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4125194534018856590, guid: 8624eb4fc2049944a9faf1ceea35c0c1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 20.059
+      value: 19.994
       objectReference: {fileID: 0}
     - target: {fileID: 4125194534018856590, guid: 8624eb4fc2049944a9faf1ceea35c0c1, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1658,7 +1661,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4125194534018856590, guid: 8624eb4fc2049944a9faf1ceea35c0c1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.159
+      value: -0.173
       objectReference: {fileID: 0}
     - target: {fileID: 4125194534018856590, guid: 8624eb4fc2049944a9faf1ceea35c0c1, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1840,7 +1843,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5680375728980218015, guid: a2ff863303c46ed4c81ba7cf7b477593, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 20.417
+      value: 20.51
       objectReference: {fileID: 0}
     - target: {fileID: 5680375728980218015, guid: a2ff863303c46ed4c81ba7cf7b477593, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1848,7 +1851,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5680375728980218015, guid: a2ff863303c46ed4c81ba7cf7b477593, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.094
+      value: 0.106
       objectReference: {fileID: 0}
     - target: {fileID: 5680375728980218015, guid: a2ff863303c46ed4c81ba7cf7b477593, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3346,6 +3349,81 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37cb37e8090ded54399f8d66b341e3ec, type: 3}
+--- !u!1 &1297500280
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1297500281}
+  - component: {fileID: 1297500282}
+  m_Layer: 0
+  m_Name: Event Camera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1297500281
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1297500280}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.5268277, y: 0.429025, z: -0.35200712, w: -0.64380217}
+  m_LocalPosition: {x: -1.166, y: -0.423, z: 0.732}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1632085900}
+  m_LocalEulerAnglesHint: {x: 78.633, y: -67.072, z: 0.349}
+--- !u!114 &1297500282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1297500280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
+  Priority:
+    Enabled: 1
+    m_Value: 0
+  OutputChannel: 1
+  StandbyUpdate: 2
+  m_StreamingVersion: 20241001
+  m_LegacyPriority: 0
+  Target:
+    TrackingTarget: {fileID: 0}
+    LookAtTarget: {fileID: 0}
+    CustomLookAtTarget: 0
+  Lens:
+    FieldOfView: 60.000004
+    OrthographicSize: 5
+    NearClipPlane: 0.3
+    FarClipPlane: 17
+    Dutch: 0
+    ModeOverride: 0
+    PhysicalProperties:
+      GateFit: 2
+      SensorSize: {x: 10.26, y: 7.49}
+      LensShift: {x: 0, y: 0}
+      FocusDistance: 10
+      Iso: 200
+      ShutterSpeed: 0.005
+      Aperture: 16
+      BladeCount: 5
+      Curvature: {x: 2, y: 11}
+      BarrelClipping: 0.25
+      Anamorphism: 0
+  BlendHint: 0
 --- !u!114 &1306894128 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3107838438023376873, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
@@ -3527,6 +3605,10 @@ PrefabInstance:
       propertyPath: dealerSmile
       value: 
       objectReference: {fileID: 272942938}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: eventCamera
+      value: 
+      objectReference: {fileID: 1297500282}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: itemManager
       value: 
@@ -6101,7 +6183,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4125194534018856590, guid: 8624eb4fc2049944a9faf1ceea35c0c1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 19.985
+      value: 19.92
       objectReference: {fileID: 0}
     - target: {fileID: 4125194534018856590, guid: 8624eb4fc2049944a9faf1ceea35c0c1, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6109,7 +6191,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4125194534018856590, guid: 8624eb4fc2049944a9faf1ceea35c0c1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.171
+      value: 0.157
       objectReference: {fileID: 0}
     - target: {fileID: 4125194534018856590, guid: 8624eb4fc2049944a9faf1ceea35c0c1, type: 3}
       propertyPath: m_LocalRotation.w

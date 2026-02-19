@@ -49,6 +49,7 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private CinemachineBrain cinemachineBrain;
     [SerializeField] private CinemachineCamera sittingCamera;
     [SerializeField] private CinemachineCamera playingCamera;
+    [SerializeField] private CinemachineCamera eventCamera;
     [SerializeField] private float cameraTransitionTime;
 
     [Header("UI")]
@@ -729,6 +730,9 @@ public class BlackjackGame : MonoBehaviour
 
             if(eventPool != null && eventPool.Count > 0)
             {
+                DisableCamera(playingCamera);
+                EnableCamera(eventCamera);
+
                 int randomIndex = Random.Range(0, eventPool.Count);
 
                 BlackjackEvent chosenEvent = eventPool[randomIndex];
@@ -752,7 +756,7 @@ public class BlackjackGame : MonoBehaviour
 
                 dealerSmile.SetActive(false);
 
-                DisableCamera(playingCamera);
+                DisableCamera(eventCamera);
                 EnableCamera(sittingCamera);
             }
         }
