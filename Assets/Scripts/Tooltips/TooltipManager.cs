@@ -1,12 +1,11 @@
+using System.Collections;
 using UnityEngine;
-using TMPro;
 
 public class TooltipManager : MonoBehaviour
 {
     public static TooltipManager instance;
 
-    [SerializeField] private GameObject tooltipObject;
-    [SerializeField] private TextMeshProUGUI tooltipText;
+    [SerializeField] private Tooltip tooltip;
 
     private void Awake()
     {
@@ -17,31 +16,17 @@ public class TooltipManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
-
-            return;
         }
-
-        tooltipObject.SetActive(false);
     }
 
-    public void ShowTooltip(string message)
+    public void ShowTooltip(string content, string header = "")
     {
-        tooltipText.text = message;
-
-        tooltipObject.SetActive(true);
+        this.tooltip.SetText(content, header);
+        this.tooltip.gameObject.SetActive(true);
     }
 
     public void HideTooltip()
     {
-        tooltipObject.SetActive(false);
-
-        tooltipText.text = "";
-    }
-
-    public void EnableTooltip()
-    {
-        tooltipObject.SetActive(true);
-
-        tooltipText.text = "";
+        this.tooltip.gameObject.SetActive(false);
     }
 }

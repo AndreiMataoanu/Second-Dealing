@@ -729,9 +729,6 @@ public class BlackjackGame : MonoBehaviour
 
             if(eventPool != null && eventPool.Count > 0)
             {
-                DisableCamera(playingCamera);
-                EnableCamera(sittingCamera);
-
                 int randomIndex = Random.Range(0, eventPool.Count);
 
                 BlackjackEvent chosenEvent = eventPool[randomIndex];
@@ -754,6 +751,9 @@ public class BlackjackGame : MonoBehaviour
                 yield return new WaitForSeconds(6.0f);
 
                 dealerSmile.SetActive(false);
+
+                DisableCamera(playingCamera);
+                EnableCamera(sittingCamera);
             }
         }
     }

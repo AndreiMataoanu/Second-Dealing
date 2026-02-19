@@ -74,7 +74,7 @@ PrefabInstance:
       objectReference: {fileID: -249047089049676387, guid: 65818da854c201149ad6085b9e6f0bfa, type: 3}
     - target: {fileID: 919132149155446097, guid: 65818da854c201149ad6085b9e6f0bfa, type: 3}
       propertyPath: m_Name
-      value: sunglasses
+      value: Sunglasses
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -83,9 +83,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 65818da854c201149ad6085b9e6f0bfa, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5814093398203198464}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 65818da854c201149ad6085b9e6f0bfa, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5134462855817810777}
   m_SourcePrefab: {fileID: 100100000, guid: 65818da854c201149ad6085b9e6f0bfa, type: 3}
 --- !u!1 &6929943178110708876 stripped
 GameObject:
@@ -108,21 +105,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
+  tooltipHeader: Sunglasses
+  tooltipContent: See the next card
   price: 200
   type: 3
   spawnWeight: 15
---- !u!114 &5134462855817810777
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6929943178110708876}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22f99aa4ae668f246b4f713c5a9179ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TooltipTrigger
-  tooltipMessage: 'The next card is revealed
-
-    Price: 200'

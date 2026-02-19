@@ -6,7 +6,11 @@ public class Clickable : MonoBehaviour
 {
     [SerializeField] private UnityEvent clickEvent;
     [SerializeField] private Material outline;
-    
+
+    [Header("Tooltip Settings")]
+    [SerializeField] private string tooltipHeader;
+    [SerializeField] private string tooltipContent;
+
     private MeshCollider meshCollider;
     private MeshRenderer meshRenderer;
     private bool hasOutline;
@@ -31,6 +35,8 @@ public class Clickable : MonoBehaviour
         var materials = new List<Material>(meshRenderer.materials) { outline };
         meshRenderer.materials = materials.ToArray();
         hasOutline = true;
+
+        TooltipManager.instance.ShowTooltip(tooltipContent, tooltipHeader);
     }
 
     private void OnMouseExit()
@@ -47,6 +53,8 @@ public class Clickable : MonoBehaviour
         materials.RemoveAt(materials.Count - 1);
         meshRenderer.materials = materials.ToArray();
         hasOutline = false;
+
+        TooltipManager.instance.HideTooltip();
     }
 
     public virtual void OnClick()

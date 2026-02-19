@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 8971211930413345447}
   - component: {fileID: 8359143841880107014}
   - component: {fileID: 8107229075581035292}
-  - component: {fileID: 3843240894601265014}
   m_Layer: 0
   m_Name: Knife
   m_TagString: Untagged
@@ -107,21 +106,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
+  tooltipHeader: Knife
+  tooltipContent: Forces the dealer to stand
   price: 200
   type: 0
   spawnWeight: 15
---- !u!114 &3843240894601265014
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3247029996075764086}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22f99aa4ae668f246b4f713c5a9179ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TooltipTrigger
-  tooltipMessage: 'Dealer is forced to stand
-
-    Price: 200'

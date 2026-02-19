@@ -67,9 +67,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1f831f2c606698a4d945ecabc454d991, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7630428666314340296}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1f831f2c606698a4d945ecabc454d991, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: -3771635297208607453}
   m_SourcePrefab: {fileID: 100100000, guid: 1f831f2c606698a4d945ecabc454d991, type: 3}
 --- !u!1 &9090495121263625931 stripped
 GameObject:
@@ -92,21 +89,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
+  tooltipHeader: Crucifix
+  tooltipContent: Your next hit will be blessed
   price: 300
   type: 2
   spawnWeight: 5
---- !u!114 &-3771635297208607453
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9090495121263625931}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22f99aa4ae668f246b4f713c5a9179ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TooltipTrigger
-  tooltipMessage: 'Your next hit will be blessed
-
-    Price: 300'
