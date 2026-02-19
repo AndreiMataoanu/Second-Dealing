@@ -1104,10 +1104,13 @@ public class BlackjackGame : MonoBehaviour
 
         if(playerHand.Count == 7 && playerValue <= blackjackGoal)
         {
-            statusText.text = "Lucky 7  You win";
+            statusText.text = "Hand full. Forced to stand...";
+
+            standHandAnimator.SetTrigger("standTrigger");
 
             yield return new WaitForSeconds(2.0f);
-            yield return StartCoroutine(EndGameCoroutine("Lucky 7  You win", true));
+
+            StartCoroutine(DealerTurnCoroutine());
         }
         else if(playerValue <= blackjackGoal)
         {
@@ -1188,7 +1191,7 @@ public class BlackjackGame : MonoBehaviour
                 int dealerDiff = Mathf.Abs(Mathf.Abs(dealerAIValue) - blackjackGoal);
                 int playerDiff = Mathf.Abs(Mathf.Abs(playerAIValue) - blackjackGoal);
 
-                while(Mathf.Abs(dealerAIValue) < (blackjackGoal - 4) && dealerDiff >= playerDiff)
+                while(Mathf.Abs(dealerAIValue) < (blackjackGoal - 4) && dealerDiff >= playerDiff && dealerHand.Count < 7)
                 {
                     yield return StartCoroutine(DealCardToDealerCoroutine(false));
 
@@ -1198,6 +1201,13 @@ public class BlackjackGame : MonoBehaviour
                     dealerDiff = Mathf.Abs(Mathf.Abs(dealerAIValue) - blackjackGoal);
 
                     yield return new WaitForSeconds(2f);
+                }
+
+                if(dealerHand.Count == 7 && dealerAIValue <= blackjackGoal)
+                {
+                    statusText.text = "Hand full! Forced to stand...";
+
+                    yield return new WaitForSeconds(2.0f);
                 }
             }
 
