@@ -227,6 +227,13 @@ public class BlackjackGame : MonoBehaviour
         betText.text = $"${currentBet}";
     }
 
+    public void ResetItemsAvailable()
+    {
+        IsCrucifixAvailable = true;
+        IsScissorsAvailable = true;
+        IsSunglassesAvailable = true;
+    }
+    
     public void IncreaseBet()
     {
         if(isRoundActive) return;
@@ -280,21 +287,22 @@ public class BlackjackGame : MonoBehaviour
     }
 
     #region Item Methods
-    public void ActivateKnife()
+    public bool ActivateKnife()
     {
-        if(!isRoundActive || isKnifeActive || !IsKnifeAvailable) return;
+        if(!isRoundActive || isKnifeActive || !IsKnifeAvailable) return false;
 
         isKnifeActive = true;
         IsKnifeAvailable = false;
+        return true;
     }
 
-    public void ActivateScissors()
+    public bool ActivateScissors()
     {
-        if(!isRoundActive || !IsScissorsAvailable) return;
+        if(!isRoundActive || !IsScissorsAvailable) return false;
 
-        if(CalculateHandValue(playerHand, true) > blackjackGoal) return;
+        if(CalculateHandValue(playerHand, true) > blackjackGoal) return false;
 
-        if(dealerHand.Count < 2) return;
+        if(dealerHand.Count < 2) return false;
 
         CardInstance visibleDealerCard = dealerHand[1];
 
@@ -325,31 +333,33 @@ public class BlackjackGame : MonoBehaviour
         IsScissorsAvailable = false;
 
         UpdateUI(true);
+        return true;
     }
 
-    public void ActivateCrucifix()
+    public bool ActivateCrucifix()
     {
-        if(!isRoundActive || isCrucifixActive || !IsCrucifixAvailable) return;
+        if(!isRoundActive || isCrucifixActive || !IsCrucifixAvailable) return false;
 
-        if(CalculateHandValue(playerHand, true) > blackjackGoal) return;
+        if(CalculateHandValue(playerHand, true) > blackjackGoal) return false;
 
         isCrucifixActive = true;
         IsCrucifixAvailable = false;
+        return true;
     }
 
-    public void ActivateSunglasses()
+    public bool ActivateSunglasses()
     {
-        if(!isRoundActive || !IsSunglassesAvailable || peekedCardObject != null) return;
+        if(!isRoundActive || !IsSunglassesAvailable || peekedCardObject != null) return false;
 
-        if(CalculateHandValue(playerHand, true) > blackjackGoal) return;
+        if(CalculateHandValue(playerHand, true) > blackjackGoal) return false;
 
         Card? nextCard = gameDeck.PeekCard();
 
-        if(!nextCard.HasValue) return;
+        if(!nextCard.HasValue) return false;
 
         Card newCardData = nextCard.Value;
 
-        if(!cardPrefabLookup.TryGetValue((newCardData.rank, newCardData.suit), out GameObject cardPrefabToUse)) return;
+        if(!cardPrefabLookup.TryGetValue((newCardData.rank, newCardData.suit), out GameObject cardPrefabToUse)) return false;
 
         peekedCardObject = Instantiate(cardPrefabToUse, deckPosition);
         peekedCardObject.transform.localScale = cardScaleVector;
@@ -371,6 +381,7 @@ public class BlackjackGame : MonoBehaviour
 
         activeCardObjects.Add(peekedCardObject);
         IsSunglassesAvailable = false;
+        return true;
     }
 
     //Helper method for Crucifix.
