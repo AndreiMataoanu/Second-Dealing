@@ -44,6 +44,7 @@ public class BlackjackGame : MonoBehaviour
 
     [SerializeField] private Animator standHandAnimator;
     [SerializeField] private Animator hitHandAnimator;
+    [SerializeField] private Animator buttonAnimator;
 
     [Header("Camera")]
     [SerializeField] private CinemachineBrain cinemachineBrain;
@@ -550,6 +551,8 @@ public class BlackjackGame : MonoBehaviour
     //Resets the game and enters the betting phase
     public void StartGame()
     {
+        buttonAnimator.SetBool("StartActive", true);
+
         ClearTable();
         DisableCamera(playingCamera);
         EnableCamera(sittingCamera);
@@ -595,6 +598,8 @@ public class BlackjackGame : MonoBehaviour
     public IEnumerator DealRoundCoroutine()
     {
         if(isRoundActive || PlayerMoney < currentBet || isActionLocked) yield break;
+
+        buttonAnimator.SetBool("StartActive", false);
 
         if(isRouletteBlackjackActive)
         {
