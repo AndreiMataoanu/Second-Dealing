@@ -14,29 +14,24 @@ public class Item : Clickable
     public void AddAction(Action<Item> action) => itemAction += action;
     public void RemoveAction(Action<Item> action) => itemAction -= action;
 
-    public void Activate()
+    public bool Activate()
     {
         if(!blackjackGame)
         {
             Debug.Log("No blackjack game");
-            return;
+            return false;
         }
-        
-        switch(type)
+
+        var result = type switch
         {
-            case ItemType.Knife:
-                blackjackGame.ActivateKnife();
-                break;
-            case ItemType.Scissors:
-                blackjackGame.ActivateScissors();
-                break;
-            case ItemType.Crucifix:
-                blackjackGame.ActivateCrucifix();
-                break;
-            case ItemType.Sunglasses:
-                blackjackGame.ActivateSunglasses();
-                break;
-        }
+            ItemType.Knife => blackjackGame.ActivateKnife(),
+            ItemType.Scissors => blackjackGame.ActivateScissors(),
+            ItemType.Crucifix => blackjackGame.ActivateCrucifix(),
+            ItemType.Sunglasses => blackjackGame.ActivateSunglasses(),
+            _ => false
+        };
+
+        return result;
     }
 
     public void SetBlackjackGame(BlackjackGame blackjack)

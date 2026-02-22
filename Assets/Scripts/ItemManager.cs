@@ -67,7 +67,12 @@ public class ItemManager : MonoBehaviour
     
     private void Activate(Item item)
     {
-        item.Activate();
+        if (!item.Activate())
+        {
+            AudioManager.instance.Play("ItemDeny");
+            return;
+        }
+        
         AudioManager.instance.Play(item.name);
         TooltipManager.instance.HideTooltip();
         Destroy(item.gameObject);
