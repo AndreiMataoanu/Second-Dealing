@@ -83,6 +83,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f7dd208a58fa8ca43b999f708a30ec54, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5670488186730345031}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f7dd208a58fa8ca43b999f708a30ec54, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -4778678758834914791}
   m_SourcePrefab: {fileID: 100100000, guid: f7dd208a58fa8ca43b999f708a30ec54, type: 3}
 --- !u!1 &5236995200358048506 stripped
 GameObject:
@@ -106,7 +109,29 @@ MonoBehaviour:
       m_Calls: []
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
   tooltipHeader: Scissors - $100
-  tooltipContent: Halves the value of the dealer's visible card
+  tooltipContent: Halves the value of the dealers visible card
   price: 100
   type: 1
   spawnWeight: 20
+--- !u!64 &-4778678758834914791
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5236995200358048506}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4632596647708219413, guid: f7dd208a58fa8ca43b999f708a30ec54, type: 3}
