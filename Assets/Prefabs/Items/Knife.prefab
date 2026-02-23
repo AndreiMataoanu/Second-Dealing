@@ -12,12 +12,13 @@ GameObject:
   - component: {fileID: 8971211930413345447}
   - component: {fileID: 8359143841880107014}
   - component: {fileID: 8107229075581035292}
+  - component: {fileID: -3876307792271350307}
   m_Layer: 0
   m_Name: Knife
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8269581312285230984
 Transform:
@@ -111,3 +112,25 @@ MonoBehaviour:
   price: 200
   type: 0
   spawnWeight: 15
+--- !u!64 &-3876307792271350307
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3247029996075764086}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5668833170292645477, guid: 27a94698a05fade48bcecf6b3bbce33b, type: 3}
