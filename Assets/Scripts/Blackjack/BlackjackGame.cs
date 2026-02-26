@@ -325,14 +325,20 @@ public class BlackjackGame : MonoBehaviour
             {
                 originalValue = Mathf.CeilToInt(originalValue / 2f);
             }
+
+            if(negativeSuits.Contains(visibleDealerCard.cardData.suit))
+            {
+                originalValue *= -1;
+            }
         }
 
-        int halvedValue = Mathf.CeilToInt((float)originalValue / 2f);
+        int halvedValue = Mathf.CeilToInt((float)Mathf.Abs(originalValue) / 2f);
 
-        scissorsValueReduction = originalValue - halvedValue;
+        scissorsValueReduction = Mathf.Abs(originalValue) - halvedValue;
         IsScissorsAvailable = false;
 
         UpdateUI(true);
+
         return true;
     }
 
@@ -456,7 +462,7 @@ public class BlackjackGame : MonoBehaviour
     #endregion
 
     //Calculates the total value of a hand. Aces are 1 or 11.
-    private int CalculateHandValue(List<CardInstance> hand, bool aiCountsJoker)
+    private int CalculateHandValue(List<CardInstance> hand, bool countJoker)
     {
         float value = 0f;
         int aceCount = 0;
@@ -478,7 +484,7 @@ public class BlackjackGame : MonoBehaviour
 
             if(card.rank == Card.Rank.Joker)
             {
-                if(aiCountsJoker)
+                if(countJoker)
                 {
                     cardValue = cardInstance.jokerValue;
                 }
@@ -526,7 +532,15 @@ public class BlackjackGame : MonoBehaviour
 
             if(targetedCardInstance != null && cardInstance == targetedCardInstance)
             {
-                cardValue -= scissorsValueReduction;
+                //cardValue -= scissorsValueReduction;
+                if(cardValue > 0)
+                {
+                    cardValue -= scissorsValueReduction;
+                }
+                else if(cardValue < 0)
+                {
+                    cardValue += scissorsValueReduction;
+                }
             }
 
             value += cardValue;
