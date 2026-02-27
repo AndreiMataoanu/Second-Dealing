@@ -549,9 +549,9 @@ public class BlackjackGame : MonoBehaviour
         //adjust aces
         if(currentAceRule == AceValueRule.Flexible)
         {
-            while(value > blackjackGoal && aceCount > 0)
+            while((value > blackjackGoal || value < -blackjackGoal) && aceCount > 0)
             {
-                value -= 10;
+                value += (value > 0) ? -10 : 10;
                 aceCount--;
             }
         }
@@ -628,9 +628,15 @@ public class BlackjackGame : MonoBehaviour
 
         if(isRouletteBlackjackActive)
         {
+            DisableCamera(sittingCamera);
+            EnableCamera(eventCamera);
+
             statusText.text = $"New Blackjack goal: {blackjackGoal}";
 
             yield return new WaitForSeconds(3.0f);
+
+            DisableCamera(eventCamera);
+            EnableCamera(playingCamera);
         }
 
         DisableCamera(sittingCamera);

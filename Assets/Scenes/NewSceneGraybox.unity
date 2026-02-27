@@ -3676,7 +3676,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 2c40c03f0fc098e4e8b9ddbddb3d482d, type: 2}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: mediumSeverityEvents.Array.size
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: 'highSeverityEvents.Array.data[0]'
@@ -3713,11 +3713,11 @@ PrefabInstance:
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: 'mediumSeverityEvents.Array.data[0]'
       value: 
-      objectReference: {fileID: 11400000, guid: a7761bfbabfaaa34e8c234738f0f907a, type: 2}
+      objectReference: {fileID: 11400000, guid: 6d1cb0823b67dd541a8a8e684dbf6102, type: 2}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: 'mediumSeverityEvents.Array.data[1]'
       value: 
-      objectReference: {fileID: 11400000, guid: 18758e0d7866558419cc4975fc50924b, type: 2}
+      objectReference: {fileID: 11400000, guid: a7761bfbabfaaa34e8c234738f0f907a, type: 2}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: 'mediumSeverityEvents.Array.data[2]'
       value: 
@@ -3725,7 +3725,7 @@ PrefabInstance:
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: 'mediumSeverityEvents.Array.data[3]'
       value: 
-      objectReference: {fileID: 11400000, guid: 6d1cb0823b67dd541a8a8e684dbf6102, type: 2}
+      objectReference: {fileID: 11400000, guid: 3b2a0ca89cf99cf468c8b8194beb91db, type: 2}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: 'mediumSeverityEvents.Array.data[4]'
       value: 
@@ -3764,7 +3764,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: eventThresholds.Array.data[0].severityToTrigger
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: eventThresholds.Array.data[1].severityToTrigger
