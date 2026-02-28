@@ -63,7 +63,6 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private GameObject redParticlePrefab;
     [SerializeField] private Transform particleSpawnPoint;
 
-    [SerializeField] private GameObject dealerSmile;
     [SerializeField] private CursorDetection cursorDetection;
 
     //Betting Variables
@@ -780,8 +779,6 @@ public class BlackjackGame : MonoBehaviour
 
                 AudioManager.instance.Play("Laugh");
 
-                dealerSmile.SetActive(true);
-
                 yield return new WaitForSeconds(5.0f);
 
                 AudioManager.instance.Play("NewEvent");
@@ -789,8 +786,6 @@ public class BlackjackGame : MonoBehaviour
                 statusText.text = $"New Event: {chosenEvent.eventName}";
 
                 yield return new WaitForSeconds(6.0f);
-
-                dealerSmile.SetActive(false);
 
                 DisableCamera(eventCamera);
                 EnableCamera(sittingCamera);
@@ -1326,15 +1321,17 @@ public class BlackjackGame : MonoBehaviour
         isRoundActive = false;
         cursorDetection.OnRoundInactive();
 
+        int targetMoney;
+
         if(message.Contains("You win"))
         {
-            PlayerMoney += currentBet;
+            targetMoney = playerMoney + currentBet;
 
             AudioManager.instance.Play("MoneyGained");
 
             Instantiate(greenParticlePrefab, particleSpawnPoint.position, particleSpawnPoint.rotation);
 
-            yield return new WaitForSeconds(3f);
+            yield return StartCoroutine(AnimateBetChange(targetMoney, 3.0f));
         }
         else if(message.Contains("Its a tie"))
         {
@@ -1342,17 +1339,13 @@ public class BlackjackGame : MonoBehaviour
         }
         else
         {
-            dealerSmile.SetActive(true);
-
-            PlayerMoney -= currentBet;
+            targetMoney = playerMoney - currentBet;
 
             AudioManager.instance.Play("MoneyLost");
 
             Instantiate(redParticlePrefab, particleSpawnPoint.position, particleSpawnPoint.rotation);
 
-            yield return new WaitForSeconds(3f);
-
-            dealerSmile.SetActive(false);
+            yield return StartCoroutine(AnimateBetChange(targetMoney, 3.0f));
         }
 
         if(revealHand)
@@ -1399,5 +1392,31 @@ public class BlackjackGame : MonoBehaviour
         if(handValue == blackjackGoal || handValue == -blackjackGoal) return true;
 
         return false;
+    }
+
+    private IEnumerator AnimateBetChange(int targetAmount, float duration)
+    {
+        float elapsedTime = 0;
+        int startingAmount = PlayerMoney;
+
+        AudioManager.instance.Play("MoneyCounter");
+
+        while(elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+
+            float percent = elapsedTime / duration;
+            float smoothedPercent = percent * percent * (3f - 2f * percent);
+
+            playerMoney = Mathf.RoundToInt(Mathf.Lerp(startingAmount, targetAmount, smoothedPercent));
+
+            UpdateBettingUI();
+
+            yield return null;
+        }
+
+        playerMoney = targetAmount;
+
+        UpdateBettingUI();
     }
 }
