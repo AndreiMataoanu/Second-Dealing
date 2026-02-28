@@ -14,7 +14,7 @@ public class Deck
         InitializeDeck();
     }
 
-    private void InitializeDeck()
+    public void InitializeDeck()
     {
         cards.Clear();
 

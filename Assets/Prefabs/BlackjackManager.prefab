@@ -44,23 +44,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d681071c0ffcd6944a3b712dc7947bf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BlackjackGame
-  powerUpManager: {fileID: 0}
+  itemManager: {fileID: 0}
   eventThresholds:
   - severityToTrigger: 0
-    moneyAmount: 500
-  - severityToTrigger: 0
-    moneyAmount: 5000
+    moneyAmount: 600
+  - severityToTrigger: 1
+    moneyAmount: 1000
+  - severityToTrigger: 2
+    moneyAmount: 3000
   - severityToTrigger: 0
     moneyAmount: 10000
   - severityToTrigger: 1
-    moneyAmount: 20000
+    moneyAmount: 25000
   - severityToTrigger: 1
-    moneyAmount: 40000
-  - severityToTrigger: 1
-    moneyAmount: 60000
+    moneyAmount: 50000
   - severityToTrigger: 2
-    moneyAmount: 80000
+    moneyAmount: 75000
   lowSeverityEvents:
+  - {fileID: 11400000, guid: 204739df0ccfea64ab4ef255a2a5bab7, type: 2}
+  - {fileID: 11400000, guid: f8f5262ed691a2643b68cfe3e83e9d93, type: 2}
+  - {fileID: 11400000, guid: 2dc03149c01ac4d4488d5a8f15b31c36, type: 2}
+  - {fileID: 11400000, guid: afea2f41da830234381ee2148e0ed747, type: 2}
   - {fileID: 11400000, guid: 1b6a6919b4e3bcc4786499add0fe4591, type: 2}
   - {fileID: 11400000, guid: 31ff245295f50c84287d8d7fd59872c3, type: 2}
   - {fileID: 11400000, guid: a2e7be97f71409e458d409648c8b0b05, type: 2}
@@ -69,48 +73,23 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2c40c03f0fc098e4e8b9ddbddb3d482d, type: 2}
   - {fileID: 11400000, guid: 90e916027f496dc438ffa740073bf320, type: 2}
   - {fileID: 11400000, guid: 2abb42800d64dda4c892a33a05c2856b, type: 2}
-  - {fileID: 11400000, guid: 3b2a0ca89cf99cf468c8b8194beb91db, type: 2}
   - {fileID: 11400000, guid: 8dd6a5c9f92458843b89d3577fc5c243, type: 2}
-  - {fileID: 11400000, guid: 474aaa61c37bc374384ce45c3db390d2, type: 2}
-  - {fileID: 11400000, guid: 2dc03149c01ac4d4488d5a8f15b31c36, type: 2}
-  - {fileID: 11400000, guid: afea2f41da830234381ee2148e0ed747, type: 2}
-  - {fileID: 11400000, guid: 898d7592c2e56784d80d5cf6fdc7b203, type: 2}
   mediumSeverityEvents:
-  - {fileID: 11400000, guid: ee1ae2fcfda71ce41b9af87d1fac0bc8, type: 2}
-  - {fileID: 11400000, guid: 37043650afe5b7046b58b59fce8111f9, type: 2}
-  - {fileID: 11400000, guid: 67414296f57dd3b41bdd63d7b5f6837e, type: 2}
-  - {fileID: 11400000, guid: 6f3c1e6777e47b7468a31eb62768c9da, type: 2}
-  - {fileID: 11400000, guid: fa443b56010248942bacc83a3339b979, type: 2}
-  - {fileID: 11400000, guid: 3fb35c740ff4e0e43ad43f0933085115, type: 2}
-  - {fileID: 11400000, guid: b557772f5521e3c40b52b27a8ca5e65e, type: 2}
-  - {fileID: 11400000, guid: 13b5a0ae317325f44ab347926b4f4cb9, type: 2}
-  - {fileID: 11400000, guid: b86ea877bd975b548ac52416a0ebd02d, type: 2}
-  - {fileID: 11400000, guid: b492008bb1a8b514b88c90ca20e0cfbb, type: 2}
-  - {fileID: 11400000, guid: 1eb1d96aa5fc1a54385b902311f5c9b6, type: 2}
-  - {fileID: 11400000, guid: b0bc1a17aa1fe5f4f817db06514c63c4, type: 2}
-  - {fileID: 11400000, guid: b251aea30c03fae45b901ba62696b872, type: 2}
-  - {fileID: 11400000, guid: d044999c252125e42b7881a580e1cc1d, type: 2}
-  - {fileID: 11400000, guid: ea87a71efb9f49e4b9dff9cf2ccc398e, type: 2}
-  - {fileID: 11400000, guid: a6fc80f18f7b6d74c924a2ba7d21e676, type: 2}
-  - {fileID: 11400000, guid: ff363c76cd4298c4bb0e9f1d2ab1eec1, type: 2}
-  - {fileID: 11400000, guid: 15b03e4c0d3f73b45a5ddda80a922f03, type: 2}
-  - {fileID: 11400000, guid: 516e25c36e7ea4441b60516f5ba5bc31, type: 2}
-  - {fileID: 11400000, guid: 7cdd9a087aaff5c4096fc3d424c82482, type: 2}
-  - {fileID: 11400000, guid: 4c2819ab4bad7c94f96cbdc0562b42cf, type: 2}
-  - {fileID: 11400000, guid: 84a42e56eda26264bb31cb357b512dad, type: 2}
-  - {fileID: 11400000, guid: f633821ca27ad9c46ac9a87848355bfd, type: 2}
-  - {fileID: 11400000, guid: 372920c56c01edc449435969e50458a8, type: 2}
-  - {fileID: 11400000, guid: 120da52b0b9f29f4db4db821a91d262c, type: 2}
-  - {fileID: 11400000, guid: 5cd2f42a4d92984479533ab48eab5922, type: 2}
-  - {fileID: 11400000, guid: 2dc116556869ceb40b506f83267f20d4, type: 2}
+  - {fileID: 11400000, guid: 3b2a0ca89cf99cf468c8b8194beb91db, type: 2}
+  - {fileID: 11400000, guid: a7761bfbabfaaa34e8c234738f0f907a, type: 2}
+  - {fileID: 11400000, guid: 18758e0d7866558419cc4975fc50924b, type: 2}
+  - {fileID: 11400000, guid: 6d1cb0823b67dd541a8a8e684dbf6102, type: 2}
   highSeverityEvents:
   - {fileID: 11400000, guid: 16f803c2a8c8cae4b83d83c657ad3736, type: 2}
+  - {fileID: 11400000, guid: 2c8cce2d0e09e354fa259a7d81357cc0, type: 2}
+  - {fileID: 11400000, guid: f9969251b08054a4b9f872af95840548, type: 2}
   standHandAnimator: {fileID: 0}
   hitHandAnimator: {fileID: 0}
-  doorAnimator: {fileID: 0}
+  buttonAnimator: {fileID: 0}
   cinemachineBrain: {fileID: 0}
   sittingCamera: {fileID: 0}
   playingCamera: {fileID: 0}
+  eventCamera: {fileID: 0}
   cameraTransitionTime: 0.5
   moneyText: {fileID: 0}
   betText: {fileID: 0}
@@ -120,7 +99,6 @@ MonoBehaviour:
   greenParticlePrefab: {fileID: 8898999322352444081, guid: 1a2c82dcfdddc9545b93aed2deafd2bb, type: 3}
   redParticlePrefab: {fileID: 3089716248877472652, guid: a551cd01744a1dc4f95b1369b03f87bb, type: 3}
   particleSpawnPoint: {fileID: 0}
-  dealerSmile: {fileID: 0}
   cursorDetection: {fileID: 0}
   isRoundActive: 0
   cardPrefabs:

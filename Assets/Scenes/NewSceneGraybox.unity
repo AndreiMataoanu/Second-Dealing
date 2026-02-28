@@ -8,8 +8,8 @@ OcclusionCullingSettings:
     smallestOccluder: 5
     smallestHole: 0.25
     backfaceThreshold: 100
-  m_SceneGUID: 00000000000000000000000000000000
-  m_OcclusionCullingData: {fileID: 0}
+  m_SceneGUID: 92386ecdd94e8ad4a86bbb37d41030f2
+  m_OcclusionCullingData: {fileID: 36300000, guid: 41c6c9f9587fe2245b3915ec4e14e0eb, type: 2}
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
@@ -615,11 +615,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b75c1670a2109b640afcf80005cfc088, type: 3}
---- !u!1 &272942938 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4037142586412128698, guid: b75c1670a2109b640afcf80005cfc088, type: 3}
-  m_PrefabInstance: {fileID: 272942937}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &287027269
 GameObject:
   m_ObjectHideFlags: 0
@@ -3560,10 +3555,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1545470627}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: dealerSmile
-      value: 
-      objectReference: {fileID: 272942938}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: eventCamera
       value: 
       objectReference: {fileID: 1297500282}
@@ -3576,10 +3567,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 595901487}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: doorAnimator
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: playingCamera
       value: 
       objectReference: {fileID: 933582557}
@@ -3591,10 +3578,6 @@ PrefabInstance:
       propertyPath: buttonAnimator
       value: 
       objectReference: {fileID: 1370196142}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: powerUpManager
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: cursorDetection
       value: 
@@ -3635,158 +3618,6 @@ PrefabInstance:
       propertyPath: sunglassesCardPosition
       value: 
       objectReference: {fileID: 1934868213}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: lowSeverityEvents.Array.size
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: highSeverityEvents.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: 'lowSeverityEvents.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 204739df0ccfea64ab4ef255a2a5bab7, type: 2}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: 'lowSeverityEvents.Array.data[1]'
-      value: 
-      objectReference: {fileID: 11400000, guid: f8f5262ed691a2643b68cfe3e83e9d93, type: 2}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: 'lowSeverityEvents.Array.data[2]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 2dc03149c01ac4d4488d5a8f15b31c36, type: 2}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: 'lowSeverityEvents.Array.data[3]'
-      value: 
-      objectReference: {fileID: 11400000, guid: afea2f41da830234381ee2148e0ed747, type: 2}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: 'lowSeverityEvents.Array.data[4]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 1b6a6919b4e3bcc4786499add0fe4591, type: 2}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: 'lowSeverityEvents.Array.data[5]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 31ff245295f50c84287d8d7fd59872c3, type: 2}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: 'lowSeverityEvents.Array.data[6]'
-      value: 
-      objectReference: {fileID: 11400000, guid: a2e7be97f71409e458d409648c8b0b05, type: 2}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: 'lowSeverityEvents.Array.data[7]'
-      value: 
-      objectReference: {fileID: 11400000, guid: d59fe0786b321334cae4ee54009c518d, type: 2}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: 'lowSeverityEvents.Array.data[8]'
-      value: 
-      objectReference: {fileID: 11400000, guid: aa96aa46492df3e4db76c4a69310aefb, type: 2}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: 'lowSeverityEvents.Array.data[9]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 2c40c03f0fc098e4e8b9ddbddb3d482d, type: 2}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: mediumSeverityEvents.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: 'highSeverityEvents.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 16f803c2a8c8cae4b83d83c657ad3736, type: 2}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: 'highSeverityEvents.Array.data[1]'
-      value: 
-      objectReference: {fileID: 11400000, guid: f9969251b08054a4b9f872af95840548, type: 2}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: 'highSeverityEvents.Array.data[2]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 2c8cce2d0e09e354fa259a7d81357cc0, type: 2}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: 'lowSeverityEvents.Array.data[10]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 90e916027f496dc438ffa740073bf320, type: 2}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: 'lowSeverityEvents.Array.data[11]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 2abb42800d64dda4c892a33a05c2856b, type: 2}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: 'lowSeverityEvents.Array.data[12]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 8dd6a5c9f92458843b89d3577fc5c243, type: 2}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: 'lowSeverityEvents.Array.data[13]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: 'lowSeverityEvents.Array.data[14]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 898d7592c2e56784d80d5cf6fdc7b203, type: 2}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: 'mediumSeverityEvents.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 6d1cb0823b67dd541a8a8e684dbf6102, type: 2}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: 'mediumSeverityEvents.Array.data[1]'
-      value: 
-      objectReference: {fileID: 11400000, guid: a7761bfbabfaaa34e8c234738f0f907a, type: 2}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: 'mediumSeverityEvents.Array.data[2]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 18758e0d7866558419cc4975fc50924b, type: 2}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: 'mediumSeverityEvents.Array.data[3]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 3b2a0ca89cf99cf468c8b8194beb91db, type: 2}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: 'mediumSeverityEvents.Array.data[4]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 6d1cb0823b67dd541a8a8e684dbf6102, type: 2}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: 'mediumSeverityEvents.Array.data[5]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 6d1cb0823b67dd541a8a8e684dbf6102, type: 2}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: eventThresholds.Array.data[0].moneyAmount
-      value: 600
-      objectReference: {fileID: 0}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: eventThresholds.Array.data[1].moneyAmount
-      value: 1000
-      objectReference: {fileID: 0}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: eventThresholds.Array.data[2].moneyAmount
-      value: 3000
-      objectReference: {fileID: 0}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: eventThresholds.Array.data[3].moneyAmount
-      value: 10000
-      objectReference: {fileID: 0}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: eventThresholds.Array.data[4].moneyAmount
-      value: 25000
-      objectReference: {fileID: 0}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: eventThresholds.Array.data[5].moneyAmount
-      value: 50000
-      objectReference: {fileID: 0}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: eventThresholds.Array.data[6].moneyAmount
-      value: 75000
-      objectReference: {fileID: 0}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: eventThresholds.Array.data[0].severityToTrigger
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: eventThresholds.Array.data[1].severityToTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: eventThresholds.Array.data[2].severityToTrigger
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: eventThresholds.Array.data[3].severityToTrigger
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5546812090285593363, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

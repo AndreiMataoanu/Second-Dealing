@@ -99,7 +99,7 @@ public class ItemManager : MonoBehaviour
     private void AddToInventory(Item item)
     {
         AudioManager.instance.Play("ItemBuy");
-        blackjackGame.LoseAmount(item.price);
+        blackjackGame.BuyItem(item.price);
         
         var pos = item.transform.localPosition;
         var rot = item.transform.localRotation;
