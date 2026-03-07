@@ -39,7 +39,7 @@ public class Item : Clickable
         blackjackGame = blackjack;
     }
 
-    public override void OnClick()
+    public override void OnClick(int mouseButton = 0)
     {
         if (!IsActive) return;
         

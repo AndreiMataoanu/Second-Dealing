@@ -73,6 +73,7 @@ public class BlackjackGame : MonoBehaviour
     private const int betStep = 100;
 
     [HideInInspector] public bool isRoundActive = false;
+    [HideInInspector] public bool CanPlayerDoubleDown => canDoubleDown;
     private bool isActionLocked = false;
 
     private Coroutine currentBustCoroutine = null;
@@ -192,20 +193,32 @@ public class BlackjackGame : MonoBehaviour
     #endregion
     
     #region Player Actions
-        // These methods will be added as unity events in the Clickable components
-        public void OnStartGame()
-        {
-            if(!isRoundActive && PlayerMoney >= currentBet)
-                StartCoroutine(DealRoundCoroutine());
-        }
+    // These methods will be added as unity events in the Clickable components
+    public void OnStartGame()
+    {
+        if(!isRoundActive && PlayerMoney >= currentBet)
+            StartCoroutine(DealRoundCoroutine());
+    }
         
-        public void OnHit() => StartCoroutine(HitCoroutine());
+    public void OnHit() => StartCoroutine(HitCoroutine());
         
-        public void OnStand() => StartCoroutine(StandCoroutine());
+    public void OnStand() => StartCoroutine(StandCoroutine());
 
-        public void OnIncreaseBet() => IncreaseBet();
+    public void OnIncreaseBet() => IncreaseBet();
         
-        public void OnDecreaseBet() => DecreaseBet();
+    public void OnDecreaseBet() => DecreaseBet();
+
+    public void OnDoubleDown()
+    {
+        if(canDoubleDown) StartCoroutine(DoubleDownCoroutine());
+    }
+
+    public void ResetItemsAvailable()
+    {
+        IsScissorsAvailable = true;
+        IsCrucifixAvailable = true;
+        IsSunglassesAvailable = true;
+    }
     #endregion
 
     #region Betting Methods
@@ -1414,7 +1427,7 @@ public class BlackjackGame : MonoBehaviour
 
         if(playerHand.Count == 0)
         {
-            playerTotalText.text = "Your hand: ";
+            playerTotalText.text = "";
         }
         else if(revealJokers || !playerHasJoker)
         {
@@ -1469,7 +1482,7 @@ public class BlackjackGame : MonoBehaviour
         }
         else
         {
-            dealerTotalText.text = "Dealer hand: ";
+            dealerTotalText.text = "";
         }
 
         UpdateBettingUI();

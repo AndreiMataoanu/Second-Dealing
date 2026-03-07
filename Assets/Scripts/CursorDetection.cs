@@ -15,17 +15,23 @@ public class CursorDetection : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        int mouseButton = -1;
+
+        if(Input.GetMouseButtonDown(0)) mouseButton = 0;
+        else if(Input.GetMouseButtonDown(1)) mouseButton = 1;
+
+        if (mouseButton != -1)
         {
-            var mousePosition = Input.mousePosition;
-            var ray = camera.ScreenPointToRay(mousePosition);
+            var ray = camera.ScreenPointToRay(Input.mousePosition);
 
-            RaycastHit raycastHit;
-
-            bool hasHit = Physics.Raycast(ray, out raycastHit);
-            if (hasHit)
+            if(Physics.Raycast(ray, out RaycastHit hit))
             {
-                raycastHit.transform.GetComponent<Clickable>()?.OnClick();
+                var clickable = hit.transform.GetComponent<Clickable>();
+
+                if(clickable != null)
+                {
+                    clickable.OnClick(mouseButton);
+                }
             }
         }
     }
