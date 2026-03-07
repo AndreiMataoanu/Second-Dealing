@@ -9,7 +9,8 @@ public class BlackjackGame : MonoBehaviour
 {
     #region Attributes
     [SerializeField] private ItemManager itemManager;
-    
+    [SerializeField] private CursorDetection cursorDetection;
+
     [System.Serializable]
     public class EventThreshold
     {
@@ -28,6 +29,7 @@ public class BlackjackGame : MonoBehaviour
     private bool isDoubleLowActive = false;
     private bool isHalfHighActive = false;
     private bool isRouletteBlackjackActive = false;
+    private bool canDoubleDown = false;
     private int blackjackGoal = 21;
     private int targetMoneyBalance;
     private List<Card.Suit> negativeSuits = new List<Card.Suit>();
@@ -63,8 +65,6 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private GameObject greenParticlePrefab;
     [SerializeField] private GameObject redParticlePrefab;
     [SerializeField] private Transform particleSpawnPoint;
-
-    [SerializeField] private CursorDetection cursorDetection;
 
     //Betting Variables
     private int playerMoney = 500;
@@ -102,10 +102,9 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private Transform dealerCardPosition;
     [SerializeField] private Transform sunglassesCardPosition;
     [SerializeField] private Transform deckPosition;
+    [SerializeField] private Vector2 playerCardOffset = new Vector2(10f, -10f);
+    [SerializeField] private float dealerCardHorizontalSpacing = 35f;
 
-    [SerializeField] private float cardSpacing = 30.0f;
-    [SerializeField] private float cardRotationAngle = 5.0f;
-    private float cardArcHeight = 0f;
     private const float zOverlap = 0.001f;
     private const float cardAnimationDuration = 0.25f;
 
@@ -183,6 +182,11 @@ public class BlackjackGame : MonoBehaviour
             if(Input.GetKeyDown(KeyCode.H)) StartCoroutine(HitCoroutine());
 
             if(Input.GetKeyDown(KeyCode.S)) StartCoroutine(StandCoroutine());
+
+            if(Input.GetKeyDown(KeyCode.D) && canDoubleDown)
+            {
+                StartCoroutine(DoubleDownCoroutine());
+            }
         }
     }
     #endregion
@@ -612,6 +616,7 @@ public class BlackjackGame : MonoBehaviour
         itemManager.SpawnPowerUps();
         isRoundActive = false;
         isActionLocked = false;
+        canDoubleDown = false;
         isKnifeActive = false;
         IsKnifeAvailable = true;
         IsScissorsAvailable = true;
@@ -660,14 +665,15 @@ public class BlackjackGame : MonoBehaviour
         itemManager.DespawnPowerUps();
 
         yield return StartCoroutine(DealCardToPlayerCoroutine());
-        yield return StartCoroutine(DealCardToDealerCoroutine(false));
-        yield return StartCoroutine(DealCardToPlayerCoroutine());
         yield return StartCoroutine(DealCardToDealerCoroutine(true));
+        yield return StartCoroutine(DealCardToPlayerCoroutine());
+        yield return StartCoroutine(DealCardToDealerCoroutine(false));
 
         UpdateUI();
 
         if(IsBlackjack(CalculateHandValue(playerHand, true)))
         {
+            canDoubleDown = false;
             statusText.text = "Blackjack!";
 
             yield return new WaitForSeconds(2.0f);
@@ -678,6 +684,7 @@ public class BlackjackGame : MonoBehaviour
         {
             statusText.text = "";
             isActionLocked = false;
+            canDoubleDown = PlayerMoney > currentBet;
         }
     }
 
@@ -863,6 +870,7 @@ public class BlackjackGame : MonoBehaviour
         if(!isRoundActive || isActionLocked) yield break;
 
         isActionLocked = true;
+        canDoubleDown = false;
 
         if(hitHandAnimator != null) hitHandAnimator.SetTrigger("hitTrigger");
 
@@ -910,6 +918,46 @@ public class BlackjackGame : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
 
         StartCoroutine(DealerTurnCoroutine());
+    }
+
+    private IEnumerator DoubleDownCoroutine()
+    {
+        if(!isRoundActive || isActionLocked || !canDoubleDown) yield break;
+
+        isActionLocked = true;
+        canDoubleDown = false;
+
+        int additionalBet = currentBet;
+
+        if(PlayerMoney < currentBet * 2)
+        {
+            additionalBet = PlayerMoney - currentBet;
+        }
+
+        currentBet += additionalBet;
+
+        UpdateBettingUI();
+
+        statusText.text = "You Double Down...";
+
+        AudioManager.instance.Play("BetUp");
+
+        hitHandAnimator.SetTrigger("hitTrigger"); //double down animation
+
+        yield return new WaitForSeconds(1f);
+        yield return StartCoroutine(DealCardToPlayerCoroutine());
+
+        UpdateUI(true);
+
+        int playerValue = CalculateHandValue(playerHand, true);
+
+        if(playerValue > blackjackGoal || playerValue < -blackjackGoal) { }
+        else
+        {
+            yield return new WaitForSeconds(1.0f);
+
+            StartCoroutine(DealerTurnCoroutine());
+        }
     }
 
     private IEnumerator DealerTurnCoroutine(bool playerHasBlackjack = false)
@@ -961,7 +1009,7 @@ public class BlackjackGame : MonoBehaviour
         }
         else
         {
-            if(playerValue > blackjackGoal)
+            if(playerValue > blackjackGoal || playerValue < -blackjackGoal)
             {
                 yield return new WaitForSeconds(1f);
             }
@@ -970,7 +1018,7 @@ public class BlackjackGame : MonoBehaviour
                 int dealerDiff = Mathf.Abs(Mathf.Abs(dealerAIValue) - blackjackGoal);
                 int playerDiff = Mathf.Abs(Mathf.Abs(playerAIValue) - blackjackGoal);
 
-                while(Mathf.Abs(dealerAIValue) < (blackjackGoal - 4) && dealerDiff >= playerDiff && dealerHand.Count < 7)
+                while(Mathf.Abs(dealerAIValue) < (blackjackGoal - 4) && dealerHand.Count < 7)
                 {
                     yield return StartCoroutine(DealCardToDealerCoroutine(false));
 
@@ -1004,7 +1052,6 @@ public class BlackjackGame : MonoBehaviour
 
         var playerJokers = playerHand.Where(c => c.cardData.rank == Card.Rank.Joker).ToList();
         var dealerJokers = dealerHand.Where(c => c.cardData.rank == Card.Rank.Joker).ToList();
-
         string revealMessage = "";
 
         if(playerJokers.Count > 0)
@@ -1105,7 +1152,6 @@ public class BlackjackGame : MonoBehaviour
             Instantiate(greenParticlePrefab, particleSpawnPoint.position, particleSpawnPoint.rotation);
 
             yield return new WaitForSeconds(0.5f);
-
             yield return StartCoroutine(AnimateBetChange(targetMoneyBalance, 3.0f));
         }
         else if(message.Contains("Its a tie"))
@@ -1121,7 +1167,6 @@ public class BlackjackGame : MonoBehaviour
             Instantiate(redParticlePrefab, particleSpawnPoint.position, particleSpawnPoint.rotation);
 
             yield return new WaitForSeconds(0.5f);
-
             yield return StartCoroutine(AnimateBetChange(targetMoneyBalance, 3.0f));
         }
 
@@ -1155,30 +1200,40 @@ public class BlackjackGame : MonoBehaviour
     #endregion
 
     #region Card Visuals
-    //Updates the positions and rotations of the cards in a hand to create a fanned-out effect.
+    //The dealer hand is in a straight line, the player hand creates a staircase effect.
     private void UpdateHandVisuals(List<CardInstance> hand)
     {
         int cardCount = hand.Count;
 
         if(cardCount == 0) return;
 
-        float midPoint = (cardCount - 1) / 2.0f;
+        bool isPlayerHand = (hand == playerHand);
 
         for(int i = 0; i < cardCount; i++)
         {
+            int cardOrderIndex = cardCount - 1 - i;
+
             CardInstance cardInstance = hand[i];
 
-            float xPos = (i - (cardCount - 1)) * cardSpacing;
-            float distanceFromCenter = i - midPoint;
-            float rotationAngle = distanceFromCenter * -cardRotationAngle;
+            float xOffset, yOffset;
 
-            Quaternion targetRotation = Quaternion.Euler(0, 0, rotationAngle);
+            if(isPlayerHand)
+            {
+                xOffset = cardOrderIndex * playerCardOffset.x;
+                yOffset = cardOrderIndex * playerCardOffset.y;
+            }
+            else
+            {
+                xOffset = cardOrderIndex * dealerCardHorizontalSpacing;
+                yOffset = 0f;
+            }
 
-            float yPos = (midPoint * midPoint - distanceFromCenter * distanceFromCenter) * cardArcHeight;
-            float zPos = i * zOverlap;
+            float zOffset = cardOrderIndex * -zOverlap;
 
-            cardInstance.displayComponent.transform.localPosition = new Vector3(xPos, yPos, zPos);
-            cardInstance.displayComponent.transform.localRotation = targetRotation;
+            Vector3 targetLocalPos = new Vector3(xOffset, yOffset, zOffset);
+
+            cardInstance.displayComponent.transform.localPosition = targetLocalPos;
+            cardInstance.displayComponent.transform.localRotation = Quaternion.identity;
         }
     }
 
