@@ -1,16 +1,16 @@
 using UnityEngine;
 
-public class HitHandClickable : Clickable
+public class StandHandClickable : Clickable
 {
     [SerializeField] private BlackjackGame gameReference;
-    [SerializeField] private string standardHitTooltip = "Left-click: Hit";
-    [SerializeField] private string doubleDownTooltip = "Left-click: Hit\nRight-click: Double Down";
+    [SerializeField] private string standardHitTooltip = "Left-click: Stand";
+    [SerializeField] private string splitTooltip = "Left-click: Stand\nRight-click: Split";
 
     protected override void OnMouseEnter()
     {
         if(!IsActive) return;
 
-        string activeContent = gameReference.CanPlayerDoubleDown ? doubleDownTooltip : standardHitTooltip;
+        string activeContent = gameReference.CanPlayerSplit ? splitTooltip : standardHitTooltip;
 
         TooltipManager.instance.ShowTooltip(activeContent, tooltipHeader);
 
@@ -28,11 +28,11 @@ public class HitHandClickable : Clickable
 
         if(mouseButton == 1)
         {
-            gameReference.OnDoubleDown();
+            gameReference.OnSplit();
         }
         else
         {
-            base.OnClick(mouseButton);
+            gameReference.OnStand();
         }
     }
 }
