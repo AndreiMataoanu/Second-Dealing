@@ -311,8 +311,7 @@ public class BlackjackGame : MonoBehaviour
             float smoothedPercent = percent * percent * (3f - 2f * percent);
 
             playerMoney = Mathf.RoundToInt(Mathf.Lerp(startingAmount, targetAmount, smoothedPercent));
-
-            UpdateBettingUI();
+            moneyText.text = $"${PlayerMoney}";
 
             yield return null;
         }
@@ -365,7 +364,7 @@ public class BlackjackGame : MonoBehaviour
 
         if(dealerHand.Count < 2) return false;
 
-        CardInstance visibleDealerCard = dealerHand[1];
+        CardInstance visibleDealerCard = dealerHand[0];
 
         int originalValue;
 
@@ -411,6 +410,7 @@ public class BlackjackGame : MonoBehaviour
 
         isCrucifixActive = true;
         IsCrucifixAvailable = false;
+
         return true;
     }
 
@@ -923,14 +923,6 @@ public class BlackjackGame : MonoBehaviour
 
         UpdateUI(true);
 
-        if(scissorsValueReduction > 0)
-        {
-            CardInstance visibleDealerCard = dealerHand[1];
-
-            int originalValue = visibleDealerCard.cardData.GetValue();
-            int halvedValue = Mathf.CeilToInt((float)originalValue / 2f);
-        }
-
         List<CardInstance> activeHand = isPlayingSplitHand ? splitHand : playerHand;
 
         int handValue = CalculateHandValue(activeHand, true);
@@ -940,6 +932,8 @@ public class BlackjackGame : MonoBehaviour
             statusText.text = "Hand full.";
 
             yield return new WaitForSeconds(2.0f);
+
+            isActionLocked = false;
 
             StartCoroutine(StandCoroutine());
         }
@@ -1440,7 +1434,7 @@ public class BlackjackGame : MonoBehaviour
 
         if(scissorsValueReduction > 0 && dealerHand.Count > 1)
         {
-            targetedCardInstance = dealerHand[1];
+            targetedCardInstance = dealerHand[0];
         }
 
         for(int i = 0; i < hand.Count; i++)
@@ -1686,9 +1680,43 @@ public class BlackjackGame : MonoBehaviour
     {
         if(isSplitting || !isRoundActive || isActionLocked || playerHand.Count != 2) return false;
 
-        bool hasMatchingRanks = playerHand[0].cardData.GetValue() == playerHand[1].cardData.GetValue();
+        float[] finalValues = new float[2];
+
+        for(int i = 0; i < 2; i++)
+        {
+            Card card = playerHand[i].cardData;
+
+            float cardValue = card.GetValue();
+
+            if(card.rank >= Card.Rank.Ten && card.rank <= Card.Rank.King)
+            {
+                cardValue = 10;
+            }
+            else if(card.rank == Card.Rank.Ace)
+            {
+                cardValue = 11;
+            }
+            else
+            {
+                cardValue = (int)card.rank;
+            }
+
+            if(isDoubleLowActive && cardValue < 6 && card.rank != Card.Rank.Joker)
+            {
+                cardValue *= 2;
+            }
+
+            if(isHalfHighActive && cardValue > 5 && card.rank != Card.Rank.Joker)
+            {
+                cardValue = Mathf.CeilToInt(cardValue / 2f);
+            }
+
+            finalValues[i] = cardValue;
+        }
+
+        bool hasMatchingValues = Mathf.RoundToInt(finalValues[0]) == Mathf.RoundToInt(finalValues[1]);
         bool hasEnoughMoney = playerMoney >= (currentBet * 2);
 
-        return hasMatchingRanks && hasEnoughMoney;
+        return hasMatchingValues && hasEnoughMoney;
     }
 }
