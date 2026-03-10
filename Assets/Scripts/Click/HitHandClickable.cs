@@ -10,7 +10,7 @@ public class HitHandClickable : Clickable
     {
         if(!IsActive) return;
 
-        string activeContent = gameReference.CanPlayerDoubleDown ? doubleDownTooltip : standardHitTooltip;
+        string activeContent = gameReference.canDoubleDown ? doubleDownTooltip : standardHitTooltip;
 
         TooltipManager.instance.ShowTooltip(activeContent, tooltipHeader);
 
@@ -30,7 +30,7 @@ public class HitHandClickable : Clickable
         {
             gameReference.OnHit();
         }
-        else if(mouseButton == 1 && gameReference.CanPlayerDoubleDown)
+        else if(mouseButton == 1 && gameReference.canDoubleDown)
         {
             gameReference.OnDoubleDown();
         }

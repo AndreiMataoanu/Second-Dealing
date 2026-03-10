@@ -5,49 +5,57 @@ using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[System.Serializable]
+public class EventThreshold
+{
+    public BlackjackEvent.EventSeverity severityToTrigger;
+
+    public int moneyAmount;
+}
+
 public class BlackjackGame : MonoBehaviour
 {
     #region Attributes
+    [Header("Set-Up")]
     [SerializeField] private ItemManager itemManager;
     [SerializeField] private CursorDetection cursorDetection;
-
-    [System.Serializable]
-    public class EventThreshold
-    {
-        public BlackjackEvent.EventSeverity severityToTrigger;
-
-        public int moneyAmount;
-    }
+    private Coroutine currentBustCoroutine = null;
+    private Deck gameDeck;
+    private int blackjackGoal = 21;
+    private int scissorsValueReduction = 0;
+    private bool isKnifeActive = false;
+    private bool isCrucifixActive = false;
+    private bool isActionLocked = false;
+    [HideInInspector] public bool canDoubleDown = false;
+    [HideInInspector] public bool isRoundActive = false;
 
     [Header("Event System")]
     [SerializeField] private List<EventThreshold> eventThresholds;
     [SerializeField] private List<BlackjackEvent> lowSeverityEvents;
     [SerializeField] private List<BlackjackEvent> mediumSeverityEvents;
     [SerializeField] private List<BlackjackEvent> highSeverityEvents;
-    private AceValueRule currentAceRule = AceValueRule.Flexible;
-    public enum AceValueRule { Flexible, Always1, Always11 }
-    private bool isDoubleLowActive = false;
-    private bool isHalfHighActive = false;
-    private bool isRouletteBlackjackActive = false;
-    private bool canDoubleDown = false;
-    private int blackjackGoal = 21;
-    private int targetMoneyBalance;
-    private List<Card.Suit> negativeSuits = new List<Card.Suit>();
-
     private List<BlackjackEvent> availableLowEvents;
     private List<BlackjackEvent> availableMediumEvents;
     private List<BlackjackEvent> availableHighEvents;
     private List<EventThreshold> triggeredThresholds = new List<EventThreshold>();
+    private List<Card.Suit> negativeSuits = new List<Card.Suit>();
+    public enum AceValueRule { Flexible, Always1, Always11 }
+    private AceValueRule currentAceRule = AceValueRule.Flexible;
+    private int targetMoneyBalance;
+    private bool isDoubleLowActive = false;
+    private bool isHalfHighActive = false;
+    private bool isRouletteBlackjackActive = false;
 
-    private Deck gameDeck;
-
-    private List<CardInstance> playerHand = new List<CardInstance>();
-    private List<CardInstance> dealerHand = new List<CardInstance>();
-    private List<GameObject> activeCardObjects = new List<GameObject>();
-
-    [SerializeField] private Animator standHandAnimator;
-    [SerializeField] private Animator hitHandAnimator;
-    [SerializeField] private Animator buttonAnimator;
+    [Header("Money")]
+    [Tooltip("Money the player starts with.")]
+    [SerializeField] private int playerMoney = 500;
+    [Tooltip("The minimum amount a bet can be.")]
+    [SerializeField] private int minBet = 100;
+    [Tooltip("Amount the bet increases / decreases.")]
+    [SerializeField] private int betStep = 100;
+    private int currentBet = 100;
+    private int hand1Bet;
+    private int hand2Bet;
 
     [Header("Camera")]
     [SerializeField] private CinemachineBrain cinemachineBrain;
@@ -62,68 +70,45 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI statusText;
     [SerializeField] private TMPro.TextMeshProUGUI playerTotalText;
     [SerializeField] private TMPro.TextMeshProUGUI dealerTotalText;
+
+    [Header("VFX")]
+    [SerializeField] private Animator standHandAnimator;
+    [SerializeField] private Animator hitHandAnimator;
+    [SerializeField] private Animator buttonAnimator;
     [SerializeField] private GameObject greenParticlePrefab;
     [SerializeField] private GameObject redParticlePrefab;
     [SerializeField] private Transform particleSpawnPoint;
-
-    //Betting Variables
-    private int playerMoney = 500;
-    private int currentBet = 100;
-    private int minBet = 100;
-    private const int betStep = 100;
-    private int hand1Bet;
-    private int hand2Bet;
-
-    [HideInInspector] public bool isRoundActive = false;
-    [HideInInspector] public bool CanPlayerDoubleDown => canDoubleDown;
-    [HideInInspector] public bool CanPlayerSplit => CanSplit();
-    private bool isActionLocked = false;
-    private bool isSplitting = false;
-
-    private Coroutine currentBustCoroutine = null;
-
-    //Abilities
-    private bool isKnifeActive = false;
-    private int scissorsValueReduction = 0;
-    private bool isCrucifixActive = false;
     private GameObject peekedCardObject = null;
-    public bool IsKnifeAvailable { get; private set; } = true;
-    public bool IsScissorsAvailable { get; private set; } = true;
-    public bool IsCrucifixAvailable { get; private set; } = true;
-    public bool IsSunglassesAvailable { get; private set; } = true;
-
-    public int PlayerMoney
-    {
-        get { return playerMoney; }
-        private set { playerMoney = value; }
-    }
+    private const float zOverlap = 0.001f;
+    private const float cardAnimationDuration = 0.25f;
 
     [Header("Visual Setup")]
     [SerializeField] private List<CardVisuals> cardPrefabs = new List<CardVisuals>();
-
-    private Dictionary<(Card.Rank, Card.Suit), GameObject> cardPrefabLookup;
-
     [SerializeField] private Transform playerCardPosition;
     [SerializeField] private Transform dealerCardPosition;
     [SerializeField] private Transform sunglassesCardPosition;
     [SerializeField] private Transform deckPosition;
+    [Tooltip("Offsets the player cards to create the staircase layout.")]
     [SerializeField] private Vector2 playerCardOffset = new Vector2(10f, -10f);
+    [Tooltip("Space between the dealers cards.")]
     [SerializeField] private float dealerCardHorizontalSpacing = 35f;
+    private Dictionary<(Card.Rank, Card.Suit), GameObject> cardPrefabLookup;
+    private readonly Vector3 cardScaleVector = Vector3.one * 0.05f;
+    private List<CardInstance> playerHand = new List<CardInstance>();
+    private List<CardInstance> dealerHand = new List<CardInstance>();
+    private List<GameObject> activeCardObjects = new List<GameObject>();
 
     [Header("Split")]
     [SerializeField] private Transform splitHandPosition;
     [SerializeField] private TMPro.TextMeshProUGUI splitTotalText;
     private List<CardInstance> splitHand = new List<CardInstance>();
     private bool isPlayingSplitHand = false;
+    private bool isSplitting = false;
 
-    private const float zOverlap = 0.001f;
-    private const float cardAnimationDuration = 0.25f;
-
+    //Delete when you get rid of keyboard controls.
     private float nextKeyBetTime = 0f;
     private float keyRepeatDelay = 0.5f;
     private float keyRepeatRate = 0.1f;
-
-    private readonly Vector3 cardScaleVector = Vector3.one * 0.05f;
     #endregion
 
     #region Monobehaviour Methods
@@ -133,7 +118,6 @@ public class BlackjackGame : MonoBehaviour
         availableLowEvents = new List<BlackjackEvent>(lowSeverityEvents);
         availableMediumEvents = new List<BlackjackEvent>(mediumSeverityEvents);
         availableHighEvents = new List<BlackjackEvent>(highSeverityEvents);
-
         cinemachineBrain.DefaultBlend.Time = cameraTransitionTime;
 
         InitializeCardLookup();
@@ -149,6 +133,7 @@ public class BlackjackGame : MonoBehaviour
 
         if(!isRoundActive)
         {
+            //Can delete
             if(Input.GetKeyDown(KeyCode.UpArrow))
             {
                 IncreaseBet();
@@ -175,6 +160,7 @@ public class BlackjackGame : MonoBehaviour
                 nextKeyBetTime = Time.time + keyRepeatRate;
             }
 
+            //Keep this
             if(Input.mouseScrollDelta.y > 0f)
             {
                 IncreaseBet();
@@ -184,11 +170,12 @@ public class BlackjackGame : MonoBehaviour
                 DecreaseBet();
             }
 
+            //Can delete
             bool canDeal = PlayerMoney >= currentBet;
 
             if(Input.GetKeyDown(KeyCode.H) && canDeal) StartCoroutine(DealRoundCoroutine());
         }
-        else //Handle playing actions.
+        else //Handle playing actions. //Can delete
         {
             if(Input.GetKeyDown(KeyCode.H)) StartCoroutine(HitCoroutine());
 
@@ -242,6 +229,12 @@ public class BlackjackGame : MonoBehaviour
     #endregion
 
     #region Betting Methods
+    public int PlayerMoney
+    {
+        get { return playerMoney; }
+        private set { playerMoney = value; }
+    }
+
     public void UpdateBettingUI()
     {
         if(currentBet > playerMoney)
@@ -473,6 +466,14 @@ public class BlackjackGame : MonoBehaviour
             default: return Card.Rank.None;
         }
     }
+
+    public bool IsKnifeAvailable { get; private set; } = true;
+
+    public bool IsScissorsAvailable { get; private set; } = true;
+
+    public bool IsCrucifixAvailable { get; private set; } = true;
+
+    public bool IsSunglassesAvailable { get; private set; } = true;
     #endregion
 
     #region Event Methods
@@ -1660,7 +1661,7 @@ public class BlackjackGame : MonoBehaviour
         return false;
     }
 
-    private bool CanSplit()
+    public bool CanSplit()
     {
         if(isSplitting || !isRoundActive || isActionLocked || playerHand.Count != 2) return false;
 

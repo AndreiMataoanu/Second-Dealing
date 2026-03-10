@@ -45,6 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BlackjackGame
   itemManager: {fileID: 0}
+  cursorDetection: {fileID: 0}
+  canDoubleDown: 0
+  isRoundActive: 0
   eventThresholds:
   - severityToTrigger: 0
     moneyAmount: 600
@@ -83,9 +86,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 16f803c2a8c8cae4b83d83c657ad3736, type: 2}
   - {fileID: 11400000, guid: 2c8cce2d0e09e354fa259a7d81357cc0, type: 2}
   - {fileID: 11400000, guid: f9969251b08054a4b9f872af95840548, type: 2}
-  standHandAnimator: {fileID: 0}
-  hitHandAnimator: {fileID: 0}
-  buttonAnimator: {fileID: 0}
+  playerMoney: 500
+  minBet: 100
+  betStep: 100
   cinemachineBrain: {fileID: 0}
   sittingCamera: {fileID: 0}
   playingCamera: {fileID: 0}
@@ -96,11 +99,12 @@ MonoBehaviour:
   statusText: {fileID: 0}
   playerTotalText: {fileID: 0}
   dealerTotalText: {fileID: 0}
+  standHandAnimator: {fileID: 0}
+  hitHandAnimator: {fileID: 0}
+  buttonAnimator: {fileID: 0}
   greenParticlePrefab: {fileID: 8898999322352444081, guid: 1a2c82dcfdddc9545b93aed2deafd2bb, type: 3}
   redParticlePrefab: {fileID: 3089716248877472652, guid: a551cd01744a1dc4f95b1369b03f87bb, type: 3}
   particleSpawnPoint: {fileID: 0}
-  cursorDetection: {fileID: 0}
-  isRoundActive: 0
   cardPrefabs:
   - rank: 1
     suit: 0
@@ -274,5 +278,7 @@ MonoBehaviour:
   dealerCardPosition: {fileID: 0}
   sunglassesCardPosition: {fileID: 0}
   deckPosition: {fileID: 0}
-  cardSpacing: 0.05
-  cardRotationAngle: 5
+  playerCardOffset: {x: 0.03, y: 0.034}
+  dealerCardHorizontalSpacing: 0.13
+  splitHandPosition: {fileID: 0}
+  splitTotalText: {fileID: 0}

@@ -10,7 +10,7 @@ public class StandHandClickable : Clickable
     {
         if(!IsActive) return;
 
-        string activeContent = gameReference.CanPlayerSplit ? splitTooltip : standardHitTooltip;
+        string activeContent = gameReference.CanSplit() ? splitTooltip : standardHitTooltip;
 
         TooltipManager.instance.ShowTooltip(activeContent, tooltipHeader);
 
