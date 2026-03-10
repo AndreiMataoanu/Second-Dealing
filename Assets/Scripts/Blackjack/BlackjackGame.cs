@@ -969,11 +969,16 @@ public class BlackjackGame : MonoBehaviour
 
         if(isSplitting && !isPlayingSplitHand)
         {
-            statusText.text = "Stand. Playing next hand...";
+            statusText.text = "You stand";
             standHandAnimator.SetTrigger("standTrigger");
 
             yield return new WaitForSeconds(1.5f);
 
+            statusText.text = "Playing next hand...";
+            
+            yield return new WaitForSeconds(2.0f);
+
+            statusText.text = "";
             isPlayingSplitHand = true;
             isActionLocked = false;
             canDoubleDown = playerMoney > currentBet;
@@ -1031,8 +1036,9 @@ public class BlackjackGame : MonoBehaviour
         {
             statusText.text = "Playing next hand...";
 
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(2.0f);
 
+            statusText.text = "";
             isPlayingSplitHand = true;
             isActionLocked = false;
             canDoubleDown = playerMoney > currentBet;
@@ -1064,9 +1070,11 @@ public class BlackjackGame : MonoBehaviour
         AudioManager.instance.Play("BetUp");
 
         statusText.text = "Splitting Hand...";
-        standHandAnimator.SetTrigger("standTrigger");
+        standHandAnimator.SetTrigger("standTrigger"); //split animation
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(2.0f);
+
+        statusText.text = "";
 
         CardInstance cardToMove = playerHand[0];
 
@@ -1110,7 +1118,7 @@ public class BlackjackGame : MonoBehaviour
 
         if(allHandsBust && !isKnifeActive)
         {
-            statusText.text = "All hands bust!";
+            statusText.text = "Bust";
 
             yield return new WaitForSeconds(1.0f);
         }
@@ -1141,11 +1149,11 @@ public class BlackjackGame : MonoBehaviour
                 }
                 else
                 {
-                    statusText.text = "Dealer also has Blackjack!";
+                    statusText.text = "Dealer also has Blackjack";
 
                     yield return new WaitForSeconds(1.5f);
 
-                    StartCoroutine(EndGameCoroutine("Both have Blackjack! Its a tie", true));
+                    StartCoroutine(EndGameCoroutine("Both have Blackjack. Its a tie", true));
 
                     yield break;
                 }
@@ -1558,23 +1566,8 @@ public class BlackjackGame : MonoBehaviour
     {
         int playerValue = CalculateHandValue(playerHand, true);
         bool revealJokers = !dealerHidden;
-        bool playerHasJoker = playerHand.Any(c => c.cardData.rank == Card.Rank.Joker);
 
-        if(playerHand.Count == 0)
-        {
-            playerTotalText.text = "";
-        }
-        else if(revealJokers || !playerHasJoker)
-        {
-            playerTotalText.text = "Your hand: " + playerValue.ToString();
-        }
-        else
-        {
-            int jokerSum = playerHand.Where(c => c.cardData.rank == Card.Rank.Joker).Sum(c => c.jokerValue);
-            int baseValue = playerValue - jokerSum;
-
-            playerTotalText.text = "Your hand: " + $"{baseValue} + ?";
-        }
+        playerTotalText.text = FormatHandText("Your hand: ", playerHand, revealJokers, false);
 
         if(isSplitting)
         {
@@ -1593,37 +1586,11 @@ public class BlackjackGame : MonoBehaviour
             {
                 List<CardInstance> visibleCards = dealerHand.Where(x => !x.isHidden).ToList();
 
-                int dealerVisibleValue = CalculateHandValue(visibleCards, true);
-                bool dealerHasVisibleJoker = visibleCards.Any(c => c.cardData.rank == Card.Rank.Joker);
-
-                if(dealerHasVisibleJoker)
-                {
-                    int jokerSum = visibleCards.Where(c => c.cardData.rank == Card.Rank.Joker).Sum(c => c.jokerValue);
-                    int baseValue = dealerVisibleValue - jokerSum;
-
-                    dealerTotalText.text = "Dealer hand: " + $"{baseValue} + ? + ?";
-                }
-                else
-                {
-                    dealerTotalText.text = "Dealer hand: " + $"{dealerVisibleValue} + ?";
-                }
+                dealerTotalText.text = FormatHandText("Dealer hand: ", visibleCards, revealJokers, true);
             }
             else
             {
-                int dealerFullValue = CalculateHandValue(dealerHand, true);
-                bool dealerHasJoker = dealerHand.Any(c => c.cardData.rank == Card.Rank.Joker);
-
-                if(revealJokers || !dealerHasJoker)
-                {
-                    dealerTotalText.text = "Dealer hand: " + dealerFullValue.ToString();
-                }
-                else
-                {
-                    int jokerSum = dealerHand.Where(c => c.cardData.rank == Card.Rank.Joker).Sum(c => c.jokerValue);
-                    int baseValue = dealerFullValue - jokerSum;
-
-                    dealerTotalText.text = "Dealer hand: " + $"{baseValue} + ?";
-                }
+                dealerTotalText.text = FormatHandText("Dealer hand: ", dealerHand, revealJokers, false);
             }
         }
         else
@@ -1633,13 +1600,30 @@ public class BlackjackGame : MonoBehaviour
 
         UpdateBettingUI();
 
-        if((playerValue > blackjackGoal || playerValue < -blackjackGoal ) && isRoundActive && currentBustCoroutine == null)
+        if((playerValue > blackjackGoal || playerValue < -blackjackGoal) && isRoundActive && currentBustCoroutine == null)
         {
             if(isPlayingSplitHand && !isSplitting)
             {
                 currentBustCoroutine = StartCoroutine(BustCheckCoroutine());
             }
         }
+    }
+
+    private string FormatHandText(string prefix, List<CardInstance> cards, bool revealJokers, bool dealerHasHiddenCard)
+    {
+        if(cards.Count == 0) return "";
+
+        int totalValue = CalculateHandValue(cards, true);
+        bool hasJoker = cards.Any(c => c.cardData.rank == Card.Rank.Joker);
+
+        if(revealJokers || !hasJoker)
+        {
+            return prefix + (dealerHasHiddenCard ? $"{totalValue} + ?" : totalValue.ToString());
+        }
+
+        int baseValue = CalculateHandValue(cards, false);
+
+        return prefix + (dealerHasHiddenCard ? $"{baseValue} + ? + ?" : $"{baseValue} + ?");
     }
 
     private IEnumerator EndRoundSequence()

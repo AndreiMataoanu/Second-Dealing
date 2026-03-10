@@ -26,13 +26,13 @@ public class HitHandClickable : Clickable
     {
         if(!IsActive) return;
 
-        if(mouseButton == 1 && gameReference.CanPlayerDoubleDown)
-        {
-            gameReference.OnDoubleDown();
-        }
-        else
+        if(mouseButton == 0)
         {
             gameReference.OnHit();
+        }
+        else if(mouseButton == 1 && gameReference.CanPlayerDoubleDown)
+        {
+            gameReference.OnDoubleDown();
         }
     }
 }
