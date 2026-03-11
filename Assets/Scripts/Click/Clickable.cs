@@ -8,7 +8,7 @@ public class Clickable : MonoBehaviour
     [SerializeField] private Material outline;
 
     [Header("Tooltip Settings")]
-    [SerializeField] private string tooltipHeader;
+    [SerializeField] public string tooltipHeader;
     [SerializeField] private string tooltipContent;
 
     private MeshCollider meshCollider;
@@ -28,7 +28,7 @@ public class Clickable : MonoBehaviour
         meshRenderer = GetComponent<MeshRenderer>();
     }
 
-    private void OnMouseEnter()
+    protected virtual void OnMouseEnter()
     {
         if (!outline || !IsActive) return;
         
@@ -39,7 +39,7 @@ public class Clickable : MonoBehaviour
         TooltipManager.instance.ShowTooltip(tooltipContent, tooltipHeader);
     }
 
-    private void OnMouseExit()
+    protected virtual void OnMouseExit()
     {
         if (!IsActive) return;
         OnRemoveOutline();
@@ -57,10 +57,25 @@ public class Clickable : MonoBehaviour
         TooltipManager.instance.HideTooltip();
     }
 
-    public virtual void OnClick()
+    public virtual void OnClick(int mouseButton = 0)
     {
         if (!IsActive) return;
-        clickEvent?.Invoke();
+
+        if(mouseButton == 0)
+        {
+            clickEvent?.Invoke();
+        }
+
         OnRemoveOutline();
+    }
+
+    protected void ApplyOutline()
+    {
+        if(!outline || hasOutline || meshRenderer == null) return;
+
+        var materials = new List<Material>(meshRenderer.materials) { outline };
+
+        meshRenderer.materials = materials.ToArray();
+        hasOutline = true;
     }
 }
