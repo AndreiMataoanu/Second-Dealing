@@ -7,20 +7,20 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: cardDiamondsK
+  m_Name: CardEffectsMat
   m_Shader: {fileID: -6465566751694194690, guid: 44e5a7c34ab38b648b9a85eaa2a4de55, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
+  m_LightmapFlags: 2
+  m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses:
   - MOTIONVECTORS
-  m_LockedProperties: _MainTex
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -42,30 +42,22 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _CutInHalf: 0
-    - _CutoffHeight: -0.15
-    - _Direction: -1
+    - _CutInHalf: 1
+    - _CutoffHeight: 0.3
     - _Doubled: 0
-    - _DoubledEffectSpeed: 0.3
-    - _EffectSpeed: 0.05
+    - _EffectSpeed: 0.01
     - _FoilSaturation: -0.1
-    - _GlowThickness: -1
-    - _Negative: 0
-    - _NegativeEffectSpeed: 0.01
-    - _NoiseScale: 10
-    - _NoiseStrength: 0.15
-    - _Opacity: 0.75
+    - _GlowThickness: -0.52
+    - _Negative: 1
+    - _NoiseScale: 3.5
+    - _NoiseStrength: 0.5
     - _QueueControl: 0
     - _QueueOffset: 0
     - _VoronoiCellDensity: 25
-    - _dHeight: 100
-    - _dWidth: 45
-    m_Colors:
-    - _BottomColor: {r: 1, g: 0, b: 0, a: 1}
-    - _TopColor: {r: 1, g: 0.8874066, b: 0, a: 1}
+    m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &7234610787563009771
+--- !u!114 &4346936759024179780
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
