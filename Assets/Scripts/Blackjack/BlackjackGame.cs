@@ -19,13 +19,17 @@ public class BlackjackGame : MonoBehaviour
     [Header("Set-Up")]
     [SerializeField] private ItemManager itemManager;
     [SerializeField] private CursorDetection cursorDetection;
+    [SerializeField] private Collider betUpCollider;
+    [SerializeField] private Collider betDownCollider;
     private Coroutine currentBustCoroutine = null;
     private Deck gameDeck;
     private int blackjackGoal = 21;
     private int scissorsValueReduction = 0;
+    private int roundsCompleted = 0;
     private bool isKnifeActive = false;
     private bool isCrucifixActive = false;
     private bool isActionLocked = false;
+    private bool isTutorialActive => roundsCompleted < tutorialRoundsLimit;
     [HideInInspector] public bool canDoubleDown = false;
     [HideInInspector] public bool isRoundActive = false;
 
@@ -47,6 +51,7 @@ public class BlackjackGame : MonoBehaviour
     private bool isRouletteBlackjackActive = false;
 
     [Header("Money")]
+    [SerializeField] private int tutorialRoundsLimit = 3;
     [Tooltip("Money the player starts with.")]
     [SerializeField] private int playerMoney = 500;
     [Tooltip("The minimum amount a bet can be.")]
@@ -195,7 +200,6 @@ public class BlackjackGame : MonoBehaviour
     #endregion
     
     #region Player Actions
-    // These methods will be added as unity events in the Clickable components
     public void OnStartGame()
     {
         if(!isRoundActive && PlayerMoney >= currentBet)
@@ -237,6 +241,14 @@ public class BlackjackGame : MonoBehaviour
 
     public void UpdateBettingUI()
     {
+        if(isTutorialActive)
+        {
+            moneyText.text = "";
+            betText.text = "";
+
+            return;
+        }
+
         if(currentBet > playerMoney)
         {
             currentBet = playerMoney;
@@ -248,7 +260,7 @@ public class BlackjackGame : MonoBehaviour
 
     public void IncreaseBet()
     {
-        if(isRoundActive) return;
+        if(isRoundActive || isTutorialActive) return;
 
         if(currentBet < PlayerMoney)
         {
@@ -271,7 +283,7 @@ public class BlackjackGame : MonoBehaviour
 
     public void DecreaseBet()
     {
-        if(isRoundActive) return;
+        if(isRoundActive || isTutorialActive) return;
 
         if(currentBet > minBet)
         {
@@ -651,9 +663,14 @@ public class BlackjackGame : MonoBehaviour
 
         gameDeck.InitializeDeck();
         gameDeck.Shuffle();
-        statusText.text = "Place your bet...";
         cursorDetection.OnRoundInactive();
-        itemManager.SpawnPowerUps();
+
+        if(!isTutorialActive)
+        {
+            itemManager.SpawnPowerUps();
+            statusText.text = "Place your bet...";
+        }
+        
         isRoundActive = false;
         isActionLocked = false;
         canDoubleDown = false;
@@ -683,7 +700,7 @@ public class BlackjackGame : MonoBehaviour
     {
         if(isRoundActive || PlayerMoney < currentBet || isActionLocked) yield break;
 
-        hand1Bet = currentBet;
+        hand1Bet = isTutorialActive ? 0 : currentBet;
         buttonAnimator.SetBool("StartActive", false);
 
         if(isRouletteBlackjackActive)
@@ -1225,6 +1242,12 @@ public class BlackjackGame : MonoBehaviour
     {
         statusText.text = message;
 
+        if(isTutorialActive)
+        {
+            yield return new WaitForSeconds(2.0f);
+            yield break;
+        }
+
         if(message.Contains("You win"))
         {
             targetMoneyBalance = playerMoney + betAmount;
@@ -1632,9 +1655,35 @@ public class BlackjackGame : MonoBehaviour
         isRoundActive = false;
         cursorDetection.OnRoundInactive();
 
+        if(roundsCompleted == tutorialRoundsLimit - 1)
+        {
+            DisableCamera(playingCamera);
+            EnableCamera(eventCamera);
+
+            AudioManager.instance.Play("Laugh");
+
+            statusText.text = "Lets raise the stakes...";
+
+            yield return new WaitForSeconds(5.0f);
+
+            AudioManager.instance.Play("NewEvent");
+
+            statusText.text = "$$$$$$$$$$$";
+
+            yield return new WaitForSeconds(6.0f);
+
+            DisableCamera(eventCamera);
+            EnableCamera(sittingCamera);
+
+            betUpCollider.enabled = true;
+            betDownCollider.enabled = true;
+        }
+
+        roundsCompleted++;
+
         yield return StartCoroutine(CheckForEventTriggerCoroutine());
 
-        if(PlayerMoney <= 0)
+        if(!isTutorialActive && PlayerMoney <= 0)
         {
             SceneManager.LoadSceneAsync(3);
 

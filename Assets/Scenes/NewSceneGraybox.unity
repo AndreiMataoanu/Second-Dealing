@@ -1665,7 +1665,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2841673505419267782, guid: 8624eb4fc2049944a9faf1ceea35c0c1, type: 3}
       propertyPath: m_text
-      value: Let's make it more interesting
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2841673505419267782, guid: 8624eb4fc2049944a9faf1ceea35c0c1, type: 3}
       propertyPath: m_fontSize
@@ -1855,7 +1855,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 741130242}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d422c2c37986cba47a02ba5d00153fe4, type: 3}
   m_Name: 
@@ -1895,7 +1895,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
@@ -3724,6 +3724,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 595901487}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: betUpCollider
+      value: 
+      objectReference: {fileID: 1712160668}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: playingCamera
       value: 
       objectReference: {fileID: 933582557}
@@ -3739,6 +3743,10 @@ PrefabInstance:
       propertyPath: splitTotalText
       value: 
       objectReference: {fileID: 1185966168}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: betDownCollider
+      value: 
+      objectReference: {fileID: 741130250}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: cursorDetection
       value: 
@@ -3779,6 +3787,10 @@ PrefabInstance:
       propertyPath: playerCardPosition
       value: 
       objectReference: {fileID: 132275048}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: tutorialRoundsLimit
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: sunglassesCardPosition
       value: 
@@ -5201,7 +5213,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1712160660}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d422c2c37986cba47a02ba5d00153fe4, type: 3}
   m_Name: 
@@ -5241,7 +5253,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
@@ -6384,7 +6396,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2287947277363377789, guid: 8624eb4fc2049944a9faf1ceea35c0c1, type: 3}
       propertyPath: m_text
-      value: $100
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2287947277363377789, guid: 8624eb4fc2049944a9faf1ceea35c0c1, type: 3}
       propertyPath: m_fontAsset
@@ -6524,7 +6536,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7074986225675697223, guid: 8624eb4fc2049944a9faf1ceea35c0c1, type: 3}
       propertyPath: m_text
-      value: $500
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7074986225675697223, guid: 8624eb4fc2049944a9faf1ceea35c0c1, type: 3}
       propertyPath: m_fontSize
