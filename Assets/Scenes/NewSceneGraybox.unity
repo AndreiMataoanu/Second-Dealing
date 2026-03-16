@@ -6869,6 +6869,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1306894128}
     - target: {fileID: 1819999903971304338, guid: 37c77e8a77093fc4f8e72e4e5f3d99bb, type: 3}
+      propertyPath: powerUpPrefabs.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1819999903971304338, guid: 37c77e8a77093fc4f8e72e4e5f3d99bb, type: 3}
       propertyPath: 'buySpawnPoints.Array.data[0]'
       value: 
       objectReference: {fileID: 1310530946}
@@ -6876,6 +6880,10 @@ PrefabInstance:
       propertyPath: 'buySpawnPoints.Array.data[1]'
       value: 
       objectReference: {fileID: 1217552630}
+    - target: {fileID: 1819999903971304338, guid: 37c77e8a77093fc4f8e72e4e5f3d99bb, type: 3}
+      propertyPath: 'powerUpPrefabs.Array.data[4]'
+      value: 
+      objectReference: {fileID: 6929943178110708876, guid: fd79154c25482724eb9cd9c0dcfc8218, type: 3}
     - target: {fileID: 1819999903971304338, guid: 37c77e8a77093fc4f8e72e4e5f3d99bb, type: 3}
       propertyPath: 'useSpawnPoints.Array.data[0]'
       value: 

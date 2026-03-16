@@ -100,7 +100,6 @@ public class ItemManager : MonoBehaviour
         {
             if(currentPassive.PassiveItemRounds == roundsSincePassiveBought || passiveUsed)
             {
-                Debug.Log("passiveDOne");
                 //AudioManager.instance.Play(item.name);
                 //TooltipManager.instance.HideTooltip();
                 Destroy(currentPassive.gameObject);
