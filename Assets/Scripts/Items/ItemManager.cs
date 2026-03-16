@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -9,13 +10,13 @@ public class ItemManager : MonoBehaviour
     [Header("Managers")]
     [SerializeField] private BlackjackGame blackjackGame;
     [SerializeField] private CursorDetection cursorDetection;
-    
+    private int roundsSincePassiveBought = 0;
     [Header("Power ups")]
     [SerializeField] private List<GameObject> buySpawnPoints;
     [SerializeField] private List<GameObject> useSpawnPoints;
     [SerializeField] private List<GameObject> powerUpPrefabs;
     [SerializeField] private float denySoundCooldown = 0.3f;
-
+    private Item currentPassive;
     private int inventoryItems = 0;
     private float nextDenyTime = 0;
     private int totalWeight = 0;
@@ -56,10 +57,23 @@ public class ItemManager : MonoBehaviour
     {
         if (inventoryItems >= useSpawnPoints.Count || !HasEnoughMoney(item)) return;
         
-        AddToInventory(item);
-        item.RemoveAction(OnBuy);
-        item.AddAction(Activate);
-        item.SetActive(false);
+        if(item.passive && currentPassive == null)
+        {
+            AddToInventory(item);
+            item.RemoveAction(OnBuy);
+            item.AddAction(Activate);
+            item.SetActive(false);
+            currentPassive = item;
+            item.Activate();
+        }
+        if(!item.passive)
+        {
+            AddToInventory(item);
+            item.RemoveAction(OnBuy);
+            item.AddAction(Activate);
+            item.SetActive(false);
+        }
+        
         cursorDetection.AddRoundActiveClickable(item);
 
         DeactivateShopItems();
@@ -72,11 +86,33 @@ public class ItemManager : MonoBehaviour
             AudioManager.instance.Play("ItemDeny");
             return;
         }
-        
-        AudioManager.instance.Play(item.name);
-        TooltipManager.instance.HideTooltip();
-        Destroy(item.gameObject);
-        inventoryItems--;
+        if(!item.passive)
+        {
+            AudioManager.instance.Play(item.name);
+            TooltipManager.instance.HideTooltip();
+            Destroy(item.gameObject);
+            inventoryItems--;
+        }
+    }
+    public void IsPassiveDone(bool passiveUsed)
+    {
+        if(currentPassive != null)
+        {
+            if(currentPassive.PassiveItemRounds == roundsSincePassiveBought || passiveUsed)
+            {
+                Debug.Log("passiveDOne");
+                //AudioManager.instance.Play(item.name);
+                //TooltipManager.instance.HideTooltip();
+                Destroy(currentPassive.gameObject);
+                inventoryItems--;
+                roundsSincePassiveBought = 0;
+                currentPassive = null;
+            }
+            else
+            {
+                roundsSincePassiveBought ++;
+            }    
+        } 
     }
 
     #region Helper Methods

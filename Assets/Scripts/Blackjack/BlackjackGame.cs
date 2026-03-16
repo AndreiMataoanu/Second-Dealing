@@ -28,6 +28,7 @@ public class BlackjackGame : MonoBehaviour
     private int roundsCompleted = 0;
     private bool isKnifeActive = false;
     private bool isCrucifixActive = false;
+    private bool isOrganActive = false;
     private bool isActionLocked = false;
     private bool isTutorialActive => roundsCompleted < tutorialRoundsLimit;
     [HideInInspector] public bool canDoubleDown = false;
@@ -455,6 +456,14 @@ public class BlackjackGame : MonoBehaviour
 
         activeCardObjects.Add(peekedCardObject);
         IsSunglassesAvailable = false;
+        return true;
+    }
+
+    public bool ActivateOrgan()
+    {
+        if(isOrganActive) return false;
+
+        isOrganActive = true;
         return true;
     }
 
@@ -1293,7 +1302,6 @@ public class BlackjackGame : MonoBehaviour
             yield return new WaitForSeconds(2.0f);
             yield break;
         }
-
         if(message.Contains("You win"))
         {
             targetMoneyBalance = playerMoney + betAmount;
@@ -1306,13 +1314,24 @@ public class BlackjackGame : MonoBehaviour
         }
         else if(message.Contains("Dealer wins") || message.Contains("Bust"))
         {
-            targetMoneyBalance = playerMoney - betAmount;
+            if(!isOrganActive)
+            {
+                targetMoneyBalance = playerMoney - betAmount;
 
-            AudioManager.instance.Play("MoneyLost");
+                AudioManager.instance.Play("MoneyLost");
 
-            Instantiate(redParticlePrefab, particleSpawnPoint.position, particleSpawnPoint.rotation);
+                Instantiate(redParticlePrefab, particleSpawnPoint.position, particleSpawnPoint.rotation);
 
-            yield return StartCoroutine(AnimateBetChange(targetMoneyBalance, 3f));
+                yield return StartCoroutine(AnimateBetChange(targetMoneyBalance, 3f));
+            }
+            else
+            {
+                itemManager.IsPassiveDone(true);
+                isOrganActive = false;
+                targetMoneyBalance = playerMoney;
+
+                yield return new WaitForSeconds(2.0f);
+            }
         }
         else
         {
@@ -1735,6 +1754,7 @@ public class BlackjackGame : MonoBehaviour
 
     private IEnumerator EndRoundSequence()
     {
+        itemManager.IsPassiveDone(false);
         isRoundActive = false;
         cursorDetection.OnRoundInactive();
 

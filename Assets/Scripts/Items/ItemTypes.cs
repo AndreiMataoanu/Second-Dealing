@@ -3,5 +3,6 @@ public enum ItemType
     Knife,
     Scissors,
     Crucifix,
-    Sunglasses
+    Sunglasses,
+    Organ
 }

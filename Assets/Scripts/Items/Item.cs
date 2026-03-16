@@ -8,11 +8,14 @@ public class Item : Clickable
     [Tooltip("Higher number means more common.")]
     [SerializeField] public int spawnWeight = 10;
 
+    [SerializeField] public int PassiveItemRounds = 2;
+    [SerializeField] public bool passive = false;  
+
     private Action<Item> itemAction;
     private BlackjackGame blackjackGame;
-
     public void AddAction(Action<Item> action) => itemAction += action;
     public void RemoveAction(Action<Item> action) => itemAction -= action;
+
 
     public bool Activate()
     {
@@ -28,6 +31,7 @@ public class Item : Clickable
             ItemType.Scissors => blackjackGame.ActivateScissors(),
             ItemType.Crucifix => blackjackGame.ActivateCrucifix(),
             ItemType.Sunglasses => blackjackGame.ActivateSunglasses(),
+            ItemType.Organ => blackjackGame.ActivateOrgan(),
             _ => false
         };
 
