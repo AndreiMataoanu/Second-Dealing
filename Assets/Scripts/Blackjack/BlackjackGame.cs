@@ -21,6 +21,7 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private CursorDetection cursorDetection;
     [SerializeField] private Collider betUpCollider;
     [SerializeField] private Collider betDownCollider;
+    private CardInstance targetedScissorsCard = null;
     private Coroutine currentBustCoroutine = null;
     private Deck gameDeck;
     private int blackjackGoal = 21;
@@ -358,6 +359,7 @@ public class BlackjackGame : MonoBehaviour
 
         isKnifeActive = true;
         IsKnifeAvailable = false;
+
         return true;
     }
 
@@ -385,7 +387,7 @@ public class BlackjackGame : MonoBehaviour
 
             if(isDoubleLowActive && originalValue < 6)
             {
-                originalValue *= 2;
+                originalValue = originalValue + originalValue;
             }
 
             if(isHalfHighActive && originalValue > 5)
@@ -395,13 +397,14 @@ public class BlackjackGame : MonoBehaviour
 
             if(negativeSuits.Contains(visibleDealerCard.cardData.suit))
             {
-                originalValue *= -1;
+                originalValue = -originalValue;
             }
         }
 
         int halvedValue = Mathf.CeilToInt((float)Mathf.Abs(originalValue) / 2f);
 
         scissorsValueReduction = Mathf.Abs(originalValue) - halvedValue;
+        targetedScissorsCard = visibleDealerCard;
         IsScissorsAvailable = false;
 
         UpdateUI(true);
@@ -721,6 +724,7 @@ public class BlackjackGame : MonoBehaviour
         IsCrucifixAvailable = true;
         isCrucifixActive = false;
         IsSunglassesAvailable = true;
+        targetedScissorsCard = null;
         playerTotalText.text = "";
         dealerTotalText.text = "";
         splitTotalText.text = "";
@@ -1549,7 +1553,7 @@ public class BlackjackGame : MonoBehaviour
 
         if(scissorsValueReduction > 0 && dealerHand.Count > 1)
         {
-            targetedCardInstance = dealerHand[0];
+            targetedCardInstance = targetedScissorsCard;
         }
 
         for(int i = 0; i < hand.Count; i++)
@@ -1595,7 +1599,7 @@ public class BlackjackGame : MonoBehaviour
 
             if(isDoubleLowActive && cardValue < 6 && card.rank != Card.Rank.Joker)
             {
-                cardValue *= 2;
+                cardValue = cardValue + cardValue;
             }
 
             if(isHalfHighActive && cardValue > 5 && card.rank != Card.Rank.Joker)
@@ -1605,7 +1609,7 @@ public class BlackjackGame : MonoBehaviour
 
             if(negativeSuits.Contains(card.suit))
             {
-                cardValue *= -1;
+                cardValue = -cardValue;
             }
 
             if(targetedCardInstance != null && cardInstance == targetedCardInstance)
