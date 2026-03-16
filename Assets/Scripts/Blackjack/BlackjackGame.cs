@@ -371,6 +371,8 @@ public class BlackjackGame : MonoBehaviour
 
         CardInstance visibleDealerCard = dealerHand[0];
 
+        visibleDealerCard.displayComponent.SetCutVisual(true);
+
         int originalValue;
 
         if(visibleDealerCard.cardData.rank == Card.Rank.Joker)
@@ -585,16 +587,22 @@ public class BlackjackGame : MonoBehaviour
     public void SetNegativeSuit(Card.Suit suit)
     {
         negativeSuits.Add(suit);
+
+        UpdateCardVFX();
     }
 
     public void SetDoubleLowActive(bool active)
     {
         isDoubleLowActive = active;
+
+        UpdateCardVFX();
     }
 
     public void SetHalfHighActive(bool active)
     {
         isHalfHighActive = active;
+
+        UpdateCardVFX();
     }
 
     public void SetRouletteBlackjackActive(bool active)
@@ -605,6 +613,36 @@ public class BlackjackGame : MonoBehaviour
     private void RandomizeBlackjackGoal()
     {
         blackjackGoal = Random.Range(21, 37); //from 21 to 36
+    }
+
+    private bool CheckIfDoubled(Card card)
+    {
+        if(card.rank == Card.Rank.Joker) return false;
+
+        if(!isDoubleLowActive) return false;
+
+        float cardValue = 0f;
+
+        if(card.rank >= Card.Rank.Ten && card.rank <= Card.Rank.King) cardValue = 10f;
+        else if(card.rank == Card.Rank.Ace) cardValue = currentAceRule == AceValueRule.Always1 ? 1f : 11f;
+        else cardValue = (int)card.rank;
+
+        return cardValue < 6f;
+    }
+
+    private bool CheckIfHalved(Card card)
+    {
+        if(card.rank == Card.Rank.Joker) return false;
+
+        if(!isHalfHighActive) return false;
+
+        float cardValue = 0f;
+
+        if(card.rank >= Card.Rank.Ten && card.rank <= Card.Rank.King) cardValue = 10f;
+        else if(card.rank == Card.Rank.Ace) cardValue = currentAceRule == AceValueRule.Always1 ? 1f : 11f;
+        else cardValue = (int)card.rank;
+
+        return cardValue > 5f;
     }
     #endregion
 
@@ -761,6 +799,14 @@ public class BlackjackGame : MonoBehaviour
         activeCardObjects.Add(cardObject);
 
         CardDisplay cardDisplay = cardObject.GetComponent<CardDisplay>();
+
+        bool isSuitNegative = negativeSuits.Contains(newCardData.suit);
+        bool isDoubled = CheckIfDoubled(newCardData);
+        bool isHalved = CheckIfHalved(newCardData);
+
+        cardDisplay.SetNegativeVisual(isSuitNegative);
+        cardDisplay.SetDoubledVisual(isDoubled);
+        cardDisplay.SetCutVisual(isHalved);
 
         if(cardDisplay == null) return null;
 
@@ -1382,6 +1428,43 @@ public class BlackjackGame : MonoBehaviour
 
             cardInstance.displayComponent.transform.localPosition = targetLocalPos;
             cardInstance.displayComponent.transform.localRotation = Quaternion.identity;
+        }
+    }
+
+    public void UpdateCardVFX()
+    {
+        foreach(CardInstance card in playerHand)
+        {
+            bool isNegative = negativeSuits.Contains(card.cardData.suit);
+            bool isDoubled = CheckIfDoubled(card.cardData);
+            bool isHalved = CheckIfHalved(card.cardData);
+
+            card.displayComponent.SetNegativeVisual(isNegative);
+            card.displayComponent.SetDoubledVisual(isDoubled);
+            card.displayComponent.SetCutVisual(isHalved);
+        }
+
+        foreach(CardInstance card in dealerHand)
+        {
+            bool isNegative = negativeSuits.Contains(card.cardData.suit);
+            bool isDoubled = CheckIfDoubled(card.cardData);
+            bool isHalved = CheckIfHalved(card.cardData);
+
+            card.displayComponent.SetNegativeVisual(isNegative);
+            card.displayComponent.SetDoubledVisual(isDoubled);
+            card.displayComponent.SetCutVisual(isHalved);
+        }
+
+        foreach(CardInstance card in splitHand)
+        {
+            bool isNegative = negativeSuits.Contains(card.cardData.suit);
+            bool isDoubled = CheckIfDoubled(card.cardData);
+            bool isHalved = CheckIfHalved(card.cardData);
+
+            card.displayComponent.SetNegativeVisual(isNegative);
+            card.displayComponent.SetDoubledVisual(isDoubled);
+            card.displayComponent.SetCutVisual(isHalved);
+            card.displayComponent.SetCutVisual(!IsScissorsAvailable);
         }
     }
 
