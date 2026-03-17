@@ -30,6 +30,7 @@ public class BlackjackGame : MonoBehaviour
     private bool isKnifeActive = false;
     private bool isCrucifixActive = false;
     private bool isOrganActive = false;
+    private bool isCigaretteActive = false;
     private bool isActionLocked = false;
     private bool isTutorialActive => roundsCompleted < tutorialRoundsLimit;
     [HideInInspector] public bool canDoubleDown = false;
@@ -459,6 +460,7 @@ public class BlackjackGame : MonoBehaviour
 
         activeCardObjects.Add(peekedCardObject);
         IsSunglassesAvailable = false;
+
         return true;
     }
 
@@ -467,7 +469,113 @@ public class BlackjackGame : MonoBehaviour
         if(isOrganActive) return false;
 
         isOrganActive = true;
+
         return true;
+    }
+
+    public bool ActivateCigarette()
+    {
+        if(!isRoundActive || isActionLocked || isCigaretteActive || isSplitting) return false;
+
+        isCigaretteActive = true;
+
+        StartCoroutine(CigaretteCoroutine());
+
+        return true;
+    }
+
+    private IEnumerator CigaretteCoroutine()
+    {
+        isActionLocked = true;
+
+        List<CardInstance> tempHand = new List<CardInstance>(playerHand);
+
+        playerHand = new List<CardInstance>(dealerHand);
+        dealerHand = new List<CardInstance>(tempHand);
+
+        AudioManager.instance.Play("Smoking");
+
+        yield return new WaitForSeconds(1.5f);
+
+        //particles
+
+        foreach(var card in playerHand)
+        {
+            if(card.isHidden)
+            {
+                yield return StartCoroutine(FlipCardCoroutine(card.displayComponent, 0.4f));
+
+                card.isHidden = false;
+            }
+        }
+
+        float animDuration = 0.5f;
+        int maxCards = Mathf.Max(playerHand.Count, dealerHand.Count);
+
+        for(int i = 0; i < maxCards; i++)
+        {
+            if(i < playerHand.Count)
+            {
+                CardInstance pCard = playerHand[i];
+
+                pCard.displayComponent.transform.SetParent(playerCardPosition.parent);
+
+                int cardOrderIndex = playerHand.Count - 1 - i;
+                float xOffset = cardOrderIndex * playerCardOffset.x;
+                float yOffset = cardOrderIndex * playerCardOffset.y;
+                float zOffset = cardOrderIndex * -zOverlap;
+
+                Vector3 targetLocalPos = new Vector3(xOffset, yOffset, zOffset);
+
+                StartCoroutine(CardAnimationCoroutine(
+                    pCard.displayComponent.transform,
+                    playerCardPosition.TransformPoint(targetLocalPos),
+                    playerCardPosition.rotation,
+                    cardScaleVector,
+                    animDuration
+                ));
+            }
+
+            if(i < dealerHand.Count)
+            {
+                CardInstance dCard = dealerHand[i];
+
+                dCard.displayComponent.transform.SetParent(dealerCardPosition.parent);
+
+                int cardOrderIndex = dealerHand.Count - 1 - i;
+                float xOffset = cardOrderIndex * dealerCardHorizontalSpacing;
+                float yOffset = 0f;
+                float zOffset = cardOrderIndex * -zOverlap;
+
+                Vector3 targetLocalPos = new Vector3(xOffset, yOffset, zOffset);
+
+                StartCoroutine(CardAnimationCoroutine(
+                    dCard.displayComponent.transform,
+                    dealerCardPosition.TransformPoint(targetLocalPos),
+                    dealerCardPosition.rotation,
+                    cardScaleVector,
+                    animDuration
+                ));
+            }
+        }
+
+        yield return new WaitForSeconds(animDuration);
+
+        foreach(CardInstance card in playerHand)
+        {
+            card.displayComponent.transform.SetParent(playerCardPosition);
+        }
+
+        foreach(CardInstance card in dealerHand)
+        {
+            card.displayComponent.transform.SetParent(dealerCardPosition);
+        }
+
+        UpdateHandVisuals(playerHand);
+        UpdateHandVisuals(dealerHand);
+        UpdateUI(true);
+
+        isActionLocked = false;
     }
 
     //Helper method for Crucifix.
@@ -733,6 +841,7 @@ public class BlackjackGame : MonoBehaviour
         IsCrucifixAvailable = true;
         isCrucifixActive = false;
         IsSunglassesAvailable = true;
+        isCigaretteActive = false;
         targetedScissorsCard = null;
         playerTotalText.text = "";
         dealerTotalText.text = "";
@@ -1533,7 +1642,10 @@ public class BlackjackGame : MonoBehaviour
         float halfDuration = duration / 2.0f;
         float elapsedTime = 0;
 
-        AudioManager.instance.Play("Flip");
+        if(!isCigaretteActive)
+        {
+            AudioManager.instance.Play("Flip");
+        }
 
         while(elapsedTime < halfDuration)
         {
