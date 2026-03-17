@@ -33,6 +33,7 @@ public class Item : Clickable
             ItemType.Sunglasses => blackjackGame.ActivateSunglasses(),
             ItemType.Organ => blackjackGame.ActivateOrgan(),
             ItemType.Cigarette => blackjackGame.ActivateCigarette(),
+            ItemType.Alcohol => blackjackGame.ActivateAlcohol(),
             _ => false
         };
 

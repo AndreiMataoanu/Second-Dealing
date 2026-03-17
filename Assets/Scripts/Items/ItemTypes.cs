@@ -5,5 +5,6 @@ public enum ItemType
     Crucifix,
     Sunglasses,
     Organ,
-    Cigarette
+    Cigarette,
+    Alcohol
 }
