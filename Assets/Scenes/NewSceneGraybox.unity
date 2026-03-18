@@ -2589,7 +2589,7 @@ MonoBehaviour:
   PivotOffset: {x: 0, y: 0, z: 0}
   AmplitudeGain: 0
   FrequencyGain: 0
-  m_NoiseOffsets: {x: -766.29565, y: 556.09937, z: 313.49277}
+  m_NoiseOffsets: {x: 685.27747, y: 41.605835, z: -159.58252}
 --- !u!1 &988398636
 GameObject:
   m_ObjectHideFlags: 0
@@ -3721,6 +3721,10 @@ PrefabInstance:
       value: BlackjackManager
       objectReference: {fileID: 0}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: qqqq
+      value: 
+      objectReference: {fileID: 2100000, guid: ece7f9838d0aa0d4b95cad66c95255a9, type: 2}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: noise
       value: 
       objectReference: {fileID: 933582558}
@@ -3728,6 +3732,10 @@ PrefabInstance:
       propertyPath: betText
       value: 
       objectReference: {fileID: 2114879424}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: material
+      value: 
+      objectReference: {fileID: 2100000, guid: ece7f9838d0aa0d4b95cad66c95255a9, type: 2}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: moneyText
       value: 
@@ -5478,6 +5486,18 @@ PrefabInstance:
       propertyPath: sounds.Array.data[20].volume
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4375733557009657759, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: sounds.Array.data[17].pitchVariance
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4375733557009657759, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: sounds.Array.data[20].pitchVariance
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4375733557009657759, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: 'sounds.Array.data[20].clips.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 49499ee043f19334ab52df3ddebe2567, type: 3}
     - target: {fileID: 5036363664628651963, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
       propertyPath: m_Name
       value: AudioManager
