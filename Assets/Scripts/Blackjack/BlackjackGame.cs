@@ -581,9 +581,9 @@ public class BlackjackGame : MonoBehaviour
         UpdateHandVisuals(playerHand);
         UpdateHandVisuals(dealerHand);
         UpdateUI(true);
-
         StartCoroutine(LerpShader(defaultNoiseAmount, 1.0f));
 
+        canDoubleDown = true;
         isActionLocked = false;
     }
 
