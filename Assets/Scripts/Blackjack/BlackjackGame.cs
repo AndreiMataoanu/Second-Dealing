@@ -504,7 +504,7 @@ public class BlackjackGame : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
 
-        yield return StartCoroutine(LerpShader(0.6f, 1f));
+        yield return StartCoroutine(LerpShader(0.5f, 1f));
 
         foreach(var card in playerHand)
         {
@@ -608,8 +608,8 @@ public class BlackjackGame : MonoBehaviour
 
         yield return new WaitForSeconds(1.5f);
 
-        StartCoroutine(AlcoholVision(defaultNoiseAmount, 0.4f, 0.2f));
-        StartCoroutine(AlcoholCameraSway(0f, 0.25f, 0f, 0.15f, 1f));
+        StartCoroutine(AlcoholVision(defaultNoiseAmount, 0.2f, 0.2f));
+        StartCoroutine(AlcoholCameraSway(0f, 0.2f, 0f, 0.1f, 1f));
 
         foreach(CardInstance card in playerHand)
         {
@@ -730,8 +730,6 @@ public class BlackjackGame : MonoBehaviour
             elapsedTime += Time.deltaTime;
 
             float t = elapsedTime / duration;
-
-            t = t * t * (3f - 2f * t);
 
             material.SetFloat("_NoiseAmount", Mathf.Lerp(startAmount, targetAmount, t));
 
@@ -2082,6 +2080,8 @@ public class BlackjackGame : MonoBehaviour
 
         if(!isTutorialActive && PlayerMoney <= 0)
         {
+            StartCoroutine(LerpShader(defaultNoiseAmount, 1.0f));
+
             SceneManager.LoadSceneAsync(3);
 
             yield break;
@@ -2089,6 +2089,8 @@ public class BlackjackGame : MonoBehaviour
 
         if(PlayerMoney >= 100000)
         {
+            StartCoroutine(LerpShader(defaultNoiseAmount, 1.0f));
+
             SceneManager.LoadSceneAsync(2);
 
             yield break;
