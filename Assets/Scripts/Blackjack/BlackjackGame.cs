@@ -22,7 +22,6 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private Collider betUpCollider;
     [SerializeField] private Collider betDownCollider;
     [SerializeField] private Material material;
-    [SerializeField] private ParticleSystem smokeParticle;
     private CardInstance targetedScissorsCard = null;
     private Coroutine currentBustCoroutine = null;
     private Deck gameDeck;
@@ -93,6 +92,7 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private GameObject greenParticlePrefab;
     [SerializeField] private GameObject redParticlePrefab;
     [SerializeField] private Transform particleSpawnPoint;
+    [SerializeField] private ParticleSystem smokeParticle;
     private GameObject peekedCardObject = null;
     private const float zOverlap = 0.001f;
     private const float cardAnimationDuration = 0.25f;
@@ -503,11 +503,9 @@ public class BlackjackGame : MonoBehaviour
 
         AudioManager.instance.Play("Smoking");
 
+        yield return new WaitForSeconds(1f);
+
         smokeParticle.Play();
-
-        yield return new WaitForSeconds(2f);
-
-        //yield return StartCoroutine(LerpShader(0.5f, 1f)); Left this here in case we need to revert, feel free to remove, this code is terrifying.
 
         foreach(var card in playerHand)
         {
@@ -586,8 +584,6 @@ public class BlackjackGame : MonoBehaviour
         UpdateUI(true);
 
         smokeParticle.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-        //StartCoroutine(LerpShader(defaultNoiseAmount, 1.0f)); also just commented out cause it feels redundant now?, feel free to remove both.
-
         canDoubleDown = true;
         isActionLocked = false;
     }
