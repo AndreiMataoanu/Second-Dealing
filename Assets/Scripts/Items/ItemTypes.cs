@@ -6,5 +6,6 @@ public enum ItemType
     Sunglasses,
     Organ,
     Cigarette,
-    Alcohol
+    Alcohol,
+    Fan
 }

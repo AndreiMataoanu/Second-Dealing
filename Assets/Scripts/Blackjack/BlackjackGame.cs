@@ -36,6 +36,7 @@ public class BlackjackGame : MonoBehaviour
     private bool isOrganActive = false;
     private bool isCigaretteActive = false;
     private bool isAlcoholActive = false;
+    private bool isFanActive = false;
     private bool isActionLocked = false;
     private bool isTutorialActive => roundsCompleted < tutorialRoundsLimit;
     [HideInInspector] public bool canDoubleDown = false;
@@ -507,6 +508,8 @@ public class BlackjackGame : MonoBehaviour
 
         smokeParticle.Play();
 
+        yield return new WaitForSeconds(1f);
+
         foreach(var card in playerHand)
         {
             if(card.isHidden)
@@ -583,7 +586,7 @@ public class BlackjackGame : MonoBehaviour
         UpdateHandVisuals(dealerHand);
         UpdateUI(true);
 
-        smokeParticle.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+        smokeParticle.Stop();
         canDoubleDown = true;
         isActionLocked = false;
     }
@@ -693,6 +696,53 @@ public class BlackjackGame : MonoBehaviour
             noise.FrequencyGain = Mathf.Lerp(minFreq, maxFreq, lerpValue);
 
             yield return null;
+        }
+    }
+
+    public bool ActivateFan()
+    {
+        if(!isRoundActive || isActionLocked || isFanActive) return false;
+
+        isFanActive = true;
+
+        StartCoroutine(FanCoroutine());
+
+        return true;
+    }
+
+    private IEnumerator FanCoroutine()
+    {
+        isActionLocked = true;
+
+        ClearTable();
+
+        isSplitting = false;
+        isPlayingSplitHand = false;
+        scissorsValueReduction = 0;
+        targetedScissorsCard = null;
+
+        yield return new WaitForSeconds(1f);
+        yield return StartCoroutine(DealCardToPlayerCoroutine());
+        yield return StartCoroutine(DealCardToDealerCoroutine(true));
+        yield return StartCoroutine(DealCardToPlayerCoroutine());
+        yield return StartCoroutine(DealCardToDealerCoroutine(false));
+
+        UpdateUI();
+
+        if(IsBlackjack(CalculateHandValue(playerHand, true)))
+        {
+            canDoubleDown = false;
+            statusText.text = "Blackjack!";
+
+            yield return new WaitForSeconds(2.0f);
+
+            StartCoroutine(DealerTurnCoroutine(true));
+        }
+        else
+        {
+            statusText.text = "";
+            isActionLocked = false;
+            canDoubleDown = playerMoney > currentBet;
         }
     }
 
@@ -926,6 +976,7 @@ public class BlackjackGame : MonoBehaviour
         playerHand.Clear();
         dealerHand.Clear();
         splitHand.Clear();
+        alcoholCards.Clear();
 
         if(peekedCardObject != null)
         {
@@ -978,6 +1029,7 @@ public class BlackjackGame : MonoBehaviour
         isCrucifixActive = false;
         isCigaretteActive = false;
         isAlcoholActive = false;
+        isFanActive = false;
         targetedScissorsCard = null;
         playerTotalText.text = "";
         dealerTotalText.text = "";

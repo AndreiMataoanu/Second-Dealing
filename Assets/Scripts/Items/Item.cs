@@ -13,9 +13,10 @@ public class Item : Clickable
 
     private Action<Item> itemAction;
     private BlackjackGame blackjackGame;
-    public void AddAction(Action<Item> action) => itemAction += action;
-    public void RemoveAction(Action<Item> action) => itemAction -= action;
 
+    public void AddAction(Action<Item> action) => itemAction += action;
+
+    public void RemoveAction(Action<Item> action) => itemAction -= action;
 
     public bool Activate()
     {
@@ -34,6 +35,7 @@ public class Item : Clickable
             ItemType.Organ => blackjackGame.ActivateOrgan(),
             ItemType.Cigarette => blackjackGame.ActivateCigarette(),
             ItemType.Alcohol => blackjackGame.ActivateAlcohol(),
+            ItemType.Fan => blackjackGame.ActivateFan(),
             _ => false
         };
 
