@@ -4,5 +4,8 @@ public enum ItemType
     Scissors,
     Crucifix,
     Sunglasses,
-    Organ
+    Organ,
+    Cigarette,
+    Alcohol,
+    Fan
 }
