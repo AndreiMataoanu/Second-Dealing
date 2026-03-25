@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -80,7 +78,8 @@ public class ItemManager : MonoBehaviour
         {
             AddToInventory(item);
             item.RemoveAction(OnBuy);
-            item.AddAction(Activate);
+            // item.AddAction(Activate);
+            item.AddAction(cursorDetection.OnUseScissors);
             item.SetActive(false);
         }
         

@@ -6,12 +6,16 @@ public class CardDisplay : MonoBehaviour
     [SerializeField] private GameObject cardBack;
     [SerializeField] private GameObject cardFace;
     private Renderer render;
+    private CardInstance cardInstance;
 
     private void Awake()
     {
         render = GetComponentInChildren<Renderer>();
     }
 
+    public void SetCardInstance(CardInstance instance) => cardInstance = instance;
+    public CardInstance GetCardInstance() => cardInstance;
+    
     public void SetHidden(bool isHidden)
     {
         if(cardBack != null)

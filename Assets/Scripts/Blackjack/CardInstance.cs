@@ -12,6 +12,7 @@ public class CardInstance
     {
         cardData = card;
         displayComponent = display;
+        displayComponent.SetCardInstance(this);
         isHidden = hidden;
     }
 }

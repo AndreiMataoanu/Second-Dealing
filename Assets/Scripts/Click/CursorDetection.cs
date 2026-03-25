@@ -6,6 +6,9 @@ public class CursorDetection : MonoBehaviour
     [SerializeField] private new Camera camera;
     [SerializeField] private List<Clickable> roundActiveClickables;
     [SerializeField] private List<Clickable> roundInactiveClickables;
+    [SerializeField] private List<Transform> cardTransforms;
+    
+    private List<Clickable> cardClickables;
     
     private void Awake()
     {
@@ -66,5 +69,36 @@ public class CursorDetection : MonoBehaviour
     public void AddRoundActiveClickable(Clickable clickable)
     {
         roundActiveClickables.Add(clickable);
+    }
+
+    public void OnUseScissors(Item item)
+    {
+        AddAllClickableCards();
+        SetClickables(cardClickables, true);
+    }
+
+    private void AddAllClickableCards()
+    {
+        cardClickables = new List<Clickable>();
+        foreach (var cardsTransform in cardTransforms)
+            AddClickableCards(cardsTransform);
+    }
+
+    private void AddClickableCards(Transform cardsTransform)
+    {
+        foreach (Transform card in cardsTransform)
+        {
+            var cardDisplay = card.GetComponent<CardDisplay>();
+            var face = card.transform.GetChild(0);
+            if (face)
+            {
+                var clickable = face.GetComponent<ClickableCard>();
+                if (clickable)
+                {
+                    clickable.SetCardInstance(cardDisplay.GetCardInstance());
+                    cardClickables.Add(clickable);
+                }
+            }
+        }
     }
 }
