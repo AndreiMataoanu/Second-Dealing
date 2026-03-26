@@ -9240,7 +9240,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8044529952306940286, guid: d9d7682fc9ba348cda1ab893cb36e0de, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.819
+      value: 0.956
       objectReference: {fileID: 0}
     - target: {fileID: 8044529952306940286, guid: d9d7682fc9ba348cda1ab893cb36e0de, type: 3}
       propertyPath: m_LocalPosition.y
@@ -9248,11 +9248,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8044529952306940286, guid: d9d7682fc9ba348cda1ab893cb36e0de, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.807
+      value: 1.819
       objectReference: {fileID: 0}
     - target: {fileID: 8044529952306940286, guid: d9d7682fc9ba348cda1ab893cb36e0de, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.81563306
+      value: 0.87466204
       objectReference: {fileID: 0}
     - target: {fileID: 8044529952306940286, guid: d9d7682fc9ba348cda1ab893cb36e0de, type: 3}
       propertyPath: m_LocalRotation.x
@@ -9260,7 +9260,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8044529952306940286, guid: d9d7682fc9ba348cda1ab893cb36e0de, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.5785696
+      value: -0.4847333
       objectReference: {fileID: 0}
     - target: {fileID: 8044529952306940286, guid: d9d7682fc9ba348cda1ab893cb36e0de, type: 3}
       propertyPath: m_LocalRotation.z
@@ -9272,7 +9272,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8044529952306940286, guid: d9d7682fc9ba348cda1ab893cb36e0de, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -70.7
+      value: -57.99
       objectReference: {fileID: 0}
     - target: {fileID: 8044529952306940286, guid: d9d7682fc9ba348cda1ab893cb36e0de, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -10162,7 +10162,7 @@ Transform:
   m_GameObject: {fileID: 1676992095}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.04, z: -0.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -16837,6 +16837,10 @@ PrefabInstance:
       propertyPath: 'buySpawnPoints.Array.data[1]'
       value: 
       objectReference: {fileID: 1217552630}
+    - target: {fileID: 1819999903971304338, guid: 37c77e8a77093fc4f8e72e4e5f3d99bb, type: 3}
+      propertyPath: 'powerUpPrefabs.Array.data[2]'
+      value: 
+      objectReference: {fileID: 6253389534292605265, guid: ebdb793d88c437d46adef7c68d6bd3c8, type: 3}
     - target: {fileID: 1819999903971304338, guid: 37c77e8a77093fc4f8e72e4e5f3d99bb, type: 3}
       propertyPath: 'useSpawnPoints.Array.data[0]'
       value: 
