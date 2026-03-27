@@ -78,8 +78,7 @@ public class ItemManager : MonoBehaviour
         {
             AddToInventory(item);
             item.RemoveAction(OnBuy);
-            // item.AddAction(Activate);
-            item.AddAction(cursorDetection.OnUseScissors);
+            item.AddAction(Activate);
             item.SetActive(false);
         }
         
@@ -100,7 +99,10 @@ public class ItemManager : MonoBehaviour
         }
         if(!item.passive)
         {
-            AudioManager.instance.Play(item.name);
+            if (item.type != ItemType.Scissors)
+                AudioManager.instance.Play(item.name);
+            else
+                AudioManager.instance.Play("ItemBuy");
             TooltipManager.instance.HideTooltip();
             Destroy(item.gameObject);
             inventoryItems--;
