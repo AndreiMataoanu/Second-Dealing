@@ -136,7 +136,7 @@ public class BlackjackGame : MonoBehaviour
 
     public void SetScissorsValueReduction(int value) => scissorsValueReduction = value;
     public void SetTargetedScissorsCard(CardInstance cardInstance) => targetedScissorsCard = cardInstance;
-    public void SetScissorsAvailable(bool available) => IsScissorsAvailable = available;
+    public void SetScissorsActive(bool active) => isScissorsActive = active;
 
     #endregion
     
@@ -765,6 +765,7 @@ public class BlackjackGame : MonoBehaviour
 
         material.SetFloat("_NoiseAmount", targetAmount);
     }
+
     #endregion
 
     #region Event Methods

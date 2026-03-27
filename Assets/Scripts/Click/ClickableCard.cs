@@ -49,7 +49,7 @@ public class ClickableCard : Clickable
         
         blackjackGame.SetScissorsValueReduction(Mathf.Abs(originalValue) - halvedValue);
         blackjackGame.SetTargetedScissorsCard(cardInstance);
-        blackjackGame.SetScissorsAvailable(false);
+        blackjackGame.SetScissorsActive(false);
         blackjackGame.UpdateUI(true);
     }
 
