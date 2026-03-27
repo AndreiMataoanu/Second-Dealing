@@ -6,7 +6,6 @@ public class CursorDetection : MonoBehaviour
     [SerializeField] private new Camera camera;
     [SerializeField] private List<Clickable> roundActiveClickables;
     [SerializeField] private List<Clickable> roundInactiveClickables;
-    [SerializeField] private List<Clickable> clickableHands;
     [SerializeField] private List<Transform> cardTransforms;
     
     private List<Clickable> cardClickables;
@@ -78,7 +77,7 @@ public class CursorDetection : MonoBehaviour
     {
         AddAllClickableCards(blackjackGame);
         SetClickables(cardClickables, true);
-        SetClickables(clickableHands, false);
+        SetClickables(roundActiveClickables, false);
     }
 
     private void AddAllClickableCards(BlackjackGame blackjackGame)
@@ -103,7 +102,7 @@ public class CursorDetection : MonoBehaviour
                     clickableCard.SetBlackjackGame(blackjackGame);
                     clickableCard.AddAction(OnClickCard);
                     clickableCard.AddAction(clickableCard.OnCutCard);
-                    clickableCard.AddAction(ActivateHands);
+                    clickableCard.AddAction(ReactivateClickables);
                     cardClickables.Add(clickableCard);
                 }
             }
@@ -127,12 +126,12 @@ public class CursorDetection : MonoBehaviour
             {
                 cardClickable.RemoveAction(OnClickCard);
                 cardClickable.RemoveAction(cardClickable.OnCutCard);
-                cardClickable.RemoveAction(ActivateHands);
+                cardClickable.RemoveAction(ReactivateClickables);
             }
         }
     }
 
-    private void ActivateHands() => SetClickables(clickableHands, true);
+    private void ReactivateClickables() => SetClickables(roundActiveClickables, true);
 
     #endregion
 
