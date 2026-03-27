@@ -16,6 +16,8 @@ public class ItemManager : MonoBehaviour
     [SerializeField] private List<GameObject> useSpawnPoints;
     [SerializeField] private List<GameObject> powerUpPrefabs;
     [SerializeField] private float denySoundCooldown = 0.3f;
+    [Header("Suitcase")] 
+    [SerializeField] private Animator suitcaseAnimator;
     private Item currentPassive;
     private int inventoryItems = 0;
     private float nextDenyTime = 0;
@@ -29,10 +31,17 @@ public class ItemManager : MonoBehaviour
         }
     }
 
-    public void SpawnPowerUps()
+    public void PlaySuitcaseOpen()
     {
         if (powerUpPrefabs == null || powerUpPrefabs.Count == 0 || inventoryItems == useSpawnPoints.Count) return;
 
+        suitcaseAnimator.Play("Suitcase_Opening");
+        // suitcaseAnimator.Play("Suitcase_Open");
+        // suitcaseAnimator.
+    }
+
+    public void SpawnPowerUps()
+    {
         foreach (var buySpawnPoint in buySpawnPoints.ToList())
         {
             var prefab = GetWeightedRandomPrefab(totalWeight);
@@ -51,6 +60,7 @@ public class ItemManager : MonoBehaviour
             if (item.transform.childCount > 0)
                 Destroy(item.transform.GetChild(0).gameObject);
         }
+        suitcaseAnimator.Play("Suitcase_Closing");
     }
     
     private void OnBuy(Item item)
@@ -75,7 +85,10 @@ public class ItemManager : MonoBehaviour
         }
         
         cursorDetection.AddRoundActiveClickable(item);
-
+        
+        if (inventoryItems == buySpawnPoints.Count)
+            suitcaseAnimator.Play("Suitcase_Closing");
+        
         DeactivateShopItems();
     }
     

@@ -1013,7 +1013,7 @@ public class BlackjackGame : MonoBehaviour
 
         if(!isTutorialActive)
         {
-            itemManager.SpawnPowerUps();
+            itemManager.PlaySuitcaseOpen();
             statusText.text = "Place your bet...";
         }
         

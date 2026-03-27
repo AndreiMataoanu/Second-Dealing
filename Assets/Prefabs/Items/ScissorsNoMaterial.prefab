@@ -11,8 +11,10 @@ GameObject:
   - component: {fileID: 7136337199276034087}
   - component: {fileID: 7070223952244996954}
   - component: {fileID: 4414410135799797022}
+  - component: {fileID: 1696113365053242763}
+  - component: {fileID: 7760549102183914475}
   m_Layer: 0
-  m_Name: Scissors_Complete
+  m_Name: ScissorsNoMaterial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,9 +29,9 @@ Transform:
   m_GameObject: {fileID: 6253389534292605265}
   serializedVersion: 2
   m_LocalRotation: {x: -0.49991274, y: 0.50008726, z: 0.49991274, w: 0.50008726}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 100, y: 100, z: 100}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0.016, y: 0.097, z: -0.045}
+  m_LocalScale: {x: 134.66, y: 134.66, z: 134.66}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -89.98, y: 90, z: 0}
@@ -66,7 +68,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4bdbf3bdd03c64360bff13a781a29512, type: 2}
+  - {fileID: 2100000, guid: 4fb862bece0a5ca45b87f98bfe148579, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -89,3 +91,48 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1696113365053242763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6253389534292605265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b4b69a41c3e6634587c1021a34ba729, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PowerUpInfo
+  clickEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
+  tooltipHeader: Scissors - $100
+  tooltipContent: Halves the value of the dealer's visible card
+  price: 100
+  type: 1
+  spawnWeight: 20
+  PassiveItemRounds: 2
+  passive: 0
+--- !u!64 &7760549102183914475
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6253389534292605265}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2683721022490003109, guid: bacff86f1994341779bc4221921bf65f, type: 3}
