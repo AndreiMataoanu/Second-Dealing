@@ -83,9 +83,12 @@ public class ItemManager : MonoBehaviour
         }
         
         cursorDetection.AddRoundActiveClickable(item);
-        
+
         if (inventoryItems == buySpawnPoints.Count)
+        {
+            DespawnPowerUps();
             suitcaseAnimator.Play("Suitcase_Closing");
+        }
         
         DeactivateShopItems();
     }
