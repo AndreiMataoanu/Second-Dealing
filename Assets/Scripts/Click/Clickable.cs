@@ -25,7 +25,7 @@ public class Clickable : MonoBehaviour
         if (!meshCollider)
             meshCollider = gameObject.AddComponent<MeshCollider>();
         
-        meshRenderer = GetComponent<MeshRenderer>();
+        meshRenderer = GetComponent<Renderer>();
     }
 
     protected virtual void OnMouseEnter()
