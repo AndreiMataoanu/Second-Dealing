@@ -12,7 +12,7 @@ public class Clickable : MonoBehaviour
     [SerializeField] private string tooltipContent;
 
     private MeshCollider meshCollider;
-    private MeshRenderer meshRenderer;
+    private Renderer meshRenderer;
     private bool hasOutline;
     
     protected bool IsActive;
@@ -25,7 +25,7 @@ public class Clickable : MonoBehaviour
         if (!meshCollider)
             meshCollider = gameObject.AddComponent<MeshCollider>();
         
-        meshRenderer = GetComponent<MeshRenderer>();
+        meshRenderer = GetComponent<Renderer>();
     }
 
     protected virtual void OnMouseEnter()

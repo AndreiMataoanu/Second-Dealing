@@ -1374,7 +1374,7 @@ public class BlackjackGame : MonoBehaviour
 
         AudioManager.instance.Play("BetUp");
 
-        hitHandAnimator.SetTrigger("hitTrigger"); //double down animation
+        hitHandAnimator.SetTrigger("doubleDownTrigger");
 
         yield return new WaitForSeconds(2f);
         yield return StartCoroutine(DealCardToPlayerCoroutine());
@@ -1421,7 +1421,7 @@ public class BlackjackGame : MonoBehaviour
         AudioManager.instance.Play("BetUp");
 
         statusText.text = "Splitting Hand...";
-        standHandAnimator.SetTrigger("standTrigger"); //split animation
+        standHandAnimator.SetTrigger("splitTrigger");
 
         yield return new WaitForSeconds(2.0f);
 
@@ -1599,6 +1599,8 @@ public class BlackjackGame : MonoBehaviour
                 AudioManager.instance.Play("MoneyLost");
 
                 Instantiate(redParticlePrefab, particleSpawnPoint.position, particleSpawnPoint.rotation);
+
+                standHandAnimator.SetTrigger("flipperTrigger");
 
                 yield return StartCoroutine(AnimateBetChange(targetMoneyBalance, 3f));
             }
