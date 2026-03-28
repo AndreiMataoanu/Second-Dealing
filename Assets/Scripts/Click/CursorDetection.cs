@@ -6,6 +6,9 @@ public class CursorDetection : MonoBehaviour
     [SerializeField] private new Camera camera;
     [SerializeField] private List<Clickable> roundActiveClickables;
     [SerializeField] private List<Clickable> roundInactiveClickables;
+    [SerializeField] private List<Transform> cardTransforms;
+    
+    private List<Clickable> cardClickables;
     
     private void Awake()
     {
@@ -67,4 +70,69 @@ public class CursorDetection : MonoBehaviour
     {
         roundActiveClickables.Add(clickable);
     }
+
+    #region Clickable Cards
+
+    public void OnUseScissors(BlackjackGame blackjackGame)
+    {
+        AddAllClickableCards(blackjackGame);
+        SetClickables(cardClickables, true);
+        SetClickables(roundActiveClickables, false);
+    }
+
+    private void AddAllClickableCards(BlackjackGame blackjackGame)
+    {
+        cardClickables = new List<Clickable>();
+        foreach (var cardsTransform in cardTransforms)
+            AddClickableCards(cardsTransform, blackjackGame);
+    }
+
+    private void AddClickableCards(Transform cardsTransform, BlackjackGame blackjackGame)
+    {
+        foreach (Transform card in cardsTransform)
+        {
+            var cardDisplay = card.GetComponent<CardDisplay>();
+            var face = card.transform.GetChild(0);
+            if (face)
+            {
+                var clickableCard = face.GetComponent<ClickableCard>();
+                if (clickableCard)
+                {
+                    clickableCard.SetCardInstance(cardDisplay.GetCardInstance());
+                    clickableCard.SetBlackjackGame(blackjackGame);
+                    clickableCard.AddAction(OnClickCard);
+                    clickableCard.AddAction(clickableCard.OnCutCard);
+                    clickableCard.AddAction(ReactivateClickables);
+                    cardClickables.Add(clickableCard);
+                }
+            }
+        }
+    }
+    
+    private void OnClickCard()
+    {
+        RemoveCardActions();
+        SetClickables(cardClickables, false);
+        cardClickables.RemoveAll(_ => true);
+    }
+
+    private void RemoveCardActions()
+    {
+        foreach (var clickable in cardClickables)
+        {
+            var cardClickable = (ClickableCard)clickable;
+
+            if (cardClickable)
+            {
+                cardClickable.RemoveAction(OnClickCard);
+                cardClickable.RemoveAction(cardClickable.OnCutCard);
+                cardClickable.RemoveAction(ReactivateClickables);
+            }
+        }
+    }
+
+    private void ReactivateClickables() => SetClickables(roundActiveClickables, true);
+
+    #endregion
+
 }

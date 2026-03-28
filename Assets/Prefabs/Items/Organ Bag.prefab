@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5764456500490738081
+--- !u!1 &2913302698420253507
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,47 +8,49 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7884191329479988000}
-  - component: {fileID: 6530388784482528484}
-  - component: {fileID: 4549296976222456360}
+  - component: {fileID: 773640230402853183}
+  - component: {fileID: 1486369379395768431}
+  - component: {fileID: 2420839996289793243}
+  - component: {fileID: 1104469173180168018}
+  - component: {fileID: 6708864065135472937}
   m_Layer: 0
-  m_Name: Scissors_Partial
+  m_Name: Organ Bag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
---- !u!4 &7884191329479988000
+--- !u!4 &773640230402853183
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5764456500490738081}
+  m_GameObject: {fileID: 2913302698420253507}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.49991274, y: 0.50008726, z: 0.49991274, w: 0.50008726}
-  m_LocalPosition: {x: 0.2, y: 0, z: 0}
-  m_LocalScale: {x: 100, y: 100, z: 100}
-  m_ConstrainProportionsScale: 0
+  m_LocalRotation: {x: -0.5, y: -0.5, z: -0.5, w: 0.5}
+  m_LocalPosition: {x: 0, y: 0.1, z: -0.08}
+  m_LocalScale: {x: 80, y: 80, z: 80}
+  m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 7134131758445264779}
+  - {fileID: 9107966763981720886}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -89.98, y: 90, z: 0}
---- !u!33 &6530388784482528484
+  m_LocalEulerAnglesHint: {x: -90, y: -90, z: 0}
+--- !u!33 &1486369379395768431
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5764456500490738081}
-  m_Mesh: {fileID: -3827974485711309418, guid: fcc192579b05743798437af77b9c5408, type: 3}
---- !u!23 &4549296976222456360
+  m_GameObject: {fileID: 2913302698420253507}
+  m_Mesh: {fileID: -8108182321566926560, guid: d47b9ca51ebc046a09ac6c73d1e4ba3f, type: 3}
+--- !u!23 &2420839996289793243
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5764456500490738081}
+  m_GameObject: {fileID: 2913302698420253507}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -67,7 +69,9 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4bdbf3bdd03c64360bff13a781a29512, type: 2}
+  - {fileID: 2100000, guid: aee0bb1cac3f44e0395de76c5e40d2bc, type: 2}
+  - {fileID: 2100000, guid: 593b8fd093b144ebaa6ed3a5994bffe1, type: 2}
+  - {fileID: 2100000, guid: 0a7361dc6b315402c8ecb6311868ff00, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -90,7 +94,52 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &8922022415983564303
+--- !u!114 &1104469173180168018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2913302698420253507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b4b69a41c3e6634587c1021a34ba729, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Item
+  clickEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
+  tooltipHeader: Organ in a Bag - $1000
+  tooltipContent: 'Passive: Sacrifice instead of your life'
+  price: 1000
+  type: 4
+  spawnWeight: 4
+  PassiveItemRounds: 2
+  passive: 1
+--- !u!64 &6708864065135472937
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2913302698420253507}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -8108182321566926560, guid: d47b9ca51ebc046a09ac6c73d1e4ba3f, type: 3}
+--- !u!1 &7444882967626690430
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -98,46 +147,47 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7134131758445264779}
-  - component: {fileID: 5365763273518143403}
-  - component: {fileID: 4986668075898573115}
+  - component: {fileID: 9107966763981720886}
+  - component: {fileID: 4523324621332733748}
+  - component: {fileID: 3521934123492505764}
+  - component: {fileID: 1718435106616091058}
   m_Layer: 0
-  m_Name: Scissors.001
+  m_Name: Organ
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7134131758445264779
+--- !u!4 &9107966763981720886
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8922022415983564303}
+  m_GameObject: {fileID: 7444882967626690430}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 7884191329479988000}
+  m_Father: {fileID: 773640230402853183}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &5365763273518143403
+--- !u!33 &4523324621332733748
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8922022415983564303}
-  m_Mesh: {fileID: -4277426811460874053, guid: fcc192579b05743798437af77b9c5408, type: 3}
---- !u!23 &4986668075898573115
+  m_GameObject: {fileID: 7444882967626690430}
+  m_Mesh: {fileID: -393458040339746742, guid: d47b9ca51ebc046a09ac6c73d1e4ba3f, type: 3}
+--- !u!23 &3521934123492505764
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8922022415983564303}
+  m_GameObject: {fileID: 7444882967626690430}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -156,7 +206,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4bdbf3bdd03c64360bff13a781a29512, type: 2}
+  - {fileID: 2100000, guid: 0a7361dc6b315402c8ecb6311868ff00, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -179,3 +229,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!111 &1718435106616091058
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7444882967626690430}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Animation: {fileID: 7400000, guid: 125ba9dda1f83497da87b6214317069f, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 125ba9dda1f83497da87b6214317069f, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_UpdateMode: 0
+  m_CullingType: 0
