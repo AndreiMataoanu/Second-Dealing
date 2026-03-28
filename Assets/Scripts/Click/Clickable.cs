@@ -12,7 +12,7 @@ public class Clickable : MonoBehaviour
     [SerializeField] private string tooltipContent;
 
     private MeshCollider meshCollider;
-    private MeshRenderer meshRenderer;
+    private Renderer meshRenderer;
     private bool hasOutline;
     
     protected bool IsActive;
