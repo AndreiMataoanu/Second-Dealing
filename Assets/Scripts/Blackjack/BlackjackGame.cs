@@ -393,8 +393,6 @@ public class BlackjackGame : MonoBehaviour
 
         if(CalculateHandValue(playerHand, true) > blackjackGoal) return false;
 
-        if(dealerHand.Count < 2) return false; // test without this line
-
         cursorDetection.OnUseScissors(this);
         
         return true;
