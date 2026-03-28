@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -34,8 +35,8 @@ public class ItemManager : MonoBehaviour
         if (powerUpPrefabs == null || powerUpPrefabs.Count == 0 || inventoryItems == useSpawnPoints.Count) return;
 
         suitcaseAnimator.Play("Suitcase_Opening");
-        // suitcaseAnimator.Play("Suitcase_Open");
-        // suitcaseAnimator.
+
+        SpawnPowerUps();
     }
 
     public void SpawnPowerUps()
@@ -53,12 +54,23 @@ public class ItemManager : MonoBehaviour
 
     public void DespawnPowerUps()
     {
-        foreach (var item in buySpawnPoints)
-        {
-            if (item.transform.childCount > 0)
-                Destroy(item.transform.GetChild(0).gameObject);
-        }
+        StartCoroutine(DespawnCoroutine());
+    }
+
+    private IEnumerator DespawnCoroutine()
+    {
         suitcaseAnimator.Play("Suitcase_Closing");
+
+        yield return null;
+        yield return new WaitForSeconds(suitcaseAnimator.GetCurrentAnimatorStateInfo(0).length);
+
+        foreach(var spawnPoint in buySpawnPoints)
+        {
+            if(spawnPoint.transform.childCount > 0)
+            {
+                Destroy(spawnPoint.transform.GetChild(0).gameObject);
+            }
+        }
     }
     
     private void OnBuy(Item item)
@@ -182,8 +194,12 @@ public class ItemManager : MonoBehaviour
             if (spawnPoint.transform.childCount != 0)
             {
                 var item = spawnPoint.transform.GetChild(0).GetComponent<Item>();
-                item.SetActive(false);
-                item.OnRemoveOutline();
+
+                if(item != null)
+                {
+                    item.SetActive(false);
+                    item.OnRemoveOutline();
+                } 
             }
         }
     }
