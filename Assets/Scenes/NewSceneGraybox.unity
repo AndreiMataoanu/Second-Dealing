@@ -1856,6 +1856,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 895424414}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &902577193 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5834705826577160200, guid: d9d7682fc9ba348cda1ab893cb36e0de, type: 3}
+  m_PrefabInstance: {fileID: 1426078259}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &916109535
 GameObject:
   m_ObjectHideFlags: 0
@@ -2245,6 +2250,11 @@ Light:
   m_LightUnit: 1
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
+--- !u!1 &1065378880 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4315217869418734485, guid: d9d7682fc9ba348cda1ab893cb36e0de, type: 3}
+  m_PrefabInstance: {fileID: 1426078259}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1077769436
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5794,9 +5804,33 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1819999903971304338, guid: 37c77e8a77093fc4f8e72e4e5f3d99bb, type: 3}
+      propertyPath: blackjackGame
+      value: 
+      objectReference: {fileID: 1343293108}
+    - target: {fileID: 1819999903971304338, guid: 37c77e8a77093fc4f8e72e4e5f3d99bb, type: 3}
+      propertyPath: cursorDetection
+      value: 
+      objectReference: {fileID: 1306894128}
+    - target: {fileID: 1819999903971304338, guid: 37c77e8a77093fc4f8e72e4e5f3d99bb, type: 3}
       propertyPath: suitcaseAnimator
       value: 
       objectReference: {fileID: 1688790259}
+    - target: {fileID: 1819999903971304338, guid: 37c77e8a77093fc4f8e72e4e5f3d99bb, type: 3}
+      propertyPath: 'buySpawnPoints.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1065378880}
+    - target: {fileID: 1819999903971304338, guid: 37c77e8a77093fc4f8e72e4e5f3d99bb, type: 3}
+      propertyPath: 'buySpawnPoints.Array.data[1]'
+      value: 
+      objectReference: {fileID: 902577193}
+    - target: {fileID: 1819999903971304338, guid: 37c77e8a77093fc4f8e72e4e5f3d99bb, type: 3}
+      propertyPath: 'useSpawnPoints.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1159936628}
+    - target: {fileID: 1819999903971304338, guid: 37c77e8a77093fc4f8e72e4e5f3d99bb, type: 3}
+      propertyPath: 'useSpawnPoints.Array.data[1]'
+      value: 
+      objectReference: {fileID: 510491807}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
