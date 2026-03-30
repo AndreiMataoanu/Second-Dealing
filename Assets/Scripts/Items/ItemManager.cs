@@ -84,6 +84,8 @@ public class ItemManager : MonoBehaviour
         }
 
         AddToInventory(item);
+
+        item.isPurchased = true;
         item.RemoveAction(OnBuy);
         item.AddAction(Activate);
         item.SetActive(false);

@@ -107,13 +107,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
-  tooltipHeader: Scissors - $100
+  tooltipHeader: Scissors
   tooltipContent: Halves the value of a card
   price: 100
   type: 1
   spawnWeight: 15
-  PassiveItemRounds: 2
-  passive: 0
+  isPurchased: 0
 --- !u!64 &7760549102183914475
 MeshCollider:
   m_ObjectHideFlags: 0

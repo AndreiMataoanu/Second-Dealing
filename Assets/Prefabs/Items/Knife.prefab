@@ -107,13 +107,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
-  tooltipHeader: Knife - $200
+  tooltipHeader: Knife
   tooltipContent: Forces the dealer to stand
   price: 200
   type: 0
   spawnWeight: 15
-  PassiveItemRounds: 2
-  passive: 0
+  isPurchased: 0
 --- !u!64 &-3876307792271350307
 MeshCollider:
   m_ObjectHideFlags: 0

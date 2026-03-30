@@ -8,6 +8,7 @@ public class Item : Clickable
     [SerializeField] public ItemType type;
     [Tooltip("Higher number means more common.")]
     [SerializeField] public int spawnWeight = 10;
+    [HideInInspector] public bool isPurchased = false;
 
     private Action<Item> itemAction;
     private BlackjackGame blackjackGame;
@@ -59,5 +60,15 @@ public class Item : Clickable
         }
 
         return base.GetTooltipContent();
+    }
+
+    protected override string GetTooltipHeader()
+    {
+        if(!isPurchased)
+        {
+            return $"{base.GetTooltipHeader()} [${price}]";
+        }
+
+        return base.GetTooltipHeader();
     }
 }

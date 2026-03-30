@@ -112,13 +112,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
-  tooltipHeader: Sunglasses - $100
+  tooltipHeader: Sunglasses
   tooltipContent: See the next card
   price: 100
   type: 3
   spawnWeight: 15
-  PassiveItemRounds: 2
-  passive: 0
+  isPurchased: 0
 --- !u!64 &-6949399263807025530
 MeshCollider:
   m_ObjectHideFlags: 0

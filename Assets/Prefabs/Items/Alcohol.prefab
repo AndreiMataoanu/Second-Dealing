@@ -108,13 +108,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
-  tooltipHeader: Alcohol - $100
+  tooltipHeader: Alcohol
   tooltipContent: You see double
   price: 100
   type: 6
   spawnWeight: 15
-  PassiveItemRounds: 2
-  passive: 0
+  isPurchased: 0
 --- !u!64 &8674433730413865787
 MeshCollider:
   m_ObjectHideFlags: 0

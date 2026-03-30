@@ -107,11 +107,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
-  tooltipHeader: Lottery Ticket - $100
+  tooltipHeader: Lottery Ticket
   tooltipContent: Finish your hand with these values to win
   price: 100
   type: 8
   spawnWeight: 15
+  isPurchased: 0
 --- !u!65 &5851287578943471964
 BoxCollider:
   m_ObjectHideFlags: 0
