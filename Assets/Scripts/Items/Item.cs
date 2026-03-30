@@ -71,7 +71,7 @@ public class Item : Clickable
         {
             List<int> numbers = blackjackGame.GetLotteryNumbers();
 
-            return $"{string.Join(" | ", numbers)}\n(Click to tear ticket)";
+            return $"{string.Join(" | ", numbers)}\nFinish your hand with these values to win\nClick to tear";
         }
 
         return base.GetTooltipContent();

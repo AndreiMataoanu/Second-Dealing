@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class ItemManager : MonoBehaviour
 {
@@ -10,11 +9,13 @@ public class ItemManager : MonoBehaviour
     [SerializeField] private BlackjackGame blackjackGame;
     [SerializeField] private CursorDetection cursorDetection;
     private int roundsSincePassiveBought = 0;
+
     [Header("Power ups")]
     [SerializeField] private List<GameObject> buySpawnPoints;
     [SerializeField] private List<GameObject> useSpawnPoints;
     [SerializeField] private List<GameObject> powerUpPrefabs;
     [SerializeField] private float denySoundCooldown = 0.3f;
+
     [Header("Suitcase")] 
     [SerializeField] private Animator suitcaseAnimator;
     private Item currentPassive;
@@ -24,11 +25,6 @@ public class ItemManager : MonoBehaviour
     public void PlaySuitcaseOpen()
     {
         if (powerUpPrefabs == null || powerUpPrefabs.Count == 0 || inventoryItems == useSpawnPoints.Count) return;
-
-        //suitcaseAnimator.Play("Suitcase_Opening");
-
-        //AudioManager.instance.Play("Latch");
-        //AudioManager.instance.Play("SuitcaseOpen");
 
         StartCoroutine(SuitcaseOpenCoroutine());
         SpawnPowerUps();
@@ -55,9 +51,7 @@ public class ItemManager : MonoBehaviour
 
     private IEnumerator DespawnCoroutine()
     {
-        suitcaseAnimator.Play("Suitcase_Closing");
-
-        AudioManager.instance.Play("SuitcaseClose");
+        StartCoroutine(SuitcaseCloseCoroutine());
 
         yield return null;
         yield return new WaitForSeconds(suitcaseAnimator.GetCurrentAnimatorStateInfo(0).length);
@@ -83,11 +77,6 @@ public class ItemManager : MonoBehaviour
             item.SetActive(false);
             currentPassive = item;
             item.Activate();
-
-            if(item.type != ItemType.Lotto)
-            {
-                item.SetActive(false);
-            }
         }
 
         if(!item.passive)
@@ -103,10 +92,7 @@ public class ItemManager : MonoBehaviour
         if (inventoryItems == buySpawnPoints.Count)
         {
             DespawnPowerUps();
-
-            suitcaseAnimator.Play("Suitcase_Closing");
-
-            AudioManager.instance.Play("SuitcaseClose");
+            StartCoroutine(SuitcaseCloseCoroutine());
         }
         
         DeactivateShopItems();
@@ -244,5 +230,14 @@ public class ItemManager : MonoBehaviour
 
         AudioManager.instance.Play("Latch");
         AudioManager.instance.Play("SuitcaseOpen");
+    }
+
+    private IEnumerator SuitcaseCloseCoroutine()
+    {
+        AudioManager.instance.Play("SuitcaseClose");
+
+        yield return new WaitForSeconds(0.6f);
+
+        suitcaseAnimator.Play("Suitcase_Closing");
     }
 }
