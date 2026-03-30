@@ -9,9 +9,6 @@ public class Item : Clickable
     [Tooltip("Higher number means more common.")]
     [SerializeField] public int spawnWeight = 10;
 
-    [SerializeField] public int PassiveItemRounds = 2;
-    [SerializeField] public bool passive = false;  
-
     private Action<Item> itemAction;
     private BlackjackGame blackjackGame;
 
@@ -21,19 +18,13 @@ public class Item : Clickable
 
     public bool Activate()
     {
-        if(!blackjackGame)
-        {
-            Debug.Log("No blackjack game");
-            return false;
-        }
-
         var result = type switch
         {
             ItemType.Knife => blackjackGame.ActivateKnife(),
             ItemType.Scissors => blackjackGame.ActivateScissors(),
             ItemType.Crucifix => blackjackGame.ActivateCrucifix(),
             ItemType.Sunglasses => blackjackGame.ActivateSunglasses(),
-            ItemType.Organ => blackjackGame.ActivateOrgan(),
+            ItemType.Organ => false,
             ItemType.Cigarette => blackjackGame.ActivateCigarette(),
             ItemType.Alcohol => blackjackGame.ActivateAlcohol(),
             ItemType.Fan => blackjackGame.ActivateFan(),
@@ -51,16 +42,9 @@ public class Item : Clickable
 
     public override void OnClick(int mouseButton = 0)
     {
-        if (!IsActive) return;
+        if(!IsActive) return;
         
         base.OnClick();
-
-        if(type == ItemType.Lotto && blackjackGame.isLottoActive)
-        {
-            blackjackGame.TearLotteryTicket();
-
-            return;
-        }
 
         itemAction?.Invoke(this);
     }

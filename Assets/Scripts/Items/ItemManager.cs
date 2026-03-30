@@ -15,10 +15,10 @@ public class ItemManager : MonoBehaviour
     [SerializeField] private List<GameObject> useSpawnPoints;
     [SerializeField] private List<GameObject> powerUpPrefabs;
     [SerializeField] private float denySoundCooldown = 0.3f;
+    private int organRoundsLeft = 0;
 
     [Header("Suitcase")] 
     [SerializeField] private Animator suitcaseAnimator;
-    private Item currentPassive;
     private int inventoryItems = 0;
     private float nextDenyTime = 0;
 
@@ -68,25 +68,37 @@ public class ItemManager : MonoBehaviour
     private void OnBuy(Item item)
     {
         if (inventoryItems >= useSpawnPoints.Count || !HasEnoughMoney(item)) return;
-        
-        if(item.passive && currentPassive == null)
+
+        if(item.type == ItemType.Lotto && blackjackGame.isLottoActive)
         {
-            AddToInventory(item);
-            item.RemoveAction(OnBuy);
-            item.AddAction(Activate);
-            item.SetActive(false);
-            currentPassive = item;
-            item.Activate();
+            AudioManager.instance.Play("ItemDeny");
+
+            return;
         }
 
-        if(!item.passive)
+        if(item.type == ItemType.Organ && blackjackGame.isOrganActive)
         {
-            AddToInventory(item);
-            item.RemoveAction(OnBuy);
-            item.AddAction(Activate);
-            item.SetActive(false);
+            AudioManager.instance.Play("ItemDeny");
+
+            return;
+        }
+
+        AddToInventory(item);
+        item.RemoveAction(OnBuy);
+        item.AddAction(Activate);
+        item.SetActive(false);
+
+        if(item.type == ItemType.Lotto)
+        {
+            blackjackGame.ActivateLotteryTicket();
         }
         
+        if(item.type == ItemType.Organ)
+        {
+            blackjackGame.ActivateOrgan();
+            organRoundsLeft = 2;
+        }
+
         cursorDetection.AddRoundActiveClickable(item);
 
         if (inventoryItems == buySpawnPoints.Count)
@@ -100,44 +112,74 @@ public class ItemManager : MonoBehaviour
     
     private void Activate(Item item)
     {
-        if (!item.Activate())
+        if(!item.Activate())
         {
-            AudioManager.instance.Play("ItemDeny");
+            if(item.type != ItemType.Organ)
+            {
+                AudioManager.instance.Play("ItemDeny");
+            }
+
             return;
         }
-        if(!item.passive)
+
+        if(item.type != ItemType.Scissors)
         {
-            if (item.type != ItemType.Scissors)
-                AudioManager.instance.Play(item.name);
-            else
-                AudioManager.instance.Play("ItemBuy");
-            TooltipManager.instance.HideTooltip();
-            Destroy(item.gameObject);
-            inventoryItems--;
+            AudioManager.instance.Play(item.name);
+        }
+        else
+        {
+            AudioManager.instance.Play("ItemBuy");
+        }
+
+        TooltipManager.instance.HideTooltip();
+
+        Destroy(item.gameObject);
+
+        inventoryItems--;
+    }
+
+    public void OnRoundEnded()
+    {
+        if(blackjackGame.isOrganActive && organRoundsLeft > 0)
+        {
+            organRoundsLeft--;
+
+            if(organRoundsLeft == 0)
+            {
+                blackjackGame.isOrganActive = false;
+
+                RemoveItemOfType(ItemType.Organ);
+            }
         }
     }
-    public void IsPassiveDone(bool passiveUsed)
+
+    public void RemoveItemOfType(ItemType type)
     {
-        if(currentPassive != null)
+        foreach(var spawnPoint in useSpawnPoints)
         {
-            if(passiveUsed || (currentPassive.type != ItemType.Lotto && currentPassive.PassiveItemRounds == roundsSincePassiveBought))
+            if(spawnPoint.transform.childCount > 0)
             {
-                Destroy(currentPassive.gameObject);
-                inventoryItems--;
-                roundsSincePassiveBought = 0;
-                currentPassive = null;
+                Item item = spawnPoint.transform.GetChild(0).GetComponent<Item>();
+
+                if(item != null && item.type == type)
+                {
+                    TooltipManager.instance.HideTooltip();
+
+                    Destroy(item.gameObject);
+
+                    inventoryItems--;
+
+                    break;
+                }
             }
-            else if(currentPassive.type != ItemType.Lotto)
-            {
-                roundsSincePassiveBought ++;
-            }    
-        } 
+        }
     }
 
     #region Helper Methods
     private GameObject GetWeightedRandomPrefab()
     {
-        bool hasTicket = currentPassive != null && currentPassive.type == ItemType.Lotto;
+        bool hasTicket = blackjackGame.isLottoActive;
+        bool hasOrgan = blackjackGame.isOrganActive;
         int currentTotalWeight = 0;
 
         List<GameObject> validPrefabs = new List<GameObject>();
@@ -147,6 +189,8 @@ public class ItemManager : MonoBehaviour
             var powerUp = prefab.GetComponent<Item>();
 
             if(hasTicket && powerUp.type == ItemType.Lotto) continue;
+
+            if(hasOrgan && powerUp.type == ItemType.Organ) continue;
 
             validPrefabs.Add(prefab);
             currentTotalWeight += powerUp.spawnWeight;

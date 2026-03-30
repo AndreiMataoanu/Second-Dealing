@@ -35,7 +35,7 @@ public class BlackjackGame : MonoBehaviour
     private bool isSunglassesActive = false;
     private bool isScissorsActive = false;
     private bool isCrucifixActive = false;
-    private bool isOrganActive = false;
+    
     private bool isCigaretteActive = false;
     private bool isAlcoholActive = false;
     private bool isFanActive = false;
@@ -45,6 +45,7 @@ public class BlackjackGame : MonoBehaviour
     [HideInInspector] public bool canDoubleDown = false;
     [HideInInspector] public bool isRoundActive = false;
     [HideInInspector] public bool isLottoActive = false;
+    [HideInInspector] public bool isOrganActive = false;
 
     [Header("Event System")]
     [SerializeField] private List<EventThreshold> eventThresholds;
@@ -777,13 +778,14 @@ public class BlackjackGame : MonoBehaviour
         return true;
     }
 
-    public void TearLotteryTicket()
+    public bool TearLotteryTicket()
     {
         isLottoActive = false;
         lotteryNumbers.Clear();
-        itemManager.IsPassiveDone(true);
 
         AudioManager.instance.Play("LottoTear");
+
+        return true;
     }
 
     private IEnumerator CheckLotteryTicket()
@@ -815,8 +817,11 @@ public class BlackjackGame : MonoBehaviour
 
             yield return StartCoroutine(AnimateBetChange(targetBalance, 3f));
 
-            UpdateBettingUI();
-            TearLotteryTicket();
+            //UpdateBettingUI();
+
+            isLottoActive = false;
+            lotteryNumbers.Clear();
+            itemManager.RemoveItemOfType(ItemType.Lotto);
         }
     }
     #endregion
@@ -1662,7 +1667,11 @@ public class BlackjackGame : MonoBehaviour
             }
             else
             {
-                itemManager.IsPassiveDone(true);
+                AudioManager.instance.Play("MoneyLost");
+
+                standHandAnimator.SetTrigger("flipperTrigger");
+
+                itemManager.RemoveItemOfType(ItemType.Organ);
                 isOrganActive = false;
                 targetMoneyBalance = playerMoney;
 
@@ -2137,7 +2146,11 @@ public class BlackjackGame : MonoBehaviour
             yield return StartCoroutine(CheckLotteryTicket());
         }
 
-        itemManager.IsPassiveDone(false);
+        if(isOrganActive)
+        {
+            itemManager.OnRoundEnded();
+        }
+        
         isRoundActive = false;
         cursorDetection.OnRoundInactive();
 

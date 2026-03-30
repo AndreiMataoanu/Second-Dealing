@@ -14,7 +14,6 @@ public class Clickable : MonoBehaviour
     private MeshCollider meshCollider;
     private Renderer meshRenderer;
     private bool hasOutline;
-    
     protected bool IsActive;
 
     public void SetActive(bool active) => IsActive = active;
