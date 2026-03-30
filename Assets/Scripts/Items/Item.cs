@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Item : Clickable
@@ -36,6 +37,7 @@ public class Item : Clickable
             ItemType.Cigarette => blackjackGame.ActivateCigarette(),
             ItemType.Alcohol => blackjackGame.ActivateAlcohol(),
             ItemType.Fan => blackjackGame.ActivateFan(),
+            ItemType.Lotto => blackjackGame.ActivateLotteryTicket(),
             _ => false
         };
 
@@ -52,6 +54,26 @@ public class Item : Clickable
         if (!IsActive) return;
         
         base.OnClick();
+
+        if(type == ItemType.Lotto && blackjackGame.isLottoActive)
+        {
+            blackjackGame.TearLotteryTicket();
+
+            return;
+        }
+
         itemAction?.Invoke(this);
+    }
+
+    protected override string GetTooltipContent()
+    {
+        if(type == ItemType.Lotto && blackjackGame != null && blackjackGame.isLottoActive)
+        {
+            List<int> numbers = blackjackGame.GetLotteryNumbers();
+
+            return $"{string.Join(" | ", numbers)}\n(Click to tear ticket)";
+        }
+
+        return base.GetTooltipContent();
     }
 }

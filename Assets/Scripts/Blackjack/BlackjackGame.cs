@@ -24,6 +24,8 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private Material material;
     private CardInstance targetedScissorsCard = null;
     private Coroutine currentBustCoroutine = null;
+    private List<int> lotteryNumbers = new List<int>();
+    
     private Deck gameDeck;
     private float defaultNoiseAmount;
     private int blackjackGoal = 21;
@@ -39,8 +41,10 @@ public class BlackjackGame : MonoBehaviour
     private bool isFanActive = false;
     private bool isActionLocked = false;
     private bool isTutorialActive => roundsCompleted < tutorialRoundsLimit;
+    [HideInInspector] public List<int> GetLotteryNumbers() => lotteryNumbers;
     [HideInInspector] public bool canDoubleDown = false;
     [HideInInspector] public bool isRoundActive = false;
+    [HideInInspector] public bool isLottoActive = false;
 
     [Header("Event System")]
     [SerializeField] private List<EventThreshold> eventThresholds;
@@ -249,13 +253,6 @@ public class BlackjackGame : MonoBehaviour
     {
         if(CanSplit()) StartCoroutine(SplitCoroutine());
     }
-
-    //public void ResetItemsAvailable()
-    //{
-    //    //IsScissorsAvailable = true;
-    //    //IsCrucifixAvailable = true;
-    //    //IsSunglassesAvailable = true;
-    //}
     #endregion
 
     #region Betting Methods
@@ -618,6 +615,7 @@ public class BlackjackGame : MonoBehaviour
                 yield return new WaitForSeconds(1.0f);
 
                 isPlayingSplitHand = true;
+                canDoubleDown = true;
                 isActionLocked = false;
 
                 UpdateUI(true);
@@ -764,6 +762,63 @@ public class BlackjackGame : MonoBehaviour
         material.SetFloat("_NoiseAmount", targetAmount);
     }
 
+    public bool ActivateLotteryTicket()
+    {
+        if(isLottoActive) return false;
+
+        isLottoActive = true;
+        lotteryNumbers.Clear();
+
+        for(int i = 0; i < 4; i++)
+        {
+            lotteryNumbers.Add(Random.Range(2, 34)); //2 to 33
+        }
+
+        return true;
+    }
+
+    public void TearLotteryTicket()
+    {
+        isLottoActive = false;
+        lotteryNumbers.Clear();
+        itemManager.IsPassiveDone(true);
+
+        AudioManager.instance.Play("LottoTear");
+    }
+
+    private IEnumerator CheckLotteryTicket()
+    {
+        if(!isLottoActive) yield break;
+
+        int primaryHandValue = Mathf.Abs(CalculateHandValue(playerHand, true));
+
+        if(lotteryNumbers.Contains(primaryHandValue))
+        {
+            lotteryNumbers.Remove(primaryHandValue);
+        }
+
+        if(isSplitting)
+        {
+            int splitHandValue = Mathf.Abs(CalculateHandValue(splitHand, true));
+
+            if(lotteryNumbers.Contains(splitHandValue))
+            {
+                lotteryNumbers.Remove(splitHandValue);
+            }
+        }
+
+        if(lotteryNumbers.Count == 0)
+        {
+            int targetBalance = playerMoney + 5000;
+
+            AudioManager.instance.Play("MoneyGained");
+
+            yield return StartCoroutine(AnimateBetChange(targetBalance, 3f));
+
+            UpdateBettingUI();
+            TearLotteryTicket();
+        }
+    }
     #endregion
 
     #region Event Methods
@@ -1297,6 +1352,7 @@ public class BlackjackGame : MonoBehaviour
                 yield return new WaitForSeconds(1.0f);
 
                 isPlayingSplitHand = true;
+                canDoubleDown = true;
                 isActionLocked = false;
 
                 UpdateUI(true);
@@ -2076,6 +2132,11 @@ public class BlackjackGame : MonoBehaviour
 
     private IEnumerator EndRoundSequence()
     {
+        if(isLottoActive)
+        {
+            yield return StartCoroutine(CheckLotteryTicket());
+        }
+
         itemManager.IsPassiveDone(false);
         isRoundActive = false;
         cursorDetection.OnRoundInactive();

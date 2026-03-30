@@ -112,10 +112,10 @@ MonoBehaviour:
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
   tooltipHeader: Organ in a Bag - $1000
   tooltipContent: 'Passive: Sacrifice instead of your life'
-  price: 1000
+  price: 0
   type: 4
-  spawnWeight: 4
-  PassiveItemRounds: 2
+  spawnWeight: 100
+  PassiveItemRounds: 1
   passive: 1
 --- !u!64 &6708864065135472937
 MeshCollider:

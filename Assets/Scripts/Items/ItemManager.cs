@@ -20,22 +20,17 @@ public class ItemManager : MonoBehaviour
     private Item currentPassive;
     private int inventoryItems = 0;
     private float nextDenyTime = 0;
-    private int totalWeight = 0;
-    
-    private void Awake()
-    {
-        foreach(var item in powerUpPrefabs)
-        {
-            totalWeight += item.GetComponent<Item>().spawnWeight;
-        }
-    }
 
     public void PlaySuitcaseOpen()
     {
         if (powerUpPrefabs == null || powerUpPrefabs.Count == 0 || inventoryItems == useSpawnPoints.Count) return;
 
-        suitcaseAnimator.Play("Suitcase_Opening");
+        //suitcaseAnimator.Play("Suitcase_Opening");
 
+        //AudioManager.instance.Play("Latch");
+        //AudioManager.instance.Play("SuitcaseOpen");
+
+        StartCoroutine(SuitcaseOpenCoroutine());
         SpawnPowerUps();
     }
 
@@ -43,9 +38,10 @@ public class ItemManager : MonoBehaviour
     {
         foreach (var buySpawnPoint in buySpawnPoints.ToList())
         {
-            var prefab = GetWeightedRandomPrefab(totalWeight);
+            var prefab = GetWeightedRandomPrefab();
             var prefabInstance = Instantiate(prefab, buySpawnPoint.transform);
             var item = prefabInstance.GetComponent<Item>();
+
             item.SetBlackjackGame(blackjackGame);
             item.SetActive(true);
             item.AddAction(OnBuy);
@@ -60,6 +56,8 @@ public class ItemManager : MonoBehaviour
     private IEnumerator DespawnCoroutine()
     {
         suitcaseAnimator.Play("Suitcase_Closing");
+
+        AudioManager.instance.Play("SuitcaseClose");
 
         yield return null;
         yield return new WaitForSeconds(suitcaseAnimator.GetCurrentAnimatorStateInfo(0).length);
@@ -85,7 +83,13 @@ public class ItemManager : MonoBehaviour
             item.SetActive(false);
             currentPassive = item;
             item.Activate();
+
+            if(item.type != ItemType.Lotto)
+            {
+                item.SetActive(false);
+            }
         }
+
         if(!item.passive)
         {
             AddToInventory(item);
@@ -99,7 +103,10 @@ public class ItemManager : MonoBehaviour
         if (inventoryItems == buySpawnPoints.Count)
         {
             DespawnPowerUps();
+
             suitcaseAnimator.Play("Suitcase_Closing");
+
+            AudioManager.instance.Play("SuitcaseClose");
         }
         
         DeactivateShopItems();
@@ -127,16 +134,14 @@ public class ItemManager : MonoBehaviour
     {
         if(currentPassive != null)
         {
-            if(currentPassive.PassiveItemRounds == roundsSincePassiveBought || passiveUsed)
+            if(passiveUsed || (currentPassive.type != ItemType.Lotto && currentPassive.PassiveItemRounds == roundsSincePassiveBought))
             {
-                //AudioManager.instance.Play(item.name);
-                //TooltipManager.instance.HideTooltip();
                 Destroy(currentPassive.gameObject);
                 inventoryItems--;
                 roundsSincePassiveBought = 0;
                 currentPassive = null;
             }
-            else
+            else if(currentPassive.type != ItemType.Lotto)
             {
                 roundsSincePassiveBought ++;
             }    
@@ -144,10 +149,24 @@ public class ItemManager : MonoBehaviour
     }
 
     #region Helper Methods
-
-    private GameObject GetWeightedRandomPrefab(int totalWeight)
+    private GameObject GetWeightedRandomPrefab()
     {
-        int roll = Random.Range(0, totalWeight);
+        bool hasTicket = currentPassive != null && currentPassive.type == ItemType.Lotto;
+        int currentTotalWeight = 0;
+
+        List<GameObject> validPrefabs = new List<GameObject>();
+
+        foreach(var prefab in powerUpPrefabs)
+        {
+            var powerUp = prefab.GetComponent<Item>();
+
+            if(hasTicket && powerUp.type == ItemType.Lotto) continue;
+
+            validPrefabs.Add(prefab);
+            currentTotalWeight += powerUp.spawnWeight;
+        }
+
+        int roll = Random.Range(0, currentTotalWeight);
         int cursor = 0;
 
         foreach(var prefab in powerUpPrefabs)
@@ -215,6 +234,15 @@ public class ItemManager : MonoBehaviour
         }
         return false;
     }
-    
     #endregion
+
+    private IEnumerator SuitcaseOpenCoroutine()
+    {
+        suitcaseAnimator.Play("Suitcase_Opening");
+
+        yield return new WaitForSeconds(0.2f);
+
+        AudioManager.instance.Play("Latch");
+        AudioManager.instance.Play("SuitcaseOpen");
+    }
 }

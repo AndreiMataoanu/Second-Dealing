@@ -36,7 +36,7 @@ public class Clickable : MonoBehaviour
         meshRenderer.materials = materials.ToArray();
         hasOutline = true;
 
-        TooltipManager.instance.ShowTooltip(tooltipContent, tooltipHeader);
+        TooltipManager.instance.ShowTooltip(GetTooltipContent(), tooltipHeader);
     }
 
     protected virtual void OnMouseExit()
@@ -77,5 +77,10 @@ public class Clickable : MonoBehaviour
 
         meshRenderer.materials = materials.ToArray();
         hasOutline = true;
+    }
+
+    protected virtual string GetTooltipContent()
+    {
+        return tooltipContent;
     }
 }
