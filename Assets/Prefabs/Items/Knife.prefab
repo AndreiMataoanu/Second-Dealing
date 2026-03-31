@@ -109,7 +109,8 @@ MonoBehaviour:
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
   tooltipHeader: Knife
   tooltipContent: Forces the dealer to stand
-  price: 200
+  basePrice: 200
+  percentagePrice: 0.2
   type: 0
   spawnWeight: 15
   isPurchased: 0

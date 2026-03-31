@@ -214,7 +214,8 @@ public class ItemManager : MonoBehaviour
     private void AddToInventory(Item item)
     {
         AudioManager.instance.Play("ItemBuy");
-        blackjackGame.BuyItem(item.price);
+
+        blackjackGame.BuyItem(item.GetPrice());
         
         var pos = item.transform.localPosition;
         var rot = item.transform.localRotation;
@@ -257,13 +258,15 @@ public class ItemManager : MonoBehaviour
 
     private bool HasEnoughMoney(Item item)
     {
-        if (blackjackGame.PlayerMoney > item.price) return true;
+        if(blackjackGame.PlayerMoney > item.GetPrice()) return true;
 
-        if (Time.time >= nextDenyTime)
+        if(Time.time >= nextDenyTime)
         {
             AudioManager.instance.Play("ItemDeny");
+
             nextDenyTime = Time.time + denySoundCooldown;
         }
+
         return false;
     }
     #endregion

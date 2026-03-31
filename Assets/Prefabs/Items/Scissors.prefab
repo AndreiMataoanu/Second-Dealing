@@ -109,7 +109,8 @@ MonoBehaviour:
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
   tooltipHeader: Scissors
   tooltipContent: Halves the value of a card
-  price: 100
+  basePrice: 100
+  percentagePrice: 0.1
   type: 1
   spawnWeight: 15
   isPurchased: 0

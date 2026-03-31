@@ -68,6 +68,8 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private int tutorialRoundsLimit = 3;
     [Tooltip("Money the player starts with.")]
     [SerializeField] private int playerMoney = 500;
+    [Tooltip("Threshold for percentage pricing.")]
+    [SerializeField] public int percentagePriceThreshold;
     [Tooltip("The minimum amount a bet can be.")]
     [SerializeField] private int minBet = 100;
     [Tooltip("Amount the bet increases / decreases.")]
@@ -75,6 +77,7 @@ public class BlackjackGame : MonoBehaviour
     private int currentBet = 100;
     private int hand1Bet;
     private int hand2Bet;
+    private bool priceChanged = false;
 
     [Header("Camera")]
     [SerializeField] private CinemachineBrain cinemachineBrain;
@@ -979,6 +982,35 @@ public class BlackjackGame : MonoBehaviour
         else cardValue = (int)card.rank;
 
         return cardValue > 5f;
+    }
+
+    private IEnumerator ChangePriceCoroutine()
+    {
+        if(!priceChanged && playerMoney >= percentagePriceThreshold)
+        {
+            priceChanged = true;
+
+            DisableCamera(playingCamera);
+            DisableCamera(sittingCamera);
+            EnableCamera(eventCamera);
+
+            AudioManager.instance.Play("Laugh");
+
+            statusText.text = "Let's make it more interesting";
+
+            yield return new WaitForSeconds(5.0f);
+
+            AudioManager.instance.Play("NewEvent");
+
+            statusText.text = "Item prices are scaling";
+
+            yield return new WaitForSeconds(4.0f);
+
+            DisableCamera(eventCamera);
+            EnableCamera(sittingCamera);
+
+            statusText.text = "";
+        }
     }
     #endregion
 
@@ -2181,6 +2213,11 @@ public class BlackjackGame : MonoBehaviour
         roundsCompleted++;
 
         yield return StartCoroutine(CheckForEventTriggerCoroutine());
+
+        if(!priceChanged)
+        {
+            yield return StartCoroutine(ChangePriceCoroutine());
+        }
 
         if(!isTutorialActive && PlayerMoney <= 0)
         {

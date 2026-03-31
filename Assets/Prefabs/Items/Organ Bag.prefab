@@ -112,7 +112,8 @@ MonoBehaviour:
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
   tooltipHeader: Organ in a Bag
   tooltipContent: 'Passive: Sacrifice instead of your life'
-  price: 1000
+  basePrice: 1000
+  percentagePrice: 0.4
   type: 4
   spawnWeight: 4
   isPurchased: 0

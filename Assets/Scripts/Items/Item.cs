@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Item : Clickable
 {
-    [SerializeField] public int price;
+    [SerializeField] private int basePrice;
+    [Tooltip("Percentage cost. Example: 0.1 = 10%")]
+    [SerializeField] private float percentagePrice = 0.1f;
     [SerializeField] public ItemType type;
     [Tooltip("Higher number means more common.")]
     [SerializeField] public int spawnWeight = 10;
@@ -50,6 +52,20 @@ public class Item : Clickable
         itemAction?.Invoke(this);
     }
 
+    public int GetPrice()
+    {
+        if(!blackjackGame) return basePrice;
+
+        int money = blackjackGame.PlayerMoney;
+
+        if(money >= blackjackGame.percentagePriceThreshold)
+        {
+            return Mathf.RoundToInt(money * percentagePrice);
+        }
+
+        return basePrice;
+    }
+
     protected override string GetTooltipContent()
     {
         if(type == ItemType.Lotto && blackjackGame != null && blackjackGame.isLottoActive)
@@ -66,7 +82,7 @@ public class Item : Clickable
     {
         if(!isPurchased)
         {
-            return $"{base.GetTooltipHeader()} [${price}]";
+            return $"{base.GetTooltipHeader()} [${GetPrice()}]";
         }
 
         return base.GetTooltipHeader();
