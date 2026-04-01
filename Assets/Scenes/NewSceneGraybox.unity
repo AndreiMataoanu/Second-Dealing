@@ -961,6 +961,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2097837783}
     m_Modifications:
+    - target: {fileID: 653470039443931003, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3384233393079924373, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
       propertyPath: gameReference
       value: 
@@ -4468,14 +4472,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1823405866}
     m_Modifications:
-    - target: {fileID: 4375733557009657759, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
-      propertyPath: sounds.Array.data[27].volume
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4375733557009657759, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
-      propertyPath: sounds.Array.data[27].pitchVariance
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5036363664628651963, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
       propertyPath: m_Name
       value: AudioManager

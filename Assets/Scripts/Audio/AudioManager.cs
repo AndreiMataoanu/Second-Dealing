@@ -2,11 +2,24 @@ using System;
 using System.Linq;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioLowPassFilter))]
 public class AudioManager : MonoBehaviour
 {
-    public Sound[] sounds;
-
+    [SerializeField] Sound[] sounds;
+        
     public static AudioManager instance;
+
+    [Header("Effects")]
+    public bool isMuffled;
+
+    [Header("Effects Settings")]
+    public float transitionSpeed = 5f;
+    public float muffledCutoffFreq = 3000f;
+    public float normalCutoffFreq = 22000f;
+
+    private AudioLowPassFilter lowPassFilter;
+
+    private float targetCutoff;
 
     private void Awake()
     {
@@ -21,6 +34,10 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
+        lowPassFilter = GetComponent<AudioLowPassFilter>();
+
+        lowPassFilter.cutoffFrequency = normalCutoffFreq;
+
         foreach(Sound s in sounds)
         {
             s.source = gameObject.AddComponent<AudioSource>();
@@ -34,6 +51,12 @@ public class AudioManager : MonoBehaviour
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
         }
+    }
+
+    private void Update()
+    {
+        targetCutoff = isMuffled ? muffledCutoffFreq : normalCutoffFreq;
+        lowPassFilter.cutoffFrequency = Mathf.Lerp(lowPassFilter.cutoffFrequency, targetCutoff, Time.deltaTime * transitionSpeed);
     }
 
     public void Play(string name)

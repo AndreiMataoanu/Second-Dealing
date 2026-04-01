@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5549978102516293586}
   - component: {fileID: 4375733557009657759}
+  - component: {fileID: 1966843140165819095}
+  - component: {fileID: 6783201524656525989}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -283,9 +285,9 @@ MonoBehaviour:
   - clips:
     - {fileID: 8300000, guid: 7a7dc277f33317b4c964ca16f3ac879d, type: 3}
     name: OrganExpire
-    volume: 1
+    volume: 2
     pitch: 1
-    pitchVariance: 0.2
+    pitchVariance: 0
     loop: 0
     source: {fileID: 0}
   - clips:
@@ -297,3 +299,40 @@ MonoBehaviour:
     pitchVariance: 0
     loop: 0
     source: {fileID: 0}
+  isMuffled: 0
+  transitionSpeed: 5
+  muffledCutoffFreq: 3000
+  normalCutoffFreq: 22000
+--- !u!81 &1966843140165819095
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5036363664628651963}
+  m_Enabled: 1
+--- !u!169 &6783201524656525989
+AudioLowPassFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5036363664628651963}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_LowpassResonanceQ: 1
+  lowpassLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.22692133
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

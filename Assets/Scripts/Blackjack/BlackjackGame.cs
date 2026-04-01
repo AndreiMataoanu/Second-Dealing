@@ -588,6 +588,8 @@ public class BlackjackGame : MonoBehaviour
 
         yield return new WaitForSeconds(1.5f);
 
+        AudioManager.instance.isMuffled = true;
+
         StartCoroutine(AlcoholVision(defaultNoiseAmount, 0.2f, 0.2f));
         StartCoroutine(AlcoholCameraSway(0f, 0.2f, 0f, 0.1f, 1f));
 
@@ -1062,6 +1064,8 @@ public class BlackjackGame : MonoBehaviour
 
         if(isAlcoholActive)
         {
+            AudioManager.instance.isMuffled = false;
+
             StartCoroutine(LerpShader(defaultNoiseAmount, 1.0f));
             StartCoroutine(AlcoholCameraSway(0f, 0f, 0f, 0f, 1.0f));
         }
