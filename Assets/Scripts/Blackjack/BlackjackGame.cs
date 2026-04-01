@@ -22,14 +22,13 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private Collider betUpCollider;
     [SerializeField] private Collider betDownCollider;
     [SerializeField] private Material material;
-    private CardInstance targetedScissorsCard = null;
+    private Dictionary<CardInstance, int> scissoredCards = new Dictionary<CardInstance, int>();
     private Coroutine currentBustCoroutine = null;
     private List<int> lotteryNumbers = new List<int>();
     
     private Deck gameDeck;
     private float defaultNoiseAmount;
     private int blackjackGoal = 21;
-    private int scissorsValueReduction = 0;
     private int roundsCompleted = 0;
     private bool isKnifeActive = false;
     private bool isSunglassesActive = false;
@@ -46,7 +45,6 @@ public class BlackjackGame : MonoBehaviour
     [HideInInspector] public bool isRoundActive = false;
     [HideInInspector] public bool isLottoActive = false;
     [HideInInspector] public bool isOrganActive = false;
-    public int GetOrganRoundsLeft() => itemManager.organRoundsLeft;
 
     [Header("Event System")]
     [SerializeField] private List<EventThreshold> eventThresholds;
@@ -130,25 +128,17 @@ public class BlackjackGame : MonoBehaviour
     private List<CardInstance> splitHand = new List<CardInstance>();
     private bool isPlayingSplitHand = false;
     private bool isSplitting = false;
-
-    //Delete when you get rid of keyboard controls.
-    private float nextKeyBetTime = 0f;
-    private float keyRepeatDelay = 0.5f;
-    private float keyRepeatRate = 0.1f;
     #endregion
 
     #region Getters & Setters
-
     public bool IsDoubleLowActive() => isDoubleLowActive;
     public bool IsHalfHighActive() => isHalfHighActive;
     public List<Card.Suit> GetNegativeSuits() => negativeSuits;
-
-    public void SetScissorsValueReduction(int value) => scissorsValueReduction = value;
-    public void SetTargetedScissorsCard(CardInstance cardInstance) => targetedScissorsCard = cardInstance;
+    public bool IsCardScissored(CardInstance cardInstance) => scissoredCards.ContainsKey(cardInstance);
     public void SetScissorsActive(bool active) => isScissorsActive = active;
-
+    public int GetOrganRoundsLeft() => itemManager.organRoundsLeft;
     #endregion
-    
+
     #region Monobehaviour Methods
     private void Start()
     {
@@ -168,68 +158,15 @@ public class BlackjackGame : MonoBehaviour
 
     private void Update()
     {
-        //TODO: Delete keyboard binds after adding click-only gameplay.
-        if(currentBustCoroutine != null || isActionLocked) return;
+        if(currentBustCoroutine != null || isActionLocked || isRoundActive) return;
 
-        if(!isRoundActive)
+        if(Input.mouseScrollDelta.y > 0f)
         {
-            //Can delete
-            if(Input.GetKeyDown(KeyCode.UpArrow))
-            {
-                IncreaseBet();
-
-                nextKeyBetTime = Time.time + keyRepeatDelay;
-            }
-            else if(Input.GetKey(KeyCode.UpArrow) && Time.time >= nextKeyBetTime)
-            {
-                IncreaseBet();
-
-                nextKeyBetTime = Time.time + keyRepeatRate;
-            }
-
-            if(Input.GetKeyDown(KeyCode.DownArrow))
-            {
-                DecreaseBet();
-
-                nextKeyBetTime = Time.time + keyRepeatDelay;
-            }
-            else if(Input.GetKey(KeyCode.DownArrow) && Time.time >= nextKeyBetTime)
-            {
-                DecreaseBet();
-
-                nextKeyBetTime = Time.time + keyRepeatRate;
-            }
-
-            //Keep this
-            if(Input.mouseScrollDelta.y > 0f)
-            {
-                IncreaseBet();
-            }
-            else if(Input.mouseScrollDelta.y < 0f)
-            {
-                DecreaseBet();
-            }
-
-            //Can delete
-            bool canDeal = PlayerMoney >= currentBet;
-
-            if(Input.GetKeyDown(KeyCode.H) && canDeal) StartCoroutine(DealRoundCoroutine());
+            IncreaseBet();
         }
-        else //Handle playing actions. //Can delete
+        else if(Input.mouseScrollDelta.y < 0f)
         {
-            if(Input.GetKeyDown(KeyCode.H)) StartCoroutine(HitCoroutine());
-
-            if(Input.GetKeyDown(KeyCode.S)) StartCoroutine(StandCoroutine());
-
-            if(Input.GetKeyDown(KeyCode.D) && canDoubleDown)
-            {
-                StartCoroutine(DoubleDownCoroutine());
-            }
-
-            if(Input.GetKeyDown(KeyCode.P) && CanSplit())
-            {
-                StartCoroutine(SplitCoroutine());
-            }
+            DecreaseBet();
         }
     }
     #endregion
@@ -393,18 +330,26 @@ public class BlackjackGame : MonoBehaviour
     {
         if(!isRoundActive || isScissorsActive) return false;
 
-        if(CalculateHandValue(playerHand, true) > blackjackGoal) return false;
-
         cursorDetection.OnUseScissors(this);
         
         return true;
     }
 
+    public void ApplyCutToCard(CardInstance cardInstance, int reduction)
+    {
+        if(scissoredCards.ContainsKey(cardInstance))
+        {
+            scissoredCards[cardInstance] += reduction;
+        }
+        else
+        {
+            scissoredCards.Add(cardInstance, reduction);
+        }
+    }
+
     public bool ActivateCrucifix()
     {
-        if(!isRoundActive || isCrucifixActive) return false;
-
-        if(CalculateHandValue(playerHand, true) > blackjackGoal) return false;
+        if(!isRoundActive) return false;
 
         isCrucifixActive = true;
 
@@ -413,9 +358,7 @@ public class BlackjackGame : MonoBehaviour
 
     public bool ActivateSunglasses()
     {
-        if(!isRoundActive || isSunglassesActive || peekedCardObject != null) return false;
-
-        if(CalculateHandValue(playerHand, true) > blackjackGoal) return false;
+        if(!isRoundActive || peekedCardObject != null) return false;
 
         Card? nextCard = gameDeck.PeekCard();
 
@@ -682,7 +625,7 @@ public class BlackjackGame : MonoBehaviour
 
     public bool ActivateFan()
     {
-        if(!isRoundActive || isActionLocked || isFanActive) return false;
+        if(!isRoundActive || isActionLocked) return false;
 
         isFanActive = true;
 
@@ -699,8 +642,6 @@ public class BlackjackGame : MonoBehaviour
 
         isSplitting = false;
         isPlayingSplitHand = false;
-        scissorsValueReduction = 0;
-        targetedScissorsCard = null;
 
         yield return new WaitForSeconds(1f);
         yield return StartCoroutine(DealCardToPlayerCoroutine());
@@ -824,8 +765,6 @@ public class BlackjackGame : MonoBehaviour
             AudioManager.instance.Play("MoneyGained");
 
             yield return StartCoroutine(AnimateBetChange(targetBalance, 3f));
-
-            //UpdateBettingUI();
 
             isLottoActive = false;
             lotteryNumbers.Clear();
@@ -1049,6 +988,7 @@ public class BlackjackGame : MonoBehaviour
         dealerHand.Clear();
         splitHand.Clear();
         alcoholCards.Clear();
+        scissoredCards.Clear();
 
         if(peekedCardObject != null)
         {
@@ -1099,12 +1039,10 @@ public class BlackjackGame : MonoBehaviour
         isKnifeActive = false;
         isSunglassesActive = false;
         isScissorsActive = false;
-        scissorsValueReduction = 0;
         isCrucifixActive = false;
         isCigaretteActive = false;
         isAlcoholActive = false;
         isFanActive = false;
-        targetedScissorsCard = null;
         playerTotalText.text = "";
         dealerTotalText.text = "";
         splitTotalText.text = "";
@@ -1861,7 +1799,7 @@ public class BlackjackGame : MonoBehaviour
         {
             bool isNegative = negativeSuits.Contains(card.cardData.suit);
             bool isDoubled = CheckIfDoubled(card.cardData) || isAlcoholActive;
-            bool isHalved = CheckIfHalved(card.cardData);
+            bool isHalved = CheckIfHalved(card.cardData) || scissoredCards.ContainsKey(card);
 
             card.displayComponent.SetNegativeVisual(isNegative);
             card.displayComponent.SetDoubledVisual(isDoubled);
@@ -1872,7 +1810,7 @@ public class BlackjackGame : MonoBehaviour
         {
             bool isNegative = negativeSuits.Contains(card.cardData.suit);
             bool isDoubled = CheckIfDoubled(card.cardData);
-            bool isHalved = CheckIfHalved(card.cardData);
+            bool isHalved = CheckIfHalved(card.cardData) || scissoredCards.ContainsKey(card);
 
             card.displayComponent.SetNegativeVisual(isNegative);
             card.displayComponent.SetDoubledVisual(isDoubled);
@@ -1883,7 +1821,7 @@ public class BlackjackGame : MonoBehaviour
         {
             bool isNegative = negativeSuits.Contains(card.cardData.suit);
             bool isDoubled = CheckIfDoubled(card.cardData) || isAlcoholActive;
-            bool isHalved = CheckIfHalved(card.cardData);
+            bool isHalved = CheckIfHalved(card.cardData) || scissoredCards.ContainsKey(card);
 
             card.displayComponent.SetNegativeVisual(isNegative);
             card.displayComponent.SetDoubledVisual(isDoubled);
@@ -2015,12 +1953,6 @@ public class BlackjackGame : MonoBehaviour
         float value = 0f;
 
         List<float> aceReductions = new List<float>();
-        CardInstance targetedCardInstance = null;
-
-        if(scissorsValueReduction > 0 && dealerHand.Count > 1)
-        {
-            targetedCardInstance = targetedScissorsCard;
-        }
 
         for(int i = 0; i < hand.Count; i++)
         {
@@ -2094,24 +2026,24 @@ public class BlackjackGame : MonoBehaviour
                 valueAsOne = -valueAsOne;
             }
 
-            if(targetedCardInstance != null && cardInstance == targetedCardInstance)
+            if(scissoredCards.TryGetValue(cardInstance, out int reduction))
             {
                 if(cardValue > 0)
                 {
-                    cardValue -= scissorsValueReduction;
+                    cardValue -= reduction;
                 }
                 else if(cardValue < 0)
                 {
-                    cardValue += scissorsValueReduction;
+                    cardValue += reduction;
                 }
 
                 if(valueAsOne > 0)
                 {
-                    valueAsOne -= scissorsValueReduction;
+                    valueAsOne -= reduction;
                 }
                 else if(valueAsOne < 0)
                 {
-                    valueAsOne += scissorsValueReduction;
+                    valueAsOne += reduction;
                 }
             }
 
