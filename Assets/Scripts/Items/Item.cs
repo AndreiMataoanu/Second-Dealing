@@ -31,7 +31,7 @@ public class Item : Clickable
             ItemType.Cigarette => blackjackGame.ActivateCigarette(),
             ItemType.Alcohol => blackjackGame.ActivateAlcohol(),
             ItemType.Fan => blackjackGame.ActivateFan(),
-            ItemType.Lotto => blackjackGame.ActivateLotteryTicket(),
+            ItemType.Lotto => blackjackGame.TearLotteryTicket(),
             _ => false
         };
 
@@ -68,11 +68,16 @@ public class Item : Clickable
 
     protected override string GetTooltipContent()
     {
-        if(type == ItemType.Lotto && blackjackGame != null && blackjackGame.isLottoActive)
+        if(type == ItemType.Lotto && blackjackGame.isLottoActive)
         {
             List<int> numbers = blackjackGame.GetLotteryNumbers();
 
             return $"{string.Join(" | ", numbers)}\nFinish your hand with these values to win\nClick to tear";
+        }
+
+        if(type == ItemType.Organ && blackjackGame.isOrganActive)
+        {
+            return $"Passive: Sacrifice instead of your life\nExpires in: {blackjackGame.GetOrganRoundsLeft()} rounds";
         }
 
         return base.GetTooltipContent();

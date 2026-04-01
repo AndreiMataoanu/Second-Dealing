@@ -68,7 +68,7 @@ public class Clickable : MonoBehaviour
         OnRemoveOutline();
     }
 
-    protected void ApplyOutline()
+    public void ApplyOutline()
     {
         if(!outline || hasOutline || meshRenderer == null) return;
 

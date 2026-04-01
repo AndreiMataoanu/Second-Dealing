@@ -8,14 +8,13 @@ public class ItemManager : MonoBehaviour
     [Header("Managers")]
     [SerializeField] private BlackjackGame blackjackGame;
     [SerializeField] private CursorDetection cursorDetection;
-    private int roundsSincePassiveBought = 0;
 
     [Header("Power ups")]
     [SerializeField] private List<GameObject> buySpawnPoints;
     [SerializeField] private List<GameObject> useSpawnPoints;
     [SerializeField] private List<GameObject> powerUpPrefabs;
     [SerializeField] private float denySoundCooldown = 0.3f;
-    private int organRoundsLeft = 0;
+    [HideInInspector] public int organRoundsLeft = 0;
 
     [Header("Suitcase")] 
     [SerializeField] private Animator suitcaseAnimator;
@@ -149,6 +148,8 @@ public class ItemManager : MonoBehaviour
             if(organRoundsLeft == 0)
             {
                 blackjackGame.isOrganActive = false;
+
+                AudioManager.instance.Play("OrganExpire");
 
                 RemoveItemOfType(ItemType.Organ);
             }

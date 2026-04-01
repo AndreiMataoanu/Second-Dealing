@@ -46,6 +46,7 @@ public class BlackjackGame : MonoBehaviour
     [HideInInspector] public bool isRoundActive = false;
     [HideInInspector] public bool isLottoActive = false;
     [HideInInspector] public bool isOrganActive = false;
+    public int GetOrganRoundsLeft() => itemManager.organRoundsLeft;
 
     [Header("Event System")]
     [SerializeField] private List<EventThreshold> eventThresholds;
@@ -614,15 +615,17 @@ public class BlackjackGame : MonoBehaviour
         {
             if(isSplitting && !isPlayingSplitHand)
             {
-                statusText.text = "First hand bust! Playing next...";
+                statusText.text = "First hand bust!";
 
                 yield return new WaitForSeconds(1.0f);
 
+                statusText.text = "";
                 isPlayingSplitHand = true;
                 canDoubleDown = true;
                 isActionLocked = false;
 
                 UpdateUI(true);
+                UpdateSplitOutlines();
             }
             else
             {
@@ -1055,7 +1058,7 @@ public class BlackjackGame : MonoBehaviour
 
     private void StartGame()
     {
-        buttonAnimator.SetBool("StartActive", true);
+        StartCoroutine(ButtonCoroutine());
 
         if(isAlcoholActive)
         {
@@ -1119,6 +1122,10 @@ public class BlackjackGame : MonoBehaviour
 
         hand1Bet = isTutorialActive ? 0 : currentBet;
         buttonAnimator.SetBool("StartActive", false);
+
+        AudioManager.instance.Play("Button");
+
+        yield return new WaitForSeconds(0.5f);
 
         if(isRouletteBlackjackActive)
         {
@@ -1306,6 +1313,7 @@ public class BlackjackGame : MonoBehaviour
             newCardInstance.displayComponent.transform.localScale = cardScaleVector;
 
             UpdateUI(true);
+            UpdateSplitOutlines();
         }
 
         deckPosition.position = savedPosition;
@@ -1384,15 +1392,17 @@ public class BlackjackGame : MonoBehaviour
         {
             if(isSplitting && !isPlayingSplitHand)
             {
-                statusText.text = "First hand bust! Playing next...";
+                statusText.text = "First hand bust!";
 
                 yield return new WaitForSeconds(1.0f);
 
+                statusText.text = "";
                 isPlayingSplitHand = true;
                 canDoubleDown = true;
                 isActionLocked = false;
 
                 UpdateUI(true);
+                UpdateSplitOutlines();
             }
             else
             {
@@ -1418,16 +1428,13 @@ public class BlackjackGame : MonoBehaviour
 
             yield return new WaitForSeconds(1.5f);
 
-            statusText.text = "Playing next hand...";
-            
-            yield return new WaitForSeconds(2.0f);
-
             statusText.text = "";
             isPlayingSplitHand = true;
             isActionLocked = false;
             canDoubleDown = playerMoney > currentBet;
 
             UpdateUI(true);
+            UpdateSplitOutlines();
         }
         else
         {
@@ -1478,9 +1485,7 @@ public class BlackjackGame : MonoBehaviour
 
         if(isSplitting && !isPlayingSplitHand)
         {
-            statusText.text = "Playing next hand...";
-
-            yield return new WaitForSeconds(2.0f);
+            yield return new WaitForSeconds(1.0f);
 
             statusText.text = "";
             isPlayingSplitHand = true;
@@ -1488,6 +1493,7 @@ public class BlackjackGame : MonoBehaviour
             canDoubleDown = playerMoney > currentBet;
 
             UpdateUI(true);
+            UpdateSplitOutlines();
         }
         else
         {
@@ -1546,10 +1552,24 @@ public class BlackjackGame : MonoBehaviour
         isActionLocked = false;
 
         UpdateUI();
+        UpdateSplitOutlines();
     }
 
     private IEnumerator DealerTurnCoroutine(bool playerHasBlackjack = false)
     {
+        if(isSplitting)
+        {
+            foreach(var card in playerHand)
+            {
+                card.displayComponent.GetComponentInChildren<ClickableCard>().OnRemoveOutline();
+            }
+
+            foreach(var card in splitHand)
+            {
+                card.displayComponent.GetComponentInChildren<ClickableCard>().OnRemoveOutline();
+            }
+        }
+
         statusText.text = "Dealer turn...";
 
         yield return new WaitForSeconds(1.0f);
@@ -1702,6 +1722,10 @@ public class BlackjackGame : MonoBehaviour
                 AudioManager.instance.Play("MoneyLost");
 
                 standHandAnimator.SetTrigger("flipperTrigger");
+
+                yield return new WaitForSeconds(0.5f);
+
+                AudioManager.instance.Play("OrganExpire");
 
                 itemManager.RemoveItemOfType(ItemType.Organ);
                 isOrganActive = false;
@@ -1935,6 +1959,49 @@ public class BlackjackGame : MonoBehaviour
         }
 
         cardTransform.localRotation = startRotation;
+    }
+
+    //Outlines every card in the active hand that is being played when splitting.
+    private void UpdateSplitOutlines()
+    {
+        if(!isSplitting) return;
+
+        foreach(CardInstance card in playerHand)
+        {
+            ClickableCard clickable = card.displayComponent.GetComponentInChildren<ClickableCard>();
+
+            if(isSplitting && !isPlayingSplitHand)
+            {
+                clickable.ApplyOutline();
+            }
+            else
+            {
+                clickable.OnRemoveOutline();
+            }
+        }
+
+        foreach(CardInstance card in splitHand)
+        {
+            ClickableCard clickable = card.displayComponent.GetComponentInChildren<ClickableCard>();
+
+            if(isSplitting && isPlayingSplitHand)
+            {
+                clickable.ApplyOutline();
+            }
+            else
+            {
+                clickable.OnRemoveOutline();
+            }
+        }
+    }
+
+    private IEnumerator ButtonCoroutine()
+    {
+        buttonAnimator.SetBool("StartActive", true);
+
+        yield return new WaitForSeconds(1f);
+
+        AudioManager.instance.Play("ButtonOpen");
     }
     #endregion
 
