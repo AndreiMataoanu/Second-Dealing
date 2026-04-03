@@ -22,6 +22,8 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private Collider betUpCollider;
     [SerializeField] private Collider betDownCollider;
     [SerializeField] private Material material;
+    public static BlackjackGame Instance { get; private set; }
+    public Telemetry.TelemetryData telemetryData;
     private CardInstance targetedScissorsCard = null;
     private Coroutine currentBustCoroutine = null;
     private Deck gameDeck;
@@ -129,8 +131,17 @@ public class BlackjackGame : MonoBehaviour
     #endregion
 
     #region Monobehaviour Methods
+    private void Awake()
+    {   
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+    }
     private void Start()
     {
+        Telemetry.GenerateNewRunID();
+        telemetryData.round = roundsCompleted;
         gameDeck = new Deck();
         availableLowEvents = new List<BlackjackEvent>(lowSeverityEvents);
         availableMediumEvents = new List<BlackjackEvent>(mediumSeverityEvents);
@@ -218,8 +229,7 @@ public class BlackjackGame : MonoBehaviour
     {
         if(!isRoundActive && PlayerMoney >= currentBet)
             StartCoroutine(DealRoundCoroutine());
-    }
-        
+    }   
     public void OnHit() => StartCoroutine(HitCoroutine());
         
     public void OnStand() => StartCoroutine(StandCoroutine());
@@ -2128,6 +2138,7 @@ public class BlackjackGame : MonoBehaviour
         }
 
         roundsCompleted++;
+        StartCoroutine(Telemetry.SubmitGoogleForm(telemetryData));
 
         yield return StartCoroutine(CheckForEventTriggerCoroutine());
 

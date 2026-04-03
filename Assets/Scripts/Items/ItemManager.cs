@@ -41,6 +41,7 @@ public class ItemManager : MonoBehaviour
             item.SetBlackjackGame(blackjackGame);
             item.SetActive(true);
             item.AddAction(OnBuy);
+            BlackjackGame.Instance.telemetryData.itemsInShop.Add(item);
         }
     }
 
