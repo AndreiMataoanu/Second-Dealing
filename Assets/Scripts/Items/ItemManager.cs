@@ -32,7 +32,9 @@ public class ItemManager : MonoBehaviour
     public void SpawnPowerUps()
     {
         if (powerUpPrefabs == null || powerUpPrefabs.Count == 0 || inventoryItems == useSpawnPoints.Count) return;
-
+        blackjackGame.telemetryData.itemsInShop = new List<Item>();
+        blackjackGame.telemetryData.itemsPurchased = new List<Item>();
+        blackjackGame.telemetryData.itemsUsed = new List<Item>();
         foreach (var buySpawnPoint in buySpawnPoints.ToList())
         {
             var prefab = GetWeightedRandomPrefab(totalWeight);
@@ -41,7 +43,7 @@ public class ItemManager : MonoBehaviour
             item.SetBlackjackGame(blackjackGame);
             item.SetActive(true);
             item.AddAction(OnBuy);
-            BlackjackGame.Instance.telemetryData.itemsInShop.Add(item);
+            blackjackGame.telemetryData.itemsInShop.Add(item);
         }
     }
 
@@ -74,6 +76,7 @@ public class ItemManager : MonoBehaviour
             item.AddAction(Activate);
             item.SetActive(false);
         }
+        blackjackGame.telemetryData.itemsPurchased.Add(item);
         
         cursorDetection.AddRoundActiveClickable(item);
 
@@ -94,6 +97,7 @@ public class ItemManager : MonoBehaviour
             Destroy(item.gameObject);
             inventoryItems--;
         }
+        blackjackGame.telemetryData.itemsUsed.Add(item);
     }
     public void IsPassiveDone(bool passiveUsed)
     {

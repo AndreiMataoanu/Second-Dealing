@@ -142,6 +142,7 @@ public class BlackjackGame : MonoBehaviour
     {
         Telemetry.GenerateNewRunID();
         telemetryData.round = roundsCompleted;
+        telemetryData.eventsTriggered = new List<BlackjackEvent>();
         gameDeck = new Deck();
         availableLowEvents = new List<BlackjackEvent>(lowSeverityEvents);
         availableMediumEvents = new List<BlackjackEvent>(mediumSeverityEvents);
@@ -228,6 +229,8 @@ public class BlackjackGame : MonoBehaviour
     public void OnStartGame()
     {
         if(!isRoundActive && PlayerMoney >= currentBet)
+        telemetryData.totalMoney = PlayerMoney;
+        telemetryData.moneyBet = currentBet;
             StartCoroutine(DealRoundCoroutine());
     }   
     public void OnHit() => StartCoroutine(HitCoroutine());
@@ -240,12 +243,20 @@ public class BlackjackGame : MonoBehaviour
 
     public void OnDoubleDown()
     {
-        if(canDoubleDown) StartCoroutine(DoubleDownCoroutine());
+        if(canDoubleDown)
+        {
+            telemetryData.doubleDown = true;
+            StartCoroutine(DoubleDownCoroutine());   
+        }
     }
 
     public void OnSplit()
     {
-        if(CanSplit()) StartCoroutine(SplitCoroutine());
+        if(CanSplit())
+        {
+            telemetryData.split = true;
+            StartCoroutine(SplitCoroutine());   
+        }
     }
 
     //public void ResetItemsAvailable()
@@ -863,7 +874,7 @@ public class BlackjackGame : MonoBehaviour
                 AudioManager.instance.Play("NewEvent");
 
                 statusText.text = $"New Event: {chosenEvent.eventName}";
-
+                telemetryData.eventsTriggered.Add(chosenEvent);
                 yield return new WaitForSeconds(6.0f);
             }
         }
@@ -1692,7 +1703,7 @@ public class BlackjackGame : MonoBehaviour
         }
 
         statusText.text = "Bust... You lose";
-
+        telemetryData.winLossTie = "lost";
         yield return StartCoroutine(EndGameCoroutine("Bust... You lose", false));
 
         currentBustCoroutine = null;
@@ -1704,15 +1715,29 @@ public class BlackjackGame : MonoBehaviour
         bool dealerBust = (dealerValue > blackjackGoal || dealerValue < -blackjackGoal) && !IsBlackjack(dealerValue);
         int playerDiff = Mathf.Abs(Mathf.Abs(playerValue) - blackjackGoal);
         int dealerDiff = Mathf.Abs(Mathf.Abs(dealerValue) - blackjackGoal);
+        telemetryData.hand = playerValue;
+        if(playerBust)
+        {
+            telemetryData.winLossTie = "lost";
+            return "Bust... You lose";   
+        }
 
-        if(playerBust) return "Bust... You lose";
-
-        if(dealerBust) return "Dealer busts... You win";
-
-        if(playerDiff < dealerDiff) return "You win";
-
-        if(dealerDiff < playerDiff) return "Dealer wins";
-
+        if(dealerBust) 
+        {
+            telemetryData.winLossTie = "Won";
+            return "Dealer busts... You win";
+        }
+        if(playerDiff < dealerDiff) 
+        {
+            telemetryData.winLossTie = "Won";
+            return "You win";
+        }
+        if(dealerDiff < playerDiff)
+        {
+            telemetryData.winLossTie = "lost";
+            return "Dealer wins";
+        }
+        telemetryData.winLossTie = "tie";
         return "Its a tie";
     }
 
@@ -2138,6 +2163,7 @@ public class BlackjackGame : MonoBehaviour
         }
 
         roundsCompleted++;
+        telemetryData.round = roundsCompleted;
         StartCoroutine(Telemetry.SubmitGoogleForm(telemetryData));
 
         yield return StartCoroutine(CheckForEventTriggerCoroutine());

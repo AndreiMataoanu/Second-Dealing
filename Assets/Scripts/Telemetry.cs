@@ -15,7 +15,7 @@ public class Telemetry : MonoBehaviour
         public List<Item> itemsInShop;
         public List<Item> itemsPurchased;
         public List<Item> itemsUsed;
-        public int eventsTriggered;
+        public List<BlackjackEvent> eventsTriggered;
         public int hand;
         public int moneyBet;
         public int totalMoney;
@@ -24,7 +24,7 @@ public class Telemetry : MonoBehaviour
         public string winLossTie;
     }
 
-    public const string GoogleFormBaseUrl = "https://docs.google.com/forms/d/e/1FAIpQLScy8rKbkU5HVRV8-eTIpOeKmfiJTACwI1PF1sP8DJJftMc9_w";
+    public const string GoogleFormBaseUrl = "https://docs.google.com/forms/d/e/1FAIpQLScy8rKbkU5HVRV8-eTIpOeKmfiJTACwI1PF1sP8DJJftMc9_w/";
 
     private const string _gform_id_user = "entry.1053518294";
 
@@ -65,22 +65,28 @@ public class Telemetry : MonoBehaviour
         form.AddField(_gform_id_user,GUIDToShortString(userId));
         form.AddField(_gform_id_run,GUIDToShortString(runId));
         form.AddField(_gform_round,data.round);
-        form.AddField(_gform_itemsInShop,listToString(data.itemsInShop));
-        form.AddField(_gform_itemsPurchased,listToString(data.itemsPurchased));
-        form.AddField(_gform_itemsUsed,listToString(data.itemsUsed));
-        form.AddField(_gform_eventsTriggered,data.eventsTriggered);
+        form.AddField(_gform_itemsInShop,ItemlistToString(data.itemsInShop));
+        form.AddField(_gform_itemsPurchased,ItemlistToString(data.itemsPurchased));
+        form.AddField(_gform_itemsUsed,ItemlistToString(data.itemsUsed));
+        form.AddField(_gform_eventsTriggered,EventlistToString(data.eventsTriggered));
         form.AddField(_gform_hand,data.hand);
         form.AddField(_gform_moneyBet,data.moneyBet);
         form.AddField(_gform_totalMoney,data.totalMoney);
         form.AddField(_gform_doubleDown,data.doubleDown.ToString());
         form.AddField(_gform_split,data.split.ToString());
         form.AddField(_gform_winLossTie,data.winLossTie);
-
         using(UnityWebRequest www = UnityWebRequest.Post(urlGoogleFormResponse,form))
         {
-            //yield return www.SendWebRequest();
-            print("request sent");
-            yield return null;
+            yield return www.SendWebRequest();
+              if (www.result != UnityWebRequest.Result.Success)
+                {
+                    Debug.LogError("Error: " + www.error);
+                }
+                else
+                {
+                    Debug.Log("Success: " + www.downloadHandler.text);
+                }
+            //yield return null;
         }
     }
     
@@ -104,17 +110,26 @@ public class Telemetry : MonoBehaviour
         return base64Guid.Substring(0, base64Guid.Length - 2);
     }
 
-    public static string listToString(List<Item> list)
+public static string ItemlistToString(List<Item> list)
+{
+    string itemString = "";
+    foreach (Item item in list) 
     {
-        string itemString = "";
-        foreach (Item item in list) 
-        {
-            itemString = nameof(item.type);
-        }
-
-        return itemString;
-
+        itemString += item.type.ToString() + " "; // append instead of overwrite
     }
+
+    return itemString;
+}
+public static string EventlistToString(List<BlackjackEvent> list)
+{
+    string eventString = "";
+    foreach (BlackjackEvent blackjackEvent in list) 
+    {
+        eventString += blackjackEvent.eventName + " "; // append instead of overwrite
+    }
+
+    return eventString;
+}
 
 
 }
