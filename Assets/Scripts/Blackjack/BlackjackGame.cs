@@ -96,6 +96,7 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private GameObject redParticlePrefab;
     [SerializeField] private Transform particleSpawnPoint;
     [SerializeField] private ParticleSystem smokeParticle;
+    [SerializeField] private GameObject distortion;
     private GameObject peekedCardObject = null;
     private const float zOverlap = 0.001f;
     private const float cardAnimationDuration = 0.25f;
@@ -540,7 +541,8 @@ public class BlackjackGame : MonoBehaviour
 
         AudioManager.instance.isMuffled = true;
 
-        StartCoroutine(AlcoholVision(defaultNoiseAmount, 0.2f, 0.2f));
+        //StartCoroutine(AlcoholVision(defaultNoiseAmount, 0.2f, 0.2f));
+        distortion.SetActive(true);
         StartCoroutine(AlcoholCameraSway(0f, 0.2f, 0f, 0.1f, 1f));
 
         foreach(var hand in playerHands)
@@ -989,7 +991,8 @@ public class BlackjackGame : MonoBehaviour
         {
             AudioManager.instance.isMuffled = false;
 
-            StartCoroutine(LerpShader(defaultNoiseAmount, 1.0f));
+            //StartCoroutine(LerpShader(defaultNoiseAmount, 1.0f));
+            distortion.SetActive(false);
             StartCoroutine(AlcoholCameraSway(0f, 0f, 0f, 0f, 1.0f));
         }
 
