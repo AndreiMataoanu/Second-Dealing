@@ -130,6 +130,18 @@ public class BlackjackGame : MonoBehaviour
     private float keyRepeatRate = 0.1f;
     #endregion
 
+    #region Getters & Setters
+
+    public bool IsDoubleLowActive() => isDoubleLowActive;
+    public bool IsHalfHighActive() => isHalfHighActive;
+    public List<Card.Suit> GetNegativeSuits() => negativeSuits;
+
+    public void SetScissorsValueReduction(int value) => scissorsValueReduction = value;
+    public void SetTargetedScissorsCard(CardInstance cardInstance) => targetedScissorsCard = cardInstance;
+    public void SetScissorsActive(bool active) => isScissorsActive = active;
+
+    #endregion
+    
     #region Monobehaviour Methods
     private void Awake()
     {   
@@ -402,46 +414,8 @@ public class BlackjackGame : MonoBehaviour
 
         if(CalculateHandValue(playerHand, true) > blackjackGoal) return false;
 
-        if(dealerHand.Count < 2) return false;
-
-        CardInstance visibleDealerCard = dealerHand[0];
-
-        visibleDealerCard.displayComponent.SetCutVisual(true);
-
-        int originalValue;
-
-        if(visibleDealerCard.cardData.rank == Card.Rank.Joker)
-        {
-            originalValue = 0;
-        }
-        else
-        {
-            originalValue = visibleDealerCard.cardData.GetValue();
-
-            if(isDoubleLowActive && originalValue < 6)
-            {
-                originalValue = originalValue + originalValue;
-            }
-
-            if(isHalfHighActive && originalValue > 5)
-            {
-                originalValue = Mathf.CeilToInt(originalValue / 2f);
-            }
-
-            if(negativeSuits.Contains(visibleDealerCard.cardData.suit))
-            {
-                originalValue = -originalValue;
-            }
-        }
-
-        int halvedValue = Mathf.CeilToInt((float)Mathf.Abs(originalValue) / 2f);
-
-        scissorsValueReduction = Mathf.Abs(originalValue) - halvedValue;
-        targetedScissorsCard = visibleDealerCard;
-        isScissorsActive = true;
-
-        UpdateUI(true);
-
+        cursorDetection.OnUseScissors(this);
+        
         return true;
     }
 
@@ -810,6 +784,7 @@ public class BlackjackGame : MonoBehaviour
 
         material.SetFloat("_NoiseAmount", targetAmount);
     }
+
     #endregion
 
     #region Event Methods
@@ -1034,7 +1009,7 @@ public class BlackjackGame : MonoBehaviour
 
         if(!isTutorialActive)
         {
-            itemManager.SpawnPowerUps();
+            itemManager.PlaySuitcaseOpen();
             statusText.text = "Place your bet...";
         }
         
@@ -1420,7 +1395,7 @@ public class BlackjackGame : MonoBehaviour
 
         AudioManager.instance.Play("BetUp");
 
-        hitHandAnimator.SetTrigger("hitTrigger"); //double down animation
+        hitHandAnimator.SetTrigger("doubleDownTrigger");
 
         yield return new WaitForSeconds(2f);
         yield return StartCoroutine(DealCardToPlayerCoroutine());
@@ -1467,7 +1442,7 @@ public class BlackjackGame : MonoBehaviour
         AudioManager.instance.Play("BetUp");
 
         statusText.text = "Splitting Hand...";
-        standHandAnimator.SetTrigger("standTrigger"); //split animation
+        standHandAnimator.SetTrigger("splitTrigger");
 
         yield return new WaitForSeconds(2.0f);
 
@@ -1645,6 +1620,8 @@ public class BlackjackGame : MonoBehaviour
                 AudioManager.instance.Play("MoneyLost");
 
                 Instantiate(redParticlePrefab, particleSpawnPoint.position, particleSpawnPoint.rotation);
+
+                standHandAnimator.SetTrigger("flipperTrigger");
 
                 yield return StartCoroutine(AnimateBetChange(targetMoneyBalance, 3f));
             }
@@ -2068,7 +2045,7 @@ public class BlackjackGame : MonoBehaviour
     }
 
     //Updates the score, money, and checks for busts.
-    private void UpdateUI(bool dealerHidden = true)
+    public void UpdateUI(bool dealerHidden = true)
     {
         int playerValue = CalculateHandValue(playerHand, true);
         bool revealJokers = !dealerHidden;

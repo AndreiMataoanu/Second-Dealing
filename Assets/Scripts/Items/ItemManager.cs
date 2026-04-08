@@ -1,7 +1,6 @@
-using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -16,6 +15,8 @@ public class ItemManager : MonoBehaviour
     [SerializeField] private List<GameObject> useSpawnPoints;
     [SerializeField] private List<GameObject> powerUpPrefabs;
     [SerializeField] private float denySoundCooldown = 0.3f;
+    [Header("Suitcase")] 
+    [SerializeField] private Animator suitcaseAnimator;
     private Item currentPassive;
     private int inventoryItems = 0;
     private float nextDenyTime = 0;
@@ -29,14 +30,23 @@ public class ItemManager : MonoBehaviour
         }
     }
 
-    public void SpawnPowerUps()
+    public void PlaySuitcaseOpen()
     {
         if (powerUpPrefabs == null || powerUpPrefabs.Count == 0 || inventoryItems == useSpawnPoints.Count) return;
+
+        suitcaseAnimator.Play("Suitcase_Opening");
+
+        SpawnPowerUps();
+    }
+
+    public void SpawnPowerUps()
+    {
         blackjackGame.telemetryData.itemsInShop = new List<Item>();
         blackjackGame.telemetryData.itemsPurchased = new List<Item>();
         blackjackGame.telemetryData.itemsUsed = new List<Item>();
         foreach (var buySpawnPoint in buySpawnPoints.ToList())
         {
+            
             var prefab = GetWeightedRandomPrefab(totalWeight);
             var prefabInstance = Instantiate(prefab, buySpawnPoint.transform);
             var item = prefabInstance.GetComponent<Item>();
@@ -49,10 +59,22 @@ public class ItemManager : MonoBehaviour
 
     public void DespawnPowerUps()
     {
-        foreach (var item in buySpawnPoints)
+        StartCoroutine(DespawnCoroutine());
+    }
+
+    private IEnumerator DespawnCoroutine()
+    {
+        suitcaseAnimator.Play("Suitcase_Closing");
+
+        yield return null;
+        yield return new WaitForSeconds(suitcaseAnimator.GetCurrentAnimatorStateInfo(0).length);
+
+        foreach(var spawnPoint in buySpawnPoints)
         {
-            if (item.transform.childCount > 0)
-                Destroy(item.transform.GetChild(0).gameObject);
+            if(spawnPoint.transform.childCount > 0)
+            {
+                Destroy(spawnPoint.transform.GetChild(0).gameObject);
+            }
         }
     }
     
@@ -80,6 +102,12 @@ public class ItemManager : MonoBehaviour
         
         cursorDetection.AddRoundActiveClickable(item);
 
+        if (inventoryItems == buySpawnPoints.Count)
+        {
+            DespawnPowerUps();
+            suitcaseAnimator.Play("Suitcase_Closing");
+        }
+        
         DeactivateShopItems();
     }
     
@@ -92,7 +120,10 @@ public class ItemManager : MonoBehaviour
         }
         if(!item.passive)
         {
-            AudioManager.instance.Play(item.name);
+            if (item.type != ItemType.Scissors)
+                AudioManager.instance.Play(item.name);
+            else
+                AudioManager.instance.Play("ItemBuy");
             TooltipManager.instance.HideTooltip();
             Destroy(item.gameObject);
             inventoryItems--;
@@ -170,8 +201,12 @@ public class ItemManager : MonoBehaviour
             if (spawnPoint.transform.childCount != 0)
             {
                 var item = spawnPoint.transform.GetChild(0).GetComponent<Item>();
-                item.SetActive(false);
-                item.OnRemoveOutline();
+
+                if(item != null)
+                {
+                    item.SetActive(false);
+                    item.OnRemoveOutline();
+                } 
             }
         }
     }
