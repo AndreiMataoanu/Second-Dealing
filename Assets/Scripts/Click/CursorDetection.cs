@@ -98,6 +98,8 @@ public class CursorDetection : MonoBehaviour
                 var clickableCard = face.GetComponent<ClickableCard>();
                 if (clickableCard)
                 {
+                    if(blackjackGame.IsCardScissored(cardDisplay.GetCardInstance())) continue;
+
                     clickableCard.SetCardInstance(cardDisplay.GetCardInstance());
                     clickableCard.SetBlackjackGame(blackjackGame);
                     clickableCard.AddAction(OnClickCard);
