@@ -7,5 +7,6 @@ public enum ItemType
     Organ,
     Cigarette,
     Alcohol,
-    Fan
+    Fan,
+    Lotto
 }

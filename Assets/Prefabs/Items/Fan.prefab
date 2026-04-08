@@ -215,13 +215,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
-  tooltipHeader: Fan - $100
+  tooltipHeader: Fan
   tooltipContent: Remove all cards
-  price: 100
+  basePrice: 100
+  percentagePrice: 0.1
   type: 7
   spawnWeight: 15
-  PassiveItemRounds: 2
-  passive: 0
+  isPurchased: 0
 --- !u!64 &8462082567563038245
 MeshCollider:
   m_ObjectHideFlags: 0

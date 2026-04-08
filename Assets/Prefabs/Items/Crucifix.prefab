@@ -96,13 +96,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
-  tooltipHeader: Crucifix - $300
+  tooltipHeader: Crucifix
   tooltipContent: Your next hit will be blessed
-  price: 300
+  basePrice: 300
+  percentagePrice: 0.3
   type: 2
   spawnWeight: 5
-  PassiveItemRounds: 2
-  passive: 0
+  isPurchased: 0
 --- !u!64 &-1736431926067525896
 MeshCollider:
   m_ObjectHideFlags: 0

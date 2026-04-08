@@ -14,7 +14,6 @@ public class Clickable : MonoBehaviour
     private MeshCollider meshCollider;
     private Renderer meshRenderer;
     private bool hasOutline;
-    
     protected bool IsActive;
 
     public void SetActive(bool active) => IsActive = active;
@@ -36,7 +35,7 @@ public class Clickable : MonoBehaviour
         meshRenderer.materials = materials.ToArray();
         hasOutline = true;
 
-        TooltipManager.instance.ShowTooltip(tooltipContent, tooltipHeader);
+        TooltipManager.instance.ShowTooltip(GetTooltipContent(), GetTooltipHeader());
     }
 
     protected virtual void OnMouseExit()
@@ -69,7 +68,7 @@ public class Clickable : MonoBehaviour
         OnRemoveOutline();
     }
 
-    protected void ApplyOutline()
+    public void ApplyOutline()
     {
         if(!outline || hasOutline || meshRenderer == null) return;
 
@@ -77,5 +76,15 @@ public class Clickable : MonoBehaviour
 
         meshRenderer.materials = materials.ToArray();
         hasOutline = true;
+    }
+
+    protected virtual string GetTooltipHeader()
+    {
+        return tooltipHeader;
+    }
+
+    protected virtual string GetTooltipContent()
+    {
+        return tooltipContent;
     }
 }
