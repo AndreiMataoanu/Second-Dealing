@@ -1790,7 +1790,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3470410137321538314, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 402224431}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7501022095072143761, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1344944152}
   m_SourcePrefab: {fileID: 100100000, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
 --- !u!4 &431888116 stripped
 Transform:
@@ -4179,6 +4182,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5546812090285593363, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
   m_PrefabInstance: {fileID: 1343293106}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1344944150 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7501022095072143761, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
+  m_PrefabInstance: {fileID: 431888115}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1344944152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344944150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f846c4bf746152d45a3dd6e71d241e4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Hands.DelayIdle
+  delayTime: 2
 --- !u!114 &1365003149 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4630205618763326894, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
@@ -5705,19 +5726,6 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 4781726319890356970, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
   m_PrefabInstance: {fileID: 431888115}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1897973888
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 405108974}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f846c4bf746152d45a3dd6e71d241e4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Hands.DelayIdle
-  delayTime: 5
 --- !u!1001 &1934868212
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6971,10 +6979,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1688790259}
     - target: {fileID: 1819999903971304338, guid: 37c77e8a77093fc4f8e72e4e5f3d99bb, type: 3}
-      propertyPath: powerUpPrefabs.Array.size
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 1819999903971304338, guid: 37c77e8a77093fc4f8e72e4e5f3d99bb, type: 3}
       propertyPath: 'buySpawnPoints.Array.data[0]'
       value: 
       objectReference: {fileID: 1065378880}
@@ -6982,22 +6986,6 @@ PrefabInstance:
       propertyPath: 'buySpawnPoints.Array.data[1]'
       value: 
       objectReference: {fileID: 902577193}
-    - target: {fileID: 1819999903971304338, guid: 37c77e8a77093fc4f8e72e4e5f3d99bb, type: 3}
-      propertyPath: 'powerUpPrefabs.Array.data[0]'
-      value: 
-      objectReference: {fileID: 9090495121263625931, guid: b8eb2e00a9140784a84588e88241707a, type: 3}
-    - target: {fileID: 1819999903971304338, guid: 37c77e8a77093fc4f8e72e4e5f3d99bb, type: 3}
-      propertyPath: 'powerUpPrefabs.Array.data[1]'
-      value: 
-      objectReference: {fileID: 3247029996075764086, guid: a93816d81abd1ac4eab255e2fe5bce46, type: 3}
-    - target: {fileID: 1819999903971304338, guid: 37c77e8a77093fc4f8e72e4e5f3d99bb, type: 3}
-      propertyPath: 'powerUpPrefabs.Array.data[3]'
-      value: 
-      objectReference: {fileID: 6929943178110708876, guid: 917409e19572f3a4b9aea542b859c53f, type: 3}
-    - target: {fileID: 1819999903971304338, guid: 37c77e8a77093fc4f8e72e4e5f3d99bb, type: 3}
-      propertyPath: 'powerUpPrefabs.Array.data[8]'
-      value: 
-      objectReference: {fileID: 7981796096309106432, guid: b881c730ab1fea64fbca849590fac1fe, type: 3}
     - target: {fileID: 1819999903971304338, guid: 37c77e8a77093fc4f8e72e4e5f3d99bb, type: 3}
       propertyPath: 'useSpawnPoints.Array.data[0]'
       value: 
