@@ -29,7 +29,6 @@ public class BlackjackGame : MonoBehaviour
     private Coroutine currentBustCoroutine = null;
     private List<int> lotteryNumbers = new List<int>();
     private Deck gameDeck;
-    private float defaultNoiseAmount;
     private int blackjackGoal = 21;
     private int roundsCompleted = 0;
     private int maxSplits = 3;
@@ -99,6 +98,7 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private GameObject redParticlePrefab;
     [SerializeField] private Transform particleSpawnPoint;
     [SerializeField] private ParticleSystem smokeParticle;
+    [SerializeField] private GameObject distortion;
     private GameObject peekedCardObject = null;
     private const float zOverlap = 0.001f;
     private const float cardAnimationDuration = 0.25f;
@@ -151,8 +151,6 @@ public class BlackjackGame : MonoBehaviour
         availableMediumEvents = new List<BlackjackEvent>(mediumSeverityEvents);
         availableHighEvents = new List<BlackjackEvent>(highSeverityEvents);
         cinemachineBrain.DefaultBlend.Time = cameraTransitionTime;
-        defaultNoiseAmount = 0.01f;
-        material.SetFloat("_NoiseAmount", defaultNoiseAmount);
 
         InitializeCardLookup();
         StartGame();
@@ -562,7 +560,8 @@ public class BlackjackGame : MonoBehaviour
 
         AudioManager.instance.isMuffled = true;
 
-        StartCoroutine(AlcoholVision(defaultNoiseAmount, 0.2f, 0.2f));
+        distortion.SetActive(true);
+
         StartCoroutine(AlcoholCameraSway(0f, 0.2f, 0f, 0.1f, 1f));
 
         foreach(var hand in playerHands)
@@ -591,26 +590,6 @@ public class BlackjackGame : MonoBehaviour
         }
 
         UpdateCardVFX();
-    }
-
-    private IEnumerator AlcoholVision(float minAmount, float maxAmount, float speed)
-    {
-        if(material == null) yield break;
-
-        float elapsedTime = 0f;
-
-        while(isAlcoholActive)
-        {
-            elapsedTime += Time.deltaTime * speed;
-
-            float lerpValue = Mathf.PingPong(elapsedTime, 1f);
-
-            lerpValue = lerpValue * lerpValue * (3f - 2f * lerpValue);
-
-            material.SetFloat("_NoiseAmount", Mathf.Lerp(minAmount, maxAmount, lerpValue));
-
-            yield return null;
-        }
     }
 
     private IEnumerator AlcoholCameraSway(float minAmp, float maxAmp, float minFreq, float maxFreq, float speed)
@@ -697,27 +676,6 @@ public class BlackjackGame : MonoBehaviour
             case 2: return Card.Rank.Two;
             default: return Card.Rank.None;
         }
-    }
-
-    private IEnumerator LerpShader(float targetAmount, float duration)
-    {
-        if(material == null) yield break;
-
-        float startAmount = material.GetFloat("_NoiseAmount");
-        float elapsedTime = 0f;
-
-        while(elapsedTime < duration)
-        {
-            elapsedTime += Time.deltaTime;
-
-            float t = elapsedTime / duration;
-
-            material.SetFloat("_NoiseAmount", Mathf.Lerp(startAmount, targetAmount, t));
-
-            yield return null;
-        }
-
-        material.SetFloat("_NoiseAmount", targetAmount);
     }
 
     public bool ActivateLotteryTicket()
@@ -1011,7 +969,8 @@ public class BlackjackGame : MonoBehaviour
         {
             AudioManager.instance.isMuffled = false;
 
-            StartCoroutine(LerpShader(defaultNoiseAmount, 1.0f));
+            distortion.SetActive(false);
+
             StartCoroutine(AlcoholCameraSway(0f, 0f, 0f, 0f, 1.0f));
         }
 
@@ -2202,8 +2161,6 @@ public class BlackjackGame : MonoBehaviour
 
         if(!isTutorialActive && PlayerMoney <= 0)
         {
-            StartCoroutine(LerpShader(defaultNoiseAmount, 1.0f));
-
             SceneManager.LoadSceneAsync(3);
 
             yield break;
@@ -2211,8 +2168,6 @@ public class BlackjackGame : MonoBehaviour
 
         if(PlayerMoney >= 100000)
         {
-            StartCoroutine(LerpShader(defaultNoiseAmount, 1.0f));
-
             SceneManager.LoadSceneAsync(2);
 
             yield break;
