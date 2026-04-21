@@ -51,6 +51,10 @@ public class MenusController : MonoBehaviour
             ResumeGame();
         }
     }
+    public void generateUserId()
+    {
+        Telemetry.GenerateNewUserID();
+    }
 
     #region Pause Menu
     public void PauseGame()

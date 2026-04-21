@@ -202,7 +202,7 @@ public class BlackjackGame : MonoBehaviour
     {
         if(CanSplit())
         {
-            telemetryData.split = true;
+            telemetryData.split ++;
             StartCoroutine(SplitCoroutine());   
         }
     }
@@ -1498,6 +1498,7 @@ public class BlackjackGame : MonoBehaviour
             {
                 if(!IsBlackjack(dealerValueInit))
                 {
+                    telemetryData.winLossTie = "Win";
                     StartCoroutine(EndGameCoroutine("Blackjack! You win", true));
 
                     yield break;
@@ -1507,7 +1508,7 @@ public class BlackjackGame : MonoBehaviour
                     statusText.text = "Dealer also has Blackjack";
 
                     yield return new WaitForSeconds(1.5f);
-
+                    telemetryData.winLossTie = "Tie";
                     StartCoroutine(EndGameCoroutine("Both have Blackjack. Its a tie", true));
 
                     yield break;

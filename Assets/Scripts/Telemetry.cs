@@ -20,7 +20,7 @@ public class Telemetry : MonoBehaviour
         public int moneyBet;
         public int totalMoney;
         public bool doubleDown;
-        public bool split;
+        public int split;
         public string winLossTie;
     }
 
@@ -73,7 +73,7 @@ public class Telemetry : MonoBehaviour
         form.AddField(_gform_moneyBet,data.moneyBet);
         form.AddField(_gform_totalMoney,data.totalMoney);
         form.AddField(_gform_doubleDown,data.doubleDown.ToString());
-        form.AddField(_gform_split,data.split.ToString());
+        form.AddField(_gform_split,data.split);
         form.AddField(_gform_winLossTie,data.winLossTie);
         using(UnityWebRequest www = UnityWebRequest.Post(urlGoogleFormResponse,form))
         {
