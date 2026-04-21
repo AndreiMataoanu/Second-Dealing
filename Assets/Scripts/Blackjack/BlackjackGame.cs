@@ -19,8 +19,10 @@ public class BlackjackGame : MonoBehaviour
     [Header("Set-Up")]
     [SerializeField] private ItemManager itemManager;
     [SerializeField] private CursorDetection cursorDetection;
+    [SerializeField] private Tutorial tutorial;
     [SerializeField] private Collider betUpCollider;
     [SerializeField] private Collider betDownCollider;
+    [SerializeField] private string[] lines;
     private Dictionary<CardInstance, int> scissoredCards = new Dictionary<CardInstance, int>();
     private Coroutine currentBustCoroutine = null;
     private List<int> lotteryNumbers = new List<int>();
@@ -35,6 +37,7 @@ public class BlackjackGame : MonoBehaviour
     private bool isCigaretteActive = false;
     private bool isAlcoholActive = false;
     private bool isActionLocked = false;
+    private bool tutorialCompleted = false;
     private bool isTutorialActive => roundsCompleted < tutorialRoundsLimit;
     [HideInInspector] public List<int> GetLotteryNumbers() => lotteryNumbers;
     [HideInInspector] public bool canDoubleDown = false;
@@ -1002,6 +1005,15 @@ public class BlackjackGame : MonoBehaviour
     //Locks the bet and starts the round
     public IEnumerator DealRoundCoroutine()
     {
+        if(!tutorialCompleted)
+        {
+            tutorialCompleted = true;
+
+            tutorial.PlayTutorial(lines);
+
+            yield return new WaitWhile(() => tutorial.IsPlaying);
+        }
+
         if(isRoundActive || PlayerMoney < currentBet || isActionLocked) yield break;
 
         isActionLocked = true;
@@ -2100,7 +2112,7 @@ public class BlackjackGame : MonoBehaviour
 
             AudioManager.instance.Play("NewEvent");
 
-            statusText.text = "$$$$$$$$$$$";
+            statusText.text = "Betting enabled";
 
             yield return new WaitForSeconds(6.0f);
 
