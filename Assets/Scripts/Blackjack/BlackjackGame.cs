@@ -389,6 +389,14 @@ public class BlackjackGame : MonoBehaviour
         if(cardDisplay != null)
         {
             cardDisplay.SetHidden(false);
+
+            bool isSuitNegative = negativeSuits.Contains(newCardData.suit);
+            bool isDoubled = CheckIfDoubled(newCardData) || isAlcoholActive;
+            bool isHalved = CheckIfHalved(newCardData);
+
+            cardDisplay.SetNegativeVisual(isSuitNegative);
+            cardDisplay.SetDoubledVisual(isDoubled);
+            cardDisplay.SetCutVisual(isHalved);
         }
 
         activeCardObjects.Add(peekedCardObject);
@@ -1746,6 +1754,29 @@ public class BlackjackGame : MonoBehaviour
             card.displayComponent.SetNegativeVisual(isNegative);
             card.displayComponent.SetDoubledVisual(isDoubled);
             card.displayComponent.SetCutVisual(isHalved);
+        }
+
+        if(peekedCardObject != null)
+        {
+            Card? topCard = gameDeck.PeekCard();
+
+            if(topCard.HasValue)
+            {
+                CardDisplay display = peekedCardObject.GetComponent<CardDisplay>();
+
+                if(display != null)
+                {
+                    Card cardData = topCard.Value;
+
+                    bool isNegative = negativeSuits.Contains(cardData.suit);
+                    bool isDoubled = CheckIfDoubled(cardData) || isAlcoholActive;
+                    bool isHalved = CheckIfHalved(cardData);
+
+                    display.SetNegativeVisual(isNegative);
+                    display.SetDoubledVisual(isDoubled);
+                    display.SetCutVisual(isHalved);
+                }
+            }
         }
     }
 

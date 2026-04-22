@@ -11,11 +11,12 @@ public class Tutorial : MonoBehaviour
     private Coroutine sequenceCoroutine;
     private Coroutine typingCoroutine;
     private bool isPlaying = false;
+    private bool allowSkip = false;
     public bool IsPlaying => isPlaying;
 
     private void Update()
     {
-        if(isPlaying && Input.GetKeyDown(KeyCode.E))
+        if(isPlaying && allowSkip && Input.anyKeyDown)
         {
             SkipTutorial();
         }
@@ -32,7 +33,12 @@ public class Tutorial : MonoBehaviour
     private IEnumerator SequenceCoroutine(string[] lines)
     {
         isPlaying = true;
+        allowSkip = false;
         panel.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(0.1f);
+
+        allowSkip = true;
 
         foreach(string line in lines)
         {
@@ -43,6 +49,7 @@ public class Tutorial : MonoBehaviour
 
         panel.gameObject.SetActive(false);
         isPlaying = false;
+        allowSkip = false;
     }
 
     private IEnumerator TypeText(string line)
