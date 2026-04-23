@@ -610,6 +610,8 @@ public class BlackjackGame : MonoBehaviour
     {
         isActionLocked = true;
 
+        yield return StartCoroutine(AnimateCardsOffScreen());
+
         ClearTable();
 
         playerHands.Add(new List<CardInstance>());
@@ -639,6 +641,48 @@ public class BlackjackGame : MonoBehaviour
             isActionLocked = false;
 
             EvaluateDoubleDownCondition();
+        }
+    }
+
+    private IEnumerator AnimateCardsOffScreen()
+    {
+        float animDuration = 2f;
+
+        List<Coroutine> moveCoroutines = new List<Coroutine>();
+
+        foreach(GameObject card in activeCardObjects)
+        {
+            Vector3 randomWindDirection = new Vector3(Random.Range(-25f, -15f), Random.Range(5f, 15f), Random.Range(-10f, 10f));
+            Vector3 offScreenPos = card.transform.position + randomWindDirection;
+            Vector3 randomSpin = new Vector3(Random.Range(-500f, 500f), Random.Range(-500f, 500f), Random.Range(-500f, 500f));
+
+            moveCoroutines.Add(StartCoroutine(BlowCardAwayCoroutine(card.transform, offScreenPos, randomSpin, animDuration)));
+        }
+
+        foreach(Coroutine c in moveCoroutines)
+        {
+            yield return c;
+        }
+    }
+
+    //Helps with spinning cards away when the fan is used.
+    private IEnumerator BlowCardAwayCoroutine(Transform cardTransform, Vector3 targetPosition, Vector3 spinSpeed, float duration)
+    {
+        Vector3 startPosition = cardTransform.position;
+
+        float time = 0;
+
+        while(time < duration)
+        {
+            time += Time.deltaTime;
+
+            float t = time / duration;
+            float moveT = t * t * (3f - 2f * t);
+
+            cardTransform.position = Vector3.Lerp(startPosition, targetPosition, moveT);
+            cardTransform.Rotate(spinSpeed * Time.deltaTime, Space.World);
+
+            yield return null;
         }
     }
 
