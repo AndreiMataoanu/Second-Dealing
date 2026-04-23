@@ -22,7 +22,6 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private Tutorial tutorial;
     [SerializeField] private Collider betUpCollider;
     [SerializeField] private Collider betDownCollider;
-    [SerializeField] private string[] lines;
     private Dictionary<CardInstance, int> scissoredCards = new Dictionary<CardInstance, int>();
     private Coroutine currentBustCoroutine = null;
     private List<int> lotteryNumbers = new List<int>();
@@ -695,27 +694,34 @@ public class BlackjackGame : MonoBehaviour
     {
         if(!isLottoActive) yield break;
 
+        int moneyGained = 0;
+        int smallReward = 500;
+        int bigReward = 5000;
+
         foreach(var hand in playerHands)
         {
             int handValue = Mathf.Abs(CalculateHandValue(hand, true));
+            int matches = lotteryNumbers.RemoveAll(number => number == handValue);
 
-            if(lotteryNumbers.Contains(handValue))
-            {
-                lotteryNumbers.Remove(handValue);
-            }
+            moneyGained += matches * smallReward;
         }
 
         if(lotteryNumbers.Count == 0)
         {
-            int targetBalance = playerMoney + 5000;
-
-            AudioManager.instance.Play("MoneyGained");
-
-            yield return StartCoroutine(AnimateBetChange(targetBalance, 3f));
+            moneyGained += bigReward;
 
             isLottoActive = false;
             lotteryNumbers.Clear();
             itemManager.RemoveItemOfType(ItemType.Lotto);
+        }
+
+        if(moneyGained > 0)
+        {
+            int targetBalance = playerMoney + moneyGained;
+
+            AudioManager.instance.Play("MoneyGained");
+
+            yield return StartCoroutine(AnimateBetChange(targetBalance, 3f));
         }
     }
     #endregion
@@ -1017,7 +1023,7 @@ public class BlackjackGame : MonoBehaviour
         {
             tutorialCompleted = true;
 
-            tutorial.PlayTutorial(lines);
+            tutorial.PlayTutorial();
 
             yield return new WaitWhile(() => tutorial.IsPlaying);
         }
@@ -1315,6 +1321,11 @@ public class BlackjackGame : MonoBehaviour
         isActionLocked = true;
         statusText.text = "You stand";
         standHandAnimator.SetTrigger("standTrigger");
+
+        if(isLottoActive)
+        {
+            yield return StartCoroutine(CheckLotteryTicket());
+        }
 
         yield return new WaitForSeconds(1.5f);
         yield return StartCoroutine(AdvanceHandCoroutine());
@@ -1628,6 +1639,11 @@ public class BlackjackGame : MonoBehaviour
 
     private IEnumerator BustCheckCoroutine(List<CardInstance> activeHand)
     {
+        if(isLottoActive)
+        {
+            yield return StartCoroutine(CheckLotteryTicket());
+        }
+
         yield return new WaitForSeconds(2f);
 
         UpdateUI(true);
@@ -2117,11 +2133,6 @@ public class BlackjackGame : MonoBehaviour
 
     private IEnumerator EndRoundSequence()
     {
-        if(isLottoActive)
-        {
-            yield return StartCoroutine(CheckLotteryTicket());
-        }
-
         if(isOrganActive)
         {
             itemManager.OnRoundEnded();

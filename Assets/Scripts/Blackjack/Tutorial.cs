@@ -7,6 +7,7 @@ public class Tutorial : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI tutorialText;
     [SerializeField] private Image panel;
     [SerializeField] private float delayBetweenLines = 1f;
+    [SerializeField] private string[] tutorialLines;
 
     private Coroutine sequenceCoroutine;
     private Coroutine typingCoroutine;
@@ -22,12 +23,12 @@ public class Tutorial : MonoBehaviour
         }
     }
 
-    public void PlayTutorial(string[] lines)
+    public void PlayTutorial()
     {
         if(sequenceCoroutine != null) StopCoroutine(sequenceCoroutine);
         if(typingCoroutine != null) StopCoroutine(typingCoroutine);
 
-        sequenceCoroutine = StartCoroutine(SequenceCoroutine(lines));
+        sequenceCoroutine = StartCoroutine(SequenceCoroutine(tutorialLines));
     }
 
     private IEnumerator SequenceCoroutine(string[] lines)
