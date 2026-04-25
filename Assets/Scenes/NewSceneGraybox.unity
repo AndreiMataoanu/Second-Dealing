@@ -418,7 +418,7 @@ GameObject:
   - component: {fileID: 172934058}
   - component: {fileID: 172934057}
   m_Layer: 5
-  m_Name: Tutorial Text
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2095,6 +2095,81 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1676992096}
   m_LocalEulerAnglesHint: {x: 90, y: 147.61, z: 89.988}
+--- !u!1 &537238134
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 537238135}
+  - component: {fileID: 537238136}
+  m_Layer: 0
+  m_Name: DialogueManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &537238135
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 537238134}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1823405866}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &537238136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 537238134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b29894440b8f4b54185915f65552c667, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueSystem
+  dialogueText: {fileID: 172934057}
+  panel: {fileID: 488802146}
+  delayBetweenLines: 2
+  typingSpeed: 0.02
+  tutorialLines:
+  - Welcome to Blackjack...
+  - I will be your dealer for tonight.
+  - The stakes are your survival.
+  - Let me recap the basics...
+  - Your goal is 21.
+  - Do not go over 21.
+  - Number cards hold their face value.
+  - Kings, Queens, and Jacks count as 10.
+  - Aces count as 1 or 11.
+  - Beat my total to win the round.
+  - Bust past 21 and you lose.
+  - Bought items alter the decks.
+  - 'Remember: Soon we will not play by standard rules alone.'
+  - Let's get started...
+  lowMoneyTaunts:
+  - Careful now...
+  - That must've hurt.
+  dealerBlackjackTaunts:
+  - Not a chance...
+  dealerWinsByOneTaunts:
+  - Not good enough...
+  - Almost...
+  playerBlackjackTaunts:
+  - Lucky...
+  tieTaunts:
+  - Not so fast...
 --- !u!198 &588188161 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 7831671138899384924, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
@@ -2558,7 +2633,7 @@ MonoBehaviour:
         m_CallState: 2
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
   tooltipHeader: Decrease Bet
-  tooltipContent: 
+  tooltipContent: 'Shortcut: scrollwheel'
 --- !u!64 &741130250
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -4335,7 +4410,7 @@ PrefabInstance:
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: tutorial
       value: 
-      objectReference: {fileID: 1343293110}
+      objectReference: {fileID: 0}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: moneyText
       value: 
@@ -4380,6 +4455,10 @@ PrefabInstance:
       propertyPath: buttonAnimator
       value: 
       objectReference: {fileID: 1370196142}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: dialogueSystem
+      value: 
+      objectReference: {fileID: 537238136}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: betDownCollider
       value: 
@@ -4559,22 +4638,14 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 981863201417496706, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1343293110}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
---- !u!1 &1343293107 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 981863201417496706, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-  m_PrefabInstance: {fileID: 1343293106}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1343293108 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
   m_PrefabInstance: {fileID: 1343293106}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1343293107}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d681071c0ffcd6944a3b712dc7947bf6, type: 3}
@@ -4585,36 +4656,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5546812090285593363, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
   m_PrefabInstance: {fileID: 1343293106}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1343293110
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1343293107}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 732d3dc4a65ec4549b5936d3d6a99361, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tutorial
-  tutorialText: {fileID: 172934057}
-  panel: {fileID: 488802146}
-  delayBetweenLines: 2
-  tutorialLines:
-  - Welcome to Blackjack...
-  - I will be your dealer for tonight.
-  - The stakes are your survival.
-  - Let me recap the basics...
-  - Your goal is 21.
-  - Do not go over 21.
-  - Number cards hold their face value.
-  - Kings, Queens, and Jacks count as 10.
-  - Aces count as 1 or 11.
-  - Beat my total to win the round.
-  - Bust past 21 and you lose.
-  - Bought items alter the decks.
-  - 'Remember: Soon we will not play by standard rules alone.'
-  - Let's get started...
 --- !u!1 &1344944150 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7501022095072143761, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
@@ -4646,7 +4687,7 @@ GameObject:
   - component: {fileID: 1363242027}
   - component: {fileID: 1363242026}
   m_Layer: 5
-  m_Name: Tutorial Canvas
+  m_Name: Dialogue Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5877,7 +5918,7 @@ MonoBehaviour:
         m_CallState: 2
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
   tooltipHeader: Increase Bet
-  tooltipContent: 
+  tooltipContent: 'Shortcut: [Scrollwheel]'
 --- !u!64 &1712160668
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -5934,6 +5975,7 @@ Transform:
   - {fileID: 1343293109}
   - {fileID: 109737086}
   - {fileID: 455090367}
+  - {fileID: 537238135}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1836844511
