@@ -20,7 +20,6 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private ItemManager itemManager;
     [SerializeField] private CursorDetection cursorDetection;
     [SerializeField] private DialogueSystem dialogueSystem;
-    //[SerializeField] private Tutorial tutorial;
     [SerializeField] private Collider betUpCollider;
     [SerializeField] private Collider betDownCollider;
     private Dictionary<CardInstance, int> scissoredCards = new Dictionary<CardInstance, int>();
@@ -1095,7 +1094,7 @@ public class BlackjackGame : MonoBehaviour
 
             statusText.text = $"New Blackjack goal: {blackjackGoal}";
 
-            yield return new WaitForSeconds(3.0f);
+            yield return StartCoroutine(WaitDelayOrInput(4f));
 
             DisableCamera(eventCamera);
             EnableCamera(playingCamera);
@@ -1559,7 +1558,7 @@ public class BlackjackGame : MonoBehaviour
             {
                 if(!IsBlackjack(dealerValueInit))
                 {
-                    StartCoroutine(EndGameCoroutine("Blackjack! You win", true));
+                    StartCoroutine(EndGameCoroutine("Blackjack", true));
 
                     yield break;
                 }
@@ -1671,7 +1670,7 @@ public class BlackjackGame : MonoBehaviour
 
         if(isTutorialActive)
         {
-            yield return new WaitForSeconds(2.0f);
+            yield return new WaitForSeconds(1.5f);
             yield break;
         }
 
@@ -1720,7 +1719,7 @@ public class BlackjackGame : MonoBehaviour
         {
             targetMoneyBalance = playerMoney;
 
-            yield return new WaitForSeconds(2.0f);
+            yield return new WaitForSeconds(1.5f);
         }
 
         if(shouldPlayBetLostTaunt)
@@ -1756,7 +1755,7 @@ public class BlackjackGame : MonoBehaviour
         {
             statusText.text = revealMessage;
 
-            yield return new WaitForSeconds(2.5f);
+            yield return new WaitForSeconds(2f);
         }
 
         currentBustCoroutine = null;
@@ -1767,7 +1766,7 @@ public class BlackjackGame : MonoBehaviour
         }
         else
         {
-            statusText.text = "Hand Bust!";
+            statusText.text = "Hand Bust";
 
             yield return new WaitForSeconds(1.5f);
             yield return StartCoroutine(AdvanceHandCoroutine());
@@ -2153,11 +2152,11 @@ public class BlackjackGame : MonoBehaviour
         {
             statusText.text = revealMessage;
 
-            yield return new WaitForSeconds(4f);
+            yield return StartCoroutine(WaitDelayOrInput(4f));
         }
         else
         {
-            yield return new WaitForSeconds(1.5f);
+            yield return StartCoroutine(WaitDelayOrInput(1.5f));
         }
     }
 
