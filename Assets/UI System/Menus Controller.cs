@@ -19,6 +19,14 @@ public class MenusController : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        if(mainMenuPanel != null)
+        {
+            AudioManager.instance.Play("MainTheme");
+        }
+    }
+
     private void Update()
     {
         if(pausePanel != null)

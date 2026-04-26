@@ -727,6 +727,8 @@ public class BlackjackGame : MonoBehaviour
 
     public bool TearLotteryTicket()
     {
+        if(!isRoundActive) return false;
+
         isLottoActive = false;
         lotteryNumbers.Clear();
 
@@ -1344,9 +1346,10 @@ public class BlackjackGame : MonoBehaviour
 
         if(activeHand.Count == 7 && handValue <= blackjackGoal)
         {
-            statusText.text = "Hand full.";
+            statusText.text = "Hand full";
 
-            yield return new WaitForSeconds(2.0f);
+            yield return StartCoroutine(CheckLotteryTicket());
+            yield return new WaitForSeconds(1.5f);
             yield return StartCoroutine(AdvanceHandCoroutine());
         }
         else if(handValue > blackjackGoal || handValue < -blackjackGoal)
