@@ -16,10 +16,17 @@ public class DialogueSystem : MonoBehaviour
     [SerializeField] private string[] tutorialLines;
 
     [Header("Taunt Quotes")]
+    [Tooltip("Taunts shown when the player is low on money.")]
     [SerializeField] private List<string> lowMoneyTaunts;
+    [Tooltip("Taunts shown when the player loses a lot of money in a bet.")]
+    [SerializeField] private List<string> betLostTaunts;
+    [Tooltip("Taunts shown when the dealer gets a natural blackjack.")]
     [SerializeField] private List<string> dealerBlackjackTaunts;
+    [Tooltip("Taunts shown when the dealer wins by 1 point.")]
     [SerializeField] private List<string> dealerWinsByOneTaunts;
+    [Tooltip("Taunts shown when the player gets a natural blackjack.")]
     [SerializeField] private List<string> playerBlackjackTaunts;
+    [Tooltip("Taunts shown when the player and dealer tie.")]
     [SerializeField] private List<string> tieTaunts;
 
     private Coroutine sequenceCoroutine;
@@ -126,6 +133,7 @@ public class DialogueSystem : MonoBehaviour
     }
 
     public void ShowLowMoneyTaunt() => ShowMessage(GetRandomTaunt(lowMoneyTaunts));
+    public void ShowBetLostTaunt() => ShowMessage(GetRandomTaunt(betLostTaunts));
     public void ShowDealerBlackjackTaunt() => ShowMessage(GetRandomTaunt(dealerBlackjackTaunts));
     public void ShowDealerWinsByOneTaunt() => ShowMessage(GetRandomTaunt(dealerWinsByOneTaunts));
     public void ShowPlayerBlackjackTaunt() => ShowMessage(GetRandomTaunt(playerBlackjackTaunts));

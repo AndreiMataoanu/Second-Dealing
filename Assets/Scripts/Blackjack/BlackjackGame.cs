@@ -1608,6 +1608,24 @@ public class BlackjackGame : MonoBehaviour
         yield return StartCoroutine(RevealJokers());
 
         int finalDealerValue = CalculateHandValue(dealerHand, true);
+        int playerValue = CalculateHandValue(playerHands[0], true);
+        bool playerBust = (playerValue > blackjackGoal || playerValue < -blackjackGoal);
+        bool dealerBust = (finalDealerValue > blackjackGoal || finalDealerValue < -blackjackGoal);
+        int playerDiff = Mathf.Abs(Mathf.Abs(playerValue) - blackjackGoal);
+        int dealerDiff = Mathf.Abs(Mathf.Abs(finalDealerValue) - blackjackGoal);
+        bool wonByOne = false;
+
+        if(!playerBust && !dealerBust && playerDiff - dealerDiff == 1)
+        {
+            wonByOne = true;
+        }
+
+        if(wonByOne)
+        {
+            dialogueSystem.ShowDealerWinsByOneTaunt();
+
+            yield return new WaitWhile(() => dialogueSystem.IsPlaying);
+        }
 
         if(playerHands.Count > 1)
         {
@@ -1633,17 +1651,22 @@ public class BlackjackGame : MonoBehaviour
 
     private IEnumerator ProcessPayout(string message, int betAmount)
     {
-        if(message == "Dealer wins by one")
-        {
-            dialogueSystem.ShowDealerWinsByOneTaunt();
-        }
-        else if(message == "Its a tie")
+        bool shouldPlayBetLostTaunt = false;
+
+        if(message == "Its a tie")
         {
             dialogueSystem.ShowTieTaunt();
+
+            yield return new WaitWhile(() => dialogueSystem.IsPlaying);
         }
         else
         {
             statusText.text = message;
+
+            if((message.Contains("Dealer wins") || message.Contains("Bust")) && betAmount >= (playerMoney * 0.5f))
+            {
+                shouldPlayBetLostTaunt = true;
+            }
         }
 
         if(isTutorialActive)
@@ -1698,6 +1721,13 @@ public class BlackjackGame : MonoBehaviour
             targetMoneyBalance = playerMoney;
 
             yield return new WaitForSeconds(2.0f);
+        }
+
+        if(shouldPlayBetLostTaunt)
+        {
+            dialogueSystem.ShowBetLostTaunt();
+
+            yield return new WaitWhile(() => dialogueSystem.IsPlaying);
         }
     }
 
@@ -1758,12 +1788,6 @@ public class BlackjackGame : MonoBehaviour
         if(playerDiff < dealerDiff) return "You win";
 
         if(dealerDiff < playerDiff) return "Dealer wins";
-
-        if(dealerDiff < playerDiff)
-        {
-            if(playerDiff - dealerDiff == 1) return "Dealer wins by one";
-            return "Dealer wins";
-        }
 
         return "Its a tie";
     }
@@ -2244,7 +2268,7 @@ public class BlackjackGame : MonoBehaviour
             yield return StartCoroutine(ChangePriceCoroutine());
         }
 
-        if(playerMoney <= 200 && playerMoney > 0)
+        if(playerMoney <= 100 && playerMoney > 0)
         {
             dialogueSystem.ShowLowMoneyTaunt();
 
