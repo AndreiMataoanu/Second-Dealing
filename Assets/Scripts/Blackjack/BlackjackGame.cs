@@ -803,7 +803,7 @@ public class BlackjackGame : MonoBehaviour
 
                 AudioManager.instance.Play("Laugh");
 
-                yield return new WaitForSeconds(5.0f);
+                yield return StartCoroutine(WaitDelayOrInput(5.0f));
 
                 introPlayed = true;
                 eventTriggered = true;
@@ -833,7 +833,7 @@ public class BlackjackGame : MonoBehaviour
 
                 statusText.text = $"New Event: {chosenEvent.eventName}";
 
-                yield return new WaitForSeconds(6.0f);
+                yield return StartCoroutine(WaitDelayOrInput(5.0f));
             }
         }
 
@@ -939,13 +939,13 @@ public class BlackjackGame : MonoBehaviour
 
             statusText.text = "Let's make it more interesting";
 
-            yield return new WaitForSeconds(5.0f);
+            yield return StartCoroutine(WaitDelayOrInput(5.0f));
 
             AudioManager.instance.Play("NewEvent");
 
             statusText.text = "Item prices are scaling";
 
-            yield return new WaitForSeconds(4.0f);
+            yield return StartCoroutine(WaitDelayOrInput(4.0f));
 
             DisableCamera(eventCamera);
             EnableCamera(sittingCamera);
@@ -2244,13 +2244,13 @@ public class BlackjackGame : MonoBehaviour
 
             statusText.text = "Lets raise the stakes...";
 
-            yield return new WaitForSeconds(5.0f);
+            yield return StartCoroutine(WaitDelayOrInput(5.0f));
 
             AudioManager.instance.Play("NewEvent");
 
             statusText.text = "Betting enabled";
 
-            yield return new WaitForSeconds(6.0f);
+            yield return StartCoroutine(WaitDelayOrInput(5.0f));
 
             DisableCamera(eventCamera);
             EnableCamera(sittingCamera);
@@ -2348,5 +2348,23 @@ public class BlackjackGame : MonoBehaviour
         foreach(int b in handBets) totalBets += b;
 
         canDoubleDown = playerMoney >= (totalBets + handBets[currentHandIndex]);
+    }
+
+    private IEnumerator WaitDelayOrInput(float duration)
+    {
+        float timer = 0f;
+
+        yield return new WaitForSeconds(0.1f);
+
+        timer += 0.1f;
+
+        while(timer < duration)
+        {
+            if(Input.anyKeyDown) break;
+
+            timer += Time.deltaTime;
+
+            yield return null;
+        }
     }
 }
