@@ -1567,7 +1567,7 @@ public class BlackjackGame : MonoBehaviour
             {
                 if(!IsBlackjack(dealerValueInit))
                 {
-                    StartCoroutine(EndGameCoroutine("Blackjack", true));
+                    StartCoroutine(EndGameCoroutine("Blackjack"));
 
                     yield break;
                 }
@@ -1577,7 +1577,7 @@ public class BlackjackGame : MonoBehaviour
 
                     yield return new WaitForSeconds(1.5f);
 
-                    StartCoroutine(EndGameCoroutine("Both have Blackjack. Its a tie", true));
+                    StartCoroutine(EndGameCoroutine("Both have Blackjack. Its a tie"));
 
                     yield break;
                 }
@@ -1748,8 +1748,6 @@ public class BlackjackGame : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
 
-        UpdateUI(true);
-
         var playerJokers = activeHand.Where(c => c.cardData.rank == Card.Rank.Joker).ToList();
         string revealMessage = "";
 
@@ -1800,10 +1798,8 @@ public class BlackjackGame : MonoBehaviour
         return "Its a tie";
     }
 
-    private IEnumerator EndGameCoroutine(string message, bool revealHand = true)
+    private IEnumerator EndGameCoroutine(string message)
     {
-        if(revealHand) UpdateUI(false);
-
         int activeBetAmount = (handBets != null && handBets.Count > 0) ? handBets[0] : currentBet;
 
         yield return StartCoroutine(ProcessPayout(message, activeBetAmount));
@@ -2182,7 +2178,7 @@ public class BlackjackGame : MonoBehaviour
 
                 if(i < playerHands.Count)
                 {
-                    string prefix = playerHands.Count > 1 ? $"Hand {i + 1}: " : "Your hand: ";
+                    string prefix = playerHands.Count > 1 ? $"" : "";
 
                     handTotalTexts[i].text = FormatHandText(prefix, playerHands[i], revealJokers, false);
                 }
@@ -2200,11 +2196,11 @@ public class BlackjackGame : MonoBehaviour
                 if(dealerHidden && dealerHand.Any(c => c.isHidden))
                 {
                     List<CardInstance> visibleCards = dealerHand.Where(x => !x.isHidden).ToList();
-                    dealerTotalText.text = FormatHandText("Dealer hand: ", visibleCards, revealJokers, true);
+                    dealerTotalText.text = FormatHandText("", visibleCards, revealJokers, true);
                 }
                 else
                 {
-                    dealerTotalText.text = FormatHandText("Dealer hand: ", dealerHand, revealJokers, false);
+                    dealerTotalText.text = FormatHandText("", dealerHand, revealJokers, false);
                 }
             }
             else
@@ -2225,12 +2221,12 @@ public class BlackjackGame : MonoBehaviour
 
         if(revealJokers || !hasJoker)
         {
-            return prefix + (dealerHasHiddenCard ? $"{totalValue} + ?" : totalValue.ToString());
+            return prefix + (dealerHasHiddenCard ? $"{totalValue}" : totalValue.ToString());
         }
 
         int baseValue = CalculateHandValue(cards, false);
 
-        return prefix + (dealerHasHiddenCard ? $"{baseValue} + ? + ?" : $"{baseValue} + ?");
+        return prefix + (dealerHasHiddenCard ? $"{baseValue}" : $"{baseValue}");
     }
 
     private IEnumerator EndRoundSequence()
