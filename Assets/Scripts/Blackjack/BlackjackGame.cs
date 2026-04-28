@@ -22,6 +22,7 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private DialogueSystem dialogueSystem;
     [SerializeField] private Collider betUpCollider;
     [SerializeField] private Collider betDownCollider;
+    [SerializeField] private int riggedRoundsLimit = 5;
     private Dictionary<CardInstance, int> scissoredCards = new Dictionary<CardInstance, int>();
     private Coroutine currentBustCoroutine = null;
     private List<int> lotteryNumbers = new List<int>();
@@ -1108,6 +1109,11 @@ public class BlackjackGame : MonoBehaviour
         statusText.text = "Dealing cards...";
         cursorDetection.OnRoundActive();
         itemManager.DespawnPowerUps();
+
+        if(roundsCompleted < riggedRoundsLimit)
+        {
+            RigPlayerHand();
+        }
 
         yield return StartCoroutine(DealCardToPlayerCoroutine());
         yield return StartCoroutine(DealCardToDealerCoroutine(true));
@@ -2350,6 +2356,45 @@ public class BlackjackGame : MonoBehaviour
         foreach(int b in handBets) totalBets += b;
 
         canDoubleDown = playerMoney >= (totalBets + handBets[currentHandIndex]);
+    }
+
+    private void RigPlayerHand()
+    {
+        int maxAttempts = 50;
+        int attempts = 0;
+
+        while(attempts < maxAttempts)
+        {
+            Card? firstCard = gameDeck.PeekCardAt(0);
+            Card? secondCard = gameDeck.PeekCardAt(2);
+
+            if(!firstCard.HasValue || !secondCard.HasValue) break;
+
+            int simulatedValue = SimulateInitialHandValue(firstCard.Value, secondCard.Value);
+
+            if(simulatedValue >= 12 && simulatedValue <= 16)
+            {
+                gameDeck.Shuffle();
+
+                attempts++;
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+
+    private int SimulateInitialHandValue(Card c1, Card c2)
+    {
+        List<CardInstance> tempHand = new List<CardInstance>();
+        CardInstance tempCard1 = new CardInstance(c1, null, false);
+        CardInstance tempCard2 = new CardInstance(c2, null, false);
+
+        tempHand.Add(tempCard1);
+        tempHand.Add(tempCard2);
+
+        return CalculateHandValue(tempHand, true);
     }
 
     private IEnumerator WaitDelayOrInput(float duration)
