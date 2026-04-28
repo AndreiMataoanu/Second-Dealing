@@ -2078,22 +2078,30 @@ public class BlackjackGame : MonoBehaviour
 
             if(scissoredCards.TryGetValue(cardInstance, out int reduction))
             {
-                if(cardValue > 0)
+                if(card.rank == Card.Rank.Joker)
                 {
-                    cardValue -= reduction;
+                    cardValue = 0;
+                    valueAsOne = 0;
                 }
-                else if(cardValue < 0)
+                else
                 {
-                    cardValue += reduction;
-                }
+                    if(cardValue > 0)
+                    {
+                        cardValue -= reduction;
+                    }
+                    else if(cardValue < 0)
+                    {
+                        cardValue += reduction;
+                    }
 
-                if(valueAsOne > 0)
-                {
-                    valueAsOne -= reduction;
-                }
-                else if(valueAsOne < 0)
-                {
-                    valueAsOne += reduction;
+                    if(valueAsOne > 0)
+                    {
+                        valueAsOne -= reduction;
+                    }
+                    else if(valueAsOne < 0)
+                    {
+                        valueAsOne += reduction;
+                    }
                 }
             }
 
