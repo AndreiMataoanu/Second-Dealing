@@ -1024,11 +1024,6 @@ public class BlackjackGame : MonoBehaviour
         DisableCamera(playingCamera);
         EnableCamera(sittingCamera);
 
-        if(isRouletteBlackjackActive)
-        {
-            RandomizeBlackjackGoal();
-        }
-
         AudioManager.instance.Play("Shuffle");
 
         gameDeck.InitializeDeck();
@@ -1038,7 +1033,7 @@ public class BlackjackGame : MonoBehaviour
         if(!isTutorialActive)
         {
             itemManager.PlaySuitcaseOpen();
-            statusText.text = "Place your bet...";
+            statusText.text = "";
         }
         
         isRoundActive = false;
@@ -1057,6 +1052,7 @@ public class BlackjackGame : MonoBehaviour
         }
 
         dealerTotalText.text = "";
+        rouletteText.text = "";
         noise.AmplitudeGain = 0f;
         noise.FrequencyGain = 0f;
 
@@ -1098,6 +1094,7 @@ public class BlackjackGame : MonoBehaviour
         {
             DisableCamera(sittingCamera);
             EnableCamera(eventCamera);
+            RandomizeBlackjackGoal();
 
             statusText.text = $"New Blackjack goal: {blackjackGoal}";
 
