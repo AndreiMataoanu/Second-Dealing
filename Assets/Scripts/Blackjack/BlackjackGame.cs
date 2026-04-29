@@ -88,6 +88,7 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI betText;
     [SerializeField] private TMPro.TextMeshProUGUI statusText;
     [SerializeField] private TMPro.TextMeshProUGUI dealerTotalText;
+    [SerializeField] private TMPro.TextMeshProUGUI rouletteText;
 
     [Header("VFX")]
     [SerializeField] private Animator standHandAnimator;
@@ -634,6 +635,7 @@ public class BlackjackGame : MonoBehaviour
             dialogueSystem.ShowPlayerBlackjackTaunt();
 
             yield return new WaitWhile(() => dialogueSystem.IsPlaying);
+            yield return StartCoroutine(CheckLotteryTicket());
 
             StartCoroutine(DealerTurnCoroutine(true));
         }
@@ -728,7 +730,7 @@ public class BlackjackGame : MonoBehaviour
 
     public bool TearLotteryTicket()
     {
-        if(!isRoundActive) return false;
+        if(!isRoundActive || isActionLocked) return false;
 
         isLottoActive = false;
         lotteryNumbers.Clear();
@@ -895,6 +897,8 @@ public class BlackjackGame : MonoBehaviour
     private void RandomizeBlackjackGoal()
     {
         blackjackGoal = Random.Range(21, 37); //from 21 to 36
+
+        rouletteText.text = blackjackGoal.ToString();
     }
 
     private bool CheckIfDoubled(Card card)
@@ -1129,6 +1133,7 @@ public class BlackjackGame : MonoBehaviour
             dialogueSystem.ShowPlayerBlackjackTaunt();
 
             yield return new WaitWhile(() => dialogueSystem.IsPlaying);
+            yield return StartCoroutine(CheckLotteryTicket());
 
             StartCoroutine(DealerTurnCoroutine(true));
         }
@@ -1404,16 +1409,7 @@ public class BlackjackGame : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
         yield return StartCoroutine(DealCardToPlayerCoroutine());
-
-        UpdateUI(true);
-
-        int playerValue = CalculateHandValue(playerHands[currentHandIndex], true);
-
-        if(playerValue <= blackjackGoal && playerValue >= -blackjackGoal)
-        {
-            yield return new WaitForSeconds(1.0f);
-        }
-
+        yield return StartCoroutine(CheckLotteryTicket());
         yield return StartCoroutine(AdvanceHandCoroutine());
     }
 
