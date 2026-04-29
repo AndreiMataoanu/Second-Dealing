@@ -38,6 +38,8 @@ public class BlackjackGame : MonoBehaviour
     private bool isAlcoholActive = false;
     private bool isActionLocked = false;
     private bool tutorialCompleted = false;
+    private bool hasSeenSplitTutorial = false;
+    private bool hasSeenDoubleDownTutorial = false;
     private bool isTutorialActive => roundsCompleted < tutorialRoundsLimit;
     [HideInInspector] public List<int> GetLotteryNumbers() => lotteryNumbers;
     [HideInInspector] public bool canDoubleDown = false;
@@ -1140,6 +1142,28 @@ public class BlackjackGame : MonoBehaviour
             isActionLocked = false;
 
             EvaluateDoubleDownCondition();
+
+            if(!hasSeenSplitTutorial && CanSplit() && roundsCompleted >= 2)
+            {
+                isActionLocked = true;
+                hasSeenSplitTutorial = true;
+                dialogueSystem.PlaySplitTutorial();
+
+                yield return new WaitWhile(() => dialogueSystem.IsPlaying);
+
+                isActionLocked = false;
+            }
+
+            if(!hasSeenDoubleDownTutorial && roundsCompleted >= 7 && canDoubleDown)
+            {
+                isActionLocked = true;
+                hasSeenDoubleDownTutorial = true;
+                dialogueSystem.PlayDoubleDownTutorial();
+
+                yield return new WaitWhile(() => dialogueSystem.IsPlaying);
+
+                isActionLocked = false;
+            }
         }
     }
 

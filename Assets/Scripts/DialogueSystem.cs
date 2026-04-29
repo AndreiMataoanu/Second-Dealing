@@ -6,14 +6,19 @@ using TMPro;
 
 public class DialogueSystem : MonoBehaviour
 {
-    [Header("UI References")]
+    [Header("Set-up")]
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private Image panel;
-
-    [Header("Tutorial Settings")]
     [SerializeField] private float delayBetweenLines = 1f;
     [SerializeField] private float typingSpeed = 0.02f;
+
+    [Header("Tutorials")]
+    [Tooltip("Tutorial shown at the start of the game.")]
     [SerializeField] private string[] tutorialLines;
+    [Tooltip("Tutorial shown when the player can split for the first time.")]
+    [SerializeField] private string[] splitTutorialLines;
+    [Tooltip("Tutorial shown when the player can double down for the first time.")]
+    [SerializeField] private string[] doubleDownTutorialLines;
 
     [Header("Taunt Quotes")]
     [Tooltip("Taunts shown when the player is low on money.")]
@@ -47,7 +52,22 @@ public class DialogueSystem : MonoBehaviour
     public void PlayTutorial()
     {
         StopCurrentDialogue();
+
         sequenceCoroutine = StartCoroutine(SequenceCoroutine(tutorialLines));
+    }
+
+    public void PlaySplitTutorial()
+    {
+        StopCurrentDialogue();
+
+        sequenceCoroutine = StartCoroutine(SequenceCoroutine(splitTutorialLines));
+    }
+
+    public void PlayDoubleDownTutorial()
+    {
+        StopCurrentDialogue();
+
+        sequenceCoroutine = StartCoroutine(SequenceCoroutine(doubleDownTutorialLines));
     }
 
     private IEnumerator SequenceCoroutine(string[] lines)
@@ -64,6 +84,7 @@ public class DialogueSystem : MonoBehaviour
         foreach(string line in lines)
         {
             typingCoroutine = StartCoroutine(TypeText(line));
+
             yield return typingCoroutine;
             yield return new WaitForSeconds(delayBetweenLines);
         }
@@ -74,6 +95,7 @@ public class DialogueSystem : MonoBehaviour
     public void ShowMessage(string message)
     {
         StopCurrentDialogue();
+
         sequenceCoroutine = StartCoroutine(SingleMessageCoroutine(message));
     }
 
@@ -89,8 +111,8 @@ public class DialogueSystem : MonoBehaviour
         allowSkip = true;
 
         typingCoroutine = StartCoroutine(TypeText(message));
-        yield return typingCoroutine;
 
+        yield return typingCoroutine;
         yield return new WaitForSeconds(2f);
 
         EndDialogue();
@@ -113,6 +135,7 @@ public class DialogueSystem : MonoBehaviour
     private void StopCurrentDialogue()
     {
         if(sequenceCoroutine != null) StopCoroutine(sequenceCoroutine);
+
         if(typingCoroutine != null) StopCoroutine(typingCoroutine);
     }
 
