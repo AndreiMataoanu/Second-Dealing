@@ -46,9 +46,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BlackjackGame
   itemManager: {fileID: 0}
   cursorDetection: {fileID: 0}
+  dialogueSystem: {fileID: 0}
   betUpCollider: {fileID: 0}
   betDownCollider: {fileID: 0}
-  material: {fileID: 2100000, guid: ece7f9838d0aa0d4b95cad66c95255a9, type: 2}
+  riggedRoundsLimit: 5
   canDoubleDown: 0
   isRoundActive: 0
   isLottoActive: 0
@@ -58,13 +59,15 @@ MonoBehaviour:
     moneyAmount: 600
   - severityToTrigger: 1
     moneyAmount: 1000
+  - severityToTrigger: 1
+    moneyAmount: 2000
   - severityToTrigger: 2
-    moneyAmount: 3000
+    moneyAmount: 5000
   - severityToTrigger: 0
     moneyAmount: 10000
-  - severityToTrigger: 1
+  - severityToTrigger: 0
     moneyAmount: 25000
-  - severityToTrigger: 1
+  - severityToTrigger: 2
     moneyAmount: 50000
   - severityToTrigger: 2
     moneyAmount: 75000
@@ -81,10 +84,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2c40c03f0fc098e4e8b9ddbddb3d482d, type: 2}
   - {fileID: 11400000, guid: 90e916027f496dc438ffa740073bf320, type: 2}
   - {fileID: 11400000, guid: 2abb42800d64dda4c892a33a05c2856b, type: 2}
+  - {fileID: 11400000, guid: 3b2a0ca89cf99cf468c8b8194beb91db, type: 2}
   - {fileID: 11400000, guid: 8dd6a5c9f92458843b89d3577fc5c243, type: 2}
   mediumSeverityEvents:
-  - {fileID: 11400000, guid: 3b2a0ca89cf99cf468c8b8194beb91db, type: 2}
-  - {fileID: 11400000, guid: a7761bfbabfaaa34e8c234738f0f907a, type: 2}
   - {fileID: 11400000, guid: 18758e0d7866558419cc4975fc50924b, type: 2}
   - {fileID: 11400000, guid: 6d1cb0823b67dd541a8a8e684dbf6102, type: 2}
   highSeverityEvents:
@@ -106,6 +108,7 @@ MonoBehaviour:
   betText: {fileID: 0}
   statusText: {fileID: 0}
   dealerTotalText: {fileID: 0}
+  rouletteText: {fileID: 0}
   standHandAnimator: {fileID: 0}
   hitHandAnimator: {fileID: 0}
   buttonAnimator: {fileID: 0}
@@ -113,6 +116,7 @@ MonoBehaviour:
   redParticlePrefab: {fileID: 3089716248877472652, guid: a551cd01744a1dc4f95b1369b03f87bb, type: 3}
   particleSpawnPoint: {fileID: 0}
   smokeParticle: {fileID: 0}
+  distortion: {fileID: 0}
   cardPrefabs:
   - rank: 1
     suit: 0
