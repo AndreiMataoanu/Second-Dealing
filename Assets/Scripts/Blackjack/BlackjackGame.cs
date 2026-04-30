@@ -1584,7 +1584,7 @@ public class BlackjackGame : MonoBehaviour
             {
                 if(!IsBlackjack(dealerValueInit))
                 {
-                    StartCoroutine(EndGameCoroutine("Blackjack"));
+                    StartCoroutine(EndGameCoroutine("Blackjack! You win"));
 
                     yield break;
                 }
