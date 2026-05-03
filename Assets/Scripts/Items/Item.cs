@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Item : Clickable
@@ -11,13 +12,31 @@ public class Item : Clickable
     [Tooltip("Higher number means more common.")]
     [SerializeField] public int spawnWeight = 10;
     [HideInInspector] public bool isPurchased = false;
-
+    [SerializeField] private TextMeshProUGUI lottoWorldText;
+    private int lastLottoCount = -1;
     private Action<Item> itemAction;
     private BlackjackGame blackjackGame;
 
     public void AddAction(Action<Item> action) => itemAction += action;
 
     public void RemoveAction(Action<Item> action) => itemAction -= action;
+
+    private void Update()
+    {
+        if(type == ItemType.Lotto && isPurchased && blackjackGame != null && blackjackGame.isLottoActive)
+        {
+            if(lottoWorldText != null)
+            {
+                List<int> numbers = blackjackGame.GetLotteryNumbers();
+
+                if(numbers.Count != lastLottoCount)
+                {
+                    lottoWorldText.text = string.Join("  ", numbers);
+                    lastLottoCount = numbers.Count;
+                }
+            }
+        }
+    }
 
     public bool Activate()
     {

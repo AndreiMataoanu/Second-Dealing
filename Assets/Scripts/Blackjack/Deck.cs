@@ -84,6 +84,13 @@ public class Deck
         return cards[0];
     }
 
+    public Card? PeekCardAt(int index)
+    {
+        if(index < 0 || index >= cards.Count) return null;
+
+        return cards[index];
+    }
+
     //Prayer Beads ability: Try to deal a specific card rank if available
     public Card? DealSpecificCard(Card.Rank rank)
     {
