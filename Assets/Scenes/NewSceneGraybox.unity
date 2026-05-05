@@ -6129,6 +6129,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1934868213}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: eventThresholds.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: 'handPositions.Array.data[0]'
       value: 
       objectReference: {fileID: 132275048}
@@ -6160,6 +6164,42 @@ PrefabInstance:
       propertyPath: 'handTotalTexts.Array.data[3]'
       value: 
       objectReference: {fileID: 369095552}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: lowSeverityEvents.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: highSeverityEvents.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: 'lowSeverityEvents.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 18758e0d7866558419cc4975fc50924b, type: 2}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: mediumSeverityEvents.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: 'highSeverityEvents.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 16f803c2a8c8cae4b83d83c657ad3736, type: 2}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: 'mediumSeverityEvents.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 6d1cb0823b67dd541a8a8e684dbf6102, type: 2}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: eventThresholds.Array.data[0].moneyAmount
+      value: 700
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: eventThresholds.Array.data[1].moneyAmount
+      value: 1200
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: eventThresholds.Array.data[2].severityToTrigger
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5546812090285593363, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

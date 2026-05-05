@@ -6,25 +6,13 @@ public class MenusController : MonoBehaviour
 {
     [SerializeField] private GameObject darkImage;
     [SerializeField] private GameObject pausePanel;
-    [SerializeField] private GameObject optionsPanel;
     [SerializeField] private GameObject mainMenuPanel;
 
     private bool isPaused;
 
     private void Awake()
     {
-        if(darkImage == null || pausePanel == null || optionsPanel == null || mainMenuPanel == null)
-        {
-            return;
-        }
-    }
-
-    private void Start()
-    {
-        if(mainMenuPanel != null)
-        {
-            AudioManager.instance.Play("MainTheme");
-        }
+        if(darkImage == null || pausePanel == null || mainMenuPanel == null) return;
     }
 
     private void Update()
@@ -51,8 +39,6 @@ public class MenusController : MonoBehaviour
         {
             darkImage.SetActive(false);
         }
-        
-        BackToPauseMenu();
 
         if(pausePanel != null)
         {
@@ -76,8 +62,6 @@ public class MenusController : MonoBehaviour
 
     public void ResumeGame()
     {
-        BackToPauseMenu();
-
         pausePanel.SetActive(false);
         darkImage.SetActive(false);
         isPaused = false;
@@ -85,12 +69,9 @@ public class MenusController : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    public void OpenOptionsMenu()
-    {
-        optionsPanel.SetActive(true);
-    }
     public void ReturnToMainMenu()
     {
+        Time.timeScale = 1;
         SceneManager.LoadSceneAsync(0);
     }
     #endregion
@@ -114,20 +95,6 @@ public class MenusController : MonoBehaviour
     {
         //Update this to the actual scene index of main map.
         SceneManager.LoadSceneAsync(1);
-    }
-    #endregion
-
-    #region Options
-    public void BackToPauseMenu()
-    {
-        optionsPanel.SetActive(false);
-    }
-
-    public void ChangeGraphicsQuality(int qualityInt)
-    {
-        QualitySettings.SetQualityLevel(qualityInt);
-
-        Debug.Log("Graphics quality changed to: " + QualitySettings.names[qualityInt]);
     }
     #endregion
 }

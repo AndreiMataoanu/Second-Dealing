@@ -351,7 +351,7 @@ public class BlackjackGame : MonoBehaviour
 
     public bool ActivateKnife()
     {
-        if(!isRoundActive || isKnifeActive) return false;
+        if(!isRoundActive || isKnifeActive || isActionLocked) return false;
 
         isKnifeActive = true;
 
@@ -360,7 +360,7 @@ public class BlackjackGame : MonoBehaviour
 
     public bool ActivateScissors()
     {
-        if(!isRoundActive || isScissorsActive) return false;
+        if(!isRoundActive || isScissorsActive || isActionLocked) return false;
 
         cursorDetection.OnUseScissors(this);
         
@@ -381,7 +381,7 @@ public class BlackjackGame : MonoBehaviour
 
     public bool ActivateCrucifix()
     {
-        if(!isRoundActive) return false;
+        if(!isRoundActive || isActionLocked) return false;
 
         isCrucifixActive = true;
 
@@ -390,7 +390,7 @@ public class BlackjackGame : MonoBehaviour
 
     public bool ActivateSunglasses()
     {
-        if(!isRoundActive || peekedCardObject != null) return false;
+        if(!isRoundActive || peekedCardObject != null || isActionLocked) return false;
 
         Card? nextCard = gameDeck.PeekCard();
 
