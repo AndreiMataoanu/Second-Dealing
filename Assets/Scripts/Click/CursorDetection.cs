@@ -7,7 +7,7 @@ public class CursorDetection : MonoBehaviour
     [SerializeField] private List<Clickable> roundActiveClickables;
     [SerializeField] private List<Clickable> roundInactiveClickables;
     [SerializeField] private List<Transform> cardTransforms;
-    
+
     private List<Clickable> cardClickables;
     
     private void Awake()

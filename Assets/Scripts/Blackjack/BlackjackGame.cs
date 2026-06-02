@@ -101,6 +101,8 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private Transform particleSpawnPoint;
     [SerializeField] private ParticleSystem smokeParticle;
     [SerializeField] private GameObject distortion;
+    [SerializeField] private Animator bottleAnimation;
+    [SerializeField] private GameObject scissorsFollow;
     private GameObject peekedCardObject = null;
     private const float zOverlap = 0.001f;
     private const float cardAnimationDuration = 0.25f;
@@ -131,7 +133,11 @@ public class BlackjackGame : MonoBehaviour
     public bool IsHalfHighActive() => isHalfHighActive;
     public List<Card.Suit> GetNegativeSuits() => negativeSuits;
     public bool IsCardScissored(CardInstance cardInstance) => scissoredCards.ContainsKey(cardInstance);
-    public void SetScissorsActive(bool active) => isScissorsActive = active;
+    public void SetScissorsActive(bool active)
+    {
+        isScissorsActive = active;
+        scissorsFollow.SetActive(active);
+    }
     public int GetOrganRoundsLeft() => itemManager.organRoundsLeft;
     #endregion
 
@@ -338,6 +344,7 @@ public class BlackjackGame : MonoBehaviour
     {
         if(!isRoundActive || isScissorsActive || isActionLocked) return false;
 
+        scissorsFollow.SetActive(true);
         cursorDetection.OnUseScissors(this);
         
         return true;
@@ -543,15 +550,18 @@ public class BlackjackGame : MonoBehaviour
     {
         isActionLocked = true;
 
-        yield return new WaitForSeconds(0.2f);
+        bottleAnimation.gameObject.SetActive(true);
+        bottleAnimation.SetTrigger("Drink");
 
         AudioManager.instance.Play("Drink");
 
+        yield return StartCoroutine(DrinkAlcoholCoroutine());
         yield return new WaitForSeconds(1.5f);
 
         AudioManager.instance.isMuffled = true;
 
         distortion.SetActive(true);
+        bottleAnimation.gameObject.SetActive(false);
 
         StartCoroutine(AlcoholCameraSway(0f, 0.2f, 0f, 0.1f, 1f));
 
@@ -599,6 +609,45 @@ public class BlackjackGame : MonoBehaviour
 
             yield return null;
         }
+    }
+
+    //Tilt camera down and back up to simulate the player taking a drink.
+    private IEnumerator DrinkAlcoholCoroutine()
+    {
+        float elapsedTime = 0f;
+
+        Quaternion startRot = playingCamera.transform.rotation;
+        Quaternion targetRot = startRot * Quaternion.Euler(-30f, 0f, 0f);
+
+        float halfDuration = 1f / 2f;
+
+        while(elapsedTime < halfDuration)
+        {
+            elapsedTime += Time.deltaTime;
+
+            float tLerp = elapsedTime / halfDuration;
+            float smoothT = tLerp * tLerp * (3f - 2f * tLerp);
+
+            playingCamera.transform.rotation = Quaternion.Slerp(startRot, targetRot, smoothT);
+
+            yield return null;
+        }
+
+        elapsedTime = 0f;
+
+        while(elapsedTime < halfDuration)
+        {
+            elapsedTime += Time.deltaTime;
+
+            float tLerp = elapsedTime / halfDuration;
+            float smoothT = tLerp * tLerp * (3f - 2f * tLerp);
+
+            playingCamera.transform.rotation = Quaternion.Slerp(targetRot, startRot, smoothT);
+
+            yield return null;
+        }
+
+        playingCamera.transform.rotation = startRot;
     }
 
     public bool ActivateFan()
