@@ -86,8 +86,7 @@ public class ItemManager : MonoBehaviour
 
         item.isPurchased = true;
         item.RemoveAction(OnBuy);
-        item.AddAction(Activate);
-        item.SetActive(false);
+        item.AddAction(OnSell);
 
         if(item.type == ItemType.Lotto)
         {
@@ -137,6 +136,50 @@ public class ItemManager : MonoBehaviour
         Destroy(item.gameObject);
 
         inventoryItems--;
+    }
+
+    private void OnSell(Item item)
+    {
+        blackjackGame.SellItem(item.GetResalePrice());
+        inventoryItems--;
+        
+        AudioManager.instance.Play("ItemBuy");
+        
+        switch (item.type)
+        {
+            case ItemType.Lotto:
+                blackjackGame.DeactivateLotteryTicket();
+                break;
+            case ItemType.Organ:
+                blackjackGame.DeactivateOrgan();
+                break;
+        }
+        
+        Destroy(item.gameObject);
+    }
+
+    public void ChangeItemAction(bool isRoundActive)
+    {
+        if (inventoryItems == 0) return;
+        
+        foreach (var usePoint in useSpawnPoints)
+        {
+            if(usePoint.transform.childCount > 0)
+            {
+                var item = usePoint.transform.GetChild(0).gameObject.GetComponent<Item>();
+
+                if (isRoundActive)
+                {
+                    item.RemoveAction(OnSell);
+                    item.AddAction(Activate);
+                }
+                else
+                {
+                    item.AddAction(OnSell);
+                    item.RemoveAction(Activate);
+                }
+            }
+        }
     }
 
     public void OnRoundEnded()
