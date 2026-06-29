@@ -1310,6 +1310,11 @@ public class BlackjackGame : MonoBehaviour
 
     private void StartGame()
     {
+        if(KeepsakeManager.instance != null)
+        {
+            KeepsakeManager.instance.ResetKeepsake();
+        }
+
         StartCoroutine(ButtonCoroutine());
 
         if(isAlcoholActive)
@@ -2042,7 +2047,7 @@ public class BlackjackGame : MonoBehaviour
                 int finalPlayerValue = CalculateHandValue(playerHands[i], true);
                 string resultMessage = DetermineWinner(finalPlayerValue, finalDealerValue);
 
-                yield return StartCoroutine(ProcessPayout(resultMessage, handBets[i]));
+                yield return StartCoroutine(ProcessPayout(resultMessage, handBets[i], playerHands));
                 yield return new WaitForSeconds(1.5f);
             }
 
@@ -2057,7 +2062,7 @@ public class BlackjackGame : MonoBehaviour
         }
     }
 
-    private IEnumerator ProcessPayout(string message, int betAmount)
+    private IEnumerator ProcessPayout(string message, int betAmount, List<List<CardInstance>> allHands = null)
     {
         bool shouldPlayBetLostTaunt = false;
 
@@ -2085,7 +2090,14 @@ public class BlackjackGame : MonoBehaviour
 
         if(message.Contains("You win"))
         {
-            targetMoneyBalance = playerMoney + betAmount;
+            int modifiedBet = betAmount;
+
+            if(KeepsakeManager.instance != null)
+            {
+                modifiedBet = KeepsakeManager.instance.ApplyPayoutModifiers(betAmount, allHands);
+            }
+
+            targetMoneyBalance = playerMoney + modifiedBet;
 
             AudioManager.instance.Play("MoneyGained");
 
@@ -2203,7 +2215,7 @@ public class BlackjackGame : MonoBehaviour
     {
         int activeBetAmount = (handBets != null && handBets.Count > 0) ? handBets[0] : currentBet;
 
-        yield return StartCoroutine(ProcessPayout(message, activeBetAmount));
+        yield return StartCoroutine(ProcessPayout(message, activeBetAmount, playerHands));
         yield return StartCoroutine(EndRoundSequence());
     }
     #endregion
