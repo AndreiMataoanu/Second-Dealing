@@ -44,10 +44,8 @@ public class ClickableCard : Clickable
                 originalValue = -originalValue;
             }
         }
-        
-        int halvedValue = Mathf.CeilToInt((float)Mathf.Abs(originalValue) / 2f);
 
-        blackjackGame.ApplyCutToCard(cardInstance, Mathf.Abs(originalValue) - halvedValue);
+        blackjackGame.ApplyCutToCard(cardInstance, 2);
         blackjackGame.SetScissorsActive(false);
         blackjackGame.UpdateUI(true);
     }

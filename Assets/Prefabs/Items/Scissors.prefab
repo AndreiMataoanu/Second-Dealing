@@ -111,9 +111,11 @@ MonoBehaviour:
   tooltipContent: Halves the value of a card
   basePrice: 100
   percentagePrice: 0.1
+  resaleLossPercentage: 0.5
   type: 1
-  spawnWeight: 15
+  spawnWeight: 1500
   isPurchased: 0
+  lottoWorldText: {fileID: 0}
 --- !u!64 &7760549102183914475
 MeshCollider:
   m_ObjectHideFlags: 0

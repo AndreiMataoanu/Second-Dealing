@@ -124,6 +124,7 @@ public class BlackjackGame : MonoBehaviour
     private List<GameObject> activeCardObjects = new List<GameObject>();
     private HashSet<CardInstance> alcoholCards = new HashSet<CardInstance>();
     private List<List<CardInstance>> playerHands = new List<List<CardInstance>>();
+    private CardInstance peekCardInstance = null;
     private List<int> handBets = new List<int>();
     private int currentHandIndex = 0;
     #endregion
@@ -361,7 +362,7 @@ public class BlackjackGame : MonoBehaviour
     {
         if(scissoredCards.ContainsKey(cardInstance))
         {
-            scissoredCards[cardInstance] += reduction;
+            scissoredCards[cardInstance] *= reduction;
         }
         else
         {
@@ -390,7 +391,7 @@ public class BlackjackGame : MonoBehaviour
 
         if(!cardPrefabLookup.TryGetValue((newCardData.rank, newCardData.suit), out GameObject cardPrefabToUse)) return false;
 
-        peekedCardObject = Instantiate(cardPrefabToUse, deckPosition);
+        peekedCardObject = Instantiate(cardPrefabToUse, sunglassesCardPosition);
         peekedCardObject.transform.localScale = cardScaleVector;
 
         StartCoroutine(CardAnimationCoroutine(
@@ -414,6 +415,8 @@ public class BlackjackGame : MonoBehaviour
             cardDisplay.SetNegativeVisual(isSuitNegative);
             cardDisplay.SetDoubledVisual(isDoubled);
             cardDisplay.SetCutVisual(isHalved);
+            
+            peekCardInstance = new CardInstance(newCardData, cardDisplay);
         }
 
         activeCardObjects.Add(peekedCardObject);
@@ -1264,7 +1267,7 @@ public class BlackjackGame : MonoBehaviour
             newCardInstance.jokerValue = Random.Range(-10, 11); //Joker value between -10 and 10
         }
 
-        hand.Insert(0, newCardInstance);
+        hand?.Insert(0, newCardInstance);
 
         return newCardInstance;
     }
@@ -1272,16 +1275,6 @@ public class BlackjackGame : MonoBehaviour
     private IEnumerator DealCardToPlayerCoroutine()
     {
         var savedPosition = deckPosition.position;
-
-        if(peekedCardObject != null)
-        {
-            deckPosition.position = sunglassesCardPosition.position;
-            activeCardObjects.Remove(peekedCardObject);
-
-            Destroy(peekedCardObject);
-
-            peekedCardObject = null;
-        }
 
         Card newCardData = new Card { rank = Card.Rank.None };
 
@@ -1345,7 +1338,16 @@ public class BlackjackGame : MonoBehaviour
         }
 
         Transform currentParent = handPositions[currentHandIndex];
-        CardInstance newCardInstance = DealCardInstance(newCardData, currentHand, currentParent, false);
+        
+        CardInstance newCardInstance;
+        if (peekCardInstance == null) 
+            newCardInstance = DealCardInstance(newCardData, currentHand, currentParent, false);
+        else
+        {
+            newCardInstance = peekCardInstance;
+            currentHand.Insert(0, newCardInstance);
+            peekCardInstance = null;
+        }
         AudioManager.instance.Play("CardHit");
 
         if(newCardInstance != null)
@@ -1382,18 +1384,17 @@ public class BlackjackGame : MonoBehaviour
 
     private IEnumerator DealCardToDealerCoroutine(bool isHidden)
     {
-        if(peekedCardObject != null)
-        {
-            activeCardObjects.Remove(peekedCardObject);
-
-            Destroy(peekedCardObject);
-
-            peekedCardObject = null;
-        }
-
         Card newCardData = gameDeck.DealCard();
 
-        CardInstance newCardInstance = DealCardInstance(newCardData, dealerHand, dealerCardPosition, isHidden);
+        CardInstance newCardInstance;
+        if (peekCardInstance == null) 
+            newCardInstance = DealCardInstance(newCardData, dealerHand, dealerCardPosition, isHidden);
+        else
+        {
+            newCardInstance = peekCardInstance;
+            dealerHand.Insert(0, newCardInstance);
+            peekCardInstance = null;
+        }
         AudioManager.instance.Play("CardHit");
 
         if(newCardInstance != null)
@@ -2169,22 +2170,24 @@ public class BlackjackGame : MonoBehaviour
                 }
                 else
                 {
+                    var half = Mathf.CeilToInt(Mathf.Abs(cardValue) / reduction);
                     if(cardValue > 0)
                     {
-                        cardValue -= reduction;
+                        cardValue = half;
                     }
                     else if(cardValue < 0)
                     {
-                        cardValue += reduction;
+                        cardValue = -half;
                     }
 
+                    var halfAce = Mathf.CeilToInt(Mathf.Abs(valueAsOne) / reduction);
                     if(valueAsOne > 0)
                     {
-                        valueAsOne -= reduction;
+                        valueAsOne = halfAce;
                     }
                     else if(valueAsOne < 0)
                     {
-                        valueAsOne += reduction;
+                        valueAsOne = -halfAce;
                     }
                 }
             }
