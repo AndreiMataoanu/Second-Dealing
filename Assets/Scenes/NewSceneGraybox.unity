@@ -2691,6 +2691,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1676992096}
   m_LocalEulerAnglesHint: {x: 90, y: 147.61, z: 89.988}
+--- !u!4 &536616959 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3299058582141345547, guid: b86f4f0c17e8f7d4492b47378589876a, type: 3}
+  m_PrefabInstance: {fileID: 7195570629954288261}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &537238134
 GameObject:
   m_ObjectHideFlags: 0
@@ -2843,6 +2848,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &571720863 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6979003678328969771, guid: b86f4f0c17e8f7d4492b47378589876a, type: 3}
+  m_PrefabInstance: {fileID: 7195570629954288261}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &571720867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 571720863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccbdd7ed435ce9248965c491cd312855, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProgressDisplay
+  blackjackGame: {fileID: 1343293108}
 --- !u!1 &572586783
 GameObject:
   m_ObjectHideFlags: 0
@@ -6414,6 +6437,34 @@ PrefabInstance:
       propertyPath: eventThresholds.Array.data[8].severityToTrigger
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: ChangeProgressText.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: ChangeProgressText.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: ChangeProgressText.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 571720867}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: ChangeProgressText.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: ChangeProgressText.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DisplayNextMilestone
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: ChangeProgressText.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ProgressDisplay, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: ChangeProgressText.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5546812090285593363, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -9282,6 +9333,7 @@ Transform:
   - {fileID: 1220219502}
   - {fileID: 1643182684}
   - {fileID: 1398443273}
+  - {fileID: 536616959}
   - {fileID: 1837545099}
   - {fileID: 275698759}
   m_Father: {fileID: 0}
@@ -10230,6 +10282,74 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1001 &7195570629954288261
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2097837783}
+    m_Modifications:
+    - target: {fileID: 759562832267998863, guid: b86f4f0c17e8f7d4492b47378589876a, type: 3}
+      propertyPath: m_Name
+      value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 2775146327779919281, guid: b86f4f0c17e8f7d4492b47378589876a, type: 3}
+      propertyPath: m_Name
+      value: ProgressMonitor
+      objectReference: {fileID: 0}
+    - target: {fileID: 3299058582141345547, guid: b86f4f0c17e8f7d4492b47378589876a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 18.835
+      objectReference: {fileID: 0}
+    - target: {fileID: 3299058582141345547, guid: b86f4f0c17e8f7d4492b47378589876a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 9.793
+      objectReference: {fileID: 0}
+    - target: {fileID: 3299058582141345547, guid: b86f4f0c17e8f7d4492b47378589876a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.562
+      objectReference: {fileID: 0}
+    - target: {fileID: 3299058582141345547, guid: b86f4f0c17e8f7d4492b47378589876a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.36650118
+      objectReference: {fileID: 0}
+    - target: {fileID: 3299058582141345547, guid: b86f4f0c17e8f7d4492b47378589876a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3299058582141345547, guid: b86f4f0c17e8f7d4492b47378589876a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.93041766
+      objectReference: {fileID: 0}
+    - target: {fileID: 3299058582141345547, guid: b86f4f0c17e8f7d4492b47378589876a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3299058582141345547, guid: b86f4f0c17e8f7d4492b47378589876a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3299058582141345547, guid: b86f4f0c17e8f7d4492b47378589876a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -223
+      objectReference: {fileID: 0}
+    - target: {fileID: 3299058582141345547, guid: b86f4f0c17e8f7d4492b47378589876a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6979003678328969771, guid: b86f4f0c17e8f7d4492b47378589876a, type: 3}
+      propertyPath: m_Name
+      value: ProgressText
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6979003678328969771, guid: b86f4f0c17e8f7d4492b47378589876a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 571720867}
+  m_SourcePrefab: {fileID: 100100000, guid: b86f4f0c17e8f7d4492b47378589876a, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 [System.Serializable]
 public class EventThreshold
@@ -91,6 +93,7 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI statusText;
     [SerializeField] private TMPro.TextMeshProUGUI dealerTotalText;
     [SerializeField] private TMPro.TextMeshProUGUI rouletteText;
+    [SerializeField] private UnityEvent ChangeProgressText;
 
     [Header("VFX")]
     [SerializeField] private Animator standHandAnimator;
@@ -126,6 +129,7 @@ public class BlackjackGame : MonoBehaviour
     private List<List<CardInstance>> playerHands = new List<List<CardInstance>>();
     private List<int> handBets = new List<int>();
     private int currentHandIndex = 0;
+    private int triggeredThresholdsCount = 0;
     #endregion
 
     #region Getters & Setters
@@ -139,6 +143,9 @@ public class BlackjackGame : MonoBehaviour
         scissorsFollow.SetActive(active);
     }
     public int GetOrganRoundsLeft() => itemManager.organRoundsLeft;
+    
+    public List<EventThreshold> EventThresholds => eventThresholds;
+    public int TriggeredThresholdsCount => triggeredThresholdsCount;
     #endregion
 
     #region Monobehaviour Methods
@@ -911,7 +918,9 @@ public class BlackjackGame : MonoBehaviour
 
         if(eventTriggered)
         {
+            triggeredThresholdsCount++;
             DisableCamera(eventCamera);
+            ChangeProgressText.Invoke();
             EnableCamera(sittingCamera);
         }
     }
