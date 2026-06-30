@@ -413,7 +413,6 @@ public class BlackjackGame : MonoBehaviour
             }
         }
         
-        // TODO: fix peek card
         peekCardInstance = null;
         Destroy(cardObject);
         isAcidActive = false;

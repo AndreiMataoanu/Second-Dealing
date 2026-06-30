@@ -77,28 +77,10 @@ public class Deck
         }
 
         Card dealtCard = cards[0];
-        if (!isDissolved)
-        {
-            cards.RemoveAt(0);
-            return dealtCard;
-        }
-        
-        var i = 0;
-        foreach (var card in removedCards)
-        {
-            dealtCard = cards[i];
-            if (dealtCard.rank != card.Item1 || dealtCard.suit != card.Item2)
-            {
-                cards.RemoveAt(i);
-                return dealtCard;
-            }
 
-            i++;
-        }
+        cards.RemoveAt(0);
 
-        InitializeDeck();
-        Shuffle();
-        return DealCard();
+        return dealtCard;
     }
 
     //Sunglasses ability: Peek at the next card without removing it from the deck
@@ -165,8 +147,15 @@ public class Deck
         var card = new Tuple<Card.Rank, Card.Suit>(rank, suit);
         if (!removedCards.Contains(card)) removedCards.Add(card);
         isDissolved = true;
-        // Acid item: can't init/shuffle deck during rounds (duplicates)
-        // handled in DealCard()
+        
+        for (int i = 0; i < cards.Count; i++)
+        {
+            if (cards[i].rank == card.Item1 && cards[i].suit == card.Item2)
+            {
+                cards.RemoveAt(i);
+                return;
+            }
+        }
     }
 
     public void AddJokersToDeck()
