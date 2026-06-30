@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class ClickableCard : Clickable
 {
+    [Header("Card VFX")] 
+    [SerializeField] private float dissolveTime = 1.3f;
+    
     private int index;
     private CardInstance cardInstance;
     private BlackjackGame blackjackGame;
@@ -48,6 +51,14 @@ public class ClickableCard : Clickable
         blackjackGame.ApplyCutToCard(cardInstance, 2);
         blackjackGame.SetScissorsActive(false);
         blackjackGame.UpdateUI(true);
+    }
+
+    public void OnDissolveCard()
+    {
+        // TODO: AudioManager.instance.Play("AcidSound");
+        // TODO: add shader effect
+        
+        blackjackGame.ApplyDissolveToCard(cardInstance, dissolveTime);
     }
 
     public override void OnClick(int mouseButton = 0)

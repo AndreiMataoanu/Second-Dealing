@@ -33,6 +33,7 @@ public class BlackjackGame : MonoBehaviour
     private bool isSplitting = false;
     private bool isKnifeActive = false;
     private bool isScissorsActive = false;
+    private bool isAcidActive = false;
     private bool isCrucifixActive = false;
     private bool isCigaretteActive = false;
     private bool isAlcoholActive = false;
@@ -353,7 +354,7 @@ public class BlackjackGame : MonoBehaviour
         if(!isRoundActive || isScissorsActive || isActionLocked) return false;
 
         scissorsFollow.SetActive(true);
-        cursorDetection.OnUseScissors(this);
+        cursorDetection.OnUseCardItem(this, ItemType.Scissors);
         
         return true;
     }
@@ -368,6 +369,57 @@ public class BlackjackGame : MonoBehaviour
         {
             scissoredCards.Add(cardInstance, reduction);
         }
+    }
+
+    public bool ActivateAcid()
+    {
+        if(!isRoundActive || isAcidActive || isActionLocked) return false;
+
+        // acidFollow.SetActive(true);
+        cursorDetection.OnUseCardItem(this, ItemType.Acid);
+        
+        return true;
+    }
+
+    public void ApplyDissolveToCard(CardInstance cardInstance, float delay)
+    {
+        StartCoroutine(DissolveCard(cardInstance, delay));
+    }
+
+    private IEnumerator DissolveCard(CardInstance cardInstance, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        var cardObject = cardInstance.displayComponent.gameObject;
+        activeCardObjects.Remove(cardObject);
+        gameDeck.AddRemovedCard(cardInstance.cardData.rank, cardInstance.cardData.suit);
+        
+        if (dealerHand.Remove(cardInstance))
+        {
+            Destroy(cardObject);
+            isAcidActive = false;
+            UpdateUI();
+            yield return null;
+        }
+
+        foreach (var playerHand in playerHands)
+        {
+            if (playerHand.Remove(cardInstance))
+            {
+                Destroy(cardObject);
+                isAcidActive = false;
+                UpdateUI();
+                yield return null;
+            }
+        }
+        
+        // TODO: fix peek card
+        peekCardInstance = null;
+        Destroy(cardObject);
+        isAcidActive = false;
+        UpdateUI();
+
+        yield return null;
     }
 
     public bool ActivateCrucifix()
@@ -1113,6 +1165,7 @@ public class BlackjackGame : MonoBehaviour
         isSplitting = false;
         isKnifeActive = false;
         isScissorsActive = false;
+        isAcidActive = false;
         isCrucifixActive = false;
         isCigaretteActive = false;
         isAlcoholActive = false;

@@ -53,6 +53,7 @@ public class Item : Clickable
             ItemType.Alcohol => blackjackGame.ActivateAlcohol(),
             ItemType.Fan => blackjackGame.ActivateFan(),
             ItemType.Lotto => blackjackGame.TearLotteryTicket(),
+            ItemType.Acid => blackjackGame.ActivateAcid(),
             _ => false
         };
 

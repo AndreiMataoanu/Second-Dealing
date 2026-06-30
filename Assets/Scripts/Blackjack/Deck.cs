@@ -1,13 +1,16 @@
-using UnityEngine;
+using System;
 using System.Collections.Generic;
+using Random = UnityEngine.Random;
 
 public class Deck
 {
     private List<Card> cards = new List<Card>();
     private List<Card.Rank> removedRanks = new List<Card.Rank>();
     private List<Card.Suit> removedSuits = new List<Card.Suit>();
+    private List<Tuple<Card.Rank, Card.Suit>> removedCards = new ();
 
     private bool jokersInDeck = false;
+    private bool isDissolved = false;
 
     public Deck()
     {
@@ -17,6 +20,7 @@ public class Deck
     public void InitializeDeck()
     {
         cards.Clear();
+        isDissolved = false;
 
         foreach(Card.Suit s in System.Enum.GetValues(typeof(Card.Suit)))
         {
@@ -28,6 +32,9 @@ public class Deck
 
                 if(removedRanks.Contains(rank)) continue;
 
+                var card = new Tuple<Card.Rank, Card.Suit>(rank, s);
+                if(removedCards.Contains(card)) continue;
+                
                 cards.Add(new Card { rank = rank, suit = s });
             }
         }
@@ -70,10 +77,28 @@ public class Deck
         }
 
         Card dealtCard = cards[0];
+        if (!isDissolved)
+        {
+            cards.RemoveAt(0);
+            return dealtCard;
+        }
+        
+        var i = 0;
+        foreach (var card in removedCards)
+        {
+            dealtCard = cards[i];
+            if (dealtCard.rank != card.Item1 || dealtCard.suit != card.Item2)
+            {
+                cards.RemoveAt(i);
+                return dealtCard;
+            }
 
-        cards.RemoveAt(0);
+            i++;
+        }
 
-        return dealtCard;
+        InitializeDeck();
+        Shuffle();
+        return DealCard();
     }
 
     //Sunglasses ability: Peek at the next card without removing it from the deck
@@ -133,6 +158,15 @@ public class Deck
 
         InitializeDeck();
         Shuffle();
+    }
+
+    public void AddRemovedCard(Card.Rank rank, Card.Suit suit)
+    {
+        var card = new Tuple<Card.Rank, Card.Suit>(rank, suit);
+        if (!removedCards.Contains(card)) removedCards.Add(card);
+        isDissolved = true;
+        // Acid item: can't init/shuffle deck during rounds (duplicates)
+        // handled in DealCard()
     }
 
     public void AddJokersToDeck()
