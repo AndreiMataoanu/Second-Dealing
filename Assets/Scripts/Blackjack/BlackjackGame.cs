@@ -33,6 +33,7 @@ public class BlackjackGame : MonoBehaviour
     private bool isSplitting = false;
     private bool isKnifeActive = false;
     private bool isScissorsActive = false;
+    private bool isAcidActive = false;
     private bool isCrucifixActive = false;
     private bool isCigaretteActive = false;
     private bool isAlcoholActive = false;
@@ -103,6 +104,7 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private GameObject distortion;
     [SerializeField] private Animator bottleAnimation;
     [SerializeField] private GameObject scissorsFollow;
+    [SerializeField] private GameObject acidFollow;
     private GameObject peekedCardObject = null;
     private const float zOverlap = 0.001f;
     private const float cardAnimationDuration = 0.25f;
@@ -124,6 +126,7 @@ public class BlackjackGame : MonoBehaviour
     private List<GameObject> activeCardObjects = new List<GameObject>();
     private HashSet<CardInstance> alcoholCards = new HashSet<CardInstance>();
     private List<List<CardInstance>> playerHands = new List<List<CardInstance>>();
+    private CardInstance peekCardInstance = null;
     private List<int> handBets = new List<int>();
     private int currentHandIndex = 0;
     #endregion
@@ -352,7 +355,7 @@ public class BlackjackGame : MonoBehaviour
         if(!isRoundActive || isScissorsActive || isActionLocked) return false;
 
         scissorsFollow.SetActive(true);
-        cursorDetection.OnUseScissors(this);
+        cursorDetection.OnUseCardItem(this, ItemType.Scissors);
         
         return true;
     }
@@ -361,12 +364,64 @@ public class BlackjackGame : MonoBehaviour
     {
         if(scissoredCards.ContainsKey(cardInstance))
         {
-            scissoredCards[cardInstance] += reduction;
+            scissoredCards[cardInstance] *= reduction;
         }
         else
         {
             scissoredCards.Add(cardInstance, reduction);
         }
+    }
+
+    public bool ActivateAcid()
+    {
+        if(!isRoundActive || isAcidActive || isActionLocked) return false;
+
+        acidFollow.SetActive(true);
+        cursorDetection.OnUseCardItem(this, ItemType.Acid);
+        
+        return true;
+    }
+
+    public void ApplyDissolveToCard(CardInstance cardInstance, float delay)
+    {
+        acidFollow.SetActive(false);
+        StartCoroutine(DissolveCard(cardInstance, delay));
+    }
+
+    private IEnumerator DissolveCard(CardInstance cardInstance, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        var cardObject = cardInstance.displayComponent.gameObject;
+        activeCardObjects.Remove(cardObject);
+        gameDeck.AddRemovedCard(cardInstance.cardData.rank, cardInstance.cardData.suit);
+        
+        if (dealerHand.Remove(cardInstance))
+        {
+            DestroyCard(cardObject);
+            yield return null;
+        }
+
+        foreach (var playerHand in playerHands)
+        {
+            if (playerHand.Remove(cardInstance))
+            {
+                DestroyCard(cardObject);
+                yield return null;
+            }
+        }
+        
+        peekCardInstance = null;
+        DestroyCard(cardObject);
+
+        yield return null;
+    }
+
+    private void DestroyCard(GameObject cardObject)
+    {
+        Destroy(cardObject);
+        isAcidActive = false;
+        UpdateUI();
     }
 
     public bool ActivateCrucifix()
@@ -390,7 +445,7 @@ public class BlackjackGame : MonoBehaviour
 
         if(!cardPrefabLookup.TryGetValue((newCardData.rank, newCardData.suit), out GameObject cardPrefabToUse)) return false;
 
-        peekedCardObject = Instantiate(cardPrefabToUse, deckPosition);
+        peekedCardObject = Instantiate(cardPrefabToUse, sunglassesCardPosition);
         peekedCardObject.transform.localScale = cardScaleVector;
 
         StartCoroutine(CardAnimationCoroutine(
@@ -414,6 +469,8 @@ public class BlackjackGame : MonoBehaviour
             cardDisplay.SetNegativeVisual(isSuitNegative);
             cardDisplay.SetDoubledVisual(isDoubled);
             cardDisplay.SetCutVisual(isHalved);
+            
+            peekCardInstance = new CardInstance(newCardData, cardDisplay);
         }
 
         activeCardObjects.Add(peekedCardObject);
@@ -1110,6 +1167,7 @@ public class BlackjackGame : MonoBehaviour
         isSplitting = false;
         isKnifeActive = false;
         isScissorsActive = false;
+        isAcidActive = false;
         isCrucifixActive = false;
         isCigaretteActive = false;
         isAlcoholActive = false;
@@ -1264,7 +1322,7 @@ public class BlackjackGame : MonoBehaviour
             newCardInstance.jokerValue = Random.Range(-10, 11); //Joker value between -10 and 10
         }
 
-        hand.Insert(0, newCardInstance);
+        hand?.Insert(0, newCardInstance);
 
         return newCardInstance;
     }
@@ -1272,16 +1330,6 @@ public class BlackjackGame : MonoBehaviour
     private IEnumerator DealCardToPlayerCoroutine()
     {
         var savedPosition = deckPosition.position;
-
-        if(peekedCardObject != null)
-        {
-            deckPosition.position = sunglassesCardPosition.position;
-            activeCardObjects.Remove(peekedCardObject);
-
-            Destroy(peekedCardObject);
-
-            peekedCardObject = null;
-        }
 
         Card newCardData = new Card { rank = Card.Rank.None };
 
@@ -1345,7 +1393,16 @@ public class BlackjackGame : MonoBehaviour
         }
 
         Transform currentParent = handPositions[currentHandIndex];
-        CardInstance newCardInstance = DealCardInstance(newCardData, currentHand, currentParent, false);
+        
+        CardInstance newCardInstance;
+        if (peekCardInstance == null) 
+            newCardInstance = DealCardInstance(newCardData, currentHand, currentParent, false);
+        else
+        {
+            newCardInstance = peekCardInstance;
+            currentHand.Insert(0, newCardInstance);
+            peekCardInstance = null;
+        }
         AudioManager.instance.Play("CardHit");
 
         if(newCardInstance != null)
@@ -1382,18 +1439,17 @@ public class BlackjackGame : MonoBehaviour
 
     private IEnumerator DealCardToDealerCoroutine(bool isHidden)
     {
-        if(peekedCardObject != null)
-        {
-            activeCardObjects.Remove(peekedCardObject);
-
-            Destroy(peekedCardObject);
-
-            peekedCardObject = null;
-        }
-
         Card newCardData = gameDeck.DealCard();
 
-        CardInstance newCardInstance = DealCardInstance(newCardData, dealerHand, dealerCardPosition, isHidden);
+        CardInstance newCardInstance;
+        if (peekCardInstance == null) 
+            newCardInstance = DealCardInstance(newCardData, dealerHand, dealerCardPosition, isHidden);
+        else
+        {
+            newCardInstance = peekCardInstance;
+            dealerHand.Insert(0, newCardInstance);
+            peekCardInstance = null;
+        }
         AudioManager.instance.Play("CardHit");
 
         if(newCardInstance != null)
@@ -2169,22 +2225,24 @@ public class BlackjackGame : MonoBehaviour
                 }
                 else
                 {
+                    var half = Mathf.CeilToInt(Mathf.Abs(cardValue) / reduction);
                     if(cardValue > 0)
                     {
-                        cardValue -= reduction;
+                        cardValue = half;
                     }
                     else if(cardValue < 0)
                     {
-                        cardValue += reduction;
+                        cardValue = -half;
                     }
 
+                    var halfAce = Mathf.CeilToInt(Mathf.Abs(valueAsOne) / reduction);
                     if(valueAsOne > 0)
                     {
-                        valueAsOne -= reduction;
+                        valueAsOne = halfAce;
                     }
                     else if(valueAsOne < 0)
                     {
-                        valueAsOne += reduction;
+                        valueAsOne = -halfAce;
                     }
                 }
             }
