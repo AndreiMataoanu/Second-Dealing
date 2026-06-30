@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "DivorcePapers", menuName = "Keepsakes/DivorcePapers")]
+[CreateAssetMenu(fileName = "DivorcePapers", menuName = "Keepsakes/Divorce Papers")]
 public class DivorcePapers : Keepsake
 {
     public override bool AllowAnySplit()

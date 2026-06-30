@@ -13,11 +13,6 @@ public class SevenSevenSeven : Keepsake
 
     private int timesTriggered = 0;
 
-    private void OnEnable()
-    {
-        timesTriggered = 0;
-    }
-
     public override void OnRoundStart()
     {
         timesTriggered = 0;
