@@ -8,6 +8,8 @@ public class Item : Clickable
     [SerializeField] private int basePrice;
     [Tooltip("Percentage cost. Example: 0.1 = 10%")]
     [SerializeField] private float percentagePrice = 0.1f;
+    [Tooltip("Subtract percentage of current price on resale.")]
+    [Range(0, 1)] [SerializeField] private float resaleLossPercentage = 0.5f;
     [SerializeField] public ItemType type;
     [Tooltip("Higher number means more common.")]
     [SerializeField] public int spawnWeight = 10;
@@ -83,6 +85,22 @@ public class Item : Clickable
         }
 
         return basePrice;
+    }
+
+    public int GetResalePrice()
+    {
+        if(!blackjackGame) return basePrice;
+
+        int money = blackjackGame.PlayerMoney;
+
+        if(money >= blackjackGame.percentagePriceThreshold)
+        {
+            var currentPrice = Mathf.RoundToInt(money * percentagePrice);
+            currentPrice -= Mathf.RoundToInt(currentPrice * resaleLossPercentage);
+            return currentPrice;
+        }
+
+        return basePrice - Mathf.RoundToInt(basePrice * resaleLossPercentage);
     }
 
     protected override string GetTooltipContent()

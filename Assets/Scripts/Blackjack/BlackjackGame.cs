@@ -331,6 +331,13 @@ public class BlackjackGame : MonoBehaviour
         UpdateBettingUI();
     }
 
+    public void SellItem(int amount)
+    {
+        playerMoney += amount;
+        
+        UpdateBettingUI();
+    }
+
     public bool ActivateKnife()
     {
         if(!isRoundActive || isKnifeActive || isActionLocked) return false;
@@ -421,6 +428,11 @@ public class BlackjackGame : MonoBehaviour
         isOrganActive = true;
 
         return true;
+    }
+
+    public void DeactivateOrgan()
+    {
+        isOrganActive = false;
     }
 
     public bool ActivateCigarette()
@@ -779,12 +791,17 @@ public class BlackjackGame : MonoBehaviour
         return true;
     }
 
+    public void DeactivateLotteryTicket()
+    {
+        isLottoActive = false;
+        lotteryNumbers.Clear();
+    }
+
     public bool TearLotteryTicket()
     {
         if(!isRoundActive || isActionLocked) return false;
 
-        isLottoActive = false;
-        lotteryNumbers.Clear();
+        DeactivateLotteryTicket();
 
         AudioManager.instance.Play("LottoTear");
 
@@ -1160,6 +1177,7 @@ public class BlackjackGame : MonoBehaviour
 
         statusText.text = "Dealing cards...";
         cursorDetection.OnRoundActive();
+        itemManager.ChangeItemAction(true);
         itemManager.DespawnPowerUps();
 
         if(roundsCompleted < riggedRoundsLimit)
@@ -2312,6 +2330,7 @@ public class BlackjackGame : MonoBehaviour
         
         isRoundActive = false;
         cursorDetection.OnRoundInactive();
+        itemManager.ChangeItemAction(false);
 
         if(roundsCompleted == tutorialRoundsLimit - 1)
         {
