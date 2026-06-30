@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,8 @@ public class EventThreshold
     public BlackjackEvent.EventSeverity severityToTrigger;
 
     public int moneyAmount;
+
+    public int maxTurns;
 }
 
 public class BlackjackGame : MonoBehaviour
@@ -50,6 +53,7 @@ public class BlackjackGame : MonoBehaviour
     [HideInInspector] public bool isOrganActive = false;
 
     [Header("Event System")]
+    [SerializeField] private bool useTurnLimit = false;
     [SerializeField] private List<EventThreshold> eventThresholds;
     [SerializeField] private List<BlackjackEvent> lowSeverityEvents;
     [SerializeField] private List<BlackjackEvent> mediumSeverityEvents;
@@ -130,6 +134,8 @@ public class BlackjackGame : MonoBehaviour
     private List<int> handBets = new List<int>();
     private int currentHandIndex = 0;
     private int triggeredThresholdsCount = 0;
+    private int currentMaxTurns;
+    private int currentTurns;
     #endregion
 
     #region Getters & Setters
@@ -146,9 +152,18 @@ public class BlackjackGame : MonoBehaviour
     
     public List<EventThreshold> EventThresholds => eventThresholds;
     public int TriggeredThresholdsCount => triggeredThresholdsCount;
+    public bool UseTurnLimit => useTurnLimit;
+    public int TurnsLeft => currentMaxTurns - currentTurns;
     #endregion
 
     #region Monobehaviour Methods
+
+    private void Awake()
+    {
+        currentMaxTurns = eventThresholds.First().maxTurns;
+        currentTurns = 0;
+    }
+
     private void Start()
     {
         gameDeck = new Deck();
@@ -919,6 +934,9 @@ public class BlackjackGame : MonoBehaviour
         if(eventTriggered)
         {
             triggeredThresholdsCount++;
+            currentMaxTurns = eventThresholds[triggeredThresholdsCount].maxTurns;
+            currentTurns = 0;
+            
             DisableCamera(eventCamera);
             ChangeProgressText.Invoke();
             EnableCamera(sittingCamera);
@@ -2366,6 +2384,11 @@ public class BlackjackGame : MonoBehaviour
         }
 
         roundsCompleted++;
+        if (useTurnLimit)
+        {
+            currentTurns++;
+            ChangeProgressText.Invoke();
+        }
 
         yield return StartCoroutine(CheckForEventTriggerCoroutine());
 
@@ -2383,6 +2406,17 @@ public class BlackjackGame : MonoBehaviour
 
         if(!isTutorialActive && PlayerMoney <= 0)
         {
+            SceneManager.LoadSceneAsync(3);
+
+            yield break;
+        }
+        
+        if (useTurnLimit && currentTurns >= currentMaxTurns)
+        {
+            dialogueSystem.ShowTurnLimitTaunt();
+
+            yield return new WaitWhile(() => dialogueSystem.IsPlaying);
+            
             SceneManager.LoadSceneAsync(3);
 
             yield break;

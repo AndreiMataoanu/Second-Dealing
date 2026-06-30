@@ -31,7 +31,13 @@ public class ProgressDisplay : MonoBehaviour
             return;
         }
 
-        textComponent.text = "Next milestone:\n" + next + "$";
+        if (!blackjackGame.UseTurnLimit)
+        {
+            textComponent.text = "Next milestone:\n$" + next;
+            return;
+        }
+
+        textComponent.text = "Next milestone:\n$" + next + "\n\nTurns left: " + blackjackGame.TurnsLeft;
     }
     
     private void Start()

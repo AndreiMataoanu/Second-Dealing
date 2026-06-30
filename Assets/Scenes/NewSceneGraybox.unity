@@ -2793,6 +2793,10 @@ MonoBehaviour:
   - Lucky...
   tieTaunts:
   - Not so fast...
+  turnLimitTaunts:
+  - A bit too slow.
+  - Time's up.
+  - I've seen enough.
 --- !u!1 &539873765
 GameObject:
   m_ObjectHideFlags: 0
@@ -2848,24 +2852,17 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!1 &571720863 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6979003678328969771, guid: b86f4f0c17e8f7d4492b47378589876a, type: 3}
+--- !u!114 &571720867 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1028207999998079401, guid: b86f4f0c17e8f7d4492b47378589876a, type: 3}
   m_PrefabInstance: {fileID: 7195570629954288261}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &571720867
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 571720863}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ccbdd7ed435ce9248965c491cd312855, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProgressDisplay
-  blackjackGame: {fileID: 1343293108}
 --- !u!1 &572586783
 GameObject:
   m_ObjectHideFlags: 0
@@ -6154,6 +6151,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1153521455}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: useTurnLimit
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: betUpCollider
       value: 
       objectReference: {fileID: 1712160668}
@@ -6373,6 +6374,42 @@ PrefabInstance:
       propertyPath: 'mediumSeverityEvents.Array.data[4]'
       value: 
       objectReference: {fileID: 11400000, guid: 8dd6a5c9f92458843b89d3577fc5c243, type: 2}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: eventThresholds.Array.data[0].maxTurns
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: eventThresholds.Array.data[1].maxTurns
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: eventThresholds.Array.data[2].maxTurns
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: eventThresholds.Array.data[3].maxTurns
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: eventThresholds.Array.data[4].maxTurns
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: eventThresholds.Array.data[5].maxTurns
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: eventThresholds.Array.data[6].maxTurns
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: eventThresholds.Array.data[7].maxTurns
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: eventThresholds.Array.data[8].maxTurns
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: eventThresholds.Array.data[0].moneyAmount
       value: 600
@@ -10290,10 +10327,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2097837783}
     m_Modifications:
-    - target: {fileID: 759562832267998863, guid: b86f4f0c17e8f7d4492b47378589876a, type: 3}
-      propertyPath: m_Name
-      value: Canvas
-      objectReference: {fileID: 0}
+    - target: {fileID: 1028207999998079401, guid: b86f4f0c17e8f7d4492b47378589876a, type: 3}
+      propertyPath: blackjackGame
+      value: 
+      objectReference: {fileID: 1343293108}
     - target: {fileID: 2775146327779919281, guid: b86f4f0c17e8f7d4492b47378589876a, type: 3}
       propertyPath: m_Name
       value: ProgressMonitor
@@ -10338,17 +10375,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6979003678328969771, guid: b86f4f0c17e8f7d4492b47378589876a, type: 3}
-      propertyPath: m_Name
-      value: ProgressText
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6979003678328969771, guid: b86f4f0c17e8f7d4492b47378589876a, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 571720867}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b86f4f0c17e8f7d4492b47378589876a, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
