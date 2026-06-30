@@ -59,6 +59,7 @@ public class ClickableCard : Clickable
         // TODO: add shader effect
         
         blackjackGame.ApplyDissolveToCard(cardInstance, dissolveTime);
+        
     }
 
     public override void OnClick(int mouseButton = 0)

@@ -104,6 +104,7 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private GameObject distortion;
     [SerializeField] private Animator bottleAnimation;
     [SerializeField] private GameObject scissorsFollow;
+    [SerializeField] private GameObject acidFollow;
     private GameObject peekedCardObject = null;
     private const float zOverlap = 0.001f;
     private const float cardAnimationDuration = 0.25f;
@@ -375,7 +376,7 @@ public class BlackjackGame : MonoBehaviour
     {
         if(!isRoundActive || isAcidActive || isActionLocked) return false;
 
-        // acidFollow.SetActive(true);
+        acidFollow.SetActive(true);
         cursorDetection.OnUseCardItem(this, ItemType.Acid);
         
         return true;
@@ -383,6 +384,7 @@ public class BlackjackGame : MonoBehaviour
 
     public void ApplyDissolveToCard(CardInstance cardInstance, float delay)
     {
+        acidFollow.SetActive(false);
         StartCoroutine(DissolveCard(cardInstance, delay));
     }
 
@@ -396,9 +398,7 @@ public class BlackjackGame : MonoBehaviour
         
         if (dealerHand.Remove(cardInstance))
         {
-            Destroy(cardObject);
-            isAcidActive = false;
-            UpdateUI();
+            DestroyCard(cardObject);
             yield return null;
         }
 
@@ -406,19 +406,22 @@ public class BlackjackGame : MonoBehaviour
         {
             if (playerHand.Remove(cardInstance))
             {
-                Destroy(cardObject);
-                isAcidActive = false;
-                UpdateUI();
+                DestroyCard(cardObject);
                 yield return null;
             }
         }
         
         peekCardInstance = null;
+        DestroyCard(cardObject);
+
+        yield return null;
+    }
+
+    private void DestroyCard(GameObject cardObject)
+    {
         Destroy(cardObject);
         isAcidActive = false;
         UpdateUI();
-
-        yield return null;
     }
 
     public bool ActivateCrucifix()
