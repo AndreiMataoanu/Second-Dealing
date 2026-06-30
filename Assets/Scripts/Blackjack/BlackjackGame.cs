@@ -2761,7 +2761,14 @@ public class BlackjackGame : MonoBehaviour
 
         foreach(int b in handBets) totalBets += b;
 
-        return val1 == val2 && playerMoney >= (totalBets + handBets[currentHandIndex]);
+        bool keepsakeAllowsSplit = false;
+
+        if(KeepsakeManager.instance != null)
+        {
+            keepsakeAllowsSplit = KeepsakeManager.instance.AllowsAnySplit();
+        }
+
+        return (val1 == val2 || keepsakeAllowsSplit) && playerMoney >= (totalBets + handBets[currentHandIndex]);
     }
 
     private float GetCardValueForSplit(Card card)

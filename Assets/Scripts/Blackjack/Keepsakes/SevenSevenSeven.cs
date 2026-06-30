@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 [CreateAssetMenu(fileName = "777", menuName = "Keepsakes/777")]
-public class Keepsake777 : Keepsake
+public class SevenSevenSeven : Keepsake
 {
     [Tooltip("Number of same value cards needed to trigger the multiplier.")]
     public int requiredMatches = 3;

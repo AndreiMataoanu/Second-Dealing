@@ -17,6 +17,7 @@ public class KeepsakeInteractable : Clickable
         Glow();
     }
 
+    //temp, its a glowing object that shows if the keepsake condition is met
     private void Glow()
     {
         if(glowVisuals == null || blackjackGame == null || keepsake == null) return;
@@ -52,21 +53,11 @@ public class KeepsakeInteractable : Clickable
 
     protected override string GetTooltipHeader()
     {
-        if(keepsake != null)
-        {
-            return keepsake.name;
-        }
-
-        return tooltipHeader;
+        return keepsake.name;
     }
 
     protected override string GetTooltipContent()
     {
-        if(keepsake != null)
-        {
-            return keepsake.description;
-        }
-
-        return base.GetTooltipContent();
+        return keepsake.description;
     }
 }

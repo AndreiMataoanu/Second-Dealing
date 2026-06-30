@@ -5,7 +5,7 @@ public class KeepsakeManager : MonoBehaviour
 {
     public static KeepsakeManager instance;
 
-    [HideInInspector] public Keepsake equippedKeepsake;
+    public Keepsake equippedKeepsake;
 
     private void Awake()
     {
@@ -32,5 +32,12 @@ public class KeepsakeManager : MonoBehaviour
         {
             equippedKeepsake.OnRoundStart();
         }
+    }
+
+    public bool AllowsAnySplit()
+    {
+        if(equippedKeepsake == null) return false;
+
+        return equippedKeepsake.AllowAnySplit();
     }
 }
