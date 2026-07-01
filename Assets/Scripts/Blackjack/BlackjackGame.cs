@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -1044,6 +1043,11 @@ public class BlackjackGame : MonoBehaviour
     public void SetRouletteBlackjackActive(bool active)
     {
         isRouletteBlackjackActive = active;
+    }
+
+    public void AddCards(int minValue, int maxValue)
+    {
+        gameDeck.AddCardCopies(minValue, maxValue);
     }
 
     private void RandomizeBlackjackGoal()

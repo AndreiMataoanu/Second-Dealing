@@ -8,6 +8,7 @@ public class Deck
     private List<Card.Rank> removedRanks = new List<Card.Rank>();
     private List<Card.Suit> removedSuits = new List<Card.Suit>();
     private List<Tuple<Card.Rank, Card.Suit>> removedCards = new ();
+    private Tuple<Card, int> copies;
 
     private bool jokersInDeck = false;
 
@@ -47,6 +48,11 @@ public class Deck
                 }
             }
         }
+
+        if (copies is not { Item2: > 0 }) return;
+        
+        for (var i = 0; i < copies.Item2; i++)
+            cards.Add(new Card{rank = copies.Item1.rank, suit = copies.Item1.suit});
     }
 
     public void Shuffle()
@@ -164,5 +170,16 @@ public class Deck
             InitializeDeck();
             Shuffle();
         }
+    }
+
+    public void AddCardCopies(int minValue, int maxValue)
+    {
+        InitializeDeck();
+        Shuffle();
+
+        var i = Random.Range(0, cards.Count);
+        var copyCount = Random.Range(minValue, maxValue + 1);
+
+        copies = new Tuple<Card, int>(new Card { rank = cards[i].rank, suit = cards[i].suit }, copyCount);
     }
 }
