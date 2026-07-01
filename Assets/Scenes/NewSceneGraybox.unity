@@ -501,6 +501,10 @@ PrefabInstance:
       propertyPath: 'roundInactiveClickables.Array.data[6]'
       value: 
       objectReference: {fileID: 1752005336}
+    - target: {fileID: 3107838438023376873, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
+      propertyPath: 'roundInactiveClickables.Array.data[7]'
+      value: 
+      objectReference: {fileID: 4358068880372872441}
     - target: {fileID: 4390543728078954121, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -6041,6 +6045,7 @@ Transform:
   - {fileID: 1424018031}
   - {fileID: 1757282759}
   - {fileID: 1752005335}
+  - {fileID: 6116808503757076230}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1249939005
@@ -11391,6 +11396,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 543450651904859136}
   m_LocalEulerAnglesHint: {x: -19.631, y: 0, z: 0}
+--- !u!4 &6116808503757076230 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5779496784260434443, guid: 97c1a7ef9b38a31438aecb02a147a8c7, type: 3}
+  m_PrefabInstance: {fileID: 7030247261013062693}
+  m_PrefabAsset: {fileID: 0}
 --- !u!33 &6178679672820982772
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -11418,6 +11428,10 @@ PrefabInstance:
     - target: {fileID: 4488206875934345577, guid: f1e8a136ee77213479411c201768a4ad, type: 3}
       propertyPath: m_Name
       value: Onyx Ring
+      objectReference: {fileID: 0}
+    - target: {fileID: 4488206875934345577, guid: f1e8a136ee77213479411c201768a4ad, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6116808503941293194, guid: f1e8a136ee77213479411c201768a4ad, type: 3}
       propertyPath: m_LocalPosition.x

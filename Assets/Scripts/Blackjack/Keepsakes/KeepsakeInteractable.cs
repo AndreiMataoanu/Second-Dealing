@@ -53,7 +53,7 @@ public class KeepsakeInteractable : Clickable
 
     protected override string GetTooltipHeader()
     {
-        return keepsake.name;
+        return keepsake.keepsakeName;
     }
 
     protected override string GetTooltipContent()

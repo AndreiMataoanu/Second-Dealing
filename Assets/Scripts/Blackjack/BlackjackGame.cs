@@ -2022,8 +2022,8 @@ public class BlackjackGame : MonoBehaviour
 
         int finalDealerValue = CalculateHandValue(dealerHand, true);
         int playerValue = CalculateHandValue(playerHands[0], true);
-        bool playerBust = (playerValue > blackjackGoal || playerValue < -blackjackGoal);
-        bool dealerBust = (finalDealerValue > blackjackGoal || finalDealerValue < -blackjackGoal);
+        bool playerBust = playerValue > blackjackGoal || playerValue < -blackjackGoal;
+        bool dealerBust = finalDealerValue > GetDealerBustThreshold() || finalDealerValue < -GetDealerBustThreshold();
         int playerDiff = Mathf.Abs(Mathf.Abs(playerValue) - blackjackGoal);
         int dealerDiff = Mathf.Abs(Mathf.Abs(finalDealerValue) - blackjackGoal);
         bool wonByOne = false;
@@ -2196,7 +2196,7 @@ public class BlackjackGame : MonoBehaviour
     private string DetermineWinner(int playerValue, int dealerValue)
     {
         bool playerBust = (playerValue > blackjackGoal || playerValue < -blackjackGoal);
-        bool dealerBust = (dealerValue > blackjackGoal || dealerValue < -blackjackGoal);
+        bool dealerBust = (dealerValue > GetDealerBustThreshold() || dealerValue < -GetDealerBustThreshold());
         int playerDiff = Mathf.Abs(Mathf.Abs(playerValue) - blackjackGoal);
         int dealerDiff = Mathf.Abs(Mathf.Abs(dealerValue) - blackjackGoal);
 
@@ -2857,5 +2857,17 @@ public class BlackjackGame : MonoBehaviour
 
             yield return null;
         }
+    }
+
+    private int GetDealerBustThreshold()
+    {
+        int threshold = blackjackGoal;
+
+        if(KeepsakeManager.instance != null)
+        {
+            threshold -= KeepsakeManager.instance.GetDealerBustModifier();
+        }
+
+        return threshold;
     }
 }

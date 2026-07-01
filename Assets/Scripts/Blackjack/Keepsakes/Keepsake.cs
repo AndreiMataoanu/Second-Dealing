@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public abstract class Keepsake : ScriptableObject
 {
-    public string name;
+    public string keepsakeName;
     [TextArea] public string description;
 
     public virtual void OnRoundStart()
@@ -23,5 +23,10 @@ public abstract class Keepsake : ScriptableObject
     public virtual bool AllowAnySplit()
     {
         return false;
+    }
+
+    public virtual int GetDealerBustModifier()
+    {
+        return 0;
     }
 }

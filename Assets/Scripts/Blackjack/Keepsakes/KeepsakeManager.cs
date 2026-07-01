@@ -40,4 +40,11 @@ public class KeepsakeManager : MonoBehaviour
 
         return equippedKeepsake.AllowAnySplit();
     }
+
+    public int GetDealerBustModifier()
+    {
+        if(equippedKeepsake == null) return 0;
+
+        return equippedKeepsake.GetDealerBustModifier();
+    }
 }
