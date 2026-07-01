@@ -69,12 +69,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 65818da854c201149ad6085b9e6f0bfa, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: -7511558181221131132, guid: 65818da854c201149ad6085b9e6f0bfa, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
       objectReference: {fileID: -249047089049676387, guid: 65818da854c201149ad6085b9e6f0bfa, type: 3}
     - target: {fileID: 919132149155446097, guid: 65818da854c201149ad6085b9e6f0bfa, type: 3}
       propertyPath: m_Name
-      value: Sunglasses
+      value: Acid
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 65818da854c201149ad6085b9e6f0bfa, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -112,12 +116,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
-  tooltipHeader: Sunglasses
-  tooltipContent: See the next card
+  tooltipHeader: Acid
+  tooltipContent: Destroy card
   basePrice: 100
   percentagePrice: 0.1
   resaleLossPercentage: 0.5
-  type: 3
+  type: 9
   spawnWeight: 15
   isPurchased: 0
   lottoWorldText: {fileID: 0}

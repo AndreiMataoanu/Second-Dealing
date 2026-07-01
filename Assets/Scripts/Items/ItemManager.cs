@@ -99,8 +99,6 @@ public class ItemManager : MonoBehaviour
             organRoundsLeft = 2;
         }
 
-        cursorDetection.AddRoundActiveClickable(item);
-
         if (inventoryItems == buySpawnPoints.Count)
         {
             DespawnPowerUps();

@@ -8,5 +8,6 @@ public enum ItemType
     Cigarette,
     Alcohol,
     Fan,
-    Lotto
+    Lotto,
+    Acid
 }

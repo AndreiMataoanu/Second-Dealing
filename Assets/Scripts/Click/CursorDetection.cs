@@ -31,7 +31,7 @@ public class CursorDetection : MonoBehaviour
             {
                 var clickable = hit.transform.GetComponent<Clickable>();
 
-                if(clickable != null)
+                if(clickable)
                 {
                     clickable.OnClick(mouseButton);
                 }
@@ -66,28 +66,23 @@ public class CursorDetection : MonoBehaviour
         }
     }
 
-    public void AddRoundActiveClickable(Clickable clickable)
-    {
-        roundActiveClickables.Add(clickable);
-    }
-
     #region Clickable Cards
 
-    public void OnUseScissors(BlackjackGame blackjackGame)
+    public void OnUseCardItem(BlackjackGame blackjackGame, ItemType itemType)
     {
-        AddAllClickableCards(blackjackGame);
+        AddAllClickableCards(blackjackGame, itemType);
         SetClickables(cardClickables, true);
         SetClickables(roundActiveClickables, false);
     }
 
-    private void AddAllClickableCards(BlackjackGame blackjackGame)
+    private void AddAllClickableCards(BlackjackGame blackjackGame, ItemType itemType)
     {
         cardClickables = new List<Clickable>();
         foreach (var cardsTransform in cardTransforms)
-            AddClickableCards(cardsTransform, blackjackGame);
+            AddClickableCards(cardsTransform, blackjackGame, itemType);
     }
 
-    private void AddClickableCards(Transform cardsTransform, BlackjackGame blackjackGame)
+    private void AddClickableCards(Transform cardsTransform, BlackjackGame blackjackGame, ItemType itemType)
     {
         foreach (Transform card in cardsTransform)
         {
@@ -103,11 +98,24 @@ public class CursorDetection : MonoBehaviour
                     clickableCard.SetCardInstance(cardDisplay.GetCardInstance());
                     clickableCard.SetBlackjackGame(blackjackGame);
                     clickableCard.AddAction(OnClickCard);
-                    clickableCard.AddAction(clickableCard.OnCutCard);
+                    AddCardAction(clickableCard, itemType);
                     clickableCard.AddAction(ReactivateClickables);
                     cardClickables.Add(clickableCard);
                 }
             }
+        }
+    }
+
+    private void AddCardAction(ClickableCard clickableCard, ItemType itemType)
+    {
+        switch (itemType)
+        {
+            case ItemType.Scissors:
+                clickableCard.AddAction(clickableCard.OnCutCard);
+                break;
+            case ItemType.Acid:
+                clickableCard.AddAction(clickableCard.OnDissolveCard);
+                break;
         }
     }
     
