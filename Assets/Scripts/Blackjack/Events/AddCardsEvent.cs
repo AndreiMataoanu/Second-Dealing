@@ -3,8 +3,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "AddCards", menuName = "Events/Add Cards")]
 public class AddCardsEvent : BlackjackEvent
 {
-    [Min(0)] [SerializeField] private int copyRangeMin;
-    [Min(0)] [SerializeField] private int copyRangeMax;
+    [Min(1)] [SerializeField] private int copyRangeMin;
+    [Min(1)] [SerializeField] private int copyRangeMax;
 
     public override void Apply(BlackjackGame game)
     {
