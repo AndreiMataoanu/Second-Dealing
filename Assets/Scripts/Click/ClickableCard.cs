@@ -62,6 +62,16 @@ public class ClickableCard : Clickable
         
     }
 
+    public void OnAddCardsOption()
+    {
+        AudioManager.instance.Play("CardHit");
+        blackjackGame.AddCardCopies(cardInstance.cardData);
+
+        Destroy(gameObject);
+        
+        blackjackGame.SelectCardCopyEnd();
+    }
+
     public override void OnClick(int mouseButton = 0)
     {
         if (!IsActive) return;

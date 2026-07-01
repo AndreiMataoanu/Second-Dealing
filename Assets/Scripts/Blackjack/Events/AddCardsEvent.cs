@@ -9,8 +9,8 @@ public class AddCardsEvent : BlackjackEvent
     public override void Apply(BlackjackGame game)
     {
         if (copyRangeMax < copyRangeMin)
-            game.AddCards(copyRangeMax, copyRangeMin);
+            game.DisplayCardOptions(copyRangeMax, copyRangeMin);
         else
-            game.AddCards(copyRangeMin, copyRangeMax);
+            game.DisplayCardOptions(copyRangeMin, copyRangeMax);
     }
 }

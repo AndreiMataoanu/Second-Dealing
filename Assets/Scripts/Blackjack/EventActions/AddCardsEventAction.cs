@@ -4,7 +4,6 @@ using UnityEngine;
 public class AddCardsEventAction : MonoBehaviour
 {
     [SerializeField] private BlackjackGame blackjackGame;
-    [SerializeField] private Transform cardsPosition;
     [SerializeField] private float horizontalSpacing = 0.2f;
 
     private const int OptionCount = 3;
@@ -26,12 +25,13 @@ public class AddCardsEventAction : MonoBehaviour
             StartCoroutine(DealCardOption(i));
             yield return new WaitForSeconds(1f);
         }
-        
-        // TODO make cards interactive
+
+        blackjackGame.AddClickableCardOptions();
     }
     
     private IEnumerator DealCardOption(int optionIndex)
     {
+        var cardsPosition = blackjackGame.CardOptionPosition;
         var card = blackjackGame.DealCard();
         var cardInstance = blackjackGame.DealCardInstanceOption(card, false);
         AudioManager.instance.Play("CardHit");
@@ -59,6 +59,14 @@ public class AddCardsEventAction : MonoBehaviour
             cardInstance.displayComponent.transform.localRotation = targetRotation;
             cardInstance.displayComponent.transform.localScale = cardScaleVector;
         }
+    }
+
+    public void DestroyCards()
+    {
+        var cardsPosition = blackjackGame.CardOptionPosition;
+
+        foreach(Transform card in cardsPosition.transform)
+            Destroy(card.gameObject);
     }
 
 }

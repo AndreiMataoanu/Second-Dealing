@@ -5,6 +5,7 @@ using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 [System.Serializable]
@@ -66,6 +67,7 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private List<BlackjackEvent> mediumSeverityEvents;
     [SerializeField] private List<BlackjackEvent> highSeverityEvents;
     [SerializeField] public UnityEvent OnAddCardsEvent;
+    [FormerlySerializedAs("OnSelectCopyCardEvent")] [SerializeField] public UnityEvent DeleteCopyOptions;
     private List<BlackjackEvent> availableLowEvents;
     private List<BlackjackEvent> availableMediumEvents;
     private List<BlackjackEvent> availableHighEvents;
@@ -166,6 +168,7 @@ public class BlackjackGame : MonoBehaviour
     public int TriggeredThresholdsCount => triggeredThresholdsCount;
     public bool UseTurnLimit => useTurnLimit;
     public int TurnsLeft => currentMaxTurns - currentTurns;
+    public Transform CardOptionPosition => cursorDetection.GetCardOptionsPosition();
     #endregion
 
     #region Monobehaviour Methods
@@ -406,7 +409,7 @@ public class BlackjackGame : MonoBehaviour
         if(!isRoundActive || isScissorsActive || isActionLocked) return false;
 
         scissorsFollow.SetActive(true);
-        cursorDetection.OnUseCardItem(this, ItemType.Scissors);
+        cursorDetection.OnUseCardItem(this, CardTrigger.Scissors);
         
         return true;
     }
@@ -428,7 +431,7 @@ public class BlackjackGame : MonoBehaviour
         if(!isRoundActive || isAcidActive || isActionLocked) return false;
 
         acidFollow.SetActive(true);
-        cursorDetection.OnUseCardItem(this, ItemType.Acid);
+        cursorDetection.OnUseCardItem(this, CardTrigger.Acid);
         
         return true;
     }
@@ -1075,9 +1078,9 @@ public class BlackjackGame : MonoBehaviour
         isRouletteBlackjackActive = active;
     }
 
-    public void AddCards(int minValue, int maxValue)
+    public void DisplayCardOptions(int minValue, int maxValue)
     {
-        var copyCount = gameDeck.AddCardCopies(minValue, maxValue);
+        var copyCount = gameDeck.GetCopyCount(minValue, maxValue);
         OnAddCardsEvent?.Invoke();
         StopCoroutine(eventTriggerCoroutine);
         ClearTable();
@@ -1090,6 +1093,18 @@ public class BlackjackGame : MonoBehaviour
         
         UpdateBettingUI();
         dialogueSystem.ShowAddCardsText(copyCount);
+    }
+
+    public void AddClickableCardOptions() => cursorDetection.OnSelectCardOption(this, CardTrigger.AddCardsEvent);
+    public void AddCardCopies(Card card) => gameDeck.AddCardCopies(card);
+
+    public void SelectCardCopyEnd() => StartCoroutine(SelectCardCopyEndCoroutine());
+    private IEnumerator SelectCardCopyEndCoroutine()
+    {
+        // TODO: add taunts
+        yield return new WaitForSeconds(1.5f);
+        DeleteCopyOptions?.Invoke();
+        StartGame();
     }
 
     private void RandomizeBlackjackGoal()
