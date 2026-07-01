@@ -6899,7 +6899,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 2abb42800d64dda4c892a33a05c2856b, type: 2}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: mediumSeverityEvents.Array.size
-      value: 1
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: 'highSeverityEvents.Array.data[0]'
@@ -6952,19 +6952,23 @@ PrefabInstance:
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: 'mediumSeverityEvents.Array.data[1]'
       value: 
-      objectReference: {fileID: 11400000, guid: 2c8cce2d0e09e354fa259a7d81357cc0, type: 2}
+      objectReference: {fileID: 11400000, guid: 8dd6a5c9f92458843b89d3577fc5c243, type: 2}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: 'mediumSeverityEvents.Array.data[2]'
       value: 
-      objectReference: {fileID: 11400000, guid: 16f803c2a8c8cae4b83d83c657ad3736, type: 2}
+      objectReference: {fileID: 11400000, guid: 3b2a0ca89cf99cf468c8b8194beb91db, type: 2}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: 'mediumSeverityEvents.Array.data[3]'
       value: 
-      objectReference: {fileID: 11400000, guid: 3b2a0ca89cf99cf468c8b8194beb91db, type: 2}
+      objectReference: {fileID: 11400000, guid: 16f803c2a8c8cae4b83d83c657ad3736, type: 2}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: 'mediumSeverityEvents.Array.data[4]'
       value: 
-      objectReference: {fileID: 11400000, guid: 8dd6a5c9f92458843b89d3577fc5c243, type: 2}
+      objectReference: {fileID: 11400000, guid: 2c8cce2d0e09e354fa259a7d81357cc0, type: 2}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: 'mediumSeverityEvents.Array.data[5]'
+      value: 
+      objectReference: {fileID: 11400000, guid: f9969251b08054a4b9f872af95840548, type: 2}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: eventThresholds.Array.data[0].maxTurns
       value: 3
