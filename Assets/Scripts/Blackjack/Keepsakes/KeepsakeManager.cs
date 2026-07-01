@@ -61,4 +61,27 @@ public class KeepsakeManager : MonoBehaviour
 
         return equippedKeepsake.AllowOverdraft();
     }
+
+    public int GetPassiveIncome()
+    {
+        if(equippedKeepsake == null) return 0;
+
+        return equippedKeepsake.GetPassiveIncome();
+    }
+
+    public bool TryConsumeKeepsake()
+    {
+        if(equippedKeepsake == null) return false;
+
+        bool isConsumed = equippedKeepsake.Consume();
+
+        if(isConsumed)
+        {
+            equippedKeepsake = null;
+
+            return true;
+        }
+
+        return false;
+    }
 }

@@ -39,4 +39,14 @@ public abstract class Keepsake : ScriptableObject
     {
         return false;
     }
+
+    public virtual int GetPassiveIncome()
+    {
+        return 0;
+    }
+
+    public virtual bool Consume()
+    {
+        return false;
+    }
 }

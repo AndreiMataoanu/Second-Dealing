@@ -2697,7 +2697,32 @@ public class BlackjackGame : MonoBehaviour
         {
             itemManager.OnRoundEnded();
         }
-        
+
+        if(playerMoney <= 0)
+        {
+            bool isConsumed = KeepsakeManager.instance.TryConsumeKeepsake();
+
+            if(isConsumed)
+            {
+                dialogueSystem.ShowTrustFundTaunt();
+                targetMoneyBalance = 500;
+
+                yield return StartCoroutine(AnimateBetChange(500, 3f));
+                yield return new WaitForSeconds(1.5f);
+            }
+        }
+        else
+        {
+            int passiveIncome = KeepsakeManager.instance.GetPassiveIncome();
+
+            if(passiveIncome > 0)
+            {
+                targetMoneyBalance = playerMoney + passiveIncome;
+
+                yield return StartCoroutine(AnimateBetChange(targetMoneyBalance, 3f));
+            }
+        }
+
         isRoundActive = false;
         cursorDetection.OnRoundInactive();
         itemManager.ChangeItemAction(false);
