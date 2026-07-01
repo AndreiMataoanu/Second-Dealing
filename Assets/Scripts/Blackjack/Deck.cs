@@ -10,7 +10,6 @@ public class Deck
     private List<Tuple<Card.Rank, Card.Suit>> removedCards = new ();
 
     private bool jokersInDeck = false;
-    private bool isDissolved = false;
 
     public Deck()
     {
@@ -20,7 +19,6 @@ public class Deck
     public void InitializeDeck()
     {
         cards.Clear();
-        isDissolved = false;
 
         foreach(Card.Suit s in System.Enum.GetValues(typeof(Card.Suit)))
         {
@@ -146,7 +144,6 @@ public class Deck
     {
         var card = new Tuple<Card.Rank, Card.Suit>(rank, suit);
         if (!removedCards.Contains(card)) removedCards.Add(card);
-        isDissolved = true;
         
         for (int i = 0; i < cards.Count; i++)
         {

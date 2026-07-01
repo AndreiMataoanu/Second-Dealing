@@ -33,6 +33,8 @@ public class DialogueSystem : MonoBehaviour
     [SerializeField] private List<string> playerBlackjackTaunts;
     [Tooltip("Taunts shown when the player and dealer tie.")]
     [SerializeField] private List<string> tieTaunts;
+    [Tooltip("Taunts shown when player is out of turns.")]
+    [SerializeField] private List<string> turnLimitTaunts;
 
     private Coroutine sequenceCoroutine;
     private Coroutine typingCoroutine;
@@ -161,6 +163,7 @@ public class DialogueSystem : MonoBehaviour
     public void ShowDealerWinsByOneTaunt() => ShowMessage(GetRandomTaunt(dealerWinsByOneTaunts));
     public void ShowPlayerBlackjackTaunt() => ShowMessage(GetRandomTaunt(playerBlackjackTaunts));
     public void ShowTieTaunt() => ShowMessage(GetRandomTaunt(tieTaunts));
+    public void ShowTurnLimitTaunt() => ShowMessage(GetRandomTaunt(turnLimitTaunts));
 
     private string GetRandomTaunt(List<string> taunts)
     {
