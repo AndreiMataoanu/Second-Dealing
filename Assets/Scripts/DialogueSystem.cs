@@ -72,6 +72,14 @@ public class DialogueSystem : MonoBehaviour
         sequenceCoroutine = StartCoroutine(SequenceCoroutine(doubleDownTutorialLines));
     }
 
+    public void ShowAddCardsText(int copyNumber)
+    {
+        StopCurrentDialogue();
+        string text = "Choose which card to copy " + copyNumber + " ";
+        text += copyNumber == 1 ? "time." : "times."; 
+        sequenceCoroutine = StartCoroutine(SingleMessageCoroutine(text, 4f));
+    }
+
     private IEnumerator SequenceCoroutine(string[] lines)
     {
         isPlaying = true;
@@ -101,7 +109,7 @@ public class DialogueSystem : MonoBehaviour
         sequenceCoroutine = StartCoroutine(SingleMessageCoroutine(message));
     }
 
-    private IEnumerator SingleMessageCoroutine(string message)
+    private IEnumerator SingleMessageCoroutine(string message, float delay=2f)
     {
         isPlaying = true;
         allowSkip = false;
@@ -115,7 +123,7 @@ public class DialogueSystem : MonoBehaviour
         typingCoroutine = StartCoroutine(TypeText(message));
 
         yield return typingCoroutine;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(delay);
 
         EndDialogue();
     }

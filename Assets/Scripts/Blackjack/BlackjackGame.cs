@@ -17,6 +17,13 @@ public class EventThreshold
     public int maxTurns;
 }
 
+public enum CameraType
+{
+    Sitting,
+    Playing,
+    Event
+}
+
 public class BlackjackGame : MonoBehaviour
 {
     #region Attributes
@@ -58,6 +65,7 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private List<BlackjackEvent> lowSeverityEvents;
     [SerializeField] private List<BlackjackEvent> mediumSeverityEvents;
     [SerializeField] private List<BlackjackEvent> highSeverityEvents;
+    [SerializeField] public UnityEvent OnAddCardsEvent;
     private List<BlackjackEvent> availableLowEvents;
     private List<BlackjackEvent> availableMediumEvents;
     private List<BlackjackEvent> availableHighEvents;
@@ -138,6 +146,8 @@ public class BlackjackGame : MonoBehaviour
     private int triggeredThresholdsCount = 0;
     private int currentMaxTurns;
     private int currentTurns;
+    private IEnumerator eventTriggerCoroutine;
+
     #endregion
 
     #region Getters & Setters
@@ -339,6 +349,26 @@ public class BlackjackGame : MonoBehaviour
     private void DisableCamera(CinemachineCamera camera)
     {
         camera.Priority = 0;
+    }
+
+    public void ChangeToCamera(CameraType cameraType)
+    {
+        sittingCamera.Priority = 0;
+        eventCamera.Priority = 0;
+        playingCamera.Priority = 0;
+        
+        switch (cameraType)
+        {
+            case CameraType.Sitting:
+                sittingCamera.Priority = 10;
+                break;
+            case CameraType.Playing:
+                playingCamera.Priority = 10;
+                break;
+            case CameraType.Event:
+                eventCamera.Priority = 10;
+                break;
+        }
     }
     #endregion
 
@@ -1047,7 +1077,19 @@ public class BlackjackGame : MonoBehaviour
 
     public void AddCards(int minValue, int maxValue)
     {
-        gameDeck.AddCardCopies(minValue, maxValue);
+        var copyCount = gameDeck.AddCardCopies(minValue, maxValue);
+        OnAddCardsEvent?.Invoke();
+        StopCoroutine(eventTriggerCoroutine);
+        ClearTable();
+
+        foreach(var text in handTotalTexts)
+        {
+            text.text = "";
+        }
+        dealerTotalText.text = "";
+        
+        UpdateBettingUI();
+        dialogueSystem.ShowAddCardsText(copyCount);
     }
 
     private void RandomizeBlackjackGoal()
@@ -1160,6 +1202,7 @@ public class BlackjackGame : MonoBehaviour
             Destroy(peekedCardObject);
 
             peekedCardObject = null;
+            peekCardInstance = null;
         }
     }
 
@@ -1357,6 +1400,41 @@ public class BlackjackGame : MonoBehaviour
 
         return newCardInstance;
     }
+    
+    public CardInstance DealCardInstanceOption(Card newCardData, bool isHidden)
+    {
+        if(!cardPrefabLookup.TryGetValue((newCardData.rank, newCardData.suit), out GameObject cardPrefabToUse)) return null;
+
+        GameObject cardObject = Instantiate(cardPrefabToUse, deckPosition);
+
+        cardObject.transform.localScale = cardScaleVector;
+
+        CardDisplay cardDisplay = cardObject.GetComponent<CardDisplay>();
+
+        bool isSuitNegative = negativeSuits.Contains(newCardData.suit);
+        bool isDoubled = CheckIfDoubled(newCardData);
+        bool isHalved = CheckIfHalved(newCardData);
+
+        cardDisplay.SetNegativeVisual(isSuitNegative);
+        cardDisplay.SetDoubledVisual(isDoubled);
+        cardDisplay.SetCutVisual(isHalved);
+
+        if(cardDisplay != null) cardDisplay.SetHidden(isHidden);
+
+        CardInstance newCardInstance = new CardInstance(newCardData, cardDisplay, isHidden);
+
+        if(newCardInstance.cardData.rank == Card.Rank.Joker)
+        {
+            newCardInstance.jokerValue = Random.Range(-10, 11); //Joker value between -10 and 10
+        }
+
+        return newCardInstance;
+    }
+
+    public Card DealCard()
+    {
+        return gameDeck.DealCard();
+    }
 
     private IEnumerator DealCardToPlayerCoroutine()
     {
@@ -1507,6 +1585,42 @@ public class BlackjackGame : MonoBehaviour
             newCardInstance.displayComponent.transform.localPosition = targetLocalPos;
             newCardInstance.displayComponent.transform.localRotation = targetRotation;
             newCardInstance.displayComponent.transform.localScale = cardScaleVector;
+
+            UpdateHandVisuals(dealerHand, dealerCardPosition, false);
+            UpdateUI(true);
+        }
+    }
+    
+    public IEnumerator DealCardOption()
+    {
+        var card = gameDeck.DealCard();
+        var cardInstance = DealCardInstanceOption(card, false);
+        AudioManager.instance.Play("CardHit");
+
+        if (cardInstance != null)
+        {
+            int cardOrderIndex = dealerHand.Count - 1;
+            float xOffset = cardOrderIndex * dealerCardHorizontalSpacing;
+            float yOffset = 0f;
+            float zOffset = cardOrderIndex * -zOverlap;
+
+            Vector3 targetLocalPos = new Vector3(xOffset, yOffset, zOffset);
+            Quaternion targetRotation = Quaternion.identity;
+
+            cardInstance.displayComponent.transform.SetParent(dealerCardPosition.parent);
+
+            yield return StartCoroutine(CardAnimationCoroutine(
+                cardInstance.displayComponent.transform,
+                dealerCardPosition.TransformPoint(targetLocalPos),
+                dealerCardPosition.rotation * targetRotation,
+                cardScaleVector,
+                cardAnimationDuration
+            ));
+
+            cardInstance.displayComponent.transform.SetParent(dealerCardPosition);
+            cardInstance.displayComponent.transform.localPosition = targetLocalPos;
+            cardInstance.displayComponent.transform.localRotation = targetRotation;
+            cardInstance.displayComponent.transform.localScale = cardScaleVector;
 
             UpdateHandVisuals(dealerHand, dealerCardPosition, false);
             UpdateUI(true);
@@ -2066,7 +2180,7 @@ public class BlackjackGame : MonoBehaviour
     }
 
     //Animates a card moving from the deck to its position in the hand.
-    private IEnumerator CardAnimationCoroutine(Transform cardTransform, Vector3 targetPosition, Quaternion targetRotation, Vector3 targetScale, float duration)
+    public IEnumerator CardAnimationCoroutine(Transform cardTransform, Vector3 targetPosition, Quaternion targetRotation, Vector3 targetScale, float duration)
     {
         Vector3 startPosition = cardTransform.position;
         Quaternion startRotation = cardTransform.rotation;
@@ -2076,7 +2190,7 @@ public class BlackjackGame : MonoBehaviour
 
         while(time < duration)
         {
-            if(cardTransform == null) yield break;
+            if(!cardTransform) yield break;
 
             time += Time.deltaTime;
 
@@ -2452,7 +2566,8 @@ public class BlackjackGame : MonoBehaviour
             ChangeProgressText.Invoke();
         }
 
-        yield return StartCoroutine(CheckForEventTriggerCoroutine());
+        eventTriggerCoroutine = CheckForEventTriggerCoroutine();
+        yield return StartCoroutine(eventTriggerCoroutine);
 
         if(!priceChanged)
         {

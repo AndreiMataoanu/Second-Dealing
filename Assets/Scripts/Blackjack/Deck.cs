@@ -172,7 +172,7 @@ public class Deck
         }
     }
 
-    public void AddCardCopies(int minValue, int maxValue)
+    public int AddCardCopies(int minValue, int maxValue)
     {
         InitializeDeck();
         Shuffle();
@@ -181,5 +181,7 @@ public class Deck
         var copyCount = Random.Range(minValue, maxValue + 1);
 
         copies = new Tuple<Card, int>(new Card { rank = cards[i].rank, suit = cards[i].suit }, copyCount);
+
+        return copyCount;
     }
 }
