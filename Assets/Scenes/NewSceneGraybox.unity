@@ -425,6 +425,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1365003152}
     - target: {fileID: 3107838438023376873, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
+      propertyPath: cardOptions
+      value: 
+      objectReference: {fileID: 826400919}
+    - target: {fileID: 3107838438023376873, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
       propertyPath: scissorsFollow
       value: 
       objectReference: {fileID: 919132147628771002}
@@ -2895,7 +2899,10 @@ MonoBehaviour:
   - A bit too slow.
   - Time's up.
   - I've seen enough.
-  addCardCopiesLines: []
+  copyOptionTaunts:
+  - That one? Hm...
+  - It's your choice I suppose.
+  - It makes sense for you to choose that.
 --- !u!1 &539873765
 GameObject:
   m_ObjectHideFlags: 0
@@ -4058,8 +4065,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 826400918}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 20.244, y: 9.765, z: -0.178}
+  m_LocalRotation: {x: 0.70441604, y: -0.06162845, z: 0.06162845, w: 0.70441604}
+  m_LocalPosition: {x: 20.238, y: 9.765, z: -0.174}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6552,7 +6559,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 2abb42800d64dda4c892a33a05c2856b, type: 2}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: mediumSeverityEvents.Array.size
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: 'highSeverityEvents.Array.data[0]'
@@ -6601,7 +6608,7 @@ PrefabInstance:
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: 'mediumSeverityEvents.Array.data[0]'
       value: 
-      objectReference: {fileID: 11400000, guid: f9969251b08054a4b9f872af95840548, type: 2}
+      objectReference: {fileID: 11400000, guid: 40dd43a7e1baf33479325c4c8079abca, type: 2}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: 'mediumSeverityEvents.Array.data[1]'
       value: 
@@ -6723,11 +6730,19 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: DeleteCopyOptions.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: ChangeProgressText.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: OnAddCardsEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: DeleteCopyOptions.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
@@ -6738,6 +6753,10 @@ PrefabInstance:
       propertyPath: ChangeProgressText.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: DeleteCopyOptions.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4109581827045791216}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: ChangeProgressText.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -6751,8 +6770,16 @@ PrefabInstance:
       value: DealOptions
       objectReference: {fileID: 0}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: DeleteCopyOptions.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: ChangeProgressText.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: DeleteCopyOptions.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DestroyCards
       objectReference: {fileID: 0}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: ChangeProgressText.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -6763,11 +6790,19 @@ PrefabInstance:
       value: AddCardsEventAction, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: DeleteCopyOptions.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: AddCardsEventAction, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: ChangeProgressText.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: ProgressDisplay, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: OnAddCardsEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: DeleteCopyOptions.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}

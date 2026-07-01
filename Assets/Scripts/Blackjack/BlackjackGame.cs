@@ -1101,7 +1101,9 @@ public class BlackjackGame : MonoBehaviour
     public void SelectCardCopyEnd() => StartCoroutine(SelectCardCopyEndCoroutine());
     private IEnumerator SelectCardCopyEndCoroutine()
     {
-        // TODO: add taunts
+        yield return new WaitForSeconds(0.7f);
+        dialogueSystem.ShowCopyChoiceTaunt();
+        
         yield return new WaitForSeconds(1.5f);
         DeleteCopyOptions?.Invoke();
         StartGame();

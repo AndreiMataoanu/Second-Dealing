@@ -35,6 +35,8 @@ public class DialogueSystem : MonoBehaviour
     [SerializeField] private List<string> tieTaunts;
     [Tooltip("Taunts shown when player is out of turns.")]
     [SerializeField] private List<string> turnLimitTaunts;
+    [Tooltip("Taunts shown when player chooses which card to copy")] 
+    [SerializeField] private List<string> copyOptionTaunts;
 
     private Coroutine sequenceCoroutine;
     private Coroutine typingCoroutine;
@@ -172,6 +174,7 @@ public class DialogueSystem : MonoBehaviour
     public void ShowPlayerBlackjackTaunt() => ShowMessage(GetRandomTaunt(playerBlackjackTaunts));
     public void ShowTieTaunt() => ShowMessage(GetRandomTaunt(tieTaunts));
     public void ShowTurnLimitTaunt() => ShowMessage(GetRandomTaunt(turnLimitTaunts));
+    public void ShowCopyChoiceTaunt() => ShowMessage(GetRandomTaunt(copyOptionTaunts));
 
     private string GetRandomTaunt(List<string> taunts)
     {
