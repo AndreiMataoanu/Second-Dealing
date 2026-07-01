@@ -8,6 +8,7 @@ public class Deck
     private List<Card.Rank> removedRanks = new List<Card.Rank>();
     private List<Card.Suit> removedSuits = new List<Card.Suit>();
     private List<Tuple<Card.Rank, Card.Suit>> removedCards = new ();
+    private Tuple<Card?, int> copies = new(null, 0);
 
     private bool jokersInDeck = false;
 
@@ -20,7 +21,7 @@ public class Deck
     {
         cards.Clear();
 
-        foreach(Card.Suit s in System.Enum.GetValues(typeof(Card.Suit)))
+        foreach(Card.Suit s in Enum.GetValues(typeof(Card.Suit)))
         {
             if(removedSuits.Contains(s)) continue;
 
@@ -47,6 +48,12 @@ public class Deck
                 }
             }
         }
+
+        if (copies is not { Item2: > 0 } || copies.Item1 == null) return;
+
+        var copy = (Card)copies.Item1;
+        for (var i = 0; i < copies.Item2; i++)
+            cards.Add(new Card{rank = copy.rank, suit = copy.suit});
     }
 
     public void Shuffle()
@@ -164,5 +171,16 @@ public class Deck
             InitializeDeck();
             Shuffle();
         }
+    }
+
+    public int GetCopyCount(int minValue, int maxValue)
+    {
+        copies = new Tuple<Card?, int>(null, Random.Range(minValue, maxValue + 1));
+        return copies.Item2;
+    }
+    
+    public void AddCardCopies(Card card)
+    {
+        copies = new Tuple<Card?, int>(new Card { rank = card.rank, suit = card.suit }, copies.Item2);
     }
 }

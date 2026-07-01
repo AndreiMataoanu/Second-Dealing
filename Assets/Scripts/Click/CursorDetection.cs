@@ -1,5 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
+public enum CardTrigger
+{
+    Acid,
+    Scissors,
+    AddCardsEvent
+}
 
 public class CursorDetection : MonoBehaviour
 {
@@ -7,6 +15,8 @@ public class CursorDetection : MonoBehaviour
     [SerializeField] private List<Clickable> roundActiveClickables;
     [SerializeField] private List<Clickable> roundInactiveClickables;
     [SerializeField] private List<Transform> cardTransforms;
+    [SerializeField] private Transform cardOptions;
+    [SerializeField] public UnityEvent EndFlip;
 
     private List<Clickable> cardClickables;
     
@@ -68,21 +78,29 @@ public class CursorDetection : MonoBehaviour
 
     #region Clickable Cards
 
-    public void OnUseCardItem(BlackjackGame blackjackGame, ItemType itemType)
+    public void OnSelectCardOption(BlackjackGame blackjackGame, CardTrigger cardTrigger)
     {
-        AddAllClickableCards(blackjackGame, itemType);
+        cardClickables = new List<Clickable>();
+        AddClickableCards(cardOptions, blackjackGame, cardTrigger);
         SetClickables(cardClickables, true);
         SetClickables(roundActiveClickables, false);
     }
 
-    private void AddAllClickableCards(BlackjackGame blackjackGame, ItemType itemType)
+    public void OnUseCardItem(BlackjackGame blackjackGame, CardTrigger cardTrigger)
+    {
+        AddAllClickableCards(blackjackGame, cardTrigger);
+        SetClickables(cardClickables, true);
+        SetClickables(roundActiveClickables, false);
+    }
+
+    private void AddAllClickableCards(BlackjackGame blackjackGame, CardTrigger cardTrigger)
     {
         cardClickables = new List<Clickable>();
         foreach (var cardsTransform in cardTransforms)
-            AddClickableCards(cardsTransform, blackjackGame, itemType);
+            AddClickableCards(cardsTransform, blackjackGame, cardTrigger);
     }
 
-    private void AddClickableCards(Transform cardsTransform, BlackjackGame blackjackGame, ItemType itemType)
+    private void AddClickableCards(Transform cardsTransform, BlackjackGame blackjackGame, CardTrigger cardTrigger)
     {
         foreach (Transform card in cardsTransform)
         {
@@ -98,7 +116,7 @@ public class CursorDetection : MonoBehaviour
                     clickableCard.SetCardInstance(cardDisplay.GetCardInstance());
                     clickableCard.SetBlackjackGame(blackjackGame);
                     clickableCard.AddAction(OnClickCard);
-                    AddCardAction(clickableCard, itemType);
+                    AddCardAction(blackjackGame, clickableCard, cardTrigger);
                     clickableCard.AddAction(ReactivateClickables);
                     cardClickables.Add(clickableCard);
                 }
@@ -106,15 +124,19 @@ public class CursorDetection : MonoBehaviour
         }
     }
 
-    private void AddCardAction(ClickableCard clickableCard, ItemType itemType)
+    private void AddCardAction(BlackjackGame blackjackGame, ClickableCard clickableCard, CardTrigger cardTrigger)
     {
-        switch (itemType)
+        switch (cardTrigger)
         {
-            case ItemType.Scissors:
+            case CardTrigger.Scissors:
                 clickableCard.AddAction(clickableCard.OnCutCard);
                 break;
-            case ItemType.Acid:
+            case CardTrigger.Acid:
                 clickableCard.AddAction(clickableCard.OnDissolveCard);
+                break;
+            case CardTrigger.AddCardsEvent:
+                clickableCard.AddAction(clickableCard.OnAddCardsOption);
+                clickableCard.AddAction(() => blackjackGame.SelectCursorHand(false));
                 break;
         }
     }
@@ -145,4 +167,9 @@ public class CursorDetection : MonoBehaviour
 
     #endregion
 
+    #region Getters
+
+    public Transform GetCardOptionsPosition() => cardOptions;
+
+    #endregion
 }
