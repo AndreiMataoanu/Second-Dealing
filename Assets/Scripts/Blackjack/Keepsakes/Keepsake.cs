@@ -34,4 +34,9 @@ public abstract class Keepsake : ScriptableObject
     {
         return false;
     }
+
+    public virtual bool AllowOverdraft()
+    {
+        return false;
+    }
 }

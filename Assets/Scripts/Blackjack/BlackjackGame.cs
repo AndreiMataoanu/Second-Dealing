@@ -2795,12 +2795,17 @@ public class BlackjackGame : MonoBehaviour
 
         float val1 = GetCardValueForSplit(currentHand[0].cardData);
         float val2 = GetCardValueForSplit(currentHand[1].cardData);
-
         int totalBets = 0;
 
         foreach(int b in handBets) totalBets += b;
 
-        return (val1 == val2 || KeepsakeManager.instance.AllowsAnySplit()) && playerMoney >= (totalBets + handBets[currentHandIndex]);
+        bool hasEnoughMoney = playerMoney >= (totalBets + handBets[currentHandIndex]);
+        bool allowsOverdraft = KeepsakeManager.instance.AllowsOverdraft();
+        bool keepsakeAllowsSplit = KeepsakeManager.instance.AllowsAnySplit();
+        bool validSplit = val1 == val2 || keepsakeAllowsSplit;
+        bool validFunds = hasEnoughMoney || allowsOverdraft;
+
+        return validSplit && validFunds;
     }
 
     private float GetCardValueForSplit(Card card)
@@ -2831,7 +2836,10 @@ public class BlackjackGame : MonoBehaviour
 
         foreach(int b in handBets) totalBets += b;
 
-        canDoubleDown = playerMoney >= (totalBets + handBets[currentHandIndex]);
+        bool hasEnoughMoney = playerMoney >= (totalBets + handBets[currentHandIndex]);
+        bool allowsOverdraft = KeepsakeManager.instance.AllowsOverdraft();
+
+        canDoubleDown = hasEnoughMoney || allowsOverdraft;
     }
 
     private void RigPlayerHand()

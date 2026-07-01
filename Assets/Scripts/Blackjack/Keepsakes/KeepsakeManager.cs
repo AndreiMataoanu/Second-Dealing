@@ -54,4 +54,11 @@ public class KeepsakeManager : MonoBehaviour
 
         return equippedKeepsake.AllowEndlessDoubleDown();
     }
+
+    public bool AllowsOverdraft()
+    {
+        if(equippedKeepsake == null) return false;
+
+        return equippedKeepsake.AllowOverdraft();
+    }
 }
