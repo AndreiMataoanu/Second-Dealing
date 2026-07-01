@@ -47,4 +47,11 @@ public class KeepsakeManager : MonoBehaviour
 
         return equippedKeepsake.GetDealerBustModifier();
     }
+
+    public bool AllowsEndlessDoubleDown()
+    {
+        if(equippedKeepsake == null) return false;
+
+        return equippedKeepsake.AllowEndlessDoubleDown();
+    }
 }

@@ -1310,10 +1310,7 @@ public class BlackjackGame : MonoBehaviour
 
     private void StartGame()
     {
-        if(KeepsakeManager.instance != null)
-        {
-            KeepsakeManager.instance.ResetKeepsake();
-        }
+        KeepsakeManager.instance.ResetKeepsake();
 
         StartCoroutine(ButtonCoroutine());
 
@@ -1749,7 +1746,14 @@ public class BlackjackGame : MonoBehaviour
         if(!isRoundActive || isActionLocked) yield break;
 
         isActionLocked = true;
-        canDoubleDown = false;
+
+        bool endlessDouble = KeepsakeManager.instance.AllowsEndlessDoubleDown();
+
+        if(!endlessDouble)
+        {
+            canDoubleDown = false;
+        }
+
         hitHandAnimator.SetTrigger("hitTrigger");
 
         yield return new WaitForSeconds(1f);
@@ -1777,6 +1781,11 @@ public class BlackjackGame : MonoBehaviour
         else
         {
             isActionLocked = false;
+
+            if(endlessDouble)
+            {
+                EvaluateDoubleDownCondition();
+            }
         }
     }
 
@@ -1803,7 +1812,13 @@ public class BlackjackGame : MonoBehaviour
         if(!isRoundActive || isActionLocked || !canDoubleDown) yield break;
 
         isActionLocked = true;
-        canDoubleDown = false;
+
+        bool endlessDouble = KeepsakeManager.instance.AllowsEndlessDoubleDown();
+
+        if(!endlessDouble)
+        {
+            canDoubleDown = false;
+        }
 
         handBets[currentHandIndex] *= 2;
 
@@ -1817,9 +1832,40 @@ public class BlackjackGame : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
         yield return StartCoroutine(DealCardToPlayerCoroutine());
-        yield return StartCoroutine(CheckLotteryTicket());
-        yield return StartCoroutine(CheckPowerballCurrentHand());
-        yield return StartCoroutine(AdvanceHandCoroutine());
+
+        if(!endlessDouble)
+        {
+            yield return StartCoroutine(CheckLotteryTicket());
+            yield return StartCoroutine(AdvanceHandCoroutine());
+            yield return StartCoroutine(CheckPowerballCurrentHand());
+        }
+        else
+        {
+            UpdateUI(true);
+
+            List<CardInstance> activeHand = playerHands[currentHandIndex];
+
+            int handValue = CalculateHandValue(activeHand, true);
+
+            if(activeHand.Count == 7 && handValue <= blackjackGoal)
+            {
+                statusText.text = "Hand full";
+
+                yield return StartCoroutine(CheckLotteryTicket());
+                yield return new WaitForSeconds(1.5f);
+                yield return StartCoroutine(AdvanceHandCoroutine());
+            }
+            else if(handValue > blackjackGoal || handValue < -blackjackGoal)
+            {
+                yield return StartCoroutine(BustCheckCoroutine(activeHand));
+            }
+            else
+            {
+                isActionLocked = false;
+
+                EvaluateDoubleDownCondition();
+            }
+        }
     }
 
     private IEnumerator SplitCoroutine()
@@ -2090,14 +2136,7 @@ public class BlackjackGame : MonoBehaviour
 
         if(message.Contains("You win"))
         {
-            int modifiedBet = betAmount;
-
-            if(KeepsakeManager.instance != null)
-            {
-                modifiedBet = KeepsakeManager.instance.ApplyPayoutModifiers(betAmount, allHands);
-            }
-
-            targetMoneyBalance = playerMoney + modifiedBet;
+            targetMoneyBalance = playerMoney + KeepsakeManager.instance.ApplyPayoutModifiers(betAmount, allHands);
 
             AudioManager.instance.Play("MoneyGained");
 
@@ -2761,14 +2800,7 @@ public class BlackjackGame : MonoBehaviour
 
         foreach(int b in handBets) totalBets += b;
 
-        bool keepsakeAllowsSplit = false;
-
-        if(KeepsakeManager.instance != null)
-        {
-            keepsakeAllowsSplit = KeepsakeManager.instance.AllowsAnySplit();
-        }
-
-        return (val1 == val2 || keepsakeAllowsSplit) && playerMoney >= (totalBets + handBets[currentHandIndex]);
+        return (val1 == val2 || KeepsakeManager.instance.AllowsAnySplit()) && playerMoney >= (totalBets + handBets[currentHandIndex]);
     }
 
     private float GetCardValueForSplit(Card card)
@@ -2861,13 +2893,6 @@ public class BlackjackGame : MonoBehaviour
 
     private int GetDealerBustThreshold()
     {
-        int threshold = blackjackGoal;
-
-        if(KeepsakeManager.instance != null)
-        {
-            threshold -= KeepsakeManager.instance.GetDealerBustModifier();
-        }
-
-        return threshold;
+        return blackjackGoal - KeepsakeManager.instance.GetDealerBustModifier();
     }
 }

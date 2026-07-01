@@ -505,6 +505,10 @@ PrefabInstance:
       propertyPath: 'roundInactiveClickables.Array.data[7]'
       value: 
       objectReference: {fileID: 4358068880372872441}
+    - target: {fileID: 3107838438023376873, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
+      propertyPath: 'roundInactiveClickables.Array.data[8]'
+      value: 
+      objectReference: {fileID: 8709289952591619879}
     - target: {fileID: 4390543728078954121, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -6046,6 +6050,7 @@ Transform:
   - {fileID: 1757282759}
   - {fileID: 1752005335}
   - {fileID: 6116808503757076230}
+  - {fileID: 5779496784260746909}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1249939005
@@ -11293,6 +11298,71 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CursorFollower
   mainCamera: {fileID: 1365003152}
   distanceFromCamera: 0.8
+--- !u!1001 &3520983870324762660
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1243624304}
+    m_Modifications:
+    - target: {fileID: 525225554434029150, guid: ee1994429ab7fab42ba86330b2dffdc9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 19.33
+      objectReference: {fileID: 0}
+    - target: {fileID: 525225554434029150, guid: ee1994429ab7fab42ba86330b2dffdc9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 10.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 525225554434029150, guid: ee1994429ab7fab42ba86330b2dffdc9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.295
+      objectReference: {fileID: 0}
+    - target: {fileID: 525225554434029150, guid: ee1994429ab7fab42ba86330b2dffdc9, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 525225554434029150, guid: ee1994429ab7fab42ba86330b2dffdc9, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 525225554434029150, guid: ee1994429ab7fab42ba86330b2dffdc9, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 525225554434029150, guid: ee1994429ab7fab42ba86330b2dffdc9, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 525225554434029150, guid: ee1994429ab7fab42ba86330b2dffdc9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 525225554434029150, guid: ee1994429ab7fab42ba86330b2dffdc9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 525225554434029150, guid: ee1994429ab7fab42ba86330b2dffdc9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5095632154569548414, guid: ee1994429ab7fab42ba86330b2dffdc9, type: 3}
+      propertyPath: m_Name
+      value: Wedding Ring
+      objectReference: {fileID: 0}
+    - target: {fileID: 7688154434853362202, guid: ee1994429ab7fab42ba86330b2dffdc9, type: 3}
+      propertyPath: glowVisuals
+      value: 
+      objectReference: {fileID: 1636298753}
+    - target: {fileID: 7688154434853362202, guid: ee1994429ab7fab42ba86330b2dffdc9, type: 3}
+      propertyPath: blackjackGame
+      value: 
+      objectReference: {fileID: 1343293108}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ee1994429ab7fab42ba86330b2dffdc9, type: 3}
 --- !u!33 &3555535361149596588
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -11396,6 +11466,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 543450651904859136}
   m_LocalEulerAnglesHint: {x: -19.631, y: 0, z: 0}
+--- !u!4 &5779496784260746909 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 525225554434029150, guid: ee1994429ab7fab42ba86330b2dffdc9, type: 3}
+  m_PrefabInstance: {fileID: 3520983870324762660}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6116808503757076230 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5779496784260434443, guid: 97c1a7ef9b38a31438aecb02a147a8c7, type: 3}

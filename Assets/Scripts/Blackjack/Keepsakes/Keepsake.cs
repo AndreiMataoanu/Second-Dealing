@@ -29,4 +29,9 @@ public abstract class Keepsake : ScriptableObject
     {
         return 0;
     }
+
+    public virtual bool AllowEndlessDoubleDown()
+    {
+        return false;
+    }
 }
