@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public enum CardTrigger
 {
@@ -15,6 +16,7 @@ public class CursorDetection : MonoBehaviour
     [SerializeField] private List<Clickable> roundInactiveClickables;
     [SerializeField] private List<Transform> cardTransforms;
     [SerializeField] private Transform cardOptions;
+    [SerializeField] public UnityEvent EndFlip;
 
     private List<Clickable> cardClickables;
     
@@ -114,7 +116,7 @@ public class CursorDetection : MonoBehaviour
                     clickableCard.SetCardInstance(cardDisplay.GetCardInstance());
                     clickableCard.SetBlackjackGame(blackjackGame);
                     clickableCard.AddAction(OnClickCard);
-                    AddCardAction(clickableCard, cardTrigger);
+                    AddCardAction(blackjackGame, clickableCard, cardTrigger);
                     clickableCard.AddAction(ReactivateClickables);
                     cardClickables.Add(clickableCard);
                 }
@@ -122,7 +124,7 @@ public class CursorDetection : MonoBehaviour
         }
     }
 
-    private void AddCardAction(ClickableCard clickableCard, CardTrigger cardTrigger)
+    private void AddCardAction(BlackjackGame blackjackGame, ClickableCard clickableCard, CardTrigger cardTrigger)
     {
         switch (cardTrigger)
         {
@@ -134,6 +136,7 @@ public class CursorDetection : MonoBehaviour
                 break;
             case CardTrigger.AddCardsEvent:
                 clickableCard.AddAction(clickableCard.OnAddCardsOption);
+                clickableCard.AddAction(() => blackjackGame.SelectCursorHand(false));
                 break;
         }
     }

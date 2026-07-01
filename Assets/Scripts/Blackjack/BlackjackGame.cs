@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Prefabs.Managers;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Events;
@@ -31,6 +32,7 @@ public class BlackjackGame : MonoBehaviour
     [Header("Set-Up")]
     [SerializeField] private ItemManager itemManager;
     [SerializeField] private CursorDetection cursorDetection;
+    [SerializeField] private CursorFollowManager cursorFollowManager;
     [SerializeField] private DialogueSystem dialogueSystem;
     [SerializeField] private Collider betUpCollider;
     [SerializeField] private Collider betDownCollider;
@@ -160,7 +162,7 @@ public class BlackjackGame : MonoBehaviour
     public void SetScissorsActive(bool active)
     {
         isScissorsActive = active;
-        scissorsFollow.SetActive(active);
+        cursorFollowManager.SetCursorTypeActive(active, CursorType.Scissors);
     }
     public int GetOrganRoundsLeft() => itemManager.organRoundsLeft;
     
@@ -169,6 +171,7 @@ public class BlackjackGame : MonoBehaviour
     public bool UseTurnLimit => useTurnLimit;
     public int TurnsLeft => currentMaxTurns - currentTurns;
     public Transform CardOptionPosition => cursorDetection.GetCardOptionsPosition();
+    public GameObject StandHand => standHandAnimator.gameObject;
     #endregion
 
     #region Monobehaviour Methods
@@ -408,7 +411,7 @@ public class BlackjackGame : MonoBehaviour
     {
         if(!isRoundActive || isScissorsActive || isActionLocked) return false;
 
-        scissorsFollow.SetActive(true);
+        cursorFollowManager.SetCursorTypeActive(true, CursorType.Scissors);
         cursorDetection.OnUseCardItem(this, CardTrigger.Scissors);
         
         return true;
@@ -430,7 +433,7 @@ public class BlackjackGame : MonoBehaviour
     {
         if(!isRoundActive || isAcidActive || isActionLocked) return false;
 
-        acidFollow.SetActive(true);
+        cursorFollowManager.SetCursorTypeActive(true, CursorType.Acid);
         cursorDetection.OnUseCardItem(this, CardTrigger.Acid);
         
         return true;
@@ -438,7 +441,7 @@ public class BlackjackGame : MonoBehaviour
 
     public void ApplyDissolveToCard(CardInstance cardInstance, float delay)
     {
-        acidFollow.SetActive(false);
+        cursorFollowManager.SetCursorTypeActive(false, CursorType.Acid);
         StartCoroutine(DissolveCard(cardInstance, delay));
     }
 
@@ -1099,6 +1102,12 @@ public class BlackjackGame : MonoBehaviour
     public void AddCardCopies(Card card) => gameDeck.AddCardCopies(card);
 
     public void SelectCardCopyEnd() => StartCoroutine(SelectCardCopyEndCoroutine());
+
+    public void SelectCursorHand(bool isActive)
+    {
+        cursorFollowManager.SetCursorTypeActive(isActive, CursorType.Flip);
+        standHandAnimator.gameObject.SetActive(!isActive);
+    }
     private IEnumerator SelectCardCopyEndCoroutine()
     {
         yield return new WaitForSeconds(0.7f);

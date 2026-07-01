@@ -27,6 +27,7 @@ public class AddCardsEventAction : MonoBehaviour
         }
 
         blackjackGame.AddClickableCardOptions();
+        blackjackGame.SelectCursorHand(true);
     }
     
     private IEnumerator DealCardOption(int optionIndex)
@@ -68,5 +69,4 @@ public class AddCardsEventAction : MonoBehaviour
         foreach(Transform card in cardsPosition.transform)
             Destroy(card.gameObject);
     }
-
 }
