@@ -64,6 +64,11 @@ public class BlackjackGame : MonoBehaviour
     [HideInInspector] public bool isLottoActive = false;
     [HideInInspector] public bool isOrganActive = false;
 
+    //Keepsakes
+    private HashSet<(Card.Rank, Card.Suit)> antiMatterCards = new HashSet<(Card.Rank, Card.Suit)>();
+    [HideInInspector] public bool isAntiMatterTargeting = false;
+    [HideInInspector] public bool isPyroTargeting = false;
+
     [Header("Event System")]
     [SerializeField] private bool useTurnLimit = false;
     [SerializeField] private List<EventThreshold> eventThresholds;
@@ -1055,6 +1060,55 @@ public class BlackjackGame : MonoBehaviour
 
         return isSuitNegative ^ isAntiMatter;
     }
+
+    public bool ActivatePyro()
+    {
+        if(!isRoundActive || isActionLocked || isPyroTargeting) return false;
+
+        isPyroTargeting = true;
+        cursorDetection.OnUsePyro(this);
+
+        return true;
+    }
+
+    public void ApplyPyroToCard(CardInstance cardInstance)
+    {
+        gameDeck.AddRemovedSpecificCard(cardInstance.cardData.rank, cardInstance.cardData.suit);
+        scissoredCards.Remove(cardInstance);
+        alcoholCards.Remove(cardInstance);
+
+        bool foundAndRemoved = false;
+
+        foreach(var hand in playerHands)
+        {
+            if(hand.Contains(cardInstance))
+            {
+                hand.Remove(cardInstance);
+
+                UpdateHandVisuals(hand, cardInstance.displayComponent.transform.parent, true);
+
+                foundAndRemoved = true;
+
+                break;
+            }
+        }
+
+        if(!foundAndRemoved)
+        {
+            if(dealerHand.Contains(cardInstance))
+            {
+                dealerHand.Remove(cardInstance);
+
+                UpdateHandVisuals(dealerHand, dealerCardPosition, false);
+            }
+        }
+
+        activeCardObjects.Remove(cardInstance.displayComponent.gameObject);
+
+        Destroy(cardInstance.displayComponent.gameObject);
+        UpdateUI(true);
+        EvaluateDoubleDownCondition();
+    }
     #endregion
 
     #region Event Methods
@@ -1391,6 +1445,7 @@ public class BlackjackGame : MonoBehaviour
         isCigaretteActive = false;
         isAlcoholActive = false;
         isAntiMatterTargeting = false;
+        isPyroTargeting = false;
 
         foreach(var text in handTotalTexts)
         {

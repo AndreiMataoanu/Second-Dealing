@@ -521,6 +521,10 @@ PrefabInstance:
       propertyPath: 'roundInactiveClickables.Array.data[11]'
       value: 
       objectReference: {fileID: 7416601481898412240}
+    - target: {fileID: 3107838438023376873, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
+      propertyPath: 'roundInactiveClickables.Array.data[12]'
+      value: 
+      objectReference: {fileID: 6060484366695423602}
     - target: {fileID: 4390543728078954121, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -6130,6 +6134,7 @@ Transform:
   - {fileID: 525225553522409727}
   - {fileID: 481516382138903451}
   - {fileID: 481516383176152658}
+  - {fileID: 5627821331020507402}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1249939005
@@ -11020,7 +11025,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5644615653053459151, guid: eba4aeab98e74a148bbeb7a4f5ee94ae, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6060484366057372295, guid: eba4aeab98e74a148bbeb7a4f5ee94ae, type: 3}
       propertyPath: blackjackGame
@@ -11642,11 +11647,27 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b7bf96b78d397eb43ab30ac654131963, type: 3}
+--- !u!4 &5627821331020507402 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8363004404796405655, guid: 8e64ba3a83d1c624aabc1edb1fbd50a3, type: 3}
+  m_PrefabInstance: {fileID: 4051891794748773922}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5779496784260746909 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 525225554434029150, guid: ee1994429ab7fab42ba86330b2dffdc9, type: 3}
   m_PrefabInstance: {fileID: 3520983870324762660}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6060484366695423602 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6352805241030095756, guid: 8e64ba3a83d1c624aabc1edb1fbd50a3, type: 3}
+  m_PrefabInstance: {fileID: 4051891794748773922}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80d3ba8abff0e9f4cb2b61ea58571f61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KeepsakeInteractable
 --- !u!4 &6116808503757076230 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5779496784260434443, guid: 97c1a7ef9b38a31438aecb02a147a8c7, type: 3}

@@ -94,4 +94,12 @@ public class ClickableCard : Clickable
         blackjackGame.isAntiMatterTargeting = false;
         blackjackGame.UpdateUI(true);
     }
+
+    public void OnPyroCard()
+    {
+        AudioManager.instance.Play("ItemBuy");
+
+        blackjackGame.ApplyPyroToCard(cardInstance);
+        blackjackGame.isPyroTargeting = false;
+    }
 }

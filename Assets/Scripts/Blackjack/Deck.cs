@@ -10,6 +10,7 @@ public class Deck
     private List<Card.Suit> removedSuits = new List<Card.Suit>();
     private List<Tuple<Card.Rank, Card.Suit>> removedCards = new ();
     private Tuple<Card?, int> copies = new(null, 0);
+    public List<(Card.Rank, Card.Suit)> removedSpecificCards = new List<(Card.Rank, Card.Suit)>();
 
     private bool jokersInDeck = false;
     private const float CoinProbability = 0.7f;
@@ -190,5 +191,13 @@ public class Deck
     public void AddCardCopies(Card card)
     {
         copies = new Tuple<Card?, int>(new Card { rank = card.rank, suit = card.suit }, copies.Item2);
+    }
+
+    public void AddRemovedSpecificCard(Card.Rank rank, Card.Suit suit)
+    {
+        if(!removedSpecificCards.Contains((rank, suit)))
+        {
+            removedSpecificCards.Add((rank, suit));
+        }
     }
 }
