@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: TrustFund
   m_EditorClassIdentifier: Assembly-CSharp::TrustFund
   keepsakeName: Trust Fund
-  description: 
+  description: Receive money every turn. Dying consumes the keepsake and revivies
+    you
+  tablePrefab: {fileID: 2708514875635923006, guid: a7b02f6b1741b76458a7ae23276f97a0, type: 3}
   passiveIncomeAmount: 50

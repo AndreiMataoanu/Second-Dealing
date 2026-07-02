@@ -157,6 +157,8 @@ public class BlackjackGame : MonoBehaviour
     private int currentTurns;
     private IEnumerator eventTriggerCoroutine;
 
+    private HashSet<(Card.Rank, Card.Suit)> antiMatterCards = new HashSet<(Card.Rank, Card.Suit)>();
+    [HideInInspector] public bool isAntiMatterTargeting = false;
     #endregion
 
     #region Getters & Setters
@@ -555,7 +557,7 @@ public class BlackjackGame : MonoBehaviour
         {
             cardDisplay.SetHidden(false);
 
-            bool isSuitNegative = negativeSuits.Contains(newCardData.suit);
+            bool isSuitNegative = IsCardNegative(newCardData);
             bool isDoubled = CheckIfDoubled(newCardData) || isAlcoholActive;
             bool isHalved = CheckIfHalved(newCardData);
 
@@ -1021,6 +1023,40 @@ public class BlackjackGame : MonoBehaviour
     }
     #endregion
 
+    #region Keepsakes
+    public bool ActivateAntiMatter()
+    {
+        if(!isRoundActive || isActionLocked || isAntiMatterTargeting) return false;
+
+        isAntiMatterTargeting = true;
+        cursorDetection.OnUseAntiMatter(this);
+
+        return true;
+    }
+
+    public void ApplyAntiMatterToCard(CardInstance cardInstance)
+    {
+        var cardId = (cardInstance.cardData.rank, cardInstance.cardData.suit);
+
+        if(antiMatterCards.Contains(cardId))
+        {
+            antiMatterCards.Remove(cardId);
+        }
+        else
+        {
+            antiMatterCards.Add(cardId);
+        }
+    }
+
+    public bool IsCardNegative(Card card)
+    {
+        bool isSuitNegative = negativeSuits.Contains(card.suit);
+        bool isAntiMatter = antiMatterCards.Contains((card.rank, card.suit));
+
+        return isSuitNegative ^ isAntiMatter;
+    }
+    #endregion
+
     #region Event Methods
     private IEnumerator CheckForEventTriggerCoroutine()
     {
@@ -1354,6 +1390,7 @@ public class BlackjackGame : MonoBehaviour
         isCrucifixActive = false;
         isCigaretteActive = false;
         isAlcoholActive = false;
+        isAntiMatterTargeting = false;
 
         foreach(var text in handTotalTexts)
         {
@@ -1489,7 +1526,7 @@ public class BlackjackGame : MonoBehaviour
 
         CardDisplay cardDisplay = cardObject.GetComponent<CardDisplay>();
 
-        bool isSuitNegative = negativeSuits.Contains(newCardData.suit);
+        bool isSuitNegative = IsCardNegative(newCardData);
         bool isDoubled = CheckIfDoubled(newCardData);
         bool isHalved = CheckIfHalved(newCardData);
 
@@ -2301,7 +2338,7 @@ public class BlackjackGame : MonoBehaviour
         {
             foreach(CardInstance card in hand)
             {
-                bool isNegative = negativeSuits.Contains(card.cardData.suit);
+                bool isNegative = IsCardNegative(card.cardData);
                 bool isDoubled = CheckIfDoubled(card.cardData) || isAlcoholActive;
                 bool isHalved = CheckIfHalved(card.cardData) || scissoredCards.ContainsKey(card);
 
@@ -2313,7 +2350,7 @@ public class BlackjackGame : MonoBehaviour
 
         foreach(CardInstance card in dealerHand)
         {
-            bool isNegative = negativeSuits.Contains(card.cardData.suit);
+            bool isNegative = IsCardNegative(card.cardData);
             bool isDoubled = CheckIfDoubled(card.cardData);
             bool isHalved = CheckIfHalved(card.cardData) || scissoredCards.ContainsKey(card);
 
@@ -2334,7 +2371,7 @@ public class BlackjackGame : MonoBehaviour
                 {
                     Card cardData = topCard.Value;
 
-                    bool isNegative = negativeSuits.Contains(cardData.suit);
+                    bool isNegative = IsCardNegative(cardData);
                     bool isDoubled = CheckIfDoubled(cardData) || isAlcoholActive;
                     bool isHalved = CheckIfHalved(cardData);
 
@@ -2522,7 +2559,7 @@ public class BlackjackGame : MonoBehaviour
                 }
             }
 
-            if(negativeSuits.Contains(card.suit))
+            if(IsCardNegative(card))
             {
                 cardValue = -cardValue;
                 valueAsOne = -valueAsOne;

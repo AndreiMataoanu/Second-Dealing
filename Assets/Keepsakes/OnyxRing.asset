@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c71a18ca27f396e4482eb4f52af3b512, type: 3}
   m_Name: OnyxRing
   m_EditorClassIdentifier: Assembly-CSharp::OnyxRing
-  name: Onyx Ring
+  keepsakeName: Onyx Ring
   description: Get 2x payout when your hand is all black
+  tablePrefab: {fileID: 2708514875635923006, guid: 90b39c55b4e262541a5451d4ab452e3b, type: 3}
   payoutMultiplier: 2

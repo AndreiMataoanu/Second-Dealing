@@ -20,6 +20,7 @@ public class ClickableCard : Clickable
     public void OnCutCard()
     {
         AudioManager.instance.Play("Scissors(Clone)");
+
         cardInstance.displayComponent.SetCutVisual(true);
         
         int originalValue;
@@ -41,8 +42,8 @@ public class ClickableCard : Clickable
             {
                 originalValue = Mathf.CeilToInt(originalValue / 2f);
             }
-        
-            if(blackjackGame.GetNegativeSuits().Contains(cardInstance.cardData.suit))
+
+            if(blackjackGame.IsCardNegative(cardInstance.cardData))
             {
                 originalValue = -originalValue;
             }
@@ -74,9 +75,23 @@ public class ClickableCard : Clickable
 
     public override void OnClick(int mouseButton = 0)
     {
-        if (!IsActive) return;
+        if(!IsActive) return;
         
         base.OnClick();
+
         cardAction?.Invoke();
+    }
+
+    public void OnAntiMatterCard()
+    {
+        AudioManager.instance.Play("ItemBuy");
+
+        blackjackGame.ApplyAntiMatterToCard(cardInstance);
+
+        bool isNowNegative = blackjackGame.IsCardNegative(cardInstance.cardData);
+
+        cardInstance.displayComponent.SetNegativeVisual(isNowNegative);
+        blackjackGame.isAntiMatterTargeting = false;
+        blackjackGame.UpdateUI(true);
     }
 }

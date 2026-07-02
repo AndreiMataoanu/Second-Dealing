@@ -5,7 +5,20 @@ public class KeepsakeManager : MonoBehaviour
 {
     public static KeepsakeManager instance;
 
-    public Keepsake equippedKeepsake;
+    [SerializeField] private Transform tableSpawnPoint;
+    private GameObject currentTableObject;
+    public Keepsake _equippedKeepsake;
+
+    public Keepsake equippedKeepsake
+    {
+        get { return _equippedKeepsake; }
+        set
+        {
+            _equippedKeepsake = value;
+
+            UpdateTableVisuals();
+        }
+    }
 
     private void Awake()
     {
@@ -16,6 +29,21 @@ public class KeepsakeManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void UpdateTableVisuals()
+    {
+        if(currentTableObject != null)
+        {
+            Destroy(currentTableObject);
+        }
+
+        if(_equippedKeepsake != null && _equippedKeepsake.tablePrefab != null && tableSpawnPoint != null)
+        {
+            currentTableObject = Instantiate(_equippedKeepsake.tablePrefab, tableSpawnPoint);
+            currentTableObject.transform.localPosition = Vector3.zero;
+            currentTableObject.transform.localRotation = Quaternion.identity;
         }
     }
 

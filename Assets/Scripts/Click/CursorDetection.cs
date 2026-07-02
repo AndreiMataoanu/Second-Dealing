@@ -17,7 +17,10 @@ public class CursorDetection : MonoBehaviour
     [SerializeField] private Transform cardOptions;
 
     private List<Clickable> cardClickables;
-    
+
+    public enum CardTargetMode { None, Scissors, AntiMatter }
+    private CardTargetMode currentTargetMode = CardTargetMode.None;
+
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.None;
@@ -75,7 +78,15 @@ public class CursorDetection : MonoBehaviour
     }
 
     #region Clickable Cards
+    public void OnUseScissors(BlackjackGame blackjackGame)
+    {
+        currentTargetMode = CardTargetMode.Scissors;
 
+        AddAllClickableCards(blackjackGame);
+        SetClickables(cardClickables, true);
+        SetClickables(roundActiveClickables, false);
+    }
+    
     public void OnSelectCardOption(BlackjackGame blackjackGame, CardTrigger cardTrigger)
     {
         cardClickables = new List<Clickable>();
@@ -91,6 +102,15 @@ public class CursorDetection : MonoBehaviour
         SetClickables(roundActiveClickables, false);
     }
 
+    public void OnUseAntiMatter(BlackjackGame blackjackGame)
+    {
+        currentTargetMode = CardTargetMode.AntiMatter;
+
+        AddAllClickableCards(blackjackGame);
+        SetClickables(cardClickables, true);
+        SetClickables(roundActiveClickables, false);
+    }
+
     private void AddAllClickableCards(BlackjackGame blackjackGame, CardTrigger cardTrigger)
     {
         cardClickables = new List<Clickable>();
@@ -100,22 +120,35 @@ public class CursorDetection : MonoBehaviour
 
     private void AddClickableCards(Transform cardsTransform, BlackjackGame blackjackGame, CardTrigger cardTrigger)
     {
-        foreach (Transform card in cardsTransform)
+        foreach(Transform card in cardsTransform)
         {
             var cardDisplay = card.GetComponent<CardDisplay>();
             var face = card.transform.GetChild(0);
-            if (face)
+
+            if(face)
             {
                 var clickableCard = face.GetComponent<ClickableCard>();
-                if (clickableCard)
+
+                if(clickableCard)
                 {
-                    if(blackjackGame.IsCardScissored(cardDisplay.GetCardInstance())) continue;
+                    if(currentTargetMode == CardTargetMode.Scissors && blackjackGame.IsCardScissored(cardDisplay.GetCardInstance())) continue;
 
                     clickableCard.SetCardInstance(cardDisplay.GetCardInstance());
                     clickableCard.SetBlackjackGame(blackjackGame);
                     clickableCard.AddAction(OnClickCard);
+
+                    if(currentTargetMode == CardTargetMode.Scissors)
+                    {
+                        clickableCard.AddAction(clickableCard.OnCutCard);
+                    }
+                    else if(currentTargetMode == CardTargetMode.AntiMatter)
+                    {
+                        clickableCard.AddAction(clickableCard.OnAntiMatterCard);
+                    }
+
                     AddCardAction(blackjackGame, clickableCard, cardTrigger);
                     clickableCard.AddAction(ReactivateClickables);
+
                     cardClickables.Add(clickableCard);
                 }
             }
@@ -148,26 +181,34 @@ public class CursorDetection : MonoBehaviour
 
     private void RemoveCardActions()
     {
-        foreach (var clickable in cardClickables)
+        foreach(var clickable in cardClickables)
         {
             var cardClickable = (ClickableCard)clickable;
 
-            if (cardClickable)
+            if(cardClickable)
             {
                 cardClickable.RemoveAction(OnClickCard);
                 cardClickable.RemoveAction(cardClickable.OnCutCard);
+                cardClickable.RemoveAction(cardClickable.OnAntiMatterCard);
                 cardClickable.RemoveAction(ReactivateClickables);
             }
+        }
+
+        currentTargetMode = CardTargetMode.None;
+    }
+
+    public void RemoveRoundActiveClickable(Clickable clickable)
+    {
+        if(roundActiveClickables.Contains(clickable))
+        {
+            roundActiveClickables.Remove(clickable);
         }
     }
 
     private void ReactivateClickables() => SetClickables(roundActiveClickables, true);
-
     #endregion
 
     #region Getters
-
     public Transform GetCardOptionsPosition() => cardOptions;
-
     #endregion
 }
