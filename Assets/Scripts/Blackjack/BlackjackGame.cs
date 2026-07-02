@@ -165,13 +165,13 @@ public class BlackjackGame : MonoBehaviour
         cursorFollowManager.SetCursorTypeActive(active, CursorType.Scissors);
     }
     public int GetOrganRoundsLeft() => itemManager.organRoundsLeft;
+    public int GetPlayerMoney() => playerMoney;
     
     public List<EventThreshold> EventThresholds => eventThresholds;
     public int TriggeredThresholdsCount => triggeredThresholdsCount;
     public bool UseTurnLimit => useTurnLimit;
     public int TurnsLeft => currentMaxTurns - currentTurns;
     public Transform CardOptionPosition => cursorDetection.GetCardOptionsPosition();
-    public GameObject StandHand => standHandAnimator.gameObject;
     #endregion
 
     #region Monobehaviour Methods
@@ -214,6 +214,7 @@ public class BlackjackGame : MonoBehaviour
     #region Player Actions
     public void OnStartGame()
     {
+        itemManager.OnRoundStart();
         if(!isRoundActive && PlayerMoney >= currentBet)
             StartCoroutine(DealRoundCoroutine());
     }
@@ -396,6 +397,24 @@ public class BlackjackGame : MonoBehaviour
         playerMoney += amount;
         
         UpdateBettingUI();
+    }
+
+    public bool ActivateNft(int moneyGained)
+    {
+        if (moneyGained == 0)
+        {
+            AudioManager.instance.Play("ItemBuy");
+            // AudioManager.instance.Play("WompWomp");
+            return true;
+        }
+        
+        int targetBalance = playerMoney + moneyGained;
+
+        AudioManager.instance.Play("MoneyGained");
+
+        StartCoroutine(AnimateBetChange(targetBalance, 3f));
+
+        return true;
     }
 
     public bool ActivateKnife()

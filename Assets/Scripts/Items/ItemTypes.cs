@@ -9,5 +9,6 @@ public enum ItemType
     Alcohol,
     Fan,
     Lotto,
-    Acid
+    Acid,
+    Nft
 }
