@@ -1894,32 +1894,32 @@ public class BlackjackGame : MonoBehaviour
                 }
             }
 
-            if(!isKnifeActive)
+            int dealerAIValue = CalculateHandValue(dealerHand, false);
+            IEnumerator DealerHit()
             {
-                int dealerAIValue = CalculateHandValue(dealerHand, false);
+                yield return StartCoroutine(DealCardToDealerCoroutine(false));
 
-                while(Mathf.Abs(dealerAIValue) < (blackjackGoal - 4) && dealerHand.Count < 7)
-                {
-                    yield return StartCoroutine(DealCardToDealerCoroutine(false));
+                UpdateUI(true);
+                dealerAIValue = CalculateHandValue(dealerHand, false);
 
-                    UpdateUI(true);
-
-                    dealerAIValue = CalculateHandValue(dealerHand, false);
-
-                    yield return new WaitForSeconds(1.5f);
-                }
-
-                if(dealerHand.Count == 7)
-                {
-                    statusText.text = "Dealer hand full";
-
-                    yield return new WaitForSeconds(1.0f);
-                }
-                else
-                {
-                    statusText.text = "Dealer stands";
-                }
+                yield return new WaitForSeconds(1.5f);
             }
+            
+            if(Mathf.Abs(dealerAIValue) < (blackjackGoal - 4) && dealerHand.Count < 7)
+                yield return DealerHit();
+
+            if(!isKnifeActive)
+                while (Mathf.Abs(dealerAIValue) < (blackjackGoal - 4) && dealerHand.Count < 7)
+                    yield return DealerHit();
+            
+            if(dealerHand.Count == 7)
+            {
+                statusText.text = "Dealer hand full";
+                yield return new WaitForSeconds(1.0f);
+            }
+            else
+                statusText.text = "Dealer stands";
+
         }
 
         UpdateUI(false);
