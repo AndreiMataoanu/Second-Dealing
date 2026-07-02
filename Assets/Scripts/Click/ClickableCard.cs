@@ -102,4 +102,9 @@ public class ClickableCard : Clickable
         blackjackGame.ApplyPyroToCard(cardInstance);
         blackjackGame.isPyroTargeting = false;
     }
+
+    public void OnHatTrickCard()
+    {
+        blackjackGame.TryHatTrickCard(cardInstance);
+    }
 }

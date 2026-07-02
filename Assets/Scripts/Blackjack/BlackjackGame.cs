@@ -68,6 +68,7 @@ public class BlackjackGame : MonoBehaviour
     private HashSet<(Card.Rank, Card.Suit)> antiMatterCards = new HashSet<(Card.Rank, Card.Suit)>();
     [HideInInspector] public bool isAntiMatterTargeting = false;
     [HideInInspector] public bool isPyroTargeting = false;
+    [HideInInspector] public bool isHatTrickTargeting = false;
 
     [Header("Event System")]
     [SerializeField] private bool useTurnLimit = false;
@@ -1109,6 +1110,113 @@ public class BlackjackGame : MonoBehaviour
         UpdateUI(true);
         EvaluateDoubleDownCondition();
     }
+
+    public bool ActivateHatTrick()
+    {
+        if(!isRoundActive || isActionLocked || isHatTrickTargeting) return false;
+
+        isHatTrickTargeting = true;
+        cursorDetection.OnUseHatTrick(this);
+
+        return true;
+    }
+
+    public void TryHatTrickCard(CardInstance cardInstance)
+    {
+        if(cardInstance.isHidden)
+        {
+            AudioManager.instance.Play("ItemDeny");
+
+            return;
+        }
+
+        bool isValidTarget = false;
+
+        foreach(var hand in playerHands)
+        {
+            if(hand.Contains(cardInstance))
+            {
+                isValidTarget = true;
+
+                break;
+            }
+        }
+
+        if(!isValidTarget && dealerHand.Contains(cardInstance))
+        {
+            isValidTarget = true;
+        }
+
+        if(!isValidTarget)
+        {
+            AudioManager.instance.Play("ItemDeny");
+
+            return;
+        }
+
+        StartCoroutine(HatTrickCoroutine(cardInstance));
+    }
+
+    private IEnumerator HatTrickCoroutine(CardInstance targetCard)
+    {
+        isActionLocked = true;
+        isHatTrickTargeting = false;
+        canDoubleDown = false;
+        gameDeck.AddPermanentCard(targetCard.cardData.rank, targetCard.cardData.suit);
+
+        AudioManager.instance.Play("ItemBuy");
+        List<CardInstance> currentHand = playerHands[currentHandIndex];
+        Transform currentParent = handPositions[currentHandIndex];
+        CardInstance newCardInstance = DealCardInstance(targetCard.cardData, currentHand, currentParent, false);
+
+        if(newCardInstance != null)
+        {
+            int cardOrderIndex = currentHand.Count - 1;
+            float xOffset = cardOrderIndex * playerCardOffset.x;
+            float yOffset = cardOrderIndex * playerCardOffset.y;
+            float zOffset = cardOrderIndex * -zOverlap;
+
+            Vector3 targetLocalPos = new Vector3(xOffset, yOffset, zOffset);
+            Quaternion targetRotation = Quaternion.identity;
+
+            newCardInstance.displayComponent.transform.SetParent(currentParent.parent);
+
+            yield return StartCoroutine(CardAnimationCoroutine(
+                newCardInstance.displayComponent.transform,
+                currentParent.TransformPoint(targetLocalPos),
+                currentParent.rotation * targetRotation,
+                cardScaleVector,
+                cardAnimationDuration
+            ));
+
+            newCardInstance.displayComponent.transform.SetParent(currentParent);
+            newCardInstance.displayComponent.transform.localPosition = targetLocalPos;
+            newCardInstance.displayComponent.transform.localRotation = targetRotation;
+
+            UpdateHandVisuals(currentHand, currentParent, true);
+            UpdateUI(true);
+            UpdateSplitOutlines();
+        }
+
+        int handValue = CalculateHandValue(currentHand, true);
+
+        if(currentHand.Count == 7 && handValue <= blackjackGoal)
+        {
+            statusText.text = "Hand full";
+
+            yield return StartCoroutine(CheckLotteryTicket());
+            yield return new WaitForSeconds(1.5f);
+            yield return StartCoroutine(AdvanceHandCoroutine());
+        }
+        else if(handValue > blackjackGoal || handValue < -blackjackGoal)
+        {
+            yield return StartCoroutine(BustCheckCoroutine(currentHand));
+        }
+        else
+        {
+            isActionLocked = false;
+        }
+    }
     #endregion
 
     #region Event Methods
@@ -1446,6 +1554,7 @@ public class BlackjackGame : MonoBehaviour
         isAlcoholActive = false;
         isAntiMatterTargeting = false;
         isPyroTargeting = false;
+        isHatTrickTargeting = false;
 
         foreach(var text in handTotalTexts)
         {

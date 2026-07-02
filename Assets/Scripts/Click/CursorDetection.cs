@@ -18,7 +18,7 @@ public class CursorDetection : MonoBehaviour
 
     private List<Clickable> cardClickables;
 
-    public enum CardTargetMode { None, Scissors, AntiMatter, Pyro }
+    public enum CardTargetMode { None, Scissors, AntiMatter, Pyro, HatTrick }
     private CardTargetMode currentTargetMode = CardTargetMode.None;
 
     private void Awake()
@@ -120,6 +120,15 @@ public class CursorDetection : MonoBehaviour
         SetClickables(roundActiveClickables, false);
     }
 
+    public void OnUseHatTrick(BlackjackGame blackjackGame)
+    {
+        currentTargetMode = CardTargetMode.HatTrick;
+
+        AddAllClickableCards(blackjackGame);
+        SetClickables(cardClickables, true);
+        SetClickables(roundActiveClickables, false);
+    }
+
     private void AddAllClickableCards(BlackjackGame blackjackGame, CardTrigger cardTrigger)
     {
         cardClickables = new List<Clickable>();
@@ -157,6 +166,10 @@ public class CursorDetection : MonoBehaviour
                     else if(currentTargetMode == CardTargetMode.Pyro)
                     {
                         clickableCard.AddAction(clickableCard.OnPyroCard);
+                    }
+                    else if(currentTargetMode == CardTargetMode.HatTrick)
+                    {
+                        clickableCard.AddAction(clickableCard.OnHatTrickCard);
                     }
 
                     AddCardAction(blackjackGame, clickableCard, cardTrigger);
@@ -204,6 +217,7 @@ public class CursorDetection : MonoBehaviour
                 cardClickable.RemoveAction(cardClickable.OnCutCard);
                 cardClickable.RemoveAction(cardClickable.OnAntiMatterCard);
                 cardClickable.RemoveAction(cardClickable.OnPyroCard);
+                cardClickable.RemoveAction(cardClickable.OnHatTrickCard);
                 cardClickable.RemoveAction(ReactivateClickables);
             }
         }

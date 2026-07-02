@@ -11,6 +11,7 @@ public class Deck
     private List<Tuple<Card.Rank, Card.Suit>> removedCards = new ();
     private Tuple<Card?, int> copies = new(null, 0);
     public List<(Card.Rank, Card.Suit)> removedSpecificCards = new List<(Card.Rank, Card.Suit)>();
+    public List<Card> permanentAddedCards = new List<Card>();
 
     private bool jokersInDeck = false;
     private const float CoinProbability = 0.7f;
@@ -199,5 +200,12 @@ public class Deck
         {
             removedSpecificCards.Add((rank, suit));
         }
+    }
+
+    public void AddPermanentCard(Card.Rank rank, Card.Suit suit)
+    {
+        Card newCard = new Card { rank = rank, suit = suit };
+
+        permanentAddedCards.Add(newCard);
     }
 }

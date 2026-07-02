@@ -525,6 +525,10 @@ PrefabInstance:
       propertyPath: 'roundInactiveClickables.Array.data[12]'
       value: 
       objectReference: {fileID: 6060484366695423602}
+    - target: {fileID: 3107838438023376873, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
+      propertyPath: 'roundInactiveClickables.Array.data[13]'
+      value: 
+      objectReference: {fileID: 6352805241449911641}
     - target: {fileID: 4390543728078954121, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -6135,6 +6139,7 @@ Transform:
   - {fileID: 481516382138903451}
   - {fileID: 481516383176152658}
   - {fileID: 5627821331020507402}
+  - {fileID: 8363004404678299970}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1249939005
@@ -11582,6 +11587,67 @@ Transform:
   m_Children: []
   m_Father: {fileID: 543450651904859136}
   m_LocalEulerAnglesHint: {x: -19.631, y: 0, z: 0}
+--- !u!1001 &4833361997338611663
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1243624304}
+    m_Modifications:
+    - target: {fileID: 254835730679701292, guid: 03ad62e633e454d44a8ed8635480de08, type: 3}
+      propertyPath: blackjackGame
+      value: 
+      objectReference: {fileID: 1343293108}
+    - target: {fileID: 3814667779372214157, guid: 03ad62e633e454d44a8ed8635480de08, type: 3}
+      propertyPath: m_Name
+      value: Hat Trick
+      objectReference: {fileID: 0}
+    - target: {fileID: 4196823322795425772, guid: 03ad62e633e454d44a8ed8635480de08, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 19.33
+      objectReference: {fileID: 0}
+    - target: {fileID: 4196823322795425772, guid: 03ad62e633e454d44a8ed8635480de08, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 10.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4196823322795425772, guid: 03ad62e633e454d44a8ed8635480de08, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.295
+      objectReference: {fileID: 0}
+    - target: {fileID: 4196823322795425772, guid: 03ad62e633e454d44a8ed8635480de08, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4196823322795425772, guid: 03ad62e633e454d44a8ed8635480de08, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4196823322795425772, guid: 03ad62e633e454d44a8ed8635480de08, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4196823322795425772, guid: 03ad62e633e454d44a8ed8635480de08, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4196823322795425772, guid: 03ad62e633e454d44a8ed8635480de08, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4196823322795425772, guid: 03ad62e633e454d44a8ed8635480de08, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4196823322795425772, guid: 03ad62e633e454d44a8ed8635480de08, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 03ad62e633e454d44a8ed8635480de08, type: 3}
 --- !u!1001 &5341056595579161382
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11750,6 +11816,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1e8a136ee77213479411c201768a4ad, type: 3}
+--- !u!114 &6352805241449911641 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 254835730679701292, guid: 03ad62e633e454d44a8ed8635480de08, type: 3}
+  m_PrefabInstance: {fileID: 4833361997338611663}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80d3ba8abff0e9f4cb2b61ea58571f61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KeepsakeInteractable
 --- !u!1 &6993759443984787572
 GameObject:
   m_ObjectHideFlags: 0
