@@ -1564,14 +1564,15 @@ public class BlackjackGame : MonoBehaviour
 
         if(!cardFound)
         {
-            if (powerballNumbers == null || powerballNumbers.Count == 0)
-                newCardData = gameDeck.DealCard();
-            else
-            {
-                var ncd = gameDeck.DealSpecificCard(Card.Rank.Ten);
-                if (ncd != null) newCardData = (Card)ncd;
-                else newCardData = (Card) gameDeck.DealSpecificCard(Card.Rank.King);
-            }
+            newCardData = gameDeck.DealCard();
+            // if (powerballNumbers == null || powerballNumbers.Count == 0)
+            //     newCardData = gameDeck.DealCard();
+            // else
+            // {
+            //     var ncd = gameDeck.DealSpecificCard(Card.Rank.Ten);
+            //     if (ncd != null) newCardData = (Card)ncd;
+            //     else newCardData = (Card) gameDeck.DealSpecificCard(Card.Rank.King);
+            // }
         }
 
         Transform currentParent = handPositions[currentHandIndex];
