@@ -40,6 +40,7 @@ public class BlackjackGame : MonoBehaviour
     private Dictionary<CardInstance, int> scissoredCards = new Dictionary<CardInstance, int>();
     private Coroutine currentBustCoroutine = null;
     private List<int> lotteryNumbers = new List<int>();
+    private List<int> powerballNumbers = new List<int>();
     private Deck gameDeck;
     private int blackjackGoal = 21;
     private int roundsCompleted = 0;
@@ -81,6 +82,7 @@ public class BlackjackGame : MonoBehaviour
     private bool isDoubleLowActive = false;
     private bool isHalfHighActive = false;
     private bool isRouletteBlackjackActive = false;
+    private bool isPowerballTriggered = false;
 
     [Header("Money")]
     [SerializeField] private int tutorialRoundsLimit = 3;
@@ -110,6 +112,7 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI dealerTotalText;
     [SerializeField] private TMPro.TextMeshProUGUI rouletteText;
     [SerializeField] private UnityEvent ChangeProgressText;
+    [SerializeField] private UnityEvent UpdatePowerballGoal;
 
     [Header("VFX")]
     [SerializeField] private Animator standHandAnimator;
@@ -171,7 +174,7 @@ public class BlackjackGame : MonoBehaviour
     public bool UseTurnLimit => useTurnLimit;
     public int TurnsLeft => currentMaxTurns - currentTurns;
     public Transform CardOptionPosition => cursorDetection.GetCardOptionsPosition();
-    public GameObject StandHand => standHandAnimator.gameObject;
+    public List<int> PowerballGoal => powerballNumbers;
     #endregion
 
     #region Monobehaviour Methods
@@ -813,6 +816,7 @@ public class BlackjackGame : MonoBehaviour
 
             yield return new WaitWhile(() => dialogueSystem.IsPlaying);
             yield return StartCoroutine(CheckLotteryTicket());
+            yield return StartCoroutine(CheckPowerballCurrentHand());
 
             StartCoroutine(DealerTurnCoroutine(true));
         }
@@ -956,6 +960,28 @@ public class BlackjackGame : MonoBehaviour
             yield return StartCoroutine(AnimateBetChange(targetBalance, 3f));
         }
     }
+
+    private IEnumerator CheckPowerballCurrentHand() => CheckPowerballAtIndex(currentHandIndex);
+    private IEnumerator CheckPowerballAtIndex(int index)
+    {
+        if (powerballNumbers == null || powerballNumbers.Count == 0) yield break;
+
+        var hand = playerHands[index];
+        int handValue = Mathf.Abs(CalculateHandValue(hand, true));
+        powerballNumbers.RemoveAll(number => number == handValue);
+
+        UpdatePowerballGoal?.Invoke();
+
+        if (powerballNumbers.Count == 0)
+        {
+            dialogueSystem.ShowPowerballTaunt();
+            var targetBalance = playerMoney + 3 * currentBet;
+            
+            AudioManager.instance.Play("MoneyGained");
+
+            yield return StartCoroutine(AnimateBetChange(targetBalance, 3f));
+        }
+    }
     #endregion
 
     #region Event Methods
@@ -1030,8 +1056,14 @@ public class BlackjackGame : MonoBehaviour
             currentTurns = 0;
             
             DisableCamera(eventCamera);
-            ChangeProgressText.Invoke();
+            ChangeProgressText?.Invoke();
+            UpdatePowerballGoal?.Invoke();
             EnableCamera(sittingCamera);
+            if (isPowerballTriggered)
+            {
+                dialogueSystem.PlayPowerballTutorial();
+                isPowerballTriggered = false;
+            }
         }
     }
 
@@ -1108,6 +1140,13 @@ public class BlackjackGame : MonoBehaviour
         cursorFollowManager.SetCursorTypeActive(isActive, CursorType.Flip);
         standHandAnimator.gameObject.SetActive(!isActive);
     }
+
+    public void SetPowerballEventActive(List<int> goal)
+    {
+        powerballNumbers = goal;
+        isPowerballTriggered = true;
+    }
+    
     private IEnumerator SelectCardCopyEndCoroutine()
     {
         yield return new WaitForSeconds(0.7f);
@@ -1358,6 +1397,7 @@ public class BlackjackGame : MonoBehaviour
 
             yield return new WaitWhile(() => dialogueSystem.IsPlaying);
             yield return StartCoroutine(CheckLotteryTicket());
+            yield return StartCoroutine(CheckPowerballCurrentHand());
 
             StartCoroutine(DealerTurnCoroutine(true));
         }
@@ -1524,7 +1564,14 @@ public class BlackjackGame : MonoBehaviour
 
         if(!cardFound)
         {
-            newCardData = gameDeck.DealCard();
+            if (powerballNumbers == null || powerballNumbers.Count == 0)
+                newCardData = gameDeck.DealCard();
+            else
+            {
+                var ncd = gameDeck.DealSpecificCard(Card.Rank.Ten);
+                if (ncd != null) newCardData = (Card)ncd;
+                else newCardData = (Card) gameDeck.DealSpecificCard(Card.Rank.King);
+            }
         }
 
         Transform currentParent = handPositions[currentHandIndex];
@@ -1675,6 +1722,7 @@ public class BlackjackGame : MonoBehaviour
             statusText.text = "Hand full";
 
             yield return StartCoroutine(CheckLotteryTicket());
+            yield return StartCoroutine(CheckPowerballCurrentHand());
             yield return new WaitForSeconds(1.5f);
             yield return StartCoroutine(AdvanceHandCoroutine());
         }
@@ -1701,6 +1749,7 @@ public class BlackjackGame : MonoBehaviour
             yield return StartCoroutine(CheckLotteryTicket());
         }
 
+        yield return StartCoroutine(CheckPowerballCurrentHand());
         yield return new WaitForSeconds(1.5f);
         yield return StartCoroutine(AdvanceHandCoroutine());
     }
@@ -1725,6 +1774,7 @@ public class BlackjackGame : MonoBehaviour
         yield return new WaitForSeconds(2f);
         yield return StartCoroutine(DealCardToPlayerCoroutine());
         yield return StartCoroutine(CheckLotteryTicket());
+        yield return StartCoroutine(CheckPowerballCurrentHand());
         yield return StartCoroutine(AdvanceHandCoroutine());
     }
 
@@ -2057,6 +2107,7 @@ public class BlackjackGame : MonoBehaviour
             yield return StartCoroutine(CheckLotteryTicket());
         }
 
+        yield return StartCoroutine(CheckPowerballCurrentHand());
         yield return new WaitForSeconds(2f);
 
         var playerJokers = activeHand.Where(c => c.cardData.rank == Card.Rank.Joker).ToList();
