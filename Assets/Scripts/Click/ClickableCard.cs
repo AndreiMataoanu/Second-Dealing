@@ -79,7 +79,14 @@ public class ClickableCard : Clickable
         
         base.OnClick();
 
-        cardAction?.Invoke();
+        if(cardAction != null)
+        {
+            cardAction.Invoke();
+        }
+        else if(cardInstance != null && cardInstance.cardData.suit == Card.Suit.Tarot)
+        {
+            blackjackGame.SacrificeTarot(cardInstance);
+        }
     }
 
     public void OnAntiMatterCard()

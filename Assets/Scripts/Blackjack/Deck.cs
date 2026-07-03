@@ -27,6 +27,8 @@ public class Deck
 
         foreach(Card.Suit s in Enum.GetValues(typeof(Card.Suit)))
         {
+            if(s == Card.Suit.Tarot && !KeepsakeManager.instance.AddsTarotCards()) continue;
+
             if(removedSuits.Contains(s)) continue;
 
             for(int r = (int)Card.Rank.Ace; r <= (int)Card.Rank.King; r++)
@@ -35,7 +37,10 @@ public class Deck
 
                 if(removedRanks.Contains(rank)) continue;
 
+                if(removedSpecificCards.Contains((rank, s))) continue;
+
                 var card = new Tuple<Card.Rank, Card.Suit>(rank, s);
+                
                 if(removedCards.Contains(card)) continue;
                 
                 cards.Add(new Card { rank = rank, suit = s });
@@ -53,10 +58,16 @@ public class Deck
             }
         }
 
+        foreach(Card permanentCard in permanentAddedCards)
+        {
+            cards.Add(permanentCard);
+        }
+
         if (copies is not { Item2: > 0 } || copies.Item1 == null) return;
 
         var copy = (Card)copies.Item1;
-        for (var i = 0; i < copies.Item2; i++)
+
+        for(var i = 0; i < copies.Item2; i++)
             cards.Add(new Card{rank = copy.rank, suit = copy.suit});
     }
 

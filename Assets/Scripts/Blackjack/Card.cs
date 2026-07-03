@@ -1,7 +1,7 @@
 public struct Card
 {
     public enum Rank { None = 0, Ace, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Jack, Queen, King, Joker }
-    public enum Suit { Clubs, Diamonds, Hearts, Spades }
+    public enum Suit { Clubs, Diamonds, Hearts, Spades, Tarot }
 
     public Rank rank;
     public Suit suit;

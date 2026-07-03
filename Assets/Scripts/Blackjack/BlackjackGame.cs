@@ -1217,6 +1217,49 @@ public class BlackjackGame : MonoBehaviour
             isActionLocked = false;
         }
     }
+
+    public void SacrificeTarot(CardInstance cardInstance)
+    {
+        if(!isRoundActive || isActionLocked || currentHandIndex >= playerHands.Count) return;
+
+        List<CardInstance> currentHand = playerHands[currentHandIndex];
+
+        if(!currentHand.Contains(cardInstance)) return;
+
+        TarotCard tarotData = cardInstance.displayComponent.GetComponent<TarotCard>();
+
+        if(tarotData == null || tarotData.rewardItemPrefab == null)
+        {
+            AudioManager.instance.Play("ItemDeny");
+
+            return;
+        }
+
+        bool success = itemManager.GiveSpecificItem(tarotData.rewardItemPrefab);
+
+        if(!success)
+        {
+            AudioManager.instance.Play("ItemDeny");
+
+            return;
+        }
+
+        AudioManager.instance.Play("ItemBuy");
+
+        scissoredCards.Remove(cardInstance);
+        alcoholCards.Remove(cardInstance);
+
+        currentHand.Remove(cardInstance);
+
+        activeCardObjects.Remove(cardInstance.displayComponent.gameObject);
+
+        Destroy(cardInstance.displayComponent.gameObject);
+
+        Transform currentParent = handPositions[currentHandIndex];
+
+        UpdateHandVisuals(currentHand, currentParent, true);
+        UpdateUI(true);
+    }
     #endregion
 
     #region Event Methods
@@ -1480,6 +1523,13 @@ public class BlackjackGame : MonoBehaviour
         {
             if(cardObject != null)
             {
+                ClickableCard clickable = cardObject.GetComponentInChildren<ClickableCard>();
+
+                if(clickable != null && cursorDetection != null)
+                {
+                    cursorDetection.RemoveRoundActiveClickable(clickable);
+                }
+
                 Destroy(cardObject);
             }
         }
@@ -1705,6 +1755,21 @@ public class BlackjackGame : MonoBehaviour
         if(newCardInstance.cardData.rank == Card.Rank.Joker)
         {
             newCardInstance.jokerValue = Random.Range(-10, 11); //Joker value between -10 and 10
+        }
+
+        if(newCardData.suit == Card.Suit.Tarot && hand != dealerHand)
+        {
+            ClickableCard clickableCard = cardObject.GetComponentInChildren<ClickableCard>();
+
+            if(clickableCard != null)
+            {
+                clickableCard.SetCardInstance(newCardInstance);
+                clickableCard.SetBlackjackGame(this);
+
+                cursorDetection.AddRoundActiveClickable(clickableCard);
+
+                clickableCard.SetActive(true);
+            }
         }
 
         hand?.Insert(0, newCardInstance);

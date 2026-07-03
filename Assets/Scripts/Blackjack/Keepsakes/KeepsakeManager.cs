@@ -112,4 +112,11 @@ public class KeepsakeManager : MonoBehaviour
 
         return false;
     }
+
+    public bool AddsTarotCards()
+    {
+        if(equippedKeepsake == null) return false;
+
+        return equippedKeepsake.AddsTarotCards();
+    }
 }
