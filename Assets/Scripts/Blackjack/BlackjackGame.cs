@@ -83,6 +83,7 @@ public class BlackjackGame : MonoBehaviour
     private bool isHalfHighActive = false;
     private bool isRouletteBlackjackActive = false;
     private bool isPowerballTriggered = false;
+    private bool isNewPowerball = false;
 
     [Header("Money")]
     [SerializeField] private int tutorialRoundsLimit = 3;
@@ -970,7 +971,6 @@ public class BlackjackGame : MonoBehaviour
         int handValue = Mathf.Abs(CalculateHandValue(hand, true));
         powerballNumbers.RemoveAll(number => number == handValue);
 
-        UpdatePowerballGoal?.Invoke();
 
         if (powerballNumbers.Count == 0)
         {
@@ -980,7 +980,12 @@ public class BlackjackGame : MonoBehaviour
             AudioManager.instance.Play("MoneyGained");
 
             yield return StartCoroutine(AnimateBetChange(targetBalance, 3f));
+
+            powerballNumbers = PowerballEvent.GenerateNumbers();
+            isNewPowerball = true;
         }
+        
+        UpdatePowerballGoal?.Invoke();
     }
     #endregion
 
@@ -1287,6 +1292,11 @@ public class BlackjackGame : MonoBehaviour
         ClearTable();
         DisableCamera(playingCamera);
         EnableCamera(sittingCamera);
+        if (isNewPowerball)
+        {
+            dialogueSystem.ShowPowerballGenerateTaunt();
+            isNewPowerball = false;
+        }
 
         AudioManager.instance.Play("Shuffle");
 
@@ -1564,15 +1574,15 @@ public class BlackjackGame : MonoBehaviour
 
         if(!cardFound)
         {
-            newCardData = gameDeck.DealCard();
-            // if (powerballNumbers == null || powerballNumbers.Count == 0)
-            //     newCardData = gameDeck.DealCard();
-            // else
-            // {
-            //     var ncd = gameDeck.DealSpecificCard(Card.Rank.Ten);
-            //     if (ncd != null) newCardData = (Card)ncd;
-            //     else newCardData = (Card) gameDeck.DealSpecificCard(Card.Rank.King);
-            // }
+            // newCardData = gameDeck.DealCard();
+            if (powerballNumbers == null || powerballNumbers.Count == 0)
+                newCardData = gameDeck.DealCard();
+            else
+            {
+                var ncd = gameDeck.DealSpecificCard(Card.Rank.Ten);
+                if (ncd != null) newCardData = (Card)ncd;
+                else newCardData = (Card) gameDeck.DealSpecificCard(Card.Rank.King);
+            }
         }
 
         Transform currentParent = handPositions[currentHandIndex];

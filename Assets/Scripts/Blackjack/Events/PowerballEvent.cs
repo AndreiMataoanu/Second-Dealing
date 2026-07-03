@@ -6,15 +6,21 @@ public class PowerballEvent : BlackjackEvent
 {
     public override void Apply(BlackjackGame game)
     {
+        List<int> numbers = GenerateNumbers();
+        game.SetPowerballEventActive(numbers);
+    }
+
+    public static List<int> GenerateNumbers()
+    {
         List<int> numbers = new List<int>();
 
-        for (int i = 0; i < 3; i++)
-            numbers.Add(Random.Range(2, 34));
+        // for (int i = 0; i < 3; i++)
+        //     numbers.Add(Random.Range(2, 34));
 
-        // numbers.Add(20);
-        // numbers.Add(20);
-        // numbers.Add(10);
+        numbers.Add(20);
+        numbers.Add(20);
+        numbers.Add(10);
         
-        game.SetPowerballEventActive(numbers);
+        return numbers;
     }
 }

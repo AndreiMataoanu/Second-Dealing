@@ -3087,123 +3087,22 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3299058582141345547, guid: b86f4f0c17e8f7d4492b47378589876a, type: 3}
   m_PrefabInstance: {fileID: 7195570629954288261}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &537238134
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 537238135}
-  - component: {fileID: 537238136}
-  m_Layer: 0
-  m_Name: DialogueManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &537238135
+--- !u!4 &537238135 stripped
 Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 8292892182814747434, guid: 1ec9ed4188d23e645a8969bc84ee8fd7, type: 3}
+  m_PrefabInstance: {fileID: 635389546846943737}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 537238134}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1823405866}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &537238136
+--- !u!114 &537238136 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 6608549595112624214, guid: 1ec9ed4188d23e645a8969bc84ee8fd7, type: 3}
+  m_PrefabInstance: {fileID: 635389546846943737}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 537238134}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b29894440b8f4b54185915f65552c667, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueSystem
-  dialogueText: {fileID: 172934057}
-  panel: {fileID: 488802146}
-  delayBetweenLines: 2
-  typingSpeed: 0.02
-  tutorialLines:
-  - Welcome to Blackjack...
-  - I will be your dealer for tonight.
-  - The stakes are your survival.
-  - Let me recap the basics...
-  - Your goal is 21.
-  - Do not go over 21.
-  - Number cards hold their face value.
-  - Kings, Queens, and Jacks count as 10.
-  - Aces count as 1 or 11.
-  - Beat my total to win the round.
-  - Bust past 21 and you lose.
-  - Bought items alter the decks.
-  - 'Remember: Soon we will not play by standard rules alone.'
-  - Let's get started...
-  splitTutorialLines:
-  - Let me remind you the rules for Splitting.
-  - When you hold two cards of equal value...
-  - You can split them into two separate hands.
-  - Another bet is placed equal to your first bet.
-  - Play the first hand to completion.
-  - Then play your next hand.
-  - You can split up to 3 times, if money allows.
-  - Double your risk, win twice the money.
-  - Use your right hand to gesture a split.
-  doubleDownTutorialLines:
-  - Let me remind you the rules for Doubling Down.
-  - When you hold two cards only...
-  - You can double down to double your current bet.
-  - I deal you exactly one more card...
-  - And your turn ends immediately.
-  - Win big or lose everything.
-  - Use your left hand to gesture a double down.
-  powerballTutorialLines:
-  - The Powerball event! A classic.
-  - You will get three random numbers.
-  - They will be on the screen behind me...
-  - ... so your little head can keep track.
-  - Finish your turn with one of those scores.
-  - You will have to get all of them eventually.
-  - Does it apply to splittiing? Guess.
-  lowMoneyTaunts:
-  - Careful now...
-  betLostTaunts:
-  - That must've hurt.
-  - Ouch...
-  - Too bad...
-  - What a waste...
-  dealerBlackjackTaunts:
-  - Not a chance...
-  dealerWinsByOneTaunts:
-  - Not good enough...
-  - Almost...
-  playerBlackjackTaunts:
-  - Lucky...
-  tieTaunts:
-  - Not so fast...
-  turnLimitTaunts:
-  - A bit too slow.
-  - Time's up.
-  - I've seen enough.
-  copyOptionTaunts:
-  - That one? Hm...
-  - It's your choice I suppose.
-  - It makes sense for you to choose that.
-  powerballWinTaunts:
-  - What's that? You got all the numbers?
-  - So you got them all.
-  - Powerball is over. Didn't last long enough...
 --- !u!1 &539873765
 GameObject:
   m_ObjectHideFlags: 0
@@ -3897,53 +3796,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 561b46045be95ba41b4f03e138dfb2c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitHandClickable
---- !u!1 &708047835
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 708047836}
-  - component: {fileID: 708047837}
-  m_Layer: 0
-  m_Name: CursorFollowManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &708047836
+--- !u!4 &708047836 stripped
 Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 968042730171440607, guid: 3bee230e62c5ae24cb5fe4da629984e8, type: 3}
+  m_PrefabInstance: {fileID: 1749143455104240813}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 708047835}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1823405866}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &708047837
+--- !u!114 &708047837 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 3182025170784302372, guid: 3bee230e62c5ae24cb5fe4da629984e8, type: 3}
+  m_PrefabInstance: {fileID: 1749143455104240813}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 708047835}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e1ff92ee3b33ed0469aad3348b9550db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Prefabs.Managers.CursorFollowManager
-  scissorsFollow: {fileID: 919132147628771002}
-  acidFollow: {fileID: 559045114}
-  handFollow: {fileID: 472231983}
 --- !u!1 &728905763
 GameObject:
   m_ObjectHideFlags: 0
@@ -10533,6 +10401,71 @@ Transform:
   m_Children: []
   m_Father: {fileID: 728905764}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!1001 &635389546846943737
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1823405866}
+    m_Modifications:
+    - target: {fileID: 6608549595112624214, guid: 1ec9ed4188d23e645a8969bc84ee8fd7, type: 3}
+      propertyPath: panel
+      value: 
+      objectReference: {fileID: 488802146}
+    - target: {fileID: 6608549595112624214, guid: 1ec9ed4188d23e645a8969bc84ee8fd7, type: 3}
+      propertyPath: dialogueText
+      value: 
+      objectReference: {fileID: 172934057}
+    - target: {fileID: 7292004457831625453, guid: 1ec9ed4188d23e645a8969bc84ee8fd7, type: 3}
+      propertyPath: m_Name
+      value: DialogueManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8292892182814747434, guid: 1ec9ed4188d23e645a8969bc84ee8fd7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8292892182814747434, guid: 1ec9ed4188d23e645a8969bc84ee8fd7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8292892182814747434, guid: 1ec9ed4188d23e645a8969bc84ee8fd7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8292892182814747434, guid: 1ec9ed4188d23e645a8969bc84ee8fd7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8292892182814747434, guid: 1ec9ed4188d23e645a8969bc84ee8fd7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8292892182814747434, guid: 1ec9ed4188d23e645a8969bc84ee8fd7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8292892182814747434, guid: 1ec9ed4188d23e645a8969bc84ee8fd7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8292892182814747434, guid: 1ec9ed4188d23e645a8969bc84ee8fd7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8292892182814747434, guid: 1ec9ed4188d23e645a8969bc84ee8fd7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8292892182814747434, guid: 1ec9ed4188d23e645a8969bc84ee8fd7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1ec9ed4188d23e645a8969bc84ee8fd7, type: 3}
 --- !u!1001 &863810553861107809
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10823,6 +10756,75 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1001 &1749143455104240813
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1823405866}
+    m_Modifications:
+    - target: {fileID: 968042730171440607, guid: 3bee230e62c5ae24cb5fe4da629984e8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 968042730171440607, guid: 3bee230e62c5ae24cb5fe4da629984e8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 968042730171440607, guid: 3bee230e62c5ae24cb5fe4da629984e8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 968042730171440607, guid: 3bee230e62c5ae24cb5fe4da629984e8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 968042730171440607, guid: 3bee230e62c5ae24cb5fe4da629984e8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 968042730171440607, guid: 3bee230e62c5ae24cb5fe4da629984e8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 968042730171440607, guid: 3bee230e62c5ae24cb5fe4da629984e8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 968042730171440607, guid: 3bee230e62c5ae24cb5fe4da629984e8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 968042730171440607, guid: 3bee230e62c5ae24cb5fe4da629984e8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 968042730171440607, guid: 3bee230e62c5ae24cb5fe4da629984e8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1704897630362226207, guid: 3bee230e62c5ae24cb5fe4da629984e8, type: 3}
+      propertyPath: m_Name
+      value: CursorFollowManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 3182025170784302372, guid: 3bee230e62c5ae24cb5fe4da629984e8, type: 3}
+      propertyPath: acidFollow
+      value: 
+      objectReference: {fileID: 559045114}
+    - target: {fileID: 3182025170784302372, guid: 3bee230e62c5ae24cb5fe4da629984e8, type: 3}
+      propertyPath: handFollow
+      value: 
+      objectReference: {fileID: 472231983}
+    - target: {fileID: 3182025170784302372, guid: 3bee230e62c5ae24cb5fe4da629984e8, type: 3}
+      propertyPath: scissorsFollow
+      value: 
+      objectReference: {fileID: 919132147628771002}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3bee230e62c5ae24cb5fe4da629984e8, type: 3}
 --- !u!1 &3226192413730300657
 GameObject:
   m_ObjectHideFlags: 0
