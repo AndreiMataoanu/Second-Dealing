@@ -162,9 +162,6 @@ public class BlackjackGame : MonoBehaviour
     private int currentMaxTurns;
     private int currentTurns;
     private IEnumerator eventTriggerCoroutine;
-
-    private HashSet<(Card.Rank, Card.Suit)> antiMatterCards = new HashSet<(Card.Rank, Card.Suit)>();
-    [HideInInspector] public bool isAntiMatterTargeting = false;
     #endregion
 
     #region Getters & Setters

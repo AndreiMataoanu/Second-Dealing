@@ -3,6 +3,7 @@ using UnityEngine;
 
 public enum CardTrigger
 {
+    None,
     Acid,
     Scissors,
     AddCardsEvent
@@ -78,15 +79,6 @@ public class CursorDetection : MonoBehaviour
     }
 
     #region Clickable Cards
-    public void OnUseScissors(BlackjackGame blackjackGame)
-    {
-        currentTargetMode = CardTargetMode.Scissors;
-
-        AddAllClickableCards(blackjackGame);
-        SetClickables(cardClickables, true);
-        SetClickables(roundActiveClickables, false);
-    }
-    
     public void OnSelectCardOption(BlackjackGame blackjackGame, CardTrigger cardTrigger)
     {
         cardClickables = new List<Clickable>();
@@ -97,6 +89,15 @@ public class CursorDetection : MonoBehaviour
 
     public void OnUseCardItem(BlackjackGame blackjackGame, CardTrigger cardTrigger)
     {
+        if(cardTrigger == CardTrigger.Scissors)
+        {
+            currentTargetMode = CardTargetMode.Scissors;
+        }
+        else
+        {
+            currentTargetMode = CardTargetMode.None;
+        }
+
         AddAllClickableCards(blackjackGame, cardTrigger);
         SetClickables(cardClickables, true);
         SetClickables(roundActiveClickables, false);
@@ -106,7 +107,7 @@ public class CursorDetection : MonoBehaviour
     {
         currentTargetMode = CardTargetMode.AntiMatter;
 
-        AddAllClickableCards(blackjackGame);
+        AddAllClickableCards(blackjackGame, CardTrigger.None);
         SetClickables(cardClickables, true);
         SetClickables(roundActiveClickables, false);
     }
@@ -115,7 +116,7 @@ public class CursorDetection : MonoBehaviour
     {
         currentTargetMode = CardTargetMode.Pyro;
 
-        AddAllClickableCards(blackjackGame);
+        AddAllClickableCards(blackjackGame, CardTrigger.None);
         SetClickables(cardClickables, true);
         SetClickables(roundActiveClickables, false);
     }
@@ -124,7 +125,7 @@ public class CursorDetection : MonoBehaviour
     {
         currentTargetMode = CardTargetMode.HatTrick;
 
-        AddAllClickableCards(blackjackGame);
+        AddAllClickableCards(blackjackGame, CardTrigger.None);
         SetClickables(cardClickables, true);
         SetClickables(roundActiveClickables, false);
     }
@@ -223,6 +224,14 @@ public class CursorDetection : MonoBehaviour
         }
 
         currentTargetMode = CardTargetMode.None;
+    }
+
+    public void AddRoundActiveClickable(Clickable clickable)
+    {
+        if(!roundActiveClickables.Contains(clickable))
+        {
+            roundActiveClickables.Add(clickable);
+        }
     }
 
     public void RemoveRoundActiveClickable(Clickable clickable)

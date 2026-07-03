@@ -131,6 +131,7 @@ MonoBehaviour:
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
   tooltipHeader: 
   tooltipContent: 
+  dissolveTime: 1.3
 --- !u!1 &1846285599611208699
 GameObject:
   m_ObjectHideFlags: 0
@@ -281,4 +282,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 951e615659bc4ed4fbe192410e90f54b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TarotCard
-  rewardItemPrefab: {fileID: 0}
+  rewardItemPrefab: {fileID: 7981796096309106432, guid: b881c730ab1fea64fbca849590fac1fe, type: 3}
