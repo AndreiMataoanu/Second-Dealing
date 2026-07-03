@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public enum CardTrigger
 {
@@ -16,7 +15,6 @@ public class CursorDetection : MonoBehaviour
     [SerializeField] private List<Clickable> roundInactiveClickables;
     [SerializeField] private List<Transform> cardTransforms;
     [SerializeField] private Transform cardOptions;
-    [SerializeField] public UnityEvent EndFlip;
 
     private List<Clickable> cardClickables;
     
