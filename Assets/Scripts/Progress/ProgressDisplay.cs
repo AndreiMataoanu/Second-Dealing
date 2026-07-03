@@ -8,6 +8,7 @@ public class ProgressDisplay : MonoBehaviour
 
     private List<int> eventThreshHolds = new();
     private TMP_Text textComponent;
+    private string defaultText;
     
     private void AddThresholds()
     {
@@ -34,10 +35,23 @@ public class ProgressDisplay : MonoBehaviour
         if (!blackjackGame.UseTurnLimit)
         {
             textComponent.text = "Next milestone:\n$" + next;
+            defaultText = textComponent.text;
             return;
         }
 
         textComponent.text = "Next milestone:\n$" + next + "\n\nTurns left: " + blackjackGame.TurnsLeft;
+        defaultText = textComponent.text;
+    }
+
+    public void UpdatePowerballGoal()
+    {
+        textComponent.text = defaultText;
+        var goal = blackjackGame.PowerballGoal;
+        if (goal.Count == 0) return;
+
+        textComponent.text += "\n\nPowerball:\n";
+        foreach (var number in goal)
+            textComponent.text += number + " ";
     }
     
     private void Start()

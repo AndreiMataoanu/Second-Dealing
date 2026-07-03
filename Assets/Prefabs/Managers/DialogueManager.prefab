@@ -1,0 +1,122 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7292004457831625453
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8292892182814747434}
+  - component: {fileID: 6608549595112624214}
+  m_Layer: 0
+  m_Name: DialogueManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8292892182814747434
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7292004457831625453}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6608549595112624214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7292004457831625453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b29894440b8f4b54185915f65552c667, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueSystem
+  dialogueText: {fileID: 0}
+  panel: {fileID: 0}
+  delayBetweenLines: 2
+  typingSpeed: 0.02
+  tutorialLines:
+  - Welcome to Blackjack...
+  - I will be your dealer for tonight.
+  - The stakes are your survival.
+  - Let me recap the basics...
+  - Your goal is 21.
+  - Do not go over 21.
+  - Number cards hold their face value.
+  - Kings, Queens, and Jacks count as 10.
+  - Aces count as 1 or 11.
+  - Beat my total to win the round.
+  - Bust past 21 and you lose.
+  - Bought items alter the decks.
+  - 'Remember: Soon we will not play by standard rules alone.'
+  - Let's get started...
+  splitTutorialLines:
+  - Let me remind you the rules for Splitting.
+  - When you hold two cards of equal value...
+  - You can split them into two separate hands.
+  - Another bet is placed equal to your first bet.
+  - Play the first hand to completion.
+  - Then play your next hand.
+  - You can split up to 3 times, if money allows.
+  - Double your risk, win twice the money.
+  - Use your right hand to gesture a split.
+  doubleDownTutorialLines:
+  - Let me remind you the rules for Doubling Down.
+  - When you hold two cards only...
+  - You can double down to double your current bet.
+  - I deal you exactly one more card...
+  - And your turn ends immediately.
+  - Win big or lose everything.
+  - Use your left hand to gesture a double down.
+  powerballTutorialLines:
+  - The Powerball event! A classic.
+  - You will get three random numbers.
+  - They will be on the screen behind me...
+  - ... so your little head can keep track.
+  - Finish your turn with one of those three scores.
+  - You will have to get all of them eventually.
+  - Does it apply to splitting? Guess.
+  lowMoneyTaunts:
+  - Careful now...
+  betLostTaunts:
+  - That must've hurt.
+  - Ouch...
+  - Too bad...
+  - What a waste...
+  dealerBlackjackTaunts:
+  - Not a chance...
+  dealerWinsByOneTaunts:
+  - Not good enough...
+  - Almost...
+  playerBlackjackTaunts:
+  - Lucky...
+  tieTaunts:
+  - Not so fast...
+  turnLimitTaunts:
+  - A bit too slow.
+  - Time's up.
+  - I've seen enough.
+  copyOptionTaunts:
+  - That one? Hm...
+  - It's your choice I suppose.
+  - It makes sense for you to choose that.
+  powerballWinTaunts:
+  - What's that? You got all of them?
+  - So you got them all.
+  - It's over. That didn't last too long...
+  powerballGenerateTaunts:
+  - Don't you worry. Powerball is not done yet.
+  - See that? You just got new powerball numbers!
