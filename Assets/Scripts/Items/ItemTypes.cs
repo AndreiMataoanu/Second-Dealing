@@ -10,5 +10,6 @@ public enum ItemType
     Fan,
     Lotto,
     Acid,
-    Nft
+    Nft,
+    Coin
 }

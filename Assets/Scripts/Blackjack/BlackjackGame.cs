@@ -49,6 +49,7 @@ public class BlackjackGame : MonoBehaviour
     private bool isScissorsActive = false;
     private bool isAcidActive = false;
     private bool isCrucifixActive = false;
+    private bool isCoinActive = false;
     private bool isCigaretteActive = false;
     private bool isAlcoholActive = false;
     private bool isActionLocked = false;
@@ -505,6 +506,17 @@ public class BlackjackGame : MonoBehaviour
         if(!isRoundActive || isActionLocked) return false;
 
         isCrucifixActive = true;
+        isCoinActive = false;
+
+        return true;
+    }
+    
+    public bool ActivateCoin()
+    {
+        if(!isRoundActive || isActionLocked) return false;
+
+        isCoinActive = true;
+        isCrucifixActive = false;
 
         return true;
     }
@@ -1491,17 +1503,21 @@ public class BlackjackGame : MonoBehaviour
 
         List<CardInstance> currentHand = playerHands[currentHandIndex];
 
-        if(isCrucifixActive)
+        if(isCrucifixActive || isCoinActive)
         {
-            isCrucifixActive = false;
-
             int playerValue = CalculateHandValue(currentHand, true);
             int idealValue = blackjackGoal - playerValue;
 
             Card? dealtCard = null;
             Card.Rank targetRank = GetBestRankForValue(idealValue);
 
-            dealtCard = gameDeck.DealSpecificCard(targetRank);
+            if (isCrucifixActive)
+                dealtCard = gameDeck.DealSpecificCard(targetRank);
+            else if (isCoinActive)
+                dealtCard = gameDeck.DealCoinSpecificCard(targetRank);
+            
+            isCrucifixActive = false;
+            isCoinActive = false;
 
             if(!dealtCard.HasValue)
             {

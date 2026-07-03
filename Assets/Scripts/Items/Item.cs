@@ -52,6 +52,7 @@ public class Item : Clickable
             ItemType.Knife => blackjackGame.ActivateKnife(),
             ItemType.Scissors => blackjackGame.ActivateScissors(),
             ItemType.Crucifix => blackjackGame.ActivateCrucifix(),
+            ItemType.Coin => blackjackGame.ActivateCoin(),
             ItemType.Sunglasses => blackjackGame.ActivateSunglasses(),
             ItemType.Organ => false,
             ItemType.Cigarette => blackjackGame.ActivateCigarette(),
