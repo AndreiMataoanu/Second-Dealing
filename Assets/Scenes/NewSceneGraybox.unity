@@ -10815,7 +10815,7 @@ PrefabInstance:
       objectReference: {fileID: 1688790259}
     - target: {fileID: 1819999903971304338, guid: 37c77e8a77093fc4f8e72e4e5f3d99bb, type: 3}
       propertyPath: powerUpPrefabs.Array.size
-      value: 10
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1819999903971304338, guid: 37c77e8a77093fc4f8e72e4e5f3d99bb, type: 3}
       propertyPath: 'buySpawnPoints.Array.data[0]'
@@ -10849,6 +10849,14 @@ PrefabInstance:
       propertyPath: 'useSpawnPoints.Array.data[1]'
       value: 
       objectReference: {fileID: 510491807}
+    - target: {fileID: 1819999903971304338, guid: 37c77e8a77093fc4f8e72e4e5f3d99bb, type: 3}
+      propertyPath: 'powerUpPrefabs.Array.data[10]'
+      value: 
+      objectReference: {fileID: 3226192414058870725, guid: 08752688242307a4db155f11b51f3ae6, type: 3}
+    - target: {fileID: 1819999903971304338, guid: 37c77e8a77093fc4f8e72e4e5f3d99bb, type: 3}
+      propertyPath: 'powerUpPrefabs.Array.data[11]'
+      value: 
+      objectReference: {fileID: 9090495121263625931, guid: 43c76f0a42570e844afb9be6f20260c9, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
