@@ -125,6 +125,11 @@ public class Item : Clickable
             return $"Passive: Sacrifice instead of your life\nExpires in: {blackjackGame.GetOrganRoundsLeft()} rounds";
         }
 
+        if (type == ItemType.Nft)
+        {
+            return base.GetTooltipContent() + " Current value: ";
+        }
+
         return base.GetTooltipContent();
     }
 
