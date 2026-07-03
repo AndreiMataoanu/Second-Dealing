@@ -99,6 +99,11 @@ public class ItemManager : MonoBehaviour
             organRoundsLeft = 2;
         }
 
+        if (item.type == ItemType.Nft)
+        {
+            item.SetNftRoundsLeft();
+        }
+
         if (inventoryItems == buySpawnPoints.Count)
         {
             DespawnPowerUps();
@@ -193,6 +198,18 @@ public class ItemManager : MonoBehaviour
                 AudioManager.instance.Play("OrganExpire");
 
                 RemoveItemOfType(ItemType.Organ);
+            }
+        }
+    }
+
+    public void OnRoundStart()
+    {
+        foreach (var spawnPoint in useSpawnPoints)
+        {
+            if (spawnPoint.transform.childCount > 0)
+            {
+                Item item = spawnPoint.transform.GetChild(0).GetComponent<Item>();
+                item.OnRoundStart();
             }
         }
     }
