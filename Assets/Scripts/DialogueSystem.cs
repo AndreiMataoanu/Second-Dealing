@@ -19,6 +19,8 @@ public class DialogueSystem : MonoBehaviour
     [SerializeField] private string[] splitTutorialLines;
     [Tooltip("Tutorial shown when the player can double down for the first time.")]
     [SerializeField] private string[] doubleDownTutorialLines;
+    [Tooltip("Tutorial shown when the player can double down for the first time.")]
+    [SerializeField] private string[] powerballTutorialLines;
 
     [Header("Taunt Quotes")]
     [Tooltip("Taunts shown when the player is low on money.")]
@@ -35,8 +37,12 @@ public class DialogueSystem : MonoBehaviour
     [SerializeField] private List<string> tieTaunts;
     [Tooltip("Taunts shown when player is out of turns.")]
     [SerializeField] private List<string> turnLimitTaunts;
-    [Tooltip("Taunts shown when player chooses which card to copy")] 
+    [Tooltip("Taunts shown when player chooses which card to copy.")] 
     [SerializeField] private List<string> copyOptionTaunts;
+    [Tooltip("Taunts shown when player gets all powerball number.")] 
+    [SerializeField] private List<string> powerballWinTaunts;
+    [Tooltip("Taunts shown when new powerball numbers are generated.")] 
+    [SerializeField] private List<string> powerballGenerateTaunts;
 
     private Coroutine sequenceCoroutine;
     private Coroutine typingCoroutine;
@@ -73,6 +79,14 @@ public class DialogueSystem : MonoBehaviour
 
         sequenceCoroutine = StartCoroutine(SequenceCoroutine(doubleDownTutorialLines));
     }
+    
+    public void PlayPowerballTutorial()
+    {
+        StopCurrentDialogue();
+
+        sequenceCoroutine = StartCoroutine(SequenceCoroutine(powerballTutorialLines));
+    }
+
 
     public void ShowAddCardsText(int copyNumber)
     {
@@ -175,6 +189,8 @@ public class DialogueSystem : MonoBehaviour
     public void ShowTieTaunt() => ShowMessage(GetRandomTaunt(tieTaunts));
     public void ShowTurnLimitTaunt() => ShowMessage(GetRandomTaunt(turnLimitTaunts));
     public void ShowCopyChoiceTaunt() => ShowMessage(GetRandomTaunt(copyOptionTaunts));
+    public void ShowPowerballTaunt() => ShowMessage(GetRandomTaunt(powerballWinTaunts));
+    public void ShowPowerballGenerateTaunt() => ShowMessage(GetRandomTaunt(powerballGenerateTaunts));
 
     private string GetRandomTaunt(List<string> taunts)
     {

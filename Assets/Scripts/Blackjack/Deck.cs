@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class Deck
@@ -11,6 +12,7 @@ public class Deck
     private Tuple<Card?, int> copies = new(null, 0);
 
     private bool jokersInDeck = false;
+    private const float CoinProbability = 0.7f;
 
     public Deck()
     {
@@ -129,6 +131,12 @@ public class Deck
         }
 
         return null;
+    }
+
+    public Card? DealCoinSpecificCard(Card.Rank targetRank)
+    {
+        var r = Random.Range(0.0f, 1.0f);
+        return r < CoinProbability ? DealSpecificCard(targetRank) : DealCard();
     }
 
     public void AddRemovedValue(Card.Rank rank)
