@@ -5,20 +5,10 @@ public class KeepsakeManager : MonoBehaviour
 {
     public static KeepsakeManager instance;
 
-    [SerializeField] private Transform tableSpawnPoint;
-    private GameObject currentTableObject;
-    public Keepsake _equippedKeepsake;
-
-    public Keepsake equippedKeepsake
-    {
-        get { return _equippedKeepsake; }
-        set
-        {
-            _equippedKeepsake = value;
-
-            UpdateTableVisuals();
-        }
-    }
+    [SerializeField] private List<Transform> tableSpawnPoints;
+    public int maxKeepsakes = 3;
+    private List<GameObject> currentTableObjects = new List<GameObject>();
+    public List<Keepsake> equippedKeepsakes = new List<Keepsake>();
 
     private void Awake()
     {
@@ -32,91 +22,166 @@ public class KeepsakeManager : MonoBehaviour
         }
     }
 
+    public bool EquipKeepsake(Keepsake keepsake)
+    {
+        if(equippedKeepsakes.Count >= maxKeepsakes) return false;
+
+        if(equippedKeepsakes.Contains(keepsake)) return false;
+
+        equippedKeepsakes.Add(keepsake);
+
+        UpdateTableVisuals();
+
+        return true;
+    }
+
+    public void UnequipKeepsake(Keepsake keepsake)
+    {
+        if(equippedKeepsakes.Remove(keepsake))
+        {
+            UpdateTableVisuals();
+        }
+    }
+
     private void UpdateTableVisuals()
     {
-        if(currentTableObject != null)
+        foreach(GameObject obj in currentTableObjects)
         {
-            Destroy(currentTableObject);
+            if(obj != null) Destroy(obj);
         }
 
-        if(_equippedKeepsake != null && _equippedKeepsake.tablePrefab != null && tableSpawnPoint != null)
+        currentTableObjects.Clear();
+
+        for(int i = 0; i < equippedKeepsakes.Count; i++)
         {
-            currentTableObject = Instantiate(_equippedKeepsake.tablePrefab, tableSpawnPoint);
-            currentTableObject.transform.localPosition = Vector3.zero;
-            currentTableObject.transform.localRotation = Quaternion.identity;
+            Keepsake keepsake = equippedKeepsakes[i];
+
+            if(keepsake.tablePrefab != null && tableSpawnPoints != null && i < tableSpawnPoints.Count && tableSpawnPoints[i] != null)
+            {
+                GameObject tableObj = Instantiate(keepsake.tablePrefab, tableSpawnPoints[i]);
+                tableObj.transform.localPosition = Vector3.zero;
+                tableObj.transform.localRotation = Quaternion.identity;
+
+                currentTableObjects.Add(tableObj);
+
+                TableKeepsakeInteractable interactable = tableObj.GetComponent<TableKeepsakeInteractable>();
+
+                if(interactable != null)
+                {
+                    interactable.SetKeepsake(keepsake);
+                }
+            }
         }
     }
 
     public int ApplyPayoutModifiers(int payout, List<List<CardInstance>> allHands)
     {
-        if(equippedKeepsake == null) return payout;
+        int currentPayout = payout;
 
-        return equippedKeepsake.ModifyPayout(payout, allHands);
+        foreach(var keepsake in equippedKeepsakes)
+        {
+            currentPayout = keepsake.ModifyPayout(currentPayout, allHands);
+        }
+
+        return currentPayout;
     }
 
     public void ResetKeepsake()
     {
-        if(equippedKeepsake != null)
+        foreach(var keepsake in equippedKeepsakes)
         {
-            equippedKeepsake.OnRoundStart();
+            keepsake.OnRoundStart();
         }
     }
 
-    public bool AllowsAnySplit()
+    public bool AllowAnySplit()
     {
-        if(equippedKeepsake == null) return false;
-
-        return equippedKeepsake.AllowAnySplit();
-    }
-
-    public int GetDealerBustModifier()
-    {
-        if(equippedKeepsake == null) return 0;
-
-        return equippedKeepsake.GetDealerBustModifier();
-    }
-
-    public bool AllowsEndlessDoubleDown()
-    {
-        if(equippedKeepsake == null) return false;
-
-        return equippedKeepsake.AllowEndlessDoubleDown();
-    }
-
-    public bool AllowsOverdraft()
-    {
-        if(equippedKeepsake == null) return false;
-
-        return equippedKeepsake.AllowOverdraft();
-    }
-
-    public int GetPassiveIncome()
-    {
-        if(equippedKeepsake == null) return 0;
-
-        return equippedKeepsake.GetPassiveIncome();
-    }
-
-    public bool TryConsumeKeepsake()
-    {
-        if(equippedKeepsake == null) return false;
-
-        bool isConsumed = equippedKeepsake.Consume();
-
-        if(isConsumed)
+        foreach(var keepsake in equippedKeepsakes)
         {
-            equippedKeepsake = null;
-
-            return true;
+            if(keepsake.AllowAnySplit()) return true;
         }
 
         return false;
     }
 
-    public bool AddsTarotCards()
+    public int GetDealerBustModifier()
     {
-        if(equippedKeepsake == null) return false;
+        int total = 0;
 
-        return equippedKeepsake.AddsTarotCards();
+        foreach(var keepsake in equippedKeepsakes)
+        {
+            total += keepsake.GetDealerBustModifier();
+        }
+
+        return total;
+    }
+
+    public bool AllowEndlessDoubleDown()
+    {
+        foreach(var keepsake in equippedKeepsakes)
+        {
+            if(keepsake.AllowEndlessDoubleDown()) return true;
+        }
+
+        return false;
+    }
+
+    public bool AllowOverdraft()
+    {
+        foreach(var keepsake in equippedKeepsakes)
+        {
+            if(keepsake.AllowOverdraft()) return true;
+        }
+
+        return false;
+    }
+
+    public int GetPassiveIncome()
+    {
+        int total = 0;
+
+        foreach(var keepsake in equippedKeepsakes)
+        {
+            total += keepsake.GetPassiveIncome();
+        }
+
+        return total;
+    }
+
+    public bool ConsumeKeepsake()
+    {
+        for(int i = 0; i < equippedKeepsakes.Count; i++)
+        {
+            if(equippedKeepsakes[i].Consume())
+            {
+                equippedKeepsakes.RemoveAt(i);
+
+                UpdateTableVisuals();
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public bool AddTarotCards()
+    {
+        foreach(var keepsake in equippedKeepsakes)
+        {
+            if(keepsake.AddTarotCards()) return true;
+        }
+
+        return false;
+    }
+
+    public bool AllowPostStandItem()
+    {
+        foreach(var keepsake in equippedKeepsakes)
+        {
+            if(keepsake.AllowPostStandItem()) return true;
+        }
+
+        return false;
     }
 }

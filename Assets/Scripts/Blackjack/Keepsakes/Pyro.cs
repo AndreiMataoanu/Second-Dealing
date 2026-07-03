@@ -15,7 +15,7 @@ public class Pyro : Keepsake
         usesThisRound = 0;
     }
 
-    public override bool TryActivateTableEffect(BlackjackGame game)
+    public override bool ActivateTableEffect(BlackjackGame game)
     {
         if(usesThisRound >= 1) return false;
 

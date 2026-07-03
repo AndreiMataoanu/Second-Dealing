@@ -11,7 +11,7 @@ public abstract class Keepsake : ScriptableObject
     {
     }
 
-    public virtual bool TryActivateTableEffect(BlackjackGame game)
+    public virtual bool ActivateTableEffect(BlackjackGame game)
     {
         return false;
     }
@@ -56,7 +56,12 @@ public abstract class Keepsake : ScriptableObject
         return false;
     }
 
-    public virtual bool AddsTarotCards()
+    public virtual bool AddTarotCards()
+    {
+        return false;
+    }
+
+    public virtual bool AllowPostStandItem()
     {
         return false;
     }

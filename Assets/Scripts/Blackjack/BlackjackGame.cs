@@ -2013,7 +2013,7 @@ public class BlackjackGame : MonoBehaviour
 
         isActionLocked = true;
 
-        bool endlessDouble = KeepsakeManager.instance.AllowsEndlessDoubleDown();
+        bool endlessDouble = KeepsakeManager.instance.AllowEndlessDoubleDown();
 
         if(!endlessDouble)
         {
@@ -2079,7 +2079,7 @@ public class BlackjackGame : MonoBehaviour
 
         isActionLocked = true;
 
-        bool endlessDouble = KeepsakeManager.instance.AllowsEndlessDoubleDown();
+        bool endlessDouble = KeepsakeManager.instance.AllowEndlessDoubleDown();
 
         if(!endlessDouble)
         {
@@ -2966,7 +2966,7 @@ public class BlackjackGame : MonoBehaviour
 
         if(playerMoney <= 0)
         {
-            bool isConsumed = KeepsakeManager.instance.TryConsumeKeepsake();
+            bool isConsumed = KeepsakeManager.instance.ConsumeKeepsake();
 
             if(isConsumed)
             {
@@ -3091,8 +3091,8 @@ public class BlackjackGame : MonoBehaviour
         foreach(int b in handBets) totalBets += b;
 
         bool hasEnoughMoney = playerMoney >= (totalBets + handBets[currentHandIndex]);
-        bool allowsOverdraft = KeepsakeManager.instance.AllowsOverdraft();
-        bool keepsakeAllowsSplit = KeepsakeManager.instance.AllowsAnySplit();
+        bool allowsOverdraft = KeepsakeManager.instance.AllowOverdraft();
+        bool keepsakeAllowsSplit = KeepsakeManager.instance.AllowAnySplit();
         bool validSplit = val1 == val2 || keepsakeAllowsSplit;
         bool validFunds = hasEnoughMoney || allowsOverdraft;
 
@@ -3128,7 +3128,7 @@ public class BlackjackGame : MonoBehaviour
         foreach(int b in handBets) totalBets += b;
 
         bool hasEnoughMoney = playerMoney >= (totalBets + handBets[currentHandIndex]);
-        bool allowsOverdraft = KeepsakeManager.instance.AllowsOverdraft();
+        bool allowsOverdraft = KeepsakeManager.instance.AllowOverdraft();
 
         canDoubleDown = hasEnoughMoney || allowsOverdraft;
     }

@@ -3,6 +3,7 @@ using UnityEngine;
 public class TableKeepsakeInteractable : Clickable
 {
     private BlackjackGame blackjackGame;
+    private Keepsake keepsake;
 
     private void Start()
     {
@@ -15,12 +16,13 @@ public class TableKeepsakeInteractable : Clickable
             cursorDetection.AddRoundActiveClickable(this);
         }
 
-        if(KeepsakeManager.instance != null && KeepsakeManager.instance.equippedKeepsake != null)
-        {
-            tooltipHeader = KeepsakeManager.instance.equippedKeepsake.keepsakeName;
-        }
-
         SetActive(false);
+    }
+
+    public void SetKeepsake(Keepsake k)
+    {
+        keepsake = k;
+        tooltipHeader = k.keepsakeName;
     }
 
     private void OnDestroy()
@@ -38,15 +40,11 @@ public class TableKeepsakeInteractable : Clickable
         if(!IsActive) return;
 
         base.OnClick(mouseButton);
+        bool activated = keepsake.ActivateTableEffect(blackjackGame);
 
-        if(KeepsakeManager.instance != null && KeepsakeManager.instance.equippedKeepsake != null)
+        if(!activated)
         {
-            bool activated = KeepsakeManager.instance.equippedKeepsake.TryActivateTableEffect(blackjackGame);
-
-            if(!activated)
-            {
-                AudioManager.instance.Play("ItemDeny");
-            }
+            AudioManager.instance.Play("ItemDeny");
         }
     }
 }

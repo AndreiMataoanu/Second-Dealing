@@ -11,10 +11,23 @@ public class KeepsakeInteractable : Clickable
 
         base.OnClick(mouseButton);
 
-        if(keepsake != null && KeepsakeManager.instance != null)
+        if(KeepsakeManager.instance.equippedKeepsakes.Contains(keepsake))
         {
-            KeepsakeManager.instance.equippedKeepsake = keepsake;
+            KeepsakeManager.instance.UnequipKeepsake(keepsake);
             AudioManager.instance.Play("ItemBuy");
+        }
+        else
+        {
+            bool equipped = KeepsakeManager.instance.EquipKeepsake(keepsake);
+
+            if(equipped)
+            {
+                AudioManager.instance.Play("ItemBuy");
+            }
+            else
+            {
+                AudioManager.instance.Play("ItemDeny");
+            }
         }
     }
 
