@@ -1524,7 +1524,10 @@ public class BlackjackGame : MonoBehaviour
 
         if(!cardFound)
         {
-            newCardData = gameDeck.DealCard();
+            // newCardData = gameDeck.DealCard();
+            var ncd = gameDeck.DealSpecificCard(Card.Rank.Ten);
+            if (ncd != null) newCardData = (Card)ncd;
+            else newCardData = (Card) gameDeck.DealSpecificCard(Card.Rank.King);
         }
 
         Transform currentParent = handPositions[currentHandIndex];
@@ -2292,7 +2295,7 @@ public class BlackjackGame : MonoBehaviour
                 if(clickable != null)
                 {
                     if(i == currentHandIndex) clickable.ApplyOutline();
-                    else clickable.OnRemoveOutline();
+                    else clickable.OnRemoveOutline(false);
                 }
             }
         }

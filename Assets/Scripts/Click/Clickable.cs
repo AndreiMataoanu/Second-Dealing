@@ -44,7 +44,7 @@ public class Clickable : MonoBehaviour
         OnRemoveOutline();
     }
 
-    public void OnRemoveOutline()
+    public void OnRemoveOutline(bool hideTooltip=true)
     {
         if (!outline || !hasOutline) return;
         
@@ -53,7 +53,7 @@ public class Clickable : MonoBehaviour
         meshRenderer.materials = materials.ToArray();
         hasOutline = false;
 
-        TooltipManager.instance.HideTooltip();
+        if (hideTooltip) TooltipManager.instance.HideTooltip();
     }
 
     public virtual void OnClick(int mouseButton = 0)
