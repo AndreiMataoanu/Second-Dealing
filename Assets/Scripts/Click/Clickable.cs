@@ -9,7 +9,7 @@ public class Clickable : MonoBehaviour
 
     [Header("Tooltip Settings")]
     [SerializeField] public string tooltipHeader;
-    [SerializeField] private string tooltipContent;
+    [TextArea][SerializeField] private string tooltipContent;
 
     private MeshCollider meshCollider;
     private Renderer meshRenderer;
