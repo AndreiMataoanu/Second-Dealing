@@ -4,6 +4,7 @@ public class TableKeepsakeInteractable : Clickable
 {
     private BlackjackGame blackjackGame;
     private Keepsake keepsake;
+    private bool usedThisRound = false;
 
     private void Start()
     {
@@ -25,6 +26,11 @@ public class TableKeepsakeInteractable : Clickable
         tooltipHeader = k.keepsakeName;
     }
 
+    public void ResetUse()
+    {
+        usedThisRound = false;
+    }
+
     private void OnDestroy()
     {
         var cursorDetection = FindFirstObjectByType<CursorDetection>();
@@ -39,12 +45,27 @@ public class TableKeepsakeInteractable : Clickable
     {
         if(!IsActive) return;
 
+        if(!keepsake.isActive || usedThisRound) return;
+
         base.OnClick(mouseButton);
         bool activated = keepsake.ActivateTableEffect(blackjackGame);
 
-        if(!activated)
+        if(activated)
+        {
+            usedThisRound = true;
+
+            OnRemoveOutline();
+        }
+        else
         {
             AudioManager.instance.Play("ItemDeny");
         }
+    }
+
+    public override void ApplyOutline()
+    {
+        if(!keepsake.isActive || usedThisRound) return;
+
+        base.ApplyOutline();
     }
 }

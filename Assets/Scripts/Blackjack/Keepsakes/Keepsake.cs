@@ -6,6 +6,7 @@ public abstract class Keepsake : ScriptableObject
     public string keepsakeName;
     [TextArea] public string description;
     public GameObject tablePrefab;
+    public bool isActive = false;
 
     public virtual void OnRoundStart()
     {

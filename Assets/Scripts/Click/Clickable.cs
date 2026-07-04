@@ -29,31 +29,30 @@ public class Clickable : MonoBehaviour
 
     protected virtual void OnMouseEnter()
     {
-        if (!outline || !IsActive) return;
-        
-        var materials = new List<Material>(meshRenderer.materials) { outline };
-        meshRenderer.materials = materials.ToArray();
-        hasOutline = true;
+        if(!IsActive) return;
+
+        ApplyOutline();
 
         TooltipManager.instance.ShowTooltip(GetTooltipContent(), GetTooltipHeader());
     }
 
     protected virtual void OnMouseExit()
     {
-        if (!IsActive) return;
+        if(!IsActive) return;
+
         OnRemoveOutline();
     }
 
-    public void OnRemoveOutline(bool hideTooltip=true)
+    public void OnRemoveOutline(bool hideTooltip = true)
     {
-        if (!outline || !hasOutline) return;
+        if(hideTooltip) TooltipManager.instance.HideTooltip();
+
+        if(!outline || !hasOutline) return;
         
         var materials = new List<Material>(meshRenderer.materials);
         materials.RemoveAt(materials.Count - 1);
         meshRenderer.materials = materials.ToArray();
         hasOutline = false;
-
-        if (hideTooltip) TooltipManager.instance.HideTooltip();
     }
 
     public virtual void OnClick(int mouseButton = 0)
@@ -68,7 +67,7 @@ public class Clickable : MonoBehaviour
         OnRemoveOutline();
     }
 
-    public void ApplyOutline()
+    public virtual void ApplyOutline()
     {
         if(!outline || hasOutline || meshRenderer == null) return;
 

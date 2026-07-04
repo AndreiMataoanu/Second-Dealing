@@ -92,6 +92,13 @@ public class KeepsakeManager : MonoBehaviour
         {
             keepsake.OnRoundStart();
         }
+
+        foreach(GameObject tableObject in currentTableObjects)
+        {
+            TableKeepsakeInteractable interactable = tableObject.GetComponent<TableKeepsakeInteractable>();
+
+            interactable.ResetUse();
+        }
     }
 
     public bool AllowAnySplit()

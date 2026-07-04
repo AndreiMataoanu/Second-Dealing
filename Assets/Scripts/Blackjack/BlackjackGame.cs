@@ -2221,6 +2221,8 @@ public class BlackjackGame : MonoBehaviour
 
     private IEnumerator DealerTurnCoroutine(bool playerHasBlackjack = false)
     {
+        cursorDetection.OnDealerTurn();
+
         foreach(var hand in playerHands)
         {
             foreach(var card in hand)
@@ -2515,6 +2517,8 @@ public class BlackjackGame : MonoBehaviour
 
     private IEnumerator EndGameCoroutine(string message)
     {
+        cursorDetection.OnDealerTurn();
+
         int activeBetAmount = (handBets != null && handBets.Count > 0) ? handBets[0] : currentBet;
 
         yield return StartCoroutine(ProcessPayout(message, activeBetAmount, playerHands));

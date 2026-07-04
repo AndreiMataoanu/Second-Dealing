@@ -14,13 +14,13 @@ public class PowerballEvent : BlackjackEvent
     {
         List<int> numbers = new List<int>();
 
-        // for (int i = 0; i < 3; i++)
-        //     numbers.Add(Random.Range(2, 34));
+        for(int i = 0; i < 3; i++)
+            numbers.Add(Random.Range(2, 34));
 
-        numbers.Add(20);
-        numbers.Add(20);
-        numbers.Add(10);
-        
+        //numbers.Add(20);
+        //numbers.Add(20);
+        //numbers.Add(10);
+
         return numbers;
     }
 }
