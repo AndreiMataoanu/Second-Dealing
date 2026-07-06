@@ -165,6 +165,7 @@ public class BlackjackGame : MonoBehaviour
     private int currentMaxTurns;
     private int currentTurns;
     private IEnumerator eventTriggerCoroutine;
+    private bool isPlayerStand = false;
 
     #endregion
 
@@ -229,6 +230,7 @@ public class BlackjackGame : MonoBehaviour
     #region Player Actions
     public void OnStartGame()
     {
+        isPlayerStand = false;
         itemManager.OnRoundStart();
         if(!isRoundActive && PlayerMoney >= currentBet)
             StartCoroutine(DealRoundCoroutine());
@@ -602,9 +604,119 @@ public class BlackjackGame : MonoBehaviour
 
         isCigaretteActive = true;
 
-        StartCoroutine(CigaretteCoroutine());
+        StartCoroutine(!isPlayerStand ? CigaretteCoroutine() : CigaretteStandCoroutine());
 
         return true;
+    }
+
+    private IEnumerator CigaretteStandCoroutine()
+    {
+        // TODO: actually do it right
+        
+        isActionLocked = true;
+
+        if (dealToDealerCoroutine != null)
+        {
+            StopCoroutine(dealToDealerCoroutine);
+            dealToDealerCoroutine = null;
+            
+        }
+        
+        List<CardInstance> tempHand = new List<CardInstance>(playerHands[0]);
+
+        playerHands[0] = new List<CardInstance>(dealerHand);
+        dealerHand = new List<CardInstance>(tempHand);
+
+        AudioManager.instance.Play("Smoking");
+
+        yield return new WaitForSeconds(1f);
+
+        smokeParticle.Play();
+
+        yield return new WaitForSeconds(1f);
+
+        foreach(var card in playerHands[0])
+        {
+            if(card.isHidden)
+            {
+                yield return StartCoroutine(FlipCardCoroutine(card.displayComponent, 0.4f));
+
+                card.isHidden = false;
+            }
+        }
+
+        float animDuration = 0.5f;
+        int maxCards = Mathf.Max(playerHands[0].Count, dealerHand.Count);
+
+        Transform currentParent = handPositions[0];
+
+        for(int i = 0; i < maxCards; i++)
+        {
+            if(i < playerHands[0].Count)
+            {
+                CardInstance pCard = playerHands[0][i];
+
+                pCard.displayComponent.transform.SetParent(currentParent.parent);
+
+                int cardOrderIndex = playerHands[0].Count - 1 - i;
+                float xOffset = cardOrderIndex * playerCardOffset.x;
+                float yOffset = cardOrderIndex * playerCardOffset.y;
+                float zOffset = cardOrderIndex * -zOverlap;
+
+                Vector3 targetLocalPos = new Vector3(xOffset, yOffset, zOffset);
+
+                StartCoroutine(CardAnimationCoroutine(
+                    pCard.displayComponent.transform,
+                    currentParent.TransformPoint(targetLocalPos),
+                    currentParent.rotation,
+                    cardScaleVector,
+                    animDuration
+                ));
+            }
+
+            if(i < dealerHand.Count)
+            {
+                CardInstance dCard = dealerHand[i];
+
+                dCard.displayComponent.transform.SetParent(dealerCardPosition.parent);
+
+                int cardOrderIndex = dealerHand.Count - 1 - i;
+                float xOffset = cardOrderIndex * dealerCardHorizontalSpacing;
+                float yOffset = 0f;
+                float zOffset = cardOrderIndex * -zOverlap;
+
+                Vector3 targetLocalPos = new Vector3(xOffset, yOffset, zOffset);
+
+                StartCoroutine(CardAnimationCoroutine(
+                    dCard.displayComponent.transform,
+                    dealerCardPosition.TransformPoint(targetLocalPos),
+                    dealerCardPosition.rotation,
+                    cardScaleVector,
+                    animDuration
+                ));
+            }
+        }
+
+        yield return new WaitForSeconds(animDuration);
+
+        foreach(CardInstance card in playerHands[0])
+        {
+            card.displayComponent.transform.SetParent(currentParent);
+        }
+
+        foreach(CardInstance card in dealerHand)
+        {
+            card.displayComponent.transform.SetParent(dealerCardPosition);
+        }
+
+        UpdateHandVisuals(playerHands[0], currentParent, true);
+        UpdateHandVisuals(dealerHand, dealerCardPosition, false);
+        UpdateUI(true);
+
+        smokeParticle.Stop();
+        isActionLocked = false;
+
+        EvaluateDoubleDownCondition();
     }
 
     private IEnumerator CigaretteCoroutine()
@@ -708,6 +820,15 @@ public class BlackjackGame : MonoBehaviour
         EvaluateDoubleDownCondition();
     }
 
+    private int ChooseHandIndex()
+    {
+        if (!isPlayerStand) return currentHandIndex;
+        return currentHandIndex - 1;
+        // if (playerHands.Count == 1) return 0;
+
+        // TODO: choose shitty hand
+    }
+    
     public bool ActivateAlcohol()
     {
         if(!isRoundActive || (isActionLocked && !useAfterStand) || isAlcoholActive) return false;
@@ -2127,6 +2248,8 @@ public class BlackjackGame : MonoBehaviour
 
     private IEnumerator StandCoroutine()
     {
+        isPlayerStand = true;
+        
         if(!isRoundActive || isActionLocked) yield break;
 
         isActionLocked = true;
@@ -2724,6 +2847,7 @@ public class BlackjackGame : MonoBehaviour
     //Flip animation for revealing the hidden card.
     private IEnumerator FlipCardCoroutine(CardDisplay cardDisplay, float duration)
     {
+        Debug.Log("flip");
         Transform cardTransform = cardDisplay.transform;
 
         Quaternion startRotation = cardTransform.localRotation;

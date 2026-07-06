@@ -111,9 +111,11 @@ MonoBehaviour:
   tooltipContent: Forces the dealer to stand
   basePrice: 200
   percentagePrice: 0.2
+  resaleLossPercentage: 0.5
   type: 0
   spawnWeight: 15
   isPurchased: 0
+  lottoWorldText: {fileID: 0}
 --- !u!64 &-3876307792271350307
 MeshCollider:
   m_ObjectHideFlags: 0
