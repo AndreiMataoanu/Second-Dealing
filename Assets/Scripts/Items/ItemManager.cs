@@ -270,21 +270,25 @@ public class ItemManager : MonoBehaviour
         return powerUpPrefabs[0];
     }
     
-    private void AddToInventory(Item item)
+    private void AddToInventory(Item item, bool isFree = false)
     {
         AudioManager.instance.Play("ItemBuy");
 
-        blackjackGame.BuyItem(item.GetPrice());
+        if(!isFree)
+        {
+            blackjackGame.BuyItem(item.GetPrice());
+        }
         
         var pos = item.transform.localPosition;
         var rot = item.transform.localRotation;
         var scale = item.transform.localScale;
 
-        foreach (var spawnPoint in useSpawnPoints)
+        foreach(var spawnPoint in useSpawnPoints)
         {
-            if (spawnPoint.transform.childCount == 0)
+            if(spawnPoint.transform.childCount == 0)
             {
                 item.transform.parent = spawnPoint.transform;
+
                 break;
             }
         }
@@ -298,11 +302,11 @@ public class ItemManager : MonoBehaviour
 
     private void DeactivateShopItems()
     {
-        if (inventoryItems < useSpawnPoints.Count) return;
+        if(inventoryItems < useSpawnPoints.Count) return;
         
-        foreach (var spawnPoint in buySpawnPoints)
+        foreach(var spawnPoint in buySpawnPoints)
         {
-            if (spawnPoint.transform.childCount != 0)
+            if(spawnPoint.transform.childCount != 0)
             {
                 var item = spawnPoint.transform.GetChild(0).GetComponent<Item>();
 
@@ -347,5 +351,36 @@ public class ItemManager : MonoBehaviour
         yield return new WaitForSeconds(0.6f);
 
         suitcaseAnimator.Play("Suitcase_Closing");
+    }
+
+    public bool GiveSpecificItem(GameObject prefab)
+    {
+        if(inventoryItems >= useSpawnPoints.Count || prefab == null) return false;
+
+        GameObject prefabInstance = Instantiate(prefab, useSpawnPoints[0].transform);
+        Item item = prefabInstance.GetComponent<Item>();
+
+        item.SetBlackjackGame(blackjackGame);
+
+        AddToInventory(item, true);
+
+        item.isPurchased = true;
+        item.AddAction(Activate);
+        item.SetActive(true);
+
+        if(item.type == ItemType.Lotto)
+        {
+            blackjackGame.ActivateLotteryTicket();
+        }
+
+        if(item.type == ItemType.Organ)
+        {
+            blackjackGame.ActivateOrgan();
+            organRoundsLeft = 2;
+        }
+
+        cursorDetection.AddRoundActiveClickable(item);
+
+        return true;
     }
 }

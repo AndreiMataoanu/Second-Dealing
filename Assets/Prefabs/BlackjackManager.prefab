@@ -54,6 +54,9 @@ MonoBehaviour:
   isRoundActive: 0
   isLottoActive: 0
   isOrganActive: 0
+  isAntiMatterTargeting: 0
+  isPyroTargeting: 0
+  isHatTrickTargeting: 0
   eventThresholds:
   - severityToTrigger: 0
     moneyAmount: 600
@@ -117,6 +120,8 @@ MonoBehaviour:
   particleSpawnPoint: {fileID: 0}
   smokeParticle: {fileID: 0}
   distortion: {fileID: 0}
+  bottleAnimation: {fileID: 0}
+  scissorsFollow: {fileID: 0}
   cardPrefabs:
   - rank: 1
     suit: 0
@@ -286,6 +291,45 @@ MonoBehaviour:
   - rank: 14
     suit: 2
     cardPrefab: {fileID: 7082712968241337282, guid: 2ea1c53c3c1277a45a1354b2d4bfd2d5, type: 3}
+  - rank: 2
+    suit: 4
+    cardPrefab: {fileID: 7082712968241337282, guid: 3b5c4ee86c74a4f4db3b163f0fccf23a, type: 3}
+  - rank: 3
+    suit: 4
+    cardPrefab: {fileID: 7082712968241337282, guid: 5b8ba41366de28d4da9696978f3a8478, type: 3}
+  - rank: 4
+    suit: 4
+    cardPrefab: {fileID: 7082712968241337282, guid: 190d2a3bca4c03c48b599068a866e812, type: 3}
+  - rank: 5
+    suit: 4
+    cardPrefab: {fileID: 7082712968241337282, guid: 00c93a55d561cbd4facacbb6643112d0, type: 3}
+  - rank: 6
+    suit: 4
+    cardPrefab: {fileID: 7082712968241337282, guid: 910d7417085d5cd4b91125a50ea1457b, type: 3}
+  - rank: 7
+    suit: 4
+    cardPrefab: {fileID: 7082712968241337282, guid: 1acf3b43afac5ef43b5e1c78b678b9e9, type: 3}
+  - rank: 8
+    suit: 4
+    cardPrefab: {fileID: 7082712968241337282, guid: c1d54c60a4f258342ba729d4fedb31e8, type: 3}
+  - rank: 9
+    suit: 4
+    cardPrefab: {fileID: 7082712968241337282, guid: 1703d10b3b18cf846a98af1c93d4f356, type: 3}
+  - rank: 10
+    suit: 4
+    cardPrefab: {fileID: 7082712968241337282, guid: d163557d1d9c17e4585fe9e8209ef408, type: 3}
+  - rank: 11
+    suit: 4
+    cardPrefab: {fileID: 7082712968241337282, guid: 0ace29e12b4bb6748b410ffad3fc6e6f, type: 3}
+  - rank: 12
+    suit: 4
+    cardPrefab: {fileID: 7082712968241337282, guid: 97fa4ec4a25244f47871899ab9d72ffe, type: 3}
+  - rank: 13
+    suit: 4
+    cardPrefab: {fileID: 7082712968241337282, guid: aeadfd0edcdc8a64fab8824a8756ec44, type: 3}
+  - rank: 1
+    suit: 4
+    cardPrefab: {fileID: 7082712968241337282, guid: 466eea15626c9a142ae74392bbc8562e, type: 3}
   handPositions:
   - {fileID: 0}
   - {fileID: 0}
