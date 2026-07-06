@@ -100,9 +100,11 @@ MonoBehaviour:
   tooltipContent: Your next hit will be blessed
   basePrice: 300
   percentagePrice: 0.3
+  resaleLossPercentage: 0.5
   type: 2
   spawnWeight: 5
   isPurchased: 0
+  lottoWorldText: {fileID: 0}
 --- !u!64 &-1736431926067525896
 MeshCollider:
   m_ObjectHideFlags: 0

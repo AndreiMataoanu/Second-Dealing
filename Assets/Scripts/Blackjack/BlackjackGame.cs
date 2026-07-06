@@ -55,7 +55,7 @@ public class BlackjackGame : MonoBehaviour
     private bool isAlcoholActive = false;
     private bool isActionLocked = false;
     private bool isMedicineActive = false;
-    private bool canUseAfterStand = false;
+    private bool useAfterStand = false;
     private bool tutorialCompleted = false;
     private bool hasSeenSplitTutorial = false;
     private bool hasSeenDoubleDownTutorial = false;
@@ -414,7 +414,7 @@ public class BlackjackGame : MonoBehaviour
 
     public bool ActivateNft(int moneyGained)
     {
-        if (isActionLocked && !canUseAfterStand) return false;
+        if (isActionLocked && !useAfterStand) return false;
         
         if (moneyGained == 0)
         {
@@ -434,7 +434,7 @@ public class BlackjackGame : MonoBehaviour
 
     public bool ActivateKnife()
     {
-        if(!isRoundActive || isKnifeActive || (isActionLocked && !canUseAfterStand)) return false;
+        if(!isRoundActive || isKnifeActive || (isActionLocked && !useAfterStand)) return false;
 
         isKnifeActive = true;
 
@@ -443,7 +443,7 @@ public class BlackjackGame : MonoBehaviour
 
     public bool ActivateScissors()
     {
-        if(!isRoundActive || isScissorsActive || (isActionLocked && !canUseAfterStand)) return false;
+        if(!isRoundActive || isScissorsActive || (isActionLocked && !useAfterStand)) return false;
 
         cursorFollowManager.SetCursorTypeActive(true, CursorType.Scissors);
         cursorDetection.OnUseCardItem(this, CardTrigger.Scissors);
@@ -465,7 +465,7 @@ public class BlackjackGame : MonoBehaviour
 
     public bool ActivateAcid()
     {
-        if(!isRoundActive || isAcidActive || (isActionLocked && !canUseAfterStand)) return false;
+        if(!isRoundActive || isAcidActive || (isActionLocked && !useAfterStand)) return false;
 
         cursorFollowManager.SetCursorTypeActive(true, CursorType.Acid);
         cursorDetection.OnUseCardItem(this, CardTrigger.Acid);
@@ -517,7 +517,7 @@ public class BlackjackGame : MonoBehaviour
 
     public bool ActivateCrucifix()
     {
-        if(!isRoundActive || (isActionLocked && !canUseAfterStand)) return false;
+        if(!isRoundActive || (isActionLocked && !useAfterStand)) return false;
 
         isCrucifixActive = true;
         isCoinActive = false;
@@ -527,7 +527,7 @@ public class BlackjackGame : MonoBehaviour
     
     public bool ActivateCoin()
     {
-        if(!isRoundActive || (isActionLocked && !canUseAfterStand)) return false;
+        if(!isRoundActive || (isActionLocked && !useAfterStand)) return false;
 
         isCoinActive = true;
         isCrucifixActive = false;
@@ -537,7 +537,7 @@ public class BlackjackGame : MonoBehaviour
 
     public bool ActivateSunglasses()
     {
-        if(!isRoundActive || peekedCardObject != null || (isActionLocked && !canUseAfterStand)) return false;
+        if(!isRoundActive || peekedCardObject != null || (isActionLocked && !useAfterStand)) return false;
 
         Card? nextCard = gameDeck.PeekCard();
 
@@ -596,7 +596,7 @@ public class BlackjackGame : MonoBehaviour
 
     public bool ActivateCigarette()
     {
-        if(!isRoundActive || (isActionLocked && !canUseAfterStand) || isCigaretteActive || isSplitting) return false;
+        if(!isRoundActive || (isActionLocked && !useAfterStand) || isCigaretteActive || isSplitting) return false;
 
         isCigaretteActive = true;
 
@@ -708,7 +708,7 @@ public class BlackjackGame : MonoBehaviour
 
     public bool ActivateAlcohol()
     {
-        if(!isRoundActive || (isActionLocked && !canUseAfterStand) || isAlcoholActive) return false;
+        if(!isRoundActive || (isActionLocked && !useAfterStand) || isAlcoholActive) return false;
 
         isAlcoholActive = true;
 
@@ -823,7 +823,7 @@ public class BlackjackGame : MonoBehaviour
 
     public bool ActivateFan()
     {
-        if(!isRoundActive || (isActionLocked && !canUseAfterStand)) return false;
+        if(!isRoundActive || (isActionLocked && !useAfterStand)) return false;
 
         StartCoroutine(FanCoroutine());
 
@@ -914,7 +914,7 @@ public class BlackjackGame : MonoBehaviour
     }
 
     //Helper method for Crucifix.
-    private Card.Rank GetBestRankForValue(int bestValue)
+    private Card.Rank GetRankForValue(int bestValue)
     {
         if(bestValue >= 11 || bestValue == 1)
         {
@@ -959,7 +959,7 @@ public class BlackjackGame : MonoBehaviour
 
     public bool TearLotteryTicket()
     {
-        if(!isRoundActive || (isActionLocked && !canUseAfterStand)) return false;
+        if(!isRoundActive || (isActionLocked && !useAfterStand)) return false;
 
         DeactivateLotteryTicket();
 
@@ -1124,12 +1124,12 @@ public class BlackjackGame : MonoBehaviour
 
     private IEnumerator ActivateMedicineCoroutine()
     {
-        canUseAfterStand = true;
+        useAfterStand = true;
         
         yield return new WaitForSeconds(5.0f);
         
         Debug.Log("cannot use anymore");
-        canUseAfterStand = false;
+        useAfterStand = false;
     }
 
     public bool ActivateHatTrick()
@@ -1849,7 +1849,7 @@ public class BlackjackGame : MonoBehaviour
             int idealValue = blackjackGoal - playerValue;
 
             Card? dealtCard = null;
-            Card.Rank targetRank = GetBestRankForValue(idealValue);
+            Card.Rank targetRank = GetRankForValue(idealValue);
 
             if (isCrucifixActive)
                 dealtCard = gameDeck.DealSpecificCard(targetRank);
@@ -1949,8 +1949,73 @@ public class BlackjackGame : MonoBehaviour
 
     private IEnumerator DealCardToDealerCoroutine(bool isHidden)
     {
-        Card newCardData = gameDeck.DealCard();
+        Card newCardData = new Card { rank = Card.Rank.None };
 
+        bool cardFound = false;
+        
+        if(isCrucifixActive || isCoinActive)
+        {
+            int dealerValue = CalculateHandValue(dealerHand, true);
+            int idealValue;
+
+            if (dealerValue >= 12) idealValue = 10;
+            else if (dealerValue >= 6) idealValue = 16 - dealerValue;
+            else idealValue = 12 - dealerValue; 
+
+            Card? dealtCard = null;
+            Card.Rank targetRank = GetRankForValue(idealValue);
+
+            if (isCrucifixActive)
+                dealtCard = gameDeck.DealSpecificCard(targetRank);
+            else if (isCoinActive)
+                dealtCard = gameDeck.DealCoinSpecificCard(targetRank);
+            
+            isCrucifixActive = false;
+            isCoinActive = false;
+
+            if(!dealtCard.HasValue)
+            {
+                int searchStart = Mathf.Min(idealValue, 10);
+
+                for(int v = searchStart; v >= 2; v--)
+                {
+                    if(v == 10)
+                    {
+                        Card.Rank[] faces = { Card.Rank.Ten, Card.Rank.Jack, Card.Rank.Queen, Card.Rank.King };
+
+                        foreach(var f in faces)
+                        {
+                            dealtCard = gameDeck.DealSpecificCard(f);
+
+                            if(dealtCard.HasValue) break;
+                        }
+                    }
+                    else
+                    {
+                        dealtCard = gameDeck.DealSpecificCard((Card.Rank)v);
+                    }
+
+                    if(dealtCard.HasValue) break;
+                }
+            }
+
+            if(!dealtCard.HasValue)
+            {
+                dealtCard = gameDeck.DealSpecificCard(Card.Rank.Ace);
+            }
+
+            if(dealtCard.HasValue)
+            {
+                newCardData = dealtCard.Value;
+                cardFound = true;
+            }
+        }
+
+        if(!cardFound)
+        {
+            newCardData = gameDeck.DealCard();
+        }
+        
         CardInstance newCardInstance;
         if (peekCardInstance == null) 
             newCardInstance = DealCardInstance(newCardData, dealerHand, dealerCardPosition, isHidden);
