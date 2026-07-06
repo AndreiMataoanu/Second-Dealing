@@ -54,6 +54,8 @@ public class BlackjackGame : MonoBehaviour
     private bool isCigaretteActive = false;
     private bool isAlcoholActive = false;
     private bool isActionLocked = false;
+    private bool isMedicineActive = false;
+    private bool canUseAfterStand = false;
     private bool tutorialCompleted = false;
     private bool hasSeenSplitTutorial = false;
     private bool hasSeenDoubleDownTutorial = false;
@@ -412,6 +414,8 @@ public class BlackjackGame : MonoBehaviour
 
     public bool ActivateNft(int moneyGained)
     {
+        if (isActionLocked && !canUseAfterStand) return false;
+        
         if (moneyGained == 0)
         {
             AudioManager.instance.Play("ItemBuy");
@@ -430,7 +434,7 @@ public class BlackjackGame : MonoBehaviour
 
     public bool ActivateKnife()
     {
-        if(!isRoundActive || isKnifeActive || isActionLocked) return false;
+        if(!isRoundActive || isKnifeActive || (isActionLocked && !canUseAfterStand)) return false;
 
         isKnifeActive = true;
 
@@ -439,7 +443,7 @@ public class BlackjackGame : MonoBehaviour
 
     public bool ActivateScissors()
     {
-        if(!isRoundActive || isScissorsActive || isActionLocked) return false;
+        if(!isRoundActive || isScissorsActive || (isActionLocked && !canUseAfterStand)) return false;
 
         cursorFollowManager.SetCursorTypeActive(true, CursorType.Scissors);
         cursorDetection.OnUseCardItem(this, CardTrigger.Scissors);
@@ -461,7 +465,7 @@ public class BlackjackGame : MonoBehaviour
 
     public bool ActivateAcid()
     {
-        if(!isRoundActive || isAcidActive || isActionLocked) return false;
+        if(!isRoundActive || isAcidActive || (isActionLocked && !canUseAfterStand)) return false;
 
         cursorFollowManager.SetCursorTypeActive(true, CursorType.Acid);
         cursorDetection.OnUseCardItem(this, CardTrigger.Acid);
@@ -513,7 +517,7 @@ public class BlackjackGame : MonoBehaviour
 
     public bool ActivateCrucifix()
     {
-        if(!isRoundActive || isActionLocked) return false;
+        if(!isRoundActive || (isActionLocked && !canUseAfterStand)) return false;
 
         isCrucifixActive = true;
         isCoinActive = false;
@@ -523,7 +527,7 @@ public class BlackjackGame : MonoBehaviour
     
     public bool ActivateCoin()
     {
-        if(!isRoundActive || isActionLocked) return false;
+        if(!isRoundActive || (isActionLocked && !canUseAfterStand)) return false;
 
         isCoinActive = true;
         isCrucifixActive = false;
@@ -533,7 +537,7 @@ public class BlackjackGame : MonoBehaviour
 
     public bool ActivateSunglasses()
     {
-        if(!isRoundActive || peekedCardObject != null || isActionLocked) return false;
+        if(!isRoundActive || peekedCardObject != null || (isActionLocked && !canUseAfterStand)) return false;
 
         Card? nextCard = gameDeck.PeekCard();
 
@@ -592,7 +596,7 @@ public class BlackjackGame : MonoBehaviour
 
     public bool ActivateCigarette()
     {
-        if(!isRoundActive || isActionLocked || isCigaretteActive || isSplitting) return false;
+        if(!isRoundActive || (isActionLocked && !canUseAfterStand) || isCigaretteActive || isSplitting) return false;
 
         isCigaretteActive = true;
 
@@ -704,7 +708,7 @@ public class BlackjackGame : MonoBehaviour
 
     public bool ActivateAlcohol()
     {
-        if(!isRoundActive || isActionLocked || isAlcoholActive) return false;
+        if(!isRoundActive || (isActionLocked && !canUseAfterStand) || isAlcoholActive) return false;
 
         isAlcoholActive = true;
 
@@ -819,7 +823,7 @@ public class BlackjackGame : MonoBehaviour
 
     public bool ActivateFan()
     {
-        if(!isRoundActive || isActionLocked) return false;
+        if(!isRoundActive || (isActionLocked && !canUseAfterStand)) return false;
 
         StartCoroutine(FanCoroutine());
 
@@ -955,7 +959,7 @@ public class BlackjackGame : MonoBehaviour
 
     public bool TearLotteryTicket()
     {
-        if(!isRoundActive || isActionLocked) return false;
+        if(!isRoundActive || (isActionLocked && !canUseAfterStand)) return false;
 
         DeactivateLotteryTicket();
 
@@ -1106,6 +1110,26 @@ public class BlackjackGame : MonoBehaviour
         Destroy(cardInstance.displayComponent.gameObject);
         UpdateUI(true);
         EvaluateDoubleDownCondition();
+    }
+
+    public bool ActivateBpMedicine()
+    {
+        if (!isRoundActive) return false;
+        isMedicineActive = true;
+
+        return true;
+    }
+
+    public void DeactivateBpMedicine() => isMedicineActive = false;
+
+    private IEnumerator ActivateMedicineCoroutine()
+    {
+        canUseAfterStand = true;
+        
+        yield return new WaitForSeconds(5.0f);
+        
+        Debug.Log("cannot use anymore");
+        canUseAfterStand = false;
     }
 
     public bool ActivateHatTrick()
@@ -2057,6 +2081,10 @@ public class BlackjackGame : MonoBehaviour
         if(!isRoundActive || isActionLocked) yield break;
 
         isActionLocked = true;
+        
+        KeepsakeManager.instance.AllowPostStandItem(this);
+        if (isMedicineActive) StartCoroutine(ActivateMedicineCoroutine());
+        
         statusText.text = "You stand";
         standHandAnimator.SetTrigger("standTrigger");
 

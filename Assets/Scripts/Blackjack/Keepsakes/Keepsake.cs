@@ -62,7 +62,7 @@ public abstract class Keepsake : ScriptableObject
         return false;
     }
 
-    public virtual bool AllowPostStandItem()
+    public virtual bool AllowPostStandItem(BlackjackGame game)
     {
         return false;
     }

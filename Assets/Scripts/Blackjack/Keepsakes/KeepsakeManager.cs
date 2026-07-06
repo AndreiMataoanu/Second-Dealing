@@ -37,6 +37,9 @@ public class KeepsakeManager : MonoBehaviour
 
     public void UnequipKeepsake(Keepsake keepsake)
     {
+        BloodPressureMedicine bpm = (BloodPressureMedicine)keepsake;
+        if (bpm) bpm.Deactivate();
+        
         if(equippedKeepsakes.Remove(keepsake))
         {
             UpdateTableVisuals();
@@ -182,11 +185,11 @@ public class KeepsakeManager : MonoBehaviour
         return false;
     }
 
-    public bool AllowPostStandItem()
+    public bool AllowPostStandItem(BlackjackGame game)
     {
         foreach(var keepsake in equippedKeepsakes)
         {
-            if(keepsake.AllowPostStandItem()) return true;
+            if(keepsake.AllowPostStandItem(game)) return true;
         }
 
         return false;
