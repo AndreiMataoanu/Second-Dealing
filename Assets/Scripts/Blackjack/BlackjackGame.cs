@@ -39,6 +39,7 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private int riggedRoundsLimit = 5;
     private Dictionary<CardInstance, int> scissoredCards = new Dictionary<CardInstance, int>();
     private Coroutine currentBustCoroutine = null;
+    private Coroutine dealToDealerCoroutine = null;
     private List<int> lotteryNumbers = new List<int>();
     private List<int> powerballNumbers = new List<int>();
     private Deck gameDeck;
@@ -164,6 +165,7 @@ public class BlackjackGame : MonoBehaviour
     private int currentMaxTurns;
     private int currentTurns;
     private IEnumerator eventTriggerCoroutine;
+
     #endregion
 
     #region Getters & Setters
@@ -824,16 +826,24 @@ public class BlackjackGame : MonoBehaviour
     public bool ActivateFan()
     {
         if(!isRoundActive || (isActionLocked && !useAfterStand)) return false;
-
+        
         StartCoroutine(FanCoroutine());
-
         return true;
     }
 
     private IEnumerator FanCoroutine()
     {
         isActionLocked = true;
+        isRoundActive = false;
+        
+        if (dealToDealerCoroutine != null)
+        {
+            StopCoroutine(dealToDealerCoroutine);
+            dealToDealerCoroutine = null;
 
+            yield return null;
+        }
+        
         yield return StartCoroutine(AnimateCardsOffScreen());
 
         ClearTable();
@@ -842,33 +852,7 @@ public class BlackjackGame : MonoBehaviour
         handBets.Add(currentBet);
         currentHandIndex = 0;
 
-        yield return new WaitForSeconds(1f);
-        yield return StartCoroutine(DealCardToPlayerCoroutine());
-        yield return StartCoroutine(DealCardToDealerCoroutine(true));
-        yield return StartCoroutine(DealCardToPlayerCoroutine());
-        yield return StartCoroutine(DealCardToDealerCoroutine(false));
-
-        UpdateUI();
-
-        if(IsBlackjack(CalculateHandValue(playerHands[0], true)))
-        {
-            canDoubleDown = false;
-            statusText.text = "Blackjack!";
-            dialogueSystem.ShowPlayerBlackjackTaunt();
-
-            yield return new WaitWhile(() => dialogueSystem.IsPlaying);
-            yield return StartCoroutine(CheckLotteryTicket());
-            yield return StartCoroutine(CheckPowerballCurrentHand());
-
-            StartCoroutine(DealerTurnCoroutine(true));
-        }
-        else
-        {
-            statusText.text = "";
-            isActionLocked = false;
-
-            EvaluateDoubleDownCondition();
-        }
+        OnStartGame();
     }
 
     private IEnumerator AnimateCardsOffScreen()
@@ -1656,7 +1640,7 @@ public class BlackjackGame : MonoBehaviour
             yield return new WaitWhile(() => dialogueSystem.IsPlaying);
         }
 
-        if(isRoundActive || PlayerMoney < currentBet || isActionLocked) yield break;
+        if(isRoundActive || PlayerMoney < currentBet) yield break;
 
         isActionLocked = true;
         isRoundActive = true;
@@ -2295,7 +2279,7 @@ public class BlackjackGame : MonoBehaviour
 
         if(currentHandIndex >= playerHands.Count)
         {
-            StartCoroutine(DealerTurnCoroutine());
+             dealToDealerCoroutine = StartCoroutine(DealerTurnCoroutine());
         }
         else
         {
