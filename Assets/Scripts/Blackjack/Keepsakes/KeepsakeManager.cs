@@ -37,7 +37,7 @@ public class KeepsakeManager : MonoBehaviour
 
     public void UnequipKeepsake(Keepsake keepsake)
     {
-        BloodPressureMedicine bpm = (BloodPressureMedicine)keepsake;
+        BloodPressureMedicine bpm = keepsake as BloodPressureMedicine;
         if (bpm) bpm.Deactivate();
         
         if(equippedKeepsakes.Remove(keepsake))

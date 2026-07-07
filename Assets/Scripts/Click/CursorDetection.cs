@@ -6,7 +6,10 @@ public enum CardTrigger
     None,
     Acid,
     Scissors,
-    AddCardsEvent
+    AddCardsEvent,
+    AntiMatter,
+    Pyro,
+    HatTrick
 }
 
 public class CursorDetection : MonoBehaviour
@@ -18,9 +21,6 @@ public class CursorDetection : MonoBehaviour
     [SerializeField] private Transform cardOptions;
 
     private List<Clickable> cardClickables;
-
-    public enum CardTargetMode { None, Scissors, AntiMatter, Pyro, HatTrick }
-    private CardTargetMode currentTargetMode = CardTargetMode.None;
 
     private void Awake()
     {
@@ -89,43 +89,7 @@ public class CursorDetection : MonoBehaviour
 
     public void OnUseCardItem(BlackjackGame blackjackGame, CardTrigger cardTrigger)
     {
-        if(cardTrigger == CardTrigger.Scissors)
-        {
-            currentTargetMode = CardTargetMode.Scissors;
-        }
-        else
-        {
-            currentTargetMode = CardTargetMode.None;
-        }
-
         AddAllClickableCards(blackjackGame, cardTrigger);
-        SetClickables(cardClickables, true);
-        SetClickables(roundActiveClickables, false);
-    }
-
-    public void OnUseAntiMatter(BlackjackGame blackjackGame)
-    {
-        currentTargetMode = CardTargetMode.AntiMatter;
-
-        AddAllClickableCards(blackjackGame, CardTrigger.None);
-        SetClickables(cardClickables, true);
-        SetClickables(roundActiveClickables, false);
-    }
-
-    public void OnUsePyro(BlackjackGame blackjackGame)
-    {
-        currentTargetMode = CardTargetMode.Pyro;
-
-        AddAllClickableCards(blackjackGame, CardTrigger.None);
-        SetClickables(cardClickables, true);
-        SetClickables(roundActiveClickables, false);
-    }
-
-    public void OnUseHatTrick(BlackjackGame blackjackGame)
-    {
-        currentTargetMode = CardTargetMode.HatTrick;
-
-        AddAllClickableCards(blackjackGame, CardTrigger.None);
         SetClickables(cardClickables, true);
         SetClickables(roundActiveClickables, false);
     }
@@ -150,29 +114,11 @@ public class CursorDetection : MonoBehaviour
 
                 if(clickableCard)
                 {
-                    if(currentTargetMode == CardTargetMode.Scissors && blackjackGame.IsCardScissored(cardDisplay.GetCardInstance())) continue;
+                    if(cardTrigger == CardTrigger.Scissors && blackjackGame.IsCardScissored(cardDisplay.GetCardInstance())) continue;
 
                     clickableCard.SetCardInstance(cardDisplay.GetCardInstance());
                     clickableCard.SetBlackjackGame(blackjackGame);
                     clickableCard.AddAction(OnClickCard);
-
-                    if(currentTargetMode == CardTargetMode.Scissors)
-                    {
-                        clickableCard.AddAction(clickableCard.OnCutCard);
-                    }
-                    else if(currentTargetMode == CardTargetMode.AntiMatter)
-                    {
-                        clickableCard.AddAction(clickableCard.OnAntiMatterCard);
-                    }
-                    else if(currentTargetMode == CardTargetMode.Pyro)
-                    {
-                        clickableCard.AddAction(clickableCard.OnPyroCard);
-                    }
-                    else if(currentTargetMode == CardTargetMode.HatTrick)
-                    {
-                        clickableCard.AddAction(clickableCard.OnHatTrickCard);
-                    }
-
                     AddCardAction(blackjackGame, clickableCard, cardTrigger);
                     clickableCard.AddAction(ReactivateClickables);
 
@@ -195,6 +141,15 @@ public class CursorDetection : MonoBehaviour
             case CardTrigger.AddCardsEvent:
                 clickableCard.AddAction(clickableCard.OnAddCardsOption);
                 clickableCard.AddAction(() => blackjackGame.SelectCursorHand(false));
+                break;
+            case CardTrigger.AntiMatter:
+                clickableCard.AddAction(clickableCard.OnAntiMatterCard);
+                break;
+            case CardTrigger.Pyro:
+                clickableCard.AddAction(clickableCard.OnPyroCard);
+                break;
+            case CardTrigger.HatTrick:
+                clickableCard.AddAction(clickableCard.OnHatTrickCard);
                 break;
         }
     }
@@ -222,8 +177,6 @@ public class CursorDetection : MonoBehaviour
                 cardClickable.RemoveAction(ReactivateClickables);
             }
         }
-
-        currentTargetMode = CardTargetMode.None;
     }
 
     public void AddRoundActiveClickable(Clickable clickable)

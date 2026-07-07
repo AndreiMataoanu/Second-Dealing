@@ -68,13 +68,6 @@ public class ItemManager : MonoBehaviour
     {
         if (inventoryItems >= useSpawnPoints.Count || !HasEnoughMoney(item)) return;
 
-        if(item.type == ItemType.Lotto && blackjackGame.isLottoActive)
-        {
-            AudioManager.instance.Play("ItemDeny");
-
-            return;
-        }
-
         if(item.type == ItemType.Organ && blackjackGame.isOrganActive)
         {
             AudioManager.instance.Play("ItemDeny");
@@ -87,11 +80,6 @@ public class ItemManager : MonoBehaviour
         item.isPurchased = true;
         item.RemoveAction(OnBuy);
         item.AddAction(OnSell);
-
-        if(item.type == ItemType.Lotto)
-        {
-            blackjackGame.ActivateLotteryTicket();
-        }
         
         if(item.type == ItemType.Organ)
         {
@@ -150,9 +138,6 @@ public class ItemManager : MonoBehaviour
         
         switch (item.type)
         {
-            case ItemType.Lotto:
-                blackjackGame.DeactivateLotteryTicket();
-                break;
             case ItemType.Organ:
                 blackjackGame.DeactivateOrgan();
                 break;
@@ -239,7 +224,6 @@ public class ItemManager : MonoBehaviour
     #region Helper Methods
     private GameObject GetWeightedRandomPrefab()
     {
-        bool hasTicket = blackjackGame.isLottoActive;
         bool hasOrgan = blackjackGame.isOrganActive;
         int currentTotalWeight = 0;
 
@@ -248,8 +232,6 @@ public class ItemManager : MonoBehaviour
         foreach(var prefab in powerUpPrefabs)
         {
             var powerUp = prefab.GetComponent<Item>();
-
-            if(hasTicket && powerUp.type == ItemType.Lotto) continue;
 
             if(hasOrgan && powerUp.type == ItemType.Organ) continue;
 
@@ -367,11 +349,6 @@ public class ItemManager : MonoBehaviour
         item.isPurchased = true;
         item.AddAction(Activate);
         item.SetActive(true);
-
-        if(item.type == ItemType.Lotto)
-        {
-            blackjackGame.ActivateLotteryTicket();
-        }
 
         if(item.type == ItemType.Organ)
         {

@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -15,9 +13,7 @@ public class Item : Clickable
     [Tooltip("Higher number means more common.")]
     [SerializeField] public int spawnWeight = 10;
     [HideInInspector] public bool isPurchased = false;
-    [SerializeField] private TextMeshProUGUI lottoWorldText;
 
-    private int lastLottoCount = -1;
     private Action<Item> itemAction;
     private BlackjackGame blackjackGame;
     private int nftRoundsLeft;
@@ -27,23 +23,6 @@ public class Item : Clickable
     public void RemoveAction(Action<Item> action) => itemAction -= action;
     
     public void SetNftRoundsLeft() => nftRoundsLeft = Random.Range(2, 4);
-
-    private void Update()
-    {
-        if(type == ItemType.Lotto && isPurchased && blackjackGame != null && blackjackGame.isLottoActive)
-        {
-            if(lottoWorldText != null)
-            {
-                List<int> numbers = blackjackGame.GetLotteryNumbers();
-
-                if(numbers.Count != lastLottoCount)
-                {
-                    lottoWorldText.text = string.Join("  ", numbers);
-                    lastLottoCount = numbers.Count;
-                }
-            }
-        }
-    }
 
     public bool Activate()
     {
@@ -58,7 +37,6 @@ public class Item : Clickable
             ItemType.Cigarette => blackjackGame.ActivateCigarette(),
             ItemType.Alcohol => blackjackGame.ActivateAlcohol(),
             ItemType.Fan => blackjackGame.ActivateFan(),
-            ItemType.Lotto => blackjackGame.TearLotteryTicket(),
             ItemType.Acid => blackjackGame.ActivateAcid(),
             ItemType.Nft => blackjackGame.ActivateNft(basePrice),
             _ => false
@@ -113,13 +91,6 @@ public class Item : Clickable
 
     protected override string GetTooltipContent()
     {
-        if(type == ItemType.Lotto && blackjackGame.isLottoActive)
-        {
-            List<int> numbers = blackjackGame.GetLotteryNumbers();
-
-            return $"{string.Join(" | ", numbers)}\nFinish your hand with these values to win\nClick to tear";
-        }
-
         if(type == ItemType.Organ && blackjackGame.isOrganActive)
         {
             return $"Passive: Sacrifice instead of your life\nExpires in: {blackjackGame.GetOrganRoundsLeft()} rounds";

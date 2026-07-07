@@ -19,6 +19,7 @@ public class ClickableCard : Clickable
 
     public void OnCutCard()
     {
+        Debug.Log("cut");
         AudioManager.instance.Play("Scissors(Clone)");
 
         cardInstance.displayComponent.SetCutVisual(true);
