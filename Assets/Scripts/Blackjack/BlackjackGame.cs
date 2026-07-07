@@ -418,12 +418,12 @@ public class BlackjackGame : MonoBehaviour
 
     public bool ActivateNft(int moneyGained)
     {
-        if (isActionLocked && !useAfterStand) return false;
+        if(isActionLocked && !useAfterStand) return false;
         
-        if (moneyGained == 0)
+        if(moneyGained == 0)
         {
             AudioManager.instance.Play("ItemBuy");
-            // AudioManager.instance.Play("WompWomp");
+
             return true;
         }
         
@@ -488,25 +488,29 @@ public class BlackjackGame : MonoBehaviour
         yield return new WaitForSeconds(delay);
 
         var cardObject = cardInstance.displayComponent.gameObject;
+
         activeCardObjects.Remove(cardObject);
         gameDeck.AddRemovedCard(cardInstance.cardData.rank, cardInstance.cardData.suit);
         
-        if (dealerHand.Remove(cardInstance))
+        if(dealerHand.Remove(cardInstance))
         {
             DestroyCard(cardObject);
+
             yield return null;
         }
 
-        foreach (var playerHand in playerHands)
+        foreach(var playerHand in playerHands)
         {
-            if (playerHand.Remove(cardInstance))
+            if(playerHand.Remove(cardInstance))
             {
                 DestroyCard(cardObject);
+
                 yield return null;
             }
         }
         
         peekCardInstance = null;
+
         DestroyCard(cardObject);
 
         yield return null;
@@ -515,7 +519,9 @@ public class BlackjackGame : MonoBehaviour
     private void DestroyCard(GameObject cardObject)
     {
         Destroy(cardObject);
+
         isAcidActive = false;
+
         UpdateUI();
     }
 
@@ -551,7 +557,7 @@ public class BlackjackGame : MonoBehaviour
 
         if(!cardPrefabLookup.TryGetValue((newCardData.rank, newCardData.suit), out GameObject cardPrefabToUse)) return false;
 
-        peekedCardObject = Instantiate(cardPrefabToUse, sunglassesCardPosition);
+        peekedCardObject = Instantiate(cardPrefabToUse, deckPosition);
         peekedCardObject.transform.localScale = cardScaleVector;
 
         StartCoroutine(CardAnimationCoroutine(
@@ -604,124 +610,28 @@ public class BlackjackGame : MonoBehaviour
 
         isCigaretteActive = true;
 
-        StartCoroutine(!isPlayerStand ? CigaretteCoroutine() : CigaretteStandCoroutine());
+        StartCoroutine(CigaretteCoroutine());
 
         return true;
-    }
-
-    private IEnumerator CigaretteStandCoroutine()
-    {
-        // TODO: actually do it right
-        
-        isActionLocked = true;
-
-        if (dealToDealerCoroutine != null)
-        {
-            StopCoroutine(dealToDealerCoroutine);
-            dealToDealerCoroutine = null;
-            
-        }
-        
-        List<CardInstance> tempHand = new List<CardInstance>(playerHands[0]);
-
-        playerHands[0] = new List<CardInstance>(dealerHand);
-        dealerHand = new List<CardInstance>(tempHand);
-
-        AudioManager.instance.Play("Smoking");
-
-        yield return new WaitForSeconds(1f);
-
-        smokeParticle.Play();
-
-        yield return new WaitForSeconds(1f);
-
-        foreach(var card in playerHands[0])
-        {
-            if(card.isHidden)
-            {
-                yield return StartCoroutine(FlipCardCoroutine(card.displayComponent, 0.4f));
-
-                card.isHidden = false;
-            }
-        }
-
-        float animDuration = 0.5f;
-        int maxCards = Mathf.Max(playerHands[0].Count, dealerHand.Count);
-
-        Transform currentParent = handPositions[0];
-
-        for(int i = 0; i < maxCards; i++)
-        {
-            if(i < playerHands[0].Count)
-            {
-                CardInstance pCard = playerHands[0][i];
-
-                pCard.displayComponent.transform.SetParent(currentParent.parent);
-
-                int cardOrderIndex = playerHands[0].Count - 1 - i;
-                float xOffset = cardOrderIndex * playerCardOffset.x;
-                float yOffset = cardOrderIndex * playerCardOffset.y;
-                float zOffset = cardOrderIndex * -zOverlap;
-
-                Vector3 targetLocalPos = new Vector3(xOffset, yOffset, zOffset);
-
-                StartCoroutine(CardAnimationCoroutine(
-                    pCard.displayComponent.transform,
-                    currentParent.TransformPoint(targetLocalPos),
-                    currentParent.rotation,
-                    cardScaleVector,
-                    animDuration
-                ));
-            }
-
-            if(i < dealerHand.Count)
-            {
-                CardInstance dCard = dealerHand[i];
-
-                dCard.displayComponent.transform.SetParent(dealerCardPosition.parent);
-
-                int cardOrderIndex = dealerHand.Count - 1 - i;
-                float xOffset = cardOrderIndex * dealerCardHorizontalSpacing;
-                float yOffset = 0f;
-                float zOffset = cardOrderIndex * -zOverlap;
-
-                Vector3 targetLocalPos = new Vector3(xOffset, yOffset, zOffset);
-
-                StartCoroutine(CardAnimationCoroutine(
-                    dCard.displayComponent.transform,
-                    dealerCardPosition.TransformPoint(targetLocalPos),
-                    dealerCardPosition.rotation,
-                    cardScaleVector,
-                    animDuration
-                ));
-            }
-        }
-
-        yield return new WaitForSeconds(animDuration);
-
-        foreach(CardInstance card in playerHands[0])
-        {
-            card.displayComponent.transform.SetParent(currentParent);
-        }
-
-        foreach(CardInstance card in dealerHand)
-        {
-            card.displayComponent.transform.SetParent(dealerCardPosition);
-        }
-
-        UpdateHandVisuals(playerHands[0], currentParent, true);
-        UpdateHandVisuals(dealerHand, dealerCardPosition, false);
-        UpdateUI(true);
-
-        smokeParticle.Stop();
-        isActionLocked = false;
-
-        EvaluateDoubleDownCondition();
     }
 
     private IEnumerator CigaretteCoroutine()
     {
         isActionLocked = true;
+
+        if(dealToDealerCoroutine != null)
+        {
+            StopCoroutine(dealToDealerCoroutine);
+
+            dealToDealerCoroutine = null;
+        }
+
+        int targetIndex = ChooseHandIndex();
+
+        currentHandIndex = targetIndex;
+        isPlayerStand = false;
+
+        cursorDetection.OnRoundActive();
 
         List<CardInstance> tempHand = new List<CardInstance>(playerHands[currentHandIndex]);
 
@@ -736,7 +646,7 @@ public class BlackjackGame : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        foreach(var card in playerHands[currentHandIndex])
+        foreach(var card in playerHands[targetIndex])
         {
             if(card.isHidden)
             {
@@ -815,18 +725,27 @@ public class BlackjackGame : MonoBehaviour
         UpdateUI(true);
 
         smokeParticle.Stop();
-        isActionLocked = false;
 
-        EvaluateDoubleDownCondition();
+        int handValue = CalculateHandValue(playerHands[targetIndex], true);
+
+        if(handValue > blackjackGoal || handValue < -blackjackGoal)
+        {
+            yield return StartCoroutine(BustCheckCoroutine(playerHands[targetIndex]));
+        }
+        else
+        {
+            isActionLocked = false;
+            statusText.text = "";
+
+            EvaluateDoubleDownCondition();
+        }
     }
 
     private int ChooseHandIndex()
     {
-        if (!isPlayerStand) return currentHandIndex;
-        return currentHandIndex - 1;
-        // if (playerHands.Count == 1) return 0;
+        if(!isPlayerStand) return currentHandIndex;
 
-        // TODO: choose shitty hand
+        return Mathf.Max(0, currentHandIndex - 1);
     }
     
     public bool ActivateAlcohol()
@@ -2255,7 +2174,7 @@ public class BlackjackGame : MonoBehaviour
         isActionLocked = true;
         
         KeepsakeManager.instance.AllowPostStandItem(this);
-        if (isMedicineActive) StartCoroutine(ActivateMedicineCoroutine());
+        if(isMedicineActive) StartCoroutine(ActivateMedicineCoroutine());
         
         statusText.text = "You stand";
         standHandAnimator.SetTrigger("standTrigger");
@@ -2266,7 +2185,20 @@ public class BlackjackGame : MonoBehaviour
         }
 
         yield return StartCoroutine(CheckPowerballCurrentHand());
-        yield return new WaitForSeconds(1.5f);
+
+        float standTimer = 0f;
+
+        while(standTimer < 1.5f)
+        {
+            if(!isPlayerStand || !isRoundActive) yield break;
+
+            standTimer += Time.deltaTime;
+
+            yield return null;
+        }
+
+        if(!isPlayerStand || !isRoundActive) yield break;
+
         yield return StartCoroutine(AdvanceHandCoroutine());
     }
 
@@ -2847,7 +2779,6 @@ public class BlackjackGame : MonoBehaviour
     //Flip animation for revealing the hidden card.
     private IEnumerator FlipCardCoroutine(CardDisplay cardDisplay, float duration)
     {
-        Debug.Log("flip");
         Transform cardTransform = cardDisplay.transform;
 
         Quaternion startRotation = cardTransform.localRotation;
