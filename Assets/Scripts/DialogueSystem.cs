@@ -45,6 +45,10 @@ public class DialogueSystem : MonoBehaviour
     [SerializeField] private List<string> powerballGenerateTaunts;
     [Tooltip("Taunts shown when the player has consumed the trust fund keepsake.")]
     [SerializeField] private List<string> trustFundTaunts;
+    [Tooltip("Taunts shown when player gets lucky after coin flip.")] 
+    [SerializeField] private List<string> luckyCoinFlip;
+    [Tooltip("Taunts shown when player gets unlucky after coin flip.")] 
+    [SerializeField] private List<string> unluckyCoinFlip;
 
     private Coroutine sequenceCoroutine;
     private Coroutine typingCoroutine;
@@ -194,6 +198,8 @@ public class DialogueSystem : MonoBehaviour
     public void ShowPowerballTaunt() => ShowMessage(GetRandomTaunt(powerballWinTaunts));
     public void ShowPowerballGenerateTaunt() => ShowMessage(GetRandomTaunt(powerballGenerateTaunts));
     public void ShowTrustFundTaunt() => ShowMessage(GetRandomTaunt(trustFundTaunts));
+    public void ShowLuckyCoinFlip() => ShowMessage(GetRandomTaunt(luckyCoinFlip));
+    public void ShowUnluckyCoinFlip() => ShowMessage(GetRandomTaunt(unluckyCoinFlip));
 
     private string GetRandomTaunt(List<string> taunts)
     {

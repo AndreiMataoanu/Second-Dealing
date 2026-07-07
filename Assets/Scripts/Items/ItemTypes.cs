@@ -8,7 +8,6 @@ public enum ItemType
     Cigarette,
     Alcohol,
     Fan,
-    Lotto,
     Acid,
     Nft,
     Coin

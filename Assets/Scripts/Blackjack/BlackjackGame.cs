@@ -40,7 +40,6 @@ public class BlackjackGame : MonoBehaviour
     private Dictionary<CardInstance, int> scissoredCards = new Dictionary<CardInstance, int>();
     private Coroutine currentBustCoroutine = null;
     private Coroutine dealToDealerCoroutine = null;
-    private List<int> lotteryNumbers = new List<int>();
     private List<int> powerballNumbers = new List<int>();
     private Deck gameDeck;
     private int blackjackGoal = 21;
@@ -51,7 +50,6 @@ public class BlackjackGame : MonoBehaviour
     private bool isScissorsActive = false;
     private bool isAcidActive = false;
     private bool isCrucifixActive = false;
-    private bool isCoinActive = false;
     private bool isCigaretteActive = false;
     private bool isAlcoholActive = false;
     private bool isActionLocked = false;
@@ -61,10 +59,8 @@ public class BlackjackGame : MonoBehaviour
     private bool hasSeenSplitTutorial = false;
     private bool hasSeenDoubleDownTutorial = false;
     private bool isTutorialActive => roundsCompleted < tutorialRoundsLimit;
-    [HideInInspector] public List<int> GetLotteryNumbers() => lotteryNumbers;
     [HideInInspector] public bool canDoubleDown = false;
     [HideInInspector] public bool isRoundActive = false;
-    [HideInInspector] public bool isLottoActive = false;
     [HideInInspector] public bool isOrganActive = false;
 
     //Keepsakes
@@ -80,7 +76,7 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private List<BlackjackEvent> mediumSeverityEvents;
     [SerializeField] private List<BlackjackEvent> highSeverityEvents;
     [SerializeField] public UnityEvent OnAddCardsEvent;
-    [FormerlySerializedAs("OnSelectCopyCardEvent")] [SerializeField] public UnityEvent DeleteCopyOptions;
+    [SerializeField] public UnityEvent DeleteCopyOptions;
     private List<BlackjackEvent> availableLowEvents;
     private List<BlackjackEvent> availableMediumEvents;
     private List<BlackjackEvent> availableHighEvents;
@@ -458,6 +454,8 @@ public class BlackjackGame : MonoBehaviour
 
     public void ApplyCutToCard(CardInstance cardInstance, int reduction)
     {
+        Debug.Log(reduction);
+        
         if(scissoredCards.ContainsKey(cardInstance))
         {
             scissoredCards[cardInstance] *= reduction;
@@ -531,7 +529,6 @@ public class BlackjackGame : MonoBehaviour
         if(!isRoundActive || (isActionLocked && !useAfterStand)) return false;
 
         isCrucifixActive = true;
-        isCoinActive = false;
 
         return true;
     }
@@ -540,8 +537,9 @@ public class BlackjackGame : MonoBehaviour
     {
         if(!isRoundActive || (isActionLocked && !useAfterStand)) return false;
 
-        isCoinActive = true;
-        isCrucifixActive = false;
+        var isLucky = itemManager.FlipCoin();
+        if (isLucky) dialogueSystem.ShowLuckyCoinFlip();
+        else dialogueSystem.ShowUnluckyCoinFlip();
 
         return true;
     }
@@ -961,73 +959,6 @@ public class BlackjackGame : MonoBehaviour
         }
     }
 
-    public bool ActivateLotteryTicket()
-    {
-        if(isLottoActive) return false;
-
-        isLottoActive = true;
-        lotteryNumbers.Clear();
-
-        for(int i = 0; i < 4; i++)
-        {
-            lotteryNumbers.Add(Random.Range(2, 34)); //2 to 33
-        }
-
-        return true;
-    }
-
-    public void DeactivateLotteryTicket()
-    {
-        isLottoActive = false;
-        lotteryNumbers.Clear();
-    }
-
-    public bool TearLotteryTicket()
-    {
-        if(!isRoundActive || (isActionLocked && !useAfterStand)) return false;
-
-        DeactivateLotteryTicket();
-
-        AudioManager.instance.Play("LottoTear");
-
-        return true;
-    }
-
-    private IEnumerator CheckLotteryTicket()
-    {
-        if(!isLottoActive) yield break;
-
-        int moneyGained = 0;
-        int smallReward = 500;
-        int bigReward = 5000;
-
-        foreach(var hand in playerHands)
-        {
-            int handValue = Mathf.Abs(CalculateHandValue(hand, true));
-            int matches = lotteryNumbers.RemoveAll(number => number == handValue);
-
-            moneyGained += matches * smallReward;
-        }
-
-        if(lotteryNumbers.Count == 0)
-        {
-            moneyGained += bigReward;
-
-            isLottoActive = false;
-            lotteryNumbers.Clear();
-            itemManager.RemoveItemOfType(ItemType.Lotto);
-        }
-
-        if(moneyGained > 0)
-        {
-            int targetBalance = playerMoney + moneyGained;
-
-            AudioManager.instance.Play("MoneyGained");
-
-            yield return StartCoroutine(AnimateBetChange(targetBalance, 3f));
-        }
-    }
-
     private IEnumerator CheckPowerballCurrentHand() => CheckPowerballAtIndex(currentHandIndex);
     private IEnumerator CheckPowerballAtIndex(int index)
     {
@@ -1061,7 +992,7 @@ public class BlackjackGame : MonoBehaviour
         if(!isRoundActive || isActionLocked || isAntiMatterTargeting) return false;
 
         isAntiMatterTargeting = true;
-        cursorDetection.OnUseAntiMatter(this);
+        cursorDetection.OnUseCardItem(this, CardTrigger.AntiMatter);
 
         return true;
     }
@@ -1093,7 +1024,7 @@ public class BlackjackGame : MonoBehaviour
         if(!isRoundActive || isActionLocked || isPyroTargeting) return false;
 
         isPyroTargeting = true;
-        cursorDetection.OnUsePyro(this);
+        cursorDetection.OnUseCardItem(this, CardTrigger.Pyro);
 
         return true;
     }
@@ -1162,7 +1093,7 @@ public class BlackjackGame : MonoBehaviour
         if(!isRoundActive || isActionLocked || isHatTrickTargeting) return false;
 
         isHatTrickTargeting = true;
-        cursorDetection.OnUseHatTrick(this);
+        cursorDetection.OnUseCardItem(this, CardTrigger.HatTrick);
 
         return true;
     }
@@ -1250,7 +1181,6 @@ public class BlackjackGame : MonoBehaviour
         {
             statusText.text = "Hand full";
 
-            yield return StartCoroutine(CheckLotteryTicket());
             yield return new WaitForSeconds(1.5f);
             yield return StartCoroutine(AdvanceHandCoroutine());
         }
@@ -1737,7 +1667,6 @@ public class BlackjackGame : MonoBehaviour
             dialogueSystem.ShowPlayerBlackjackTaunt();
 
             yield return new WaitWhile(() => dialogueSystem.IsPlaying);
-            yield return StartCoroutine(CheckLotteryTicket());
             yield return StartCoroutine(CheckPowerballCurrentHand());
 
             StartCoroutine(DealerTurnCoroutine(true));
@@ -1868,21 +1797,15 @@ public class BlackjackGame : MonoBehaviour
 
         List<CardInstance> currentHand = playerHands[currentHandIndex];
 
-        if(isCrucifixActive || isCoinActive)
+        if(isCrucifixActive)
         {
             int playerValue = CalculateHandValue(currentHand, true);
             int idealValue = blackjackGoal - playerValue;
 
-            Card? dealtCard = null;
             Card.Rank targetRank = GetRankForValue(idealValue);
-
-            if (isCrucifixActive)
-                dealtCard = gameDeck.DealSpecificCard(targetRank);
-            else if (isCoinActive)
-                dealtCard = gameDeck.DealCoinSpecificCard(targetRank);
+            Card? dealtCard = gameDeck.DealSpecificCard(targetRank);
             
             isCrucifixActive = false;
-            isCoinActive = false;
 
             if(!dealtCard.HasValue)
             {
@@ -1978,7 +1901,7 @@ public class BlackjackGame : MonoBehaviour
 
         bool cardFound = false;
         
-        if(isCrucifixActive || isCoinActive)
+        if(isCrucifixActive)
         {
             int dealerValue = CalculateHandValue(dealerHand, true);
             int idealValue;
@@ -1987,16 +1910,10 @@ public class BlackjackGame : MonoBehaviour
             else if (dealerValue >= 6) idealValue = 16 - dealerValue;
             else idealValue = 12 - dealerValue; 
 
-            Card? dealtCard = null;
             Card.Rank targetRank = GetRankForValue(idealValue);
-
-            if (isCrucifixActive)
-                dealtCard = gameDeck.DealSpecificCard(targetRank);
-            else if (isCoinActive)
-                dealtCard = gameDeck.DealCoinSpecificCard(targetRank);
+            Card? dealtCard = gameDeck.DealSpecificCard(targetRank);
             
             isCrucifixActive = false;
-            isCoinActive = false;
 
             if(!dealtCard.HasValue)
             {
@@ -2146,7 +2063,6 @@ public class BlackjackGame : MonoBehaviour
         {
             statusText.text = "Hand full";
 
-            yield return StartCoroutine(CheckLotteryTicket());
             yield return StartCoroutine(CheckPowerballCurrentHand());
             yield return new WaitForSeconds(1.5f);
             yield return StartCoroutine(AdvanceHandCoroutine());
@@ -2179,11 +2095,6 @@ public class BlackjackGame : MonoBehaviour
         
         statusText.text = "You stand";
         standHandAnimator.SetTrigger("standTrigger");
-
-        if(isLottoActive)
-        {
-            yield return StartCoroutine(CheckLotteryTicket());
-        }
 
         yield return StartCoroutine(CheckPowerballCurrentHand());
 
@@ -2231,7 +2142,6 @@ public class BlackjackGame : MonoBehaviour
 
         if(!endlessDouble)
         {
-            yield return StartCoroutine(CheckLotteryTicket());
             yield return StartCoroutine(AdvanceHandCoroutine());
             yield return StartCoroutine(CheckPowerballCurrentHand());
         }
@@ -2247,7 +2157,6 @@ public class BlackjackGame : MonoBehaviour
             {
                 statusText.text = "Hand full";
 
-                yield return StartCoroutine(CheckLotteryTicket());
                 yield return new WaitForSeconds(1.5f);
                 yield return StartCoroutine(AdvanceHandCoroutine());
             }
@@ -2590,11 +2499,6 @@ public class BlackjackGame : MonoBehaviour
 
     private IEnumerator BustCheckCoroutine(List<CardInstance> activeHand)
     {
-        if(isLottoActive)
-        {
-            yield return StartCoroutine(CheckLotteryTicket());
-        }
-
         yield return StartCoroutine(CheckPowerballCurrentHand());
         yield return new WaitForSeconds(2f);
 
