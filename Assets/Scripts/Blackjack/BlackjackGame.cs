@@ -2484,6 +2484,7 @@ public class BlackjackGame : MonoBehaviour
         if(message.Contains("You win"))
         {
             CheckSuitWinCondition(allHands);
+            CheckThreeOfAKind(allHands);
 
             targetMoneyBalance = playerMoney + KeepsakeManager.instance.ApplyPayoutModifiers(betAmount, allHands);
 
@@ -2567,6 +2568,30 @@ public class BlackjackGame : MonoBehaviour
         if(allBlack)
         {
             KeepsakeUnlockProgression.instance.AddStat(ChallengeType.WinBlackSuits);
+        }
+    }
+
+    private void CheckThreeOfAKind(List<List<CardInstance>> allHands)
+    {
+        foreach(var hand in allHands)
+        {
+            Dictionary<int, int> valueCounts = new Dictionary<int, int>();
+
+            foreach(var card in hand)
+            {
+                int val = card.cardData.GetValue();
+
+                if(!valueCounts.ContainsKey(val)) valueCounts[val] = 0;
+
+                valueCounts[val]++;
+
+                if(valueCounts[val] >= 3)
+                {
+                    KeepsakeUnlockProgression.instance.AddStat(ChallengeType.ThreeOfAKind);
+
+                    return;
+                }
+            }
         }
     }
 

@@ -25,14 +25,34 @@ public class KeepsakeUnlockProgression : MonoBehaviour
         LoadPlaythroughStats();
     }
 
+    //temp
     private void Update()
     {
+        if(Input.GetKeyDown(KeyCode.F1))
+        {
+            UnlockAllProgress();
+        }
+
         if(Input.GetKeyDown(KeyCode.F12))
         {
             ResetAllProgress();
         }
     }
 
+    //temp
+    public void UnlockAllProgress()
+    {
+        foreach(ChallengeType type in Enum.GetValues(typeof(ChallengeType)))
+        {
+            playthroughStats[type] = 999;
+
+            PlayerPrefs.SetInt(type.ToString(), 999);
+        }
+
+        PlayerPrefs.Save();
+    }
+
+    //temp
     public void ResetAllProgress()
     {
         roundStats.Clear();
@@ -60,48 +80,62 @@ public class KeepsakeUnlockProgression : MonoBehaviour
             playthroughStats[type] = 0;
         }
 
-        playthroughStats[type] += amount;
+        if(IsRoundChallenge(type))
+        {
+            if(roundStats[type] > playthroughStats[type])
+            {
+                playthroughStats[type] = roundStats[type];
+            }
+        }
+        else
+        {
+            playthroughStats[type] += amount;
+        }
+
+        if(type == ChallengeType.DoubleDown || type == ChallengeType.Split)
+        {
+            int dd = roundStats.ContainsKey(ChallengeType.DoubleDown) ? roundStats[ChallengeType.DoubleDown] : 0;
+            int split = roundStats.ContainsKey(ChallengeType.Split) ? roundStats[ChallengeType.Split] : 0;
+
+            if(dd >= 5 && split >= 5)
+            {
+                int combo = roundStats.ContainsKey(ChallengeType.DoubleDownAndSplit) ? roundStats[ChallengeType.DoubleDownAndSplit] : 0;
+
+                if(combo == 0)
+                {
+                    AddStat(ChallengeType.DoubleDownAndSplit, 1);
+                }
+            }
+        }
 
         SavePlaythroughStats();
     }
 
     public bool HasMetRequirement(Keepsake keepsake)
     {
-        int progress = 0;
-        bool isRoundSpecific = IsRoundChallenge(keepsake.requiredChallenge);
-
-        if(isRoundSpecific)
-        {
-            roundStats.TryGetValue(keepsake.requiredChallenge, out progress);
-        }
-        else
-        {
-            playthroughStats.TryGetValue(keepsake.requiredChallenge, out progress);
-        }
+        playthroughStats.TryGetValue(keepsake.requiredChallenge, out int progress);
 
         return progress >= keepsake.requiredTarget;
     }
 
     public int GetProgress(ChallengeType type)
     {
-        int progress = 0;
-        bool isRoundSpecific = IsRoundChallenge(type);
-
-        if(isRoundSpecific)
-        {
-            roundStats.TryGetValue(type, out progress);
-        }
-        else
-        {
-            playthroughStats.TryGetValue(type, out progress);
-        }
+        playthroughStats.TryGetValue(type, out int progress);
 
         return progress;
     }
 
     private bool IsRoundChallenge(ChallengeType type)
     {
-        return type == ChallengeType.ItemAfterStand || type == ChallengeType.AlterDealerHand;
+        return type == ChallengeType.ItemAfterStand || type == ChallengeType.AlterDealerHand || type == ChallengeType.DoubleDownAndSplit;
+    }
+
+    //Call KeepsakeUnlockProgression.instance.EndRun() where the player dies / chashes out.
+    public void EndRun()
+    {
+        AddStat(ChallengeType.CompleteRound);
+
+        roundStats.Clear();
     }
 
     private void SavePlaythroughStats()

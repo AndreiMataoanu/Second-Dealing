@@ -14,7 +14,10 @@ public enum ChallengeType
     WinBlackSuits,
     UseItems,
     Split,
-    DoubleDown
+    DoubleDown,
+    DoubleDownAndSplit,
+    ThreeOfAKind,
+    CompleteRound
 }
 
 public abstract class Keepsake : ScriptableObject
