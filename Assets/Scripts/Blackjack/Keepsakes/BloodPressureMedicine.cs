@@ -3,8 +3,13 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "BloodPressureMedicine", menuName = "Keepsakes/BloodPressureMedicine")]
 public class BloodPressureMedicine : Keepsake
 {
-    public override bool AllowPostStandItem()
+    private BlackjackGame blackjackGame;
+    
+    public override bool AllowPostStandItem(BlackjackGame game)
     {
-        return true;
+        blackjackGame = game;
+        return game.ActivateBpMedicine();
     }
+
+    public void Deactivate() => blackjackGame.DeactivateBpMedicine();
 }

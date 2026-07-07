@@ -125,9 +125,9 @@ public class Item : Clickable
             return $"Passive: Sacrifice instead of your life\nExpires in: {blackjackGame.GetOrganRoundsLeft()} rounds";
         }
 
-        if (type == ItemType.Nft)
+        if(type == ItemType.Nft)
         {
-            return base.GetTooltipContent() + " Current value: ";
+            return base.GetTooltipContent() + "\n Current value: " + basePrice;
         }
 
         return base.GetTooltipContent();
@@ -145,9 +145,9 @@ public class Item : Clickable
 
     public void OnRoundStart()
     {
-        if (type == ItemType.Nft)
+        if(type == ItemType.Nft)
         {
-            if (nftRoundsLeft == 0)
+            if(nftRoundsLeft == 0)
                 basePrice = 0;
             else
             {
