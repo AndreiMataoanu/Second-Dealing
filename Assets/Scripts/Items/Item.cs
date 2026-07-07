@@ -17,12 +17,19 @@ public class Item : Clickable
     private Action<Item> itemAction;
     private BlackjackGame blackjackGame;
     private int nftRoundsLeft;
+    private float multiplier;
 
     public void AddAction(Action<Item> action) => itemAction += action;
 
     public void RemoveAction(Action<Item> action) => itemAction -= action;
     
     public void SetNftRoundsLeft() => nftRoundsLeft = Random.Range(2, 4);
+
+    public void SetMultiplier(float value = 1.0f)
+    {
+        if (type == ItemType.Coin) return;
+        multiplier = value;
+    }
 
     public bool Activate()
     {
@@ -67,10 +74,10 @@ public class Item : Clickable
 
         if(money >= blackjackGame.percentagePriceThreshold)
         {
-            return Mathf.RoundToInt(money * percentagePrice);
+            return Mathf.RoundToInt(money * percentagePrice * multiplier);
         }
 
-        return basePrice;
+        return Mathf.RoundToInt(basePrice * multiplier);
     }
 
     public int GetResalePrice()

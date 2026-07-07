@@ -101,14 +101,13 @@ MonoBehaviour:
       m_Calls: []
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
   tooltipHeader: Coin
-  tooltipContent: Flip the coin for a good card.
-  basePrice: 150
-  percentagePrice: 0.3
-  resaleLossPercentage: 0.5
-  type: 11
+  tooltipContent: Flip the coin for double or half the price on items next shop round.
+  basePrice: 1
+  percentagePrice: 0
+  resaleLossPercentage: 0
+  type: 10
   spawnWeight: 5
   isPurchased: 0
-  lottoWorldText: {fileID: 0}
 --- !u!64 &-1736431926067525896
 MeshCollider:
   m_ObjectHideFlags: 0

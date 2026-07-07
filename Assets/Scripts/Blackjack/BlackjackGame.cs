@@ -50,7 +50,6 @@ public class BlackjackGame : MonoBehaviour
     private bool isScissorsActive = false;
     private bool isAcidActive = false;
     private bool isCrucifixActive = false;
-    private bool isCoinActive = false;
     private bool isCigaretteActive = false;
     private bool isAlcoholActive = false;
     private bool isActionLocked = false;
@@ -77,7 +76,7 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private List<BlackjackEvent> mediumSeverityEvents;
     [SerializeField] private List<BlackjackEvent> highSeverityEvents;
     [SerializeField] public UnityEvent OnAddCardsEvent;
-    [FormerlySerializedAs("OnSelectCopyCardEvent")] [SerializeField] public UnityEvent DeleteCopyOptions;
+    [SerializeField] public UnityEvent DeleteCopyOptions;
     private List<BlackjackEvent> availableLowEvents;
     private List<BlackjackEvent> availableMediumEvents;
     private List<BlackjackEvent> availableHighEvents;
@@ -530,7 +529,6 @@ public class BlackjackGame : MonoBehaviour
         if(!isRoundActive || (isActionLocked && !useAfterStand)) return false;
 
         isCrucifixActive = true;
-        isCoinActive = false;
 
         return true;
     }
@@ -539,8 +537,9 @@ public class BlackjackGame : MonoBehaviour
     {
         if(!isRoundActive || (isActionLocked && !useAfterStand)) return false;
 
-        isCoinActive = true;
-        isCrucifixActive = false;
+        var isLucky = itemManager.FlipCoin();
+        if (isLucky) dialogueSystem.ShowLuckyCoinFlip();
+        else dialogueSystem.ShowUnluckyCoinFlip();
 
         return true;
     }
@@ -1798,21 +1797,15 @@ public class BlackjackGame : MonoBehaviour
 
         List<CardInstance> currentHand = playerHands[currentHandIndex];
 
-        if(isCrucifixActive || isCoinActive)
+        if(isCrucifixActive)
         {
             int playerValue = CalculateHandValue(currentHand, true);
             int idealValue = blackjackGoal - playerValue;
 
-            Card? dealtCard = null;
             Card.Rank targetRank = GetRankForValue(idealValue);
-
-            if (isCrucifixActive)
-                dealtCard = gameDeck.DealSpecificCard(targetRank);
-            else if (isCoinActive)
-                dealtCard = gameDeck.DealCoinSpecificCard(targetRank);
+            Card? dealtCard = gameDeck.DealSpecificCard(targetRank);
             
             isCrucifixActive = false;
-            isCoinActive = false;
 
             if(!dealtCard.HasValue)
             {
@@ -1908,7 +1901,7 @@ public class BlackjackGame : MonoBehaviour
 
         bool cardFound = false;
         
-        if(isCrucifixActive || isCoinActive)
+        if(isCrucifixActive)
         {
             int dealerValue = CalculateHandValue(dealerHand, true);
             int idealValue;
@@ -1917,16 +1910,10 @@ public class BlackjackGame : MonoBehaviour
             else if (dealerValue >= 6) idealValue = 16 - dealerValue;
             else idealValue = 12 - dealerValue; 
 
-            Card? dealtCard = null;
             Card.Rank targetRank = GetRankForValue(idealValue);
-
-            if (isCrucifixActive)
-                dealtCard = gameDeck.DealSpecificCard(targetRank);
-            else if (isCoinActive)
-                dealtCard = gameDeck.DealCoinSpecificCard(targetRank);
+            Card? dealtCard = gameDeck.DealSpecificCard(targetRank);
             
             isCrucifixActive = false;
-            isCoinActive = false;
 
             if(!dealtCard.HasValue)
             {

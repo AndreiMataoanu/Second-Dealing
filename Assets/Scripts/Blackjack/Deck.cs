@@ -146,12 +146,6 @@ public class Deck
         return null;
     }
 
-    public Card? DealCoinSpecificCard(Card.Rank targetRank)
-    {
-        var r = Random.Range(0.0f, 1.0f);
-        return r < CoinProbability ? DealSpecificCard(targetRank) : DealCard();
-    }
-
     public void AddRemovedValue(Card.Rank rank)
     {
         if(!removedRanks.Contains(rank)) removedRanks.Add(rank);

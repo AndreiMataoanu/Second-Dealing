@@ -20,6 +20,7 @@ public class ItemManager : MonoBehaviour
     [SerializeField] private Animator suitcaseAnimator;
     private int inventoryItems = 0;
     private float nextDenyTime = 0;
+    private float coinMultiplier = 1.0f;
 
     public void PlaySuitcaseOpen()
     {
@@ -37,6 +38,7 @@ public class ItemManager : MonoBehaviour
             var prefabInstance = Instantiate(prefab, buySpawnPoint.transform);
             var item = prefabInstance.GetComponent<Item>();
 
+            item.SetMultiplier(coinMultiplier);
             item.SetBlackjackGame(blackjackGame);
             item.SetActive(true);
             item.AddAction(OnBuy);
@@ -62,6 +64,8 @@ public class ItemManager : MonoBehaviour
                 Destroy(spawnPoint.transform.GetChild(0).gameObject);
             }
         }
+
+        ResetShopPrices();
     }
     
     private void OnBuy(Item item)
@@ -314,6 +318,7 @@ public class ItemManager : MonoBehaviour
 
         return false;
     }
+    
     #endregion
 
     private IEnumerator SuitcaseOpenCoroutine()
@@ -360,4 +365,20 @@ public class ItemManager : MonoBehaviour
 
         return true;
     }
+
+    #region Coin
+
+    // returns multiplier 0.5 - half off, 2.0 - double the price
+    public bool FlipCoin()
+    {
+        // AudioManager.instance.Play("CoinSound");
+        int coinFlip = Random.Range(0, 2);
+        coinMultiplier = coinFlip == 0 ? 0.5f : 2.0f;
+        
+        return coinFlip == 0; // return if lucky
+    }
+
+    private void ResetShopPrices() => coinMultiplier = 1.0f;
+
+    #endregion
 }
