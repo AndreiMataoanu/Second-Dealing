@@ -230,6 +230,7 @@ public class BlackjackGame : MonoBehaviour
     #region Player Actions
     public void OnStartGame()
     {
+        isSplitting = false;
         isPlayerStand = false;
         itemManager.OnRoundStart();
         if(!isRoundActive && PlayerMoney >= currentBet)
@@ -3196,8 +3197,6 @@ public class BlackjackGame : MonoBehaviour
 
             yield break;
         }
-
-        isSplitting = false;
 
         StartGame();
     }
