@@ -10483,11 +10483,67 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6896360752514835711, guid: 40ab288ea42b16a4eb566d5aeb3be1c1, type: 3}
   m_PrefabInstance: {fileID: 863810553861107809}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &2143984250 stripped
+--- !u!1 &2143984249
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2143984250}
+  - component: {fileID: 2143984251}
+  - component: {fileID: 2143984252}
+  m_Layer: 0
+  m_Name: KeepsakeManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2143984250
 Transform:
   m_CorrespondingSourceObject: {fileID: 7521905233958303720, guid: e4eacccfcf7f0644da3b4ee7a9546e8b, type: 3}
   m_PrefabInstance: {fileID: 3717772241830269376}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2143984249}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1823405866}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2143984251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2143984249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f3f78e7be8286947a6f0a7ace86a714, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KeepsakeManager
+  tableSpawnPoints:
+  - {fileID: 1259476006182470430}
+  - {fileID: 921047315}
+  maxKeepsakes: 2
+  equippedKeepsakes: []
+--- !u!114 &2143984252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2143984249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: debb497e3399f6042a0e0f13d3c0a7d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KeepsakeUnlockProgression
 --- !u!4 &197260203817784798
 Transform:
   m_ObjectHideFlags: 0
@@ -10874,6 +10930,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 36366832078275221, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 19.7
+      objectReference: {fileID: 0}
     - target: {fileID: 452393188812297846, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: blackjackGame
       value: 
@@ -10886,25 +10946,41 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 868414382173514219, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 20.1
+      objectReference: {fileID: 0}
     - target: {fileID: 911001280434813227, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 911575697712452226, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: blackjackGame
       value: 
       objectReference: {fileID: 1343293108}
+    - target: {fileID: 1446032172909477900, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 19.51
+      objectReference: {fileID: 0}
     - target: {fileID: 1451009221993462026, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: m_Name
       value: Keepsakes
       objectReference: {fileID: 0}
     - target: {fileID: 1810711894634738487, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2020329909444052542, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2037345501548978446, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 20.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2342012282872764057, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 20.5
       objectReference: {fileID: 0}
     - target: {fileID: 2628419885280275922, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: m_IsActive
@@ -10926,6 +11002,14 @@ PrefabInstance:
       propertyPath: blackjackGame
       value: 
       objectReference: {fileID: 1343293108}
+    - target: {fileID: 4511233512572514436, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 20.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4841384410794594574, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 19.9
+      objectReference: {fileID: 0}
     - target: {fileID: 4846051652731105430, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: blackjackGame
       value: 
@@ -10992,15 +11076,19 @@ PrefabInstance:
       objectReference: {fileID: 1343293108}
     - target: {fileID: 5616993612565364171, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5699337217021059656, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5874137656377705350, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 20.9
       objectReference: {fileID: 0}
     - target: {fileID: 6800314405720819609, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7058561348228269487, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: blackjackGame
@@ -11016,16 +11104,20 @@ PrefabInstance:
       objectReference: {fileID: 1343293108}
     - target: {fileID: 7581688550545038301, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7650252107163627382, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7771372226783443124, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: blackjackGame
       value: 
       objectReference: {fileID: 1343293108}
+    - target: {fileID: 8849441083528438474, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 20.7
+      objectReference: {fileID: 0}
     - target: {fileID: 9186716506486884956, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -11451,6 +11543,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a95d577b361219646b9a6394856cf59b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemManager
+  blackjackGame: {fileID: 1343293108}
+  cursorDetection: {fileID: 1306894128}
+  buySpawnPoints:
+  - {fileID: 1065378880}
+  - {fileID: 902577193}
+  useSpawnPoints:
+  - {fileID: 1159936628}
+  - {fileID: 510491807}
+  powerUpPrefabs:
+  - {fileID: 3247029996075764086, guid: 0e1526c2b64e7f04aa27b1188867eddd, type: 3}
+  - {fileID: 9090495121263625931, guid: 67a688aecdef10547bb6132e7ef51989, type: 3}
+  - {fileID: 6253389534292605265, guid: 08275bcefc07b4b52ab13520a11ef74b, type: 3}
+  - {fileID: 6929943178110708876, guid: 96176d5594c1c0e4c953255859f5fe50, type: 3}
+  - {fileID: 2913302698420253507, guid: 7e9e18d91886a45a4b32e403eadfb330, type: 3}
+  - {fileID: 8317044011722196100, guid: 8aeb761f10f864350a0aecf0e0c10996, type: 3}
+  - {fileID: 3226192414058870725, guid: 9dfc65c5a04984ba6b85c0a159bae247, type: 3}
+  - {fileID: 7098207735584986369, guid: 56af34de3a7d441eaa5726c833ab73ef, type: 3}
+  - {fileID: 7981796096309106432, guid: b881c730ab1fea64fbca849590fac1fe, type: 3}
+  - {fileID: 6929943178110708876, guid: 3e3733b30d9c286429f2a2ed810a1433, type: 3}
+  - {fileID: 3226192414058870725, guid: 08752688242307a4db155f11b51f3ae6, type: 3}
+  - {fileID: 9090495121263625931, guid: 43c76f0a42570e844afb9be6f20260c9, type: 3}
+  denySoundCooldown: 0.3
+  organRoundsLeft: 0
+  suitcaseAnimator: {fileID: 1688790259}
 --- !u!1001 &4109581827045791215
 PrefabInstance:
   m_ObjectHideFlags: 0

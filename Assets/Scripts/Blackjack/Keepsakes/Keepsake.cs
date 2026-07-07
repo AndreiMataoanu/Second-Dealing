@@ -1,10 +1,29 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+public enum ChallengeType
+{
+    None,
+    LoseByOne,
+    TriggerNegativeEvent,
+    TriggerRemoveEvent,
+    TriggerAddEvent,
+    ItemAfterStand,
+    AlterDealerHand,
+    WinRedSuits,
+    WinBlackSuits,
+    UseItems,
+    Split,
+    DoubleDown
+}
+
 public abstract class Keepsake : ScriptableObject
 {
     public string keepsakeName;
     [TextArea] public string description;
+    [TextArea] public string unlockDescription;
+    public ChallengeType requiredChallenge = ChallengeType.None;
+    public int requiredTarget = 0;
     public GameObject tablePrefab;
     public bool isActive = false;
 

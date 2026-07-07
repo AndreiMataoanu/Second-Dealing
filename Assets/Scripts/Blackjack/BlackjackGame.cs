@@ -415,6 +415,8 @@ public class BlackjackGame : MonoBehaviour
 
     public bool ActivateNft(int moneyGained)
     {
+        if(CheckItemAfterStand()) return false;
+
         if(isActionLocked && !useAfterStand) return false;
         
         if(moneyGained == 0)
@@ -435,6 +437,8 @@ public class BlackjackGame : MonoBehaviour
 
     public bool ActivateKnife()
     {
+        if(CheckItemAfterStand()) return false;
+
         if(!isRoundActive || isKnifeActive || (isActionLocked && !useAfterStand)) return false;
 
         isKnifeActive = true;
@@ -444,6 +448,8 @@ public class BlackjackGame : MonoBehaviour
 
     public bool ActivateScissors()
     {
+        if(CheckItemAfterStand()) return false;
+
         if(!isRoundActive || isScissorsActive || (isActionLocked && !useAfterStand)) return false;
 
         cursorFollowManager.SetCursorTypeActive(true, CursorType.Scissors);
@@ -468,6 +474,8 @@ public class BlackjackGame : MonoBehaviour
 
     public bool ActivateAcid()
     {
+        if(CheckItemAfterStand()) return false;
+
         if(!isRoundActive || isAcidActive || (isActionLocked && !useAfterStand)) return false;
 
         cursorFollowManager.SetCursorTypeActive(true, CursorType.Acid);
@@ -526,6 +534,8 @@ public class BlackjackGame : MonoBehaviour
 
     public bool ActivateCrucifix()
     {
+        if(CheckItemAfterStand()) return false;
+
         if(!isRoundActive || (isActionLocked && !useAfterStand)) return false;
 
         isCrucifixActive = true;
@@ -535,6 +545,8 @@ public class BlackjackGame : MonoBehaviour
     
     public bool ActivateCoin()
     {
+        if(CheckItemAfterStand()) return false;
+
         if(!isRoundActive || (isActionLocked && !useAfterStand)) return false;
 
         var isLucky = itemManager.FlipCoin();
@@ -546,6 +558,8 @@ public class BlackjackGame : MonoBehaviour
 
     public bool ActivateSunglasses()
     {
+        if(CheckItemAfterStand()) return false;
+
         if(!isRoundActive || peekedCardObject != null || (isActionLocked && !useAfterStand)) return false;
 
         Card? nextCard = gameDeck.PeekCard();
@@ -605,6 +619,8 @@ public class BlackjackGame : MonoBehaviour
 
     public bool ActivateCigarette()
     {
+        if(CheckItemAfterStand()) return false;
+
         if(!isRoundActive || (isActionLocked && !useAfterStand) || isCigaretteActive || isSplitting) return false;
 
         isCigaretteActive = true;
@@ -749,6 +765,8 @@ public class BlackjackGame : MonoBehaviour
     
     public bool ActivateAlcohol()
     {
+        if(CheckItemAfterStand()) return false;
+
         if(!isRoundActive || (isActionLocked && !useAfterStand) || isAlcoholActive) return false;
 
         isAlcoholActive = true;
@@ -864,9 +882,12 @@ public class BlackjackGame : MonoBehaviour
 
     public bool ActivateFan()
     {
+        if(CheckItemAfterStand()) return false;
+
         if(!isRoundActive || (isActionLocked && !useAfterStand)) return false;
         
         StartCoroutine(FanCoroutine());
+
         return true;
     }
 
@@ -1235,6 +1256,19 @@ public class BlackjackGame : MonoBehaviour
 
         UpdateHandVisuals(currentHand, currentParent, true);
         UpdateUI(true);
+    }
+
+    //Keepsake unlock progression.
+    public bool CheckItemAfterStand()
+    {
+        if(isActionLocked && !useAfterStand)
+        {
+            KeepsakeUnlockProgression.instance.AddStat(ChallengeType.ItemAfterStand);
+
+            return true;
+        }
+
+        return false;
     }
     #endregion
 
@@ -2120,6 +2154,8 @@ public class BlackjackGame : MonoBehaviour
 
         isActionLocked = true;
 
+        KeepsakeUnlockProgression.instance.AddStat(ChallengeType.DoubleDown);
+
         bool endlessDouble = KeepsakeManager.instance.AllowEndlessDoubleDown();
 
         if(!endlessDouble)
@@ -2176,6 +2212,8 @@ public class BlackjackGame : MonoBehaviour
     private IEnumerator SplitCoroutine()
     {
         isActionLocked = true;
+
+        KeepsakeUnlockProgression.instance.AddStat(ChallengeType.Split);
 
         int betToAdd = handBets[currentHandIndex];
 
@@ -2388,6 +2426,8 @@ public class BlackjackGame : MonoBehaviour
 
         if(wonByOne)
         {
+            KeepsakeUnlockProgression.instance.AddStat(ChallengeType.LoseByOne);
+
             dialogueSystem.ShowDealerWinsByOneTaunt();
 
             yield return new WaitWhile(() => dialogueSystem.IsPlaying);
@@ -2443,6 +2483,8 @@ public class BlackjackGame : MonoBehaviour
 
         if(message.Contains("You win"))
         {
+            CheckSuitWinCondition(allHands);
+
             targetMoneyBalance = playerMoney + KeepsakeManager.instance.ApplyPayoutModifiers(betAmount, allHands);
 
             AudioManager.instance.Play("MoneyGained");
@@ -2494,6 +2536,37 @@ public class BlackjackGame : MonoBehaviour
             dialogueSystem.ShowBetLostTaunt();
 
             yield return new WaitWhile(() => dialogueSystem.IsPlaying);
+        }
+    }
+
+    private void CheckSuitWinCondition(List<List<CardInstance>> allHands)
+    {
+        bool allRed = true;
+        bool allBlack = true;
+
+        foreach(var hand in allHands)
+        {
+            foreach(var card in hand)
+            {
+                if(card.cardData.suit == Card.Suit.Hearts || card.cardData.suit == Card.Suit.Diamonds)
+                {
+                    allBlack = false;
+                }
+                else if(card.cardData.suit == Card.Suit.Spades || card.cardData.suit == Card.Suit.Clubs)
+                {
+                    allRed = false;
+                }
+            }
+        }
+
+        if(allRed)
+        {
+            KeepsakeUnlockProgression.instance.AddStat(ChallengeType.WinRedSuits);
+        }
+
+        if(allBlack)
+        {
+            KeepsakeUnlockProgression.instance.AddStat(ChallengeType.WinBlackSuits);
         }
     }
 
