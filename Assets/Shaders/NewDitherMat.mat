@@ -38,7 +38,16 @@ Material:
     m_Ints: []
     m_Floats:
     - _ColorResolution: 1
-    - _DitherSpread: 256
+    - _DitherScale: 6
+    - _DitherSpread: 64
+    - _Harshness: 0.25
+    - _Mask: 0.37
+    - _Saturation: 1
+    - _Scale: 6
+    - _Temperature: 0
+    - _Tint: 0
+    - _test1: 0.25
+    - _test2: 0.25
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1
