@@ -31,6 +31,7 @@ public class BlackjackGame : MonoBehaviour
     #region Attributes
     [Header("Set-Up")]
     [SerializeField] private ItemManager itemManager;
+    [SerializeField] private ShopManager shopManager;
     [SerializeField] private CursorDetection cursorDetection;
     [SerializeField] private CursorFollowManager cursorFollowManager;
     [SerializeField] private DialogueSystem dialogueSystem;
@@ -143,7 +144,7 @@ public class BlackjackGame : MonoBehaviour
         isScissorsActive = active;
         cursorFollowManager.SetCursorTypeActive(active, CursorType.Scissors);
     }
-    public int GetOrganRoundsLeft() => itemManager.organRoundsLeft;
+    public int GetOrganRoundsLeft() => shopManager.organRoundsLeft;
     public int GetPlayerMoney() => playerMoney;
     
     public Transform CardOptionPosition => cursorDetection.GetCardOptionsPosition();
@@ -167,7 +168,7 @@ public class BlackjackGame : MonoBehaviour
     private void Start()
     {
         gameDeck = new Deck();
-        eventManager.SetBlackjackGame(this);
+        ManagerSetup();
 
         cinemachineBrain.DefaultBlend.Time = cameraTransitionTime;
 
@@ -197,7 +198,10 @@ public class BlackjackGame : MonoBehaviour
     {
         isSplitting = false;
         isPlayerStand = false;
+        
+        shopManager.DespawnShopItems();
         itemManager.OnRoundStart();
+        
         if(!isRoundActive && PlayerMoney >= currentBet)
             StartCoroutine(DealRoundCoroutine());
     }
@@ -507,7 +511,7 @@ public class BlackjackGame : MonoBehaviour
 
         if(!isRoundActive || (isActionLocked && !useAfterStand)) return false;
 
-        var isLucky = itemManager.FlipCoin();
+        var isLucky = shopManager.FlipCoin();
         if (isLucky) dialogueSystem.ShowLuckyCoinFlip();
         else dialogueSystem.ShowUnluckyCoinFlip();
 
@@ -947,6 +951,16 @@ public class BlackjackGame : MonoBehaviour
         StartCoroutine(AnimateBetChange(targetBalance, 3f));
     }
 
+    private void ManagerSetup()
+    {
+        itemManager.SetBlackjackGame(this);
+        itemManager.SetShopManager(shopManager);
+        
+        shopManager.SetBlackjackGame(this);
+        
+        eventManager.SetBlackjackGame(this);
+    }
+
     #endregion
 
     #region Keepsakes
@@ -1173,16 +1187,7 @@ public class BlackjackGame : MonoBehaviour
             return;
         }
 
-        bool success = itemManager.GiveSpecificItem(tarotData.rewardItemPrefab);
-
-        if(!success)
-        {
-            AudioManager.instance.Play("ItemDeny");
-
-            return;
-        }
-
-        AudioManager.instance.Play("ItemBuy");
+        itemManager.OnTarotSpawn(tarotData.rewardItemPrefab);
 
         scissoredCards.Remove(cardInstance);
         alcoholCards.Remove(cardInstance);
@@ -1328,7 +1333,7 @@ public class BlackjackGame : MonoBehaviour
 
         if(!isTutorialActive)
         {
-            itemManager.PlaySuitcaseOpen();
+            shopManager.PlaySuitcaseOpen();
             statusText.text = "";
         }
         
@@ -1397,7 +1402,6 @@ public class BlackjackGame : MonoBehaviour
         statusText.text = "Dealing cards...";
         cursorDetection.OnRoundActive();
         itemManager.ChangeItemAction(true);
-        itemManager.DespawnPowerUps();
 
         if(roundsCompleted < riggedRoundsLimit)
         {
@@ -2199,7 +2203,7 @@ public class BlackjackGame : MonoBehaviour
 
                 AudioManager.instance.Play("OrganExpire");
 
-                itemManager.RemoveItemOfType(ItemType.Organ);
+                shopManager.RemoveFromInventory(ItemType.Organ);
                 isOrganActive = false;
                 targetMoneyBalance = playerMoney;
 

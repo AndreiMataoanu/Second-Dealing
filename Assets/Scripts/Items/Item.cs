@@ -19,7 +19,11 @@ public class Item : Clickable
     private int nftRoundsLeft;
     private float multiplier;
 
-    public void AddAction(Action<Item> action) => itemAction += action;
+    public void AddAction(Action<Item> action)
+    {
+        Debug.Log("Add action");
+        itemAction += action;
+    }
 
     public void RemoveAction(Action<Item> action) => itemAction -= action;
     

@@ -1,0 +1,305 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+using Random = UnityEngine.Random;
+
+public class ShopManager : MonoBehaviour
+{
+    [Header("Item")]
+    [SerializeField] private List<GameObject> buySpawnPoints;
+    [SerializeField] private List<GameObject> useSpawnPoints;
+    [SerializeField] private List<GameObject> itemPrefabs;
+    
+    [Header("Sound")]
+    [SerializeField] private float denySoundCooldown = 0.3f;
+    [HideInInspector] public int organRoundsLeft = 0; // TODO: move to item manager
+
+    [Header("Suitcase")] 
+    [SerializeField] private Animator suitcaseAnimator;
+    
+    private int inventoryItemCount = 0;
+    private float nextDenyTime = 0;
+    private float coinMultiplier = 1.0f;
+    
+    private List<Item> inventoryItems = new();
+    private BlackjackGame blackjackGame;
+
+    private Action<Item> BuyAction;
+    
+    #region Getters
+
+    public List<Item> InventoryItems => inventoryItems;
+
+    #endregion
+    
+    #region Setters
+
+    public void SetBlackjackGame(BlackjackGame game)
+    {
+        blackjackGame = game;
+    }
+
+    public void SetBuyAction(Action<Item> buyAction)
+    {
+        Debug.Log("set buy action");
+        Debug.Log(buyAction);
+        BuyAction = buyAction;
+    }
+    
+    #endregion
+
+    #region Open Shop
+
+    public void SpawnPowerUps()
+    {
+        foreach (var buySpawnPoint in buySpawnPoints.ToList())
+        {
+            var prefab = GetWeightedRandomPrefab();
+            var item = SpawnItem(prefab, buySpawnPoint.transform);
+
+            item.SetMultiplier(coinMultiplier);
+            item.SetBlackjackGame(blackjackGame);
+            item.SetActive(true);
+            item.AddAction(BuyAction);
+        }
+    }
+    
+    private GameObject GetWeightedRandomPrefab()
+    {
+        bool hasOrgan = blackjackGame.isOrganActive;
+        int currentTotalWeight = 0;
+
+        // revise valid prefabs should be member
+        List<GameObject> validPrefabs = new List<GameObject>();
+
+        foreach(var prefab in itemPrefabs)
+        {
+            var item = prefab.GetComponent<Item>();
+
+            if(hasOrgan && item.type == ItemType.Organ) continue;
+
+            validPrefabs.Add(prefab);
+            currentTotalWeight += item.spawnWeight;
+        }
+
+        int roll = Random.Range(0, currentTotalWeight);
+        int cursor = 0;
+
+        foreach(var prefab in validPrefabs)
+        {
+            cursor += prefab.GetComponent<Item>().spawnWeight;
+
+            if(roll < cursor) return prefab;
+        }
+
+        return itemPrefabs[0];
+    }
+
+    #endregion
+
+    #region Close Shop
+    
+    public void OnCloseShop()
+    {
+        if (inventoryItemCount != buySpawnPoints.Count) return;
+        
+        DespawnShopItems();
+        StartCoroutine(SuitcaseCloseCoroutine());
+    }
+
+    public void DespawnShopItems()
+    {
+        StartCoroutine(DespawnCoroutine());
+    }
+    
+    private IEnumerator DespawnCoroutine()
+    {
+        StartCoroutine(SuitcaseCloseCoroutine());
+
+        yield return null;
+        yield return new WaitForSeconds(suitcaseAnimator.GetCurrentAnimatorStateInfo(0).length);
+
+        foreach(var spawnPoint in buySpawnPoints)
+        {
+            if(spawnPoint.transform.childCount > 0)
+            {
+                Destroy(spawnPoint.transform.GetChild(0).gameObject);
+            }
+        }
+
+        ResetShopPrices();
+    }
+
+    #endregion
+
+    #region Inventory
+
+    public void AddToInventory(Item item, bool isFree = false)
+    {
+        MoveToInventoryPosition(item, isFree);
+        OnAddedToInventory(item);
+    }
+    
+    private void MoveToInventoryPosition(Item item, bool isFree=false)
+    {
+        AudioManager.instance.Play("ItemBuy");
+
+        if(!isFree) blackjackGame.BuyItem(item.GetPrice());
+        
+        var pos = item.transform.localPosition;
+        var rot = item.transform.localRotation;
+        var scale = item.transform.localScale;
+
+        foreach(var spawnPoint in useSpawnPoints)
+        {
+            if(spawnPoint.transform.childCount == 0)
+            {
+                item.transform.parent = spawnPoint.transform;
+                break;
+            }
+        }
+        
+        item.transform.localPosition = pos;
+        item.transform.localRotation = rot;
+        item.transform.localScale = scale;
+    }
+
+    private void OnAddedToInventory(Item item)
+    {
+        ActivateItemPassiveEffects(item); // TODO: should be item method
+        
+        item.isPurchased = true;
+        inventoryItemCount++;
+        inventoryItems.Add(item);
+    }
+    
+    public void RemoveFromInventory(Item item)
+    {
+        TooltipManager.instance.HideTooltip();
+        
+        DeactivateItemPassiveEffects(item);
+        Destroy(item.gameObject);
+        inventoryItemCount--;
+        inventoryItems.Remove(item);
+    }
+    
+    public void RemoveFromInventory(ItemType type)
+    {
+        foreach(var item in inventoryItems)
+            RemoveFromInventory(item);
+    }
+    
+    public Item SpawnItemInventory(GameObject prefab)
+    {
+        if(inventoryItemCount >= useSpawnPoints.Count) return null;
+
+        var item = SpawnItem(prefab, useSpawnPoints[inventoryItemCount].transform);
+        OnAddedToInventory(item);
+
+        return item;
+    }
+
+    #endregion
+
+    #region Helper Methods
+    
+    private Item SpawnItem(GameObject prefab, Transform position)
+    {
+        if (prefab == null) return null;
+        
+        GameObject prefabInstance = Instantiate(prefab, position);
+        Item item = prefabInstance.GetComponent<Item>();
+        item.SetBlackjackGame(blackjackGame);
+
+        return item;
+    }
+
+    public bool CanBuyItem(Item item)
+    {
+        if(inventoryItemCount >= useSpawnPoints.Count || blackjackGame.PlayerMoney > item.GetPrice()) return true;
+
+        if(Time.time >= nextDenyTime)
+        {
+            AudioManager.instance.Play("ItemDeny");
+
+            nextDenyTime = Time.time + denySoundCooldown;
+        }
+
+        return false;
+    }
+
+    private void ActivateItemPassiveEffects(Item item)
+    {
+        switch (item.type)
+        {
+            case ItemType.Organ:
+                blackjackGame.ActivateOrgan();
+                organRoundsLeft = 2;
+                break;
+            case ItemType.Nft:
+                item.SetNftRoundsLeft();
+                break;
+        }
+    }
+
+    private void DeactivateItemPassiveEffects(Item item)
+    {
+        switch (item.type)
+        {
+            case ItemType.Organ:
+                blackjackGame.DeactivateOrgan();
+                break;
+        }
+    }
+    
+    #endregion
+    
+    #region Coin
+
+    // returns multiplier 0.5 - half off, 2.0 - double the price
+    public bool FlipCoin()
+    {
+        // AudioManager.instance.Play("CoinSound");
+        int coinFlip = Random.Range(0, 2);
+        coinMultiplier = coinFlip == 0 ? 0.5f : 2.0f;
+        
+        return coinFlip == 0;
+    }
+
+    private void ResetShopPrices() => coinMultiplier = 1.0f;
+
+    #endregion
+    
+    #region Suitcase Animation
+    
+    public void PlaySuitcaseOpen()
+    {
+        if (itemPrefabs == null || itemPrefabs.Count == 0 || inventoryItemCount == useSpawnPoints.Count) return;
+
+        StartCoroutine(SuitcaseOpenCoroutine());
+        SpawnPowerUps();
+    }
+    
+    private IEnumerator SuitcaseOpenCoroutine()
+    {
+        suitcaseAnimator.Play("Suitcase_Opening");
+
+        yield return new WaitForSeconds(0.2f);
+
+        AudioManager.instance.Play("Latch");
+        AudioManager.instance.Play("SuitcaseOpen");
+    }
+
+    private IEnumerator SuitcaseCloseCoroutine()
+    {
+        AudioManager.instance.Play("SuitcaseClose");
+
+        yield return new WaitForSeconds(0.6f);
+
+        suitcaseAnimator.Play("Suitcase_Closing");
+    }
+    
+    #endregion
+}
