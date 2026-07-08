@@ -9491,7 +9491,7 @@ MonoBehaviour:
   priority: 0
   blendDistance: 1
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: f38b231a0d0b3d94ca6a7059bdcc3077, type: 2}
+  sharedProfile: {fileID: 11400000, guid: 5c9d0b5bde1023441911735f1cf10938, type: 2}
 --- !u!65 &1894970973
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11779,6 +11779,18 @@ PrefabInstance:
       propertyPath: 'buySpawnPoints.Array.data[1]'
       value: 
       objectReference: {fileID: 902577193}
+    - target: {fileID: 1560667398378699949, guid: 3fcfec802fc6b644ab5976dc3571252e, type: 3}
+      propertyPath: 'powerUpPrefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 3247029996075764086, guid: 0e1526c2b64e7f04aa27b1188867eddd, type: 3}
+    - target: {fileID: 1560667398378699949, guid: 3fcfec802fc6b644ab5976dc3571252e, type: 3}
+      propertyPath: 'powerUpPrefabs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 6929943178110708876, guid: 96176d5594c1c0e4c953255859f5fe50, type: 3}
+    - target: {fileID: 1560667398378699949, guid: 3fcfec802fc6b644ab5976dc3571252e, type: 3}
+      propertyPath: 'powerUpPrefabs.Array.data[3]'
+      value: 
+      objectReference: {fileID: 9090495121263625931, guid: 67a688aecdef10547bb6132e7ef51989, type: 3}
     - target: {fileID: 1560667398378699949, guid: 3fcfec802fc6b644ab5976dc3571252e, type: 3}
       propertyPath: 'useSpawnPoints.Array.data[0]'
       value: 
