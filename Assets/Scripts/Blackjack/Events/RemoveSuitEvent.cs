@@ -8,5 +8,7 @@ public class RemoveSuitEvent : BlackjackEvent
     public override void Apply(BlackjackGame game)
     {
         game.RemoveSuitFromDeck(suitToRemove);
+
+        KeepsakeUnlockProgression.instance.AddStat(ChallengeType.TriggerRemoveEvent);
     }
 }

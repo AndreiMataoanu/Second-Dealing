@@ -14,4 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DivorcePapers
   keepsakeName: Divorce Papers
   description: You can split whenever, if funding allows
+  unlockDescription: Split 21 times
+  requiredChallenge: 10
+  requiredTarget: 21
   tablePrefab: {fileID: 2708514875635923006, guid: 8913c3dc521699549ad18bbcb968c349, type: 3}
+  isActive: 0

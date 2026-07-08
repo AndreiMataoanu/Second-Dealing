@@ -8,5 +8,7 @@ public class NegativeSuitEvent : BlackjackEvent
     public override void Apply(BlackjackGame game)
     {
         game.SetNegativeSuit(suitToTarget);
+
+        KeepsakeUnlockProgression.instance.AddStat(ChallengeType.TriggerNegativeEvent);
     }
 }

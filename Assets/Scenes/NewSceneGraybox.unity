@@ -9076,7 +9076,7 @@ Transform:
   - {fileID: 537238135}
   - {fileID: 1135337103}
   - {fileID: 708047836}
-  - {fileID: 2143984250}
+  - {fileID: 3717772241830269377}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1836844511
@@ -10483,11 +10483,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6896360752514835711, guid: 40ab288ea42b16a4eb566d5aeb3be1c1, type: 3}
   m_PrefabInstance: {fileID: 863810553861107809}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &2143984250 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7521905233958303720, guid: e4eacccfcf7f0644da3b4ee7a9546e8b, type: 3}
-  m_PrefabInstance: {fileID: 3717772241830269376}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &197260203817784798
 Transform:
   m_ObjectHideFlags: 0
@@ -10874,6 +10869,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 36366832078275221, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 19.7
+      objectReference: {fileID: 0}
     - target: {fileID: 452393188812297846, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: blackjackGame
       value: 
@@ -10886,29 +10885,45 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 868414382173514219, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 20.1
+      objectReference: {fileID: 0}
     - target: {fileID: 911001280434813227, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 911575697712452226, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: blackjackGame
       value: 
       objectReference: {fileID: 1343293108}
+    - target: {fileID: 1446032172909477900, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 19.51
+      objectReference: {fileID: 0}
     - target: {fileID: 1451009221993462026, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: m_Name
       value: Keepsakes
       objectReference: {fileID: 0}
     - target: {fileID: 1810711894634738487, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2020329909444052542, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2037345501548978446, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 20.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2342012282872764057, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 20.5
       objectReference: {fileID: 0}
     - target: {fileID: 2628419885280275922, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3363845420032303589, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: keepsake
@@ -10922,10 +10937,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3677911708978420232, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 21.07
+      objectReference: {fileID: 0}
     - target: {fileID: 4300470382328938508, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: blackjackGame
       value: 
       objectReference: {fileID: 1343293108}
+    - target: {fileID: 4511233512572514436, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 20.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4841384410794594574, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 19.9
+      objectReference: {fileID: 0}
     - target: {fileID: 4846051652731105430, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: blackjackGame
       value: 
@@ -10940,7 +10967,7 @@ PrefabInstance:
       objectReference: {fileID: 1343293108}
     - target: {fileID: 5321876896776416877, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5372428982862247798, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10992,15 +11019,23 @@ PrefabInstance:
       objectReference: {fileID: 1343293108}
     - target: {fileID: 5616993612565364171, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5699337217021059656, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5874137656377705350, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 20.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6624206119709449870, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 21.1
       objectReference: {fileID: 0}
     - target: {fileID: 6800314405720819609, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7058561348228269487, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: blackjackGame
@@ -11016,16 +11051,24 @@ PrefabInstance:
       objectReference: {fileID: 1343293108}
     - target: {fileID: 7581688550545038301, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7650252107163627382, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7771372226783443124, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: blackjackGame
       value: 
       objectReference: {fileID: 1343293108}
+    - target: {fileID: 8223191251668752074, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 21.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8849441083528438474, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 20.7
+      objectReference: {fileID: 0}
     - target: {fileID: 9186716506486884956, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -11440,6 +11483,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4eacccfcf7f0644da3b4ee7a9546e8b, type: 3}
+--- !u!4 &3717772241830269377 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7521905233958303720, guid: e4eacccfcf7f0644da3b4ee7a9546e8b, type: 3}
+  m_PrefabInstance: {fileID: 3717772241830269376}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &4031140933024232257 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1560667398378699949, guid: 3fcfec802fc6b644ab5976dc3571252e, type: 3}

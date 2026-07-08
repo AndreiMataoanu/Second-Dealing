@@ -12,5 +12,7 @@ public class AddCardsEvent : BlackjackEvent
             game.DisplayCardOptions(copyRangeMax, copyRangeMin);
         else
             game.DisplayCardOptions(copyRangeMin, copyRangeMax);
+
+        KeepsakeUnlockProgression.instance.AddStat(ChallengeType.TriggerAddEvent);
     }
 }
