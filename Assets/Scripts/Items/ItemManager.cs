@@ -16,7 +16,6 @@ public class ItemManager : MonoBehaviour
 
     public void SetShopManager(ShopManager shop)
     {
-        Debug.Log("Set shop " + shop);
         shopManager = shop;
         shopManager.SetBuyAction(OnBuy);
     }

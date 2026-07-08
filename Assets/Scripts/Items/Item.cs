@@ -17,13 +17,9 @@ public class Item : Clickable
     private Action<Item> itemAction;
     private BlackjackGame blackjackGame;
     private int nftRoundsLeft;
-    private float multiplier;
+    private float multiplier = 1.0f;
 
-    public void AddAction(Action<Item> action)
-    {
-        Debug.Log("Add action");
-        itemAction += action;
-    }
+    public void AddAction(Action<Item> action) => itemAction += action;
 
     public void RemoveAction(Action<Item> action) => itemAction -= action;
     

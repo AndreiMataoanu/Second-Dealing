@@ -36,17 +36,9 @@ public class ShopManager : MonoBehaviour
     
     #region Setters
 
-    public void SetBlackjackGame(BlackjackGame game)
-    {
-        blackjackGame = game;
-    }
+    public void SetBlackjackGame(BlackjackGame game) => blackjackGame = game;
 
-    public void SetBuyAction(Action<Item> buyAction)
-    {
-        Debug.Log("set buy action");
-        Debug.Log(buyAction);
-        BuyAction = buyAction;
-    }
+    public void SetBuyAction(Action<Item> buyAction) => BuyAction = buyAction;
     
     #endregion
 
