@@ -11,6 +11,13 @@ public class KeepsakeInteractable : Clickable
 
         base.OnClick(mouseButton);
 
+        if(!KeepsakeUnlockProgression.instance.HasMetRequirement(keepsake))
+        {
+            AudioManager.instance.Play("ItemDeny");
+
+            return;
+        }
+
         if(KeepsakeManager.instance.equippedKeepsakes.Contains(keepsake))
         {
             KeepsakeManager.instance.UnequipKeepsake(keepsake);
@@ -38,6 +45,13 @@ public class KeepsakeInteractable : Clickable
 
     protected override string GetTooltipContent()
     {
+        if(!KeepsakeUnlockProgression.instance.HasMetRequirement(keepsake))
+        {
+            int currentProgress = KeepsakeUnlockProgression.instance.GetProgress(keepsake.requiredChallenge);
+
+            return $"{keepsake.description}\n\nUnlock: {keepsake.unlockDescription} ({currentProgress}/{keepsake.requiredTarget})";
+        }
+
         return keepsake.description;
     }
 }

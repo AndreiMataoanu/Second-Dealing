@@ -6,5 +6,7 @@ public class AddJokersEvent : BlackjackEvent
     public override void Apply(EventManager events)
     {
         events.AddJokers();
+        
+        KeepsakeUnlockProgression.instance.AddStat(ChallengeType.TriggerAddEvent);
     }
 }

@@ -19,6 +19,8 @@ public class RemoveValueEvent : BlackjackEvent
                 events.RemoveValueFromDeck(r);
             }
         }
+
+        KeepsakeUnlockProgression.instance.AddStat(ChallengeType.TriggerRemoveEvent);
     }
 
     private int GetRankValue(Card.Rank rank)

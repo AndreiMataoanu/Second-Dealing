@@ -130,6 +130,8 @@ public class ItemManager : MonoBehaviour
 
         Destroy(item.gameObject);
 
+        KeepsakeUnlockProgression.instance.AddStat(ChallengeType.UseItems);
+
         inventoryItems--;
     }
 
