@@ -4,10 +4,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Powerball", menuName = "Events/Powerball")]
 public class PowerballEvent : BlackjackEvent
 {
-    public override void Apply(BlackjackGame game)
+    public override void Apply(EventManager events)
     {
         List<int> numbers = GenerateNumbers();
-        game.SetPowerballEventActive(numbers);
+        events.SetPowerballEventActive(numbers);
     }
 
     public static List<int> GenerateNumbers()

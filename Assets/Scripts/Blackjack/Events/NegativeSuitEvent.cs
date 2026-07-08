@@ -5,8 +5,8 @@ public class NegativeSuitEvent : BlackjackEvent
 {
     [SerializeField] Card.Suit suitToTarget;
 
-    public override void Apply(BlackjackGame game)
+    public override void Apply(EventManager events)
     {
-        game.SetNegativeSuit(suitToTarget);
+        events.SetNegativeSuit(suitToTarget);
     }
 }

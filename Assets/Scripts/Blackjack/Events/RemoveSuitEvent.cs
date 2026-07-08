@@ -5,8 +5,8 @@ public class RemoveSuitEvent : BlackjackEvent
 {
     public Card.Suit suitToRemove;
 
-    public override void Apply(BlackjackGame game)
+    public override void Apply(EventManager events)
     {
-        game.RemoveSuitFromDeck(suitToRemove);
+        events.RemoveSuitFromDeck(suitToRemove);
     }
 }

@@ -6,20 +6,21 @@ public class ProgressDisplay : MonoBehaviour
 {
     [SerializeField] private BlackjackGame blackjackGame;
 
+    private EventManager eventManager;
     private List<int> eventThreshHolds = new();
     private TMP_Text textComponent;
     private string defaultText;
     
     private void AddThresholds()
     {
-        foreach (var threshold in blackjackGame.EventThresholds)
+        foreach (var threshold in eventManager.EventThresholds)
             if (threshold != null) 
                 eventThreshHolds.Add(threshold.moneyAmount);
     }
 
     private int GetNextThreshold()
     {
-        int i = blackjackGame.TriggeredThresholdsCount;
+        int i = eventManager.TriggeredThresholdsCount;
         return i < eventThreshHolds.Count ? eventThreshHolds[i] : -1;
     }
 
@@ -32,21 +33,21 @@ public class ProgressDisplay : MonoBehaviour
             return;
         }
 
-        if (!blackjackGame.UseTurnLimit)
+        if (!eventManager.UseTurnLimit)
         {
             textComponent.text = "Next milestone:\n$" + next;
             defaultText = textComponent.text;
             return;
         }
 
-        textComponent.text = "Next milestone:\n$" + next + "\n\nTurns left: " + blackjackGame.TurnsLeft;
+        textComponent.text = "Next milestone:\n$" + next + "\n\nTurns left: " + eventManager.TurnsLeft;
         defaultText = textComponent.text;
     }
 
     public void UpdatePowerballGoal()
     {
         textComponent.text = defaultText;
-        var goal = blackjackGame.PowerballGoal;
+        var goal = eventManager.PowerballGoal;
         if (goal.Count == 0) return;
 
         textComponent.text += "\n\nPowerball:\n";
@@ -56,8 +57,9 @@ public class ProgressDisplay : MonoBehaviour
     
     private void Start()
     {
-        AddThresholds();
+        eventManager = blackjackGame.EventManager;
         textComponent = GetComponent<TMP_Text>();
+        AddThresholds();
         DisplayNextMilestone();
     }
 }

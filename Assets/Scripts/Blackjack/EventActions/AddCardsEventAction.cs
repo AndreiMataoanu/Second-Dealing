@@ -6,9 +6,15 @@ public class AddCardsEventAction : MonoBehaviour
     [SerializeField] private BlackjackGame blackjackGame;
     [SerializeField] private float horizontalSpacing = 0.2f;
 
+    private EventManager eventManager;
     private const int OptionCount = 3;
     private const float CardAnimationDuration = 0.25f;
     private readonly Vector3 cardScaleVector = Vector3.one * 0.05f;
+
+    private void Awake()
+    {
+        eventManager = blackjackGame.EventManager;
+    }
 
     public void DealOptions()
     {
@@ -26,7 +32,7 @@ public class AddCardsEventAction : MonoBehaviour
             yield return new WaitForSeconds(1f);
         }
 
-        blackjackGame.AddClickableCardOptions();
+        eventManager.AddClickableCardOptions();
         blackjackGame.SelectCursorHand(true);
     }
     

@@ -46,56 +46,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BlackjackGame
   itemManager: {fileID: 0}
   cursorDetection: {fileID: 0}
+  cursorFollowManager: {fileID: 0}
   dialogueSystem: {fileID: 0}
+  eventManager: {fileID: 0}
   betUpCollider: {fileID: 0}
   betDownCollider: {fileID: 0}
   riggedRoundsLimit: 5
   canDoubleDown: 0
   isRoundActive: 0
-  isLottoActive: 0
   isOrganActive: 0
   isAntiMatterTargeting: 0
   isPyroTargeting: 0
   isHatTrickTargeting: 0
-  eventThresholds:
-  - severityToTrigger: 0
-    moneyAmount: 600
-  - severityToTrigger: 1
-    moneyAmount: 1000
-  - severityToTrigger: 1
-    moneyAmount: 2000
-  - severityToTrigger: 2
-    moneyAmount: 5000
-  - severityToTrigger: 0
-    moneyAmount: 10000
-  - severityToTrigger: 0
-    moneyAmount: 25000
-  - severityToTrigger: 2
-    moneyAmount: 50000
-  - severityToTrigger: 2
-    moneyAmount: 75000
-  lowSeverityEvents:
-  - {fileID: 11400000, guid: 204739df0ccfea64ab4ef255a2a5bab7, type: 2}
-  - {fileID: 11400000, guid: f8f5262ed691a2643b68cfe3e83e9d93, type: 2}
-  - {fileID: 11400000, guid: 2dc03149c01ac4d4488d5a8f15b31c36, type: 2}
-  - {fileID: 11400000, guid: afea2f41da830234381ee2148e0ed747, type: 2}
-  - {fileID: 11400000, guid: 1b6a6919b4e3bcc4786499add0fe4591, type: 2}
-  - {fileID: 11400000, guid: 31ff245295f50c84287d8d7fd59872c3, type: 2}
-  - {fileID: 11400000, guid: a2e7be97f71409e458d409648c8b0b05, type: 2}
-  - {fileID: 11400000, guid: d59fe0786b321334cae4ee54009c518d, type: 2}
-  - {fileID: 11400000, guid: aa96aa46492df3e4db76c4a69310aefb, type: 2}
-  - {fileID: 11400000, guid: 2c40c03f0fc098e4e8b9ddbddb3d482d, type: 2}
-  - {fileID: 11400000, guid: 90e916027f496dc438ffa740073bf320, type: 2}
-  - {fileID: 11400000, guid: 2abb42800d64dda4c892a33a05c2856b, type: 2}
-  - {fileID: 11400000, guid: 3b2a0ca89cf99cf468c8b8194beb91db, type: 2}
-  - {fileID: 11400000, guid: 8dd6a5c9f92458843b89d3577fc5c243, type: 2}
-  mediumSeverityEvents:
-  - {fileID: 11400000, guid: 18758e0d7866558419cc4975fc50924b, type: 2}
-  - {fileID: 11400000, guid: 6d1cb0823b67dd541a8a8e684dbf6102, type: 2}
-  highSeverityEvents:
-  - {fileID: 11400000, guid: 16f803c2a8c8cae4b83d83c657ad3736, type: 2}
-  - {fileID: 11400000, guid: 2c8cce2d0e09e354fa259a7d81357cc0, type: 2}
-  - {fileID: 11400000, guid: f9969251b08054a4b9f872af95840548, type: 2}
   tutorialRoundsLimit: 0
   playerMoney: 500
   percentagePriceThreshold: 10000
@@ -112,6 +74,36 @@ MonoBehaviour:
   statusText: {fileID: 0}
   dealerTotalText: {fileID: 0}
   rouletteText: {fileID: 0}
+  ChangeProgressText:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: ProgressDisplay, Assembly-CSharp
+        m_MethodName: DisplayNextMilestone
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  UpdatePowerballGoal:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: ProgressDisplay, Assembly-CSharp
+        m_MethodName: UpdatePowerballGoal
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   standHandAnimator: {fileID: 0}
   hitHandAnimator: {fileID: 0}
   buttonAnimator: {fileID: 0}
@@ -122,6 +114,7 @@ MonoBehaviour:
   distortion: {fileID: 0}
   bottleAnimation: {fileID: 0}
   scissorsFollow: {fileID: 0}
+  acidFollow: {fileID: 0}
   cardPrefabs:
   - rank: 1
     suit: 0
