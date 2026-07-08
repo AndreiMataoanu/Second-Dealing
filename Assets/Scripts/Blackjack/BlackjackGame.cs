@@ -532,7 +532,7 @@ public class BlackjackGame : MonoBehaviour
 
         if(!cardPrefabLookup.TryGetValue((newCardData.rank, newCardData.suit), out GameObject cardPrefabToUse)) return false;
 
-        peekedCardObject = Instantiate(cardPrefabToUse, deckPosition);
+        peekedCardObject = Instantiate(cardPrefabToUse, sunglassesCardPosition);
         peekedCardObject.transform.localScale = cardScaleVector;
 
         StartCoroutine(CardAnimationCoroutine(
