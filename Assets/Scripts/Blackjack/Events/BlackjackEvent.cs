@@ -8,5 +8,5 @@ public abstract class BlackjackEvent : ScriptableObject
 
     public EventSeverity severity;
 
-    public abstract void Apply(BlackjackGame game);
+    public abstract void Apply(EventManager events);
 }

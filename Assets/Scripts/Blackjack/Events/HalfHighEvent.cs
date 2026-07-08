@@ -3,8 +3,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "HalfHigh", menuName = "Events/Half High")]
 public class HalfHighEvent : BlackjackEvent
 {
-    public override void Apply(BlackjackGame game)
+    public override void Apply(EventManager events)
     {
-        game.SetHalfHighActive(true);
+        events.SetHalfHighActive(true);
     }
 }

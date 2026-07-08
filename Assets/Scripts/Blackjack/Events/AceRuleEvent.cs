@@ -3,10 +3,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "AceRule", menuName = "Events/Set Ace Rule")]
 public class AceRuleEvent : BlackjackEvent
 {
-    public BlackjackGame.AceValueRule ruleToSet;
+    public AceValueRule ruleToSet;
 
-    public override void Apply(BlackjackGame game)
+    public override void Apply(EventManager events)
     {
-        game.SetAceRule(ruleToSet);
+        events.SetAceRule(ruleToSet);
     }
 }

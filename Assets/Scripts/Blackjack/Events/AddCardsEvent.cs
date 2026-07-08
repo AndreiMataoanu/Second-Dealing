@@ -6,12 +6,12 @@ public class AddCardsEvent : BlackjackEvent
     [Min(1)] [SerializeField] private int copyRangeMin;
     [Min(1)] [SerializeField] private int copyRangeMax;
 
-    public override void Apply(BlackjackGame game)
+    public override void Apply(EventManager events)
     {
         if (copyRangeMax < copyRangeMin)
-            game.DisplayCardOptions(copyRangeMax, copyRangeMin);
+            events.DisplayCardOptions(copyRangeMax, copyRangeMin);
         else
-            game.DisplayCardOptions(copyRangeMin, copyRangeMax);
+            events.DisplayCardOptions(copyRangeMin, copyRangeMax);
 
         KeepsakeUnlockProgression.instance.AddStat(ChallengeType.TriggerAddEvent);
     }

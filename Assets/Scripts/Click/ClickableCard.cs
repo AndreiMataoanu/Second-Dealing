@@ -34,12 +34,12 @@ public class ClickableCard : Clickable
         {
             originalValue = cardInstance.cardData.GetValue();
         
-            if(blackjackGame.IsDoubleLowActive() && originalValue < 6)
+            if(blackjackGame.EventManager.IsDoubleLowActive && originalValue < 6)
             {
                 originalValue = originalValue + originalValue;
             }
         
-            if(blackjackGame.IsHalfHighActive() && originalValue > 5)
+            if(blackjackGame.EventManager.IsDoubleLowActive && originalValue > 5)
             {
                 originalValue = Mathf.CeilToInt(originalValue / 2f);
             }
@@ -67,11 +67,11 @@ public class ClickableCard : Clickable
     public void OnAddCardsOption()
     {
         AudioManager.instance.Play("CardHit");
-        blackjackGame.AddCardCopies(cardInstance.cardData);
+        blackjackGame.EventManager.AddCardCopies(cardInstance.cardData);
 
         Destroy(gameObject);
         
-        blackjackGame.SelectCardCopyEnd();
+        blackjackGame.EventManager.SelectCardCopyEnd();
     }
 
     public override void OnClick(int mouseButton = 0)

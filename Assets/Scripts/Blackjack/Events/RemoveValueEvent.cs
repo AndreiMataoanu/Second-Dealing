@@ -6,7 +6,7 @@ public class RemoveValueEvent : BlackjackEvent
 {
     [SerializeField] Card.Rank valueToRemove;
 
-    public override void Apply(BlackjackGame game)
+    public override void Apply(EventManager events)
     {
         int targetValue = GetRankValue(valueToRemove);
 
@@ -16,7 +16,7 @@ public class RemoveValueEvent : BlackjackEvent
 
             if(GetRankValue(r) == targetValue)
             {
-                game.RemoveValueFromDeck(r);
+                events.RemoveValueFromDeck(r);
             }
         }
 
