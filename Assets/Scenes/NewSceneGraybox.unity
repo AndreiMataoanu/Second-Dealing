@@ -6761,6 +6761,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 708047837}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: gameSpeedMultiplier
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: sunglassesCardPosition
       value: 
       objectReference: {fileID: 1934868213}
@@ -10495,10 +10499,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 36366832078275221, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 19.7
-      objectReference: {fileID: 0}
     - target: {fileID: 452393188812297846, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: blackjackGame
       value: 
@@ -10507,78 +10507,22 @@ PrefabInstance:
       propertyPath: blackjackGame
       value: 
       objectReference: {fileID: 1343293108}
-    - target: {fileID: 815305041096098012, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 868414382173514219, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 20.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 911001280434813227, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 911575697712452226, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: blackjackGame
       value: 
       objectReference: {fileID: 1343293108}
-    - target: {fileID: 1446032172909477900, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 19.51
-      objectReference: {fileID: 0}
     - target: {fileID: 1451009221993462026, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: m_Name
       value: Keepsakes
       objectReference: {fileID: 0}
-    - target: {fileID: 1810711894634738487, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2020329909444052542, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2037345501548978446, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 20.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2342012282872764057, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 20.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2628419885280275922, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3363845420032303589, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: keepsake
-      value: 
-      objectReference: {fileID: 11400000, guid: a815397d89741834fb2e9742ad3c7b83, type: 2}
     - target: {fileID: 3363845420032303589, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: blackjackGame
       value: 
       objectReference: {fileID: 1343293108}
-    - target: {fileID: 3482811157631772901, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3677911708978420232, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 21.07
-      objectReference: {fileID: 0}
     - target: {fileID: 4300470382328938508, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: blackjackGame
       value: 
       objectReference: {fileID: 1343293108}
-    - target: {fileID: 4511233512572514436, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 20.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4841384410794594574, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 19.9
-      objectReference: {fileID: 0}
     - target: {fileID: 4846051652731105430, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: blackjackGame
       value: 
@@ -10591,10 +10535,6 @@ PrefabInstance:
       propertyPath: blackjackGame
       value: 
       objectReference: {fileID: 1343293108}
-    - target: {fileID: 5321876896776416877, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5372428982862247798, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -10636,33 +10576,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5592926720199198344, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: keepsake
-      value: 
-      objectReference: {fileID: 11400000, guid: 01fcafe4f6a2d4b44b08823893a0dadc, type: 2}
-    - target: {fileID: 5592926720199198344, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: blackjackGame
       value: 
       objectReference: {fileID: 1343293108}
-    - target: {fileID: 5616993612565364171, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5699337217021059656, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5874137656377705350, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 20.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 6624206119709449870, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 21.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6800314405720819609, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7058561348228269487, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: blackjackGame
       value: 
@@ -10675,30 +10591,10 @@ PrefabInstance:
       propertyPath: blackjackGame
       value: 
       objectReference: {fileID: 1343293108}
-    - target: {fileID: 7581688550545038301, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7650252107163627382, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7771372226783443124, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: blackjackGame
       value: 
       objectReference: {fileID: 1343293108}
-    - target: {fileID: 8223191251668752074, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 21.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8849441083528438474, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 20.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 9186716506486884956, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11243,6 +11139,22 @@ PrefabInstance:
       propertyPath: suitcaseAnimator
       value: 
       objectReference: {fileID: 1688790259}
+    - target: {fileID: 6917493003461796987, guid: 637802685cb82c8408715413db95dd14, type: 3}
+      propertyPath: itemPrefabs.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6917493003461796987, guid: 637802685cb82c8408715413db95dd14, type: 3}
+      propertyPath: 'itemPrefabs.Array.data[4]'
+      value: 
+      objectReference: {fileID: 9090495121263625931, guid: 67a688aecdef10547bb6132e7ef51989, type: 3}
+    - target: {fileID: 6917493003461796987, guid: 637802685cb82c8408715413db95dd14, type: 3}
+      propertyPath: 'itemPrefabs.Array.data[6]'
+      value: 
+      objectReference: {fileID: 3247029996075764086, guid: 0e1526c2b64e7f04aa27b1188867eddd, type: 3}
+    - target: {fileID: 6917493003461796987, guid: 637802685cb82c8408715413db95dd14, type: 3}
+      propertyPath: 'itemPrefabs.Array.data[7]'
+      value: 
+      objectReference: {fileID: 6929943178110708876, guid: 96176d5594c1c0e4c953255859f5fe50, type: 3}
     - target: {fileID: 6917493003461796987, guid: 637802685cb82c8408715413db95dd14, type: 3}
       propertyPath: 'buySpawnPoints.Array.data[0]'
       value: 
