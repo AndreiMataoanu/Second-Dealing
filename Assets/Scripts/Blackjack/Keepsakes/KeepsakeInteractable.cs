@@ -4,6 +4,50 @@ public class KeepsakeInteractable : Clickable
 {
     [SerializeField] private Keepsake keepsake;
     [SerializeField] private BlackjackGame blackjackGame;
+    [SerializeField] private Material lockedMaterial;
+
+    private Renderer objectRenderer;
+    private Material[] originalMaterials;
+
+    private void Start()
+    {
+        objectRenderer = GetComponent<Renderer>();
+        originalMaterials = objectRenderer.materials;
+
+        KeepsakeUnlockProgression.instance.OnProgressChanged += UpdateVisuals;
+
+        UpdateVisuals();
+    }
+
+    private void OnDestroy()
+    {
+        KeepsakeUnlockProgression.instance.OnProgressChanged -= UpdateVisuals;
+    }
+
+    private void UpdateVisuals()
+    {
+        bool isLocked = !KeepsakeUnlockProgression.instance.HasMetRequirement(keepsake);
+
+        if(isLocked)
+        {
+            OnRemoveOutline(true);
+
+            Material[] lockedMats = new Material[originalMaterials.Length];
+
+            for(int i = 0; i < lockedMats.Length; i++)
+            {
+                lockedMats[i] = lockedMaterial;
+            }
+
+            objectRenderer.materials = lockedMats;
+        }
+        else if(!isLocked)
+        {
+            OnRemoveOutline(true);
+
+            objectRenderer.materials = originalMaterials;
+        }
+    }
 
     public override void OnClick(int mouseButton = 0)
     {

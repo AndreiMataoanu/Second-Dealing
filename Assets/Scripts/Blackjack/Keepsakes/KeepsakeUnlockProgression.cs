@@ -9,6 +9,8 @@ public class KeepsakeUnlockProgression : MonoBehaviour
     private Dictionary<ChallengeType, int> roundStats = new Dictionary<ChallengeType, int>();
     private Dictionary<ChallengeType, int> playthroughStats = new Dictionary<ChallengeType, int>();
 
+    public event Action OnProgressChanged;
+
     private void Awake()
     {
         if(instance == null)
@@ -50,6 +52,8 @@ public class KeepsakeUnlockProgression : MonoBehaviour
         }
 
         PlayerPrefs.Save();
+
+        OnProgressChanged?.Invoke();
     }
 
     //temp
@@ -64,6 +68,8 @@ public class KeepsakeUnlockProgression : MonoBehaviour
         }
 
         PlayerPrefs.Save();
+
+        OnProgressChanged?.Invoke();
     }
 
     public void AddStat(ChallengeType type, int amount = 1)
@@ -109,6 +115,8 @@ public class KeepsakeUnlockProgression : MonoBehaviour
         }
 
         SavePlaythroughStats();
+
+        OnProgressChanged?.Invoke();
     }
 
     public bool HasMetRequirement(Keepsake keepsake)

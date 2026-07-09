@@ -40,7 +40,6 @@ public class MenusController : MonoBehaviour
     private void Start()
     {
         LoadSettings();
-        UpdateSpeedUI();
     }
 
     private void Update()
@@ -94,6 +93,7 @@ public class MenusController : MonoBehaviour
     {
         pausePanel.SetActive(false);
         darkImage.SetActive(false);
+        optionsPanel.SetActive(false);
         //volume.profile = normalVolume;
         isPaused = false;
 
@@ -165,17 +165,20 @@ public class MenusController : MonoBehaviour
 
     private void LoadSettings()
     {
-        masterSlider.value = PlayerPrefs.GetFloat("MasterVolume", 1f);
-        sfxSlider.value = PlayerPrefs.GetFloat("SFXVolume", 1f);
-        musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", 1f);
+        //masterSlider.value = PlayerPrefs.GetFloat("MasterVolume", 1f);
+        //sfxSlider.value = PlayerPrefs.GetFloat("SFXVolume", 1f);
+        //musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", 1f);
+        currentSpeedIndex = PlayerPrefs.GetInt("GameSpeedIndex", 2);
 
-        SetMasterVolume(masterSlider.value);
-        SetSFXVolume(sfxSlider.value);
-        SetMusicVolume(musicSlider.value);
+        //SetMasterVolume(masterSlider.value);
+        //SetSFXVolume(sfxSlider.value);
+        //SetMusicVolume(musicSlider.value);
 
-        masterSlider.onValueChanged.AddListener(SetMasterVolume);
-        sfxSlider.onValueChanged.AddListener(SetSFXVolume);
-        musicSlider.onValueChanged.AddListener(SetMusicVolume);
+        //masterSlider.onValueChanged.AddListener(SetMasterVolume);
+        //sfxSlider.onValueChanged.AddListener(SetSFXVolume);
+        //musicSlider.onValueChanged.AddListener(SetMusicVolume);
+
+        ApplySpeed();
     }
 
     public void SetMasterVolume(float volume)
@@ -226,6 +229,8 @@ public class MenusController : MonoBehaviour
     private void ApplySpeed()
     {
         BlackjackGame.gameSpeedMultiplier = speedOptions[currentSpeedIndex];
+        PlayerPrefs.SetInt("GameSpeedIndex", currentSpeedIndex);
+        PlayerPrefs.Save();
 
         UpdateSpeedUI();
     }
@@ -234,7 +239,7 @@ public class MenusController : MonoBehaviour
     {
         if(speedText != null)
         {
-            speedText.text = speedOptions[currentSpeedIndex].ToString("0.0") + "x";
+            speedText.text = speedOptions[currentSpeedIndex].ToString("0.00") + "x";
         }
     }
     #endregion
