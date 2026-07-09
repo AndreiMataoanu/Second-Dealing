@@ -49,9 +49,9 @@ public class KeepsakeInteractable : Clickable
         {
             int currentProgress = KeepsakeUnlockProgression.instance.GetProgress(keepsake.requiredChallenge);
 
-            return $"{keepsake.description}\n\nUnlock: {keepsake.unlockDescription} ({currentProgress}/{keepsake.requiredTarget})";
+            return $"\n{keepsake.description}\n\nUnlock: {keepsake.unlockDescription} ({currentProgress}/{keepsake.requiredTarget})";
         }
 
-        return keepsake.description;
+        return $"\n{keepsake.description}";
     }
 }

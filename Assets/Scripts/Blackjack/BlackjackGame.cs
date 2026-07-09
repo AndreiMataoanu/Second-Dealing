@@ -39,7 +39,7 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private Collider betUpCollider;
     [SerializeField] private Collider betDownCollider;
     [SerializeField] private int riggedRoundsLimit = 5;
-    [SerializeField] private float gameSpeedMultiplier = 1f;
+    [SerializeField] public static float gameSpeedMultiplier = 1f;
     private Dictionary<CardInstance, int> scissoredCards = new Dictionary<CardInstance, int>();
     private Coroutine currentBustCoroutine = null;
     private Coroutine dealToDealerCoroutine = null;

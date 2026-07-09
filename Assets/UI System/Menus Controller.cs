@@ -1,4 +1,6 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -7,12 +9,38 @@ public class MenusController : MonoBehaviour
     [SerializeField] private GameObject darkImage;
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private GameObject mainMenuPanel;
+    [SerializeField] private GameObject optionsPanel;
+
+    [Header("Options Sliders")]
+    [SerializeField] private Slider masterSlider;
+    [SerializeField] private Slider sfxSlider;
+    [SerializeField] private Slider musicSlider;
+    [SerializeField] private TextMeshProUGUI speedText;
+    private float[] speedOptions = { 0.5f, 0.75f, 1.0f, 1.25f, 1.5f, 1.75f, 2.0f, 2.25f, 2.5f, 2.75f, 3.0f };
+    private int currentSpeedIndex = 1;
+
+    //FMOD. Commented lines are for FMOD integration, which is not currently used, but works as intended.
+    [SerializeField] private Volume volume;
+    [SerializeField] private VolumeProfile normalVolume;
+    [SerializeField] private VolumeProfile menuVolume;
+    //Bus masterBus;
+    //Bus sfxBus;
+    //Bus musicBus;
 
     private bool isPaused;
 
     private void Awake()
     {
+        //masterBus = FMODUnity.RuntimeManager.GetBus("bus:/");
+        //sfxBus = FMODUnity.RuntimeManager.GetBus("bus:/SFX");
+
         if(darkImage == null || pausePanel == null || mainMenuPanel == null) return;
+    }
+
+    private void Start()
+    {
+        LoadSettings();
+        UpdateSpeedUI();
     }
 
     private void Update()
@@ -44,6 +72,11 @@ public class MenusController : MonoBehaviour
         {
             ResumeGame();
         }
+
+        if(optionsPanel != null)
+        {
+            optionsPanel.SetActive(false);
+        }
     }
 
     #region Pause Menu
@@ -51,6 +84,7 @@ public class MenusController : MonoBehaviour
     {
         pausePanel.SetActive(true);
         darkImage.SetActive(true);
+        //volume.profile = menuVolume;
         isPaused = true;
 
         Time.timeScale = 0;
@@ -60,6 +94,7 @@ public class MenusController : MonoBehaviour
     {
         pausePanel.SetActive(false);
         darkImage.SetActive(false);
+        //volume.profile = normalVolume;
         isPaused = false;
 
         Time.timeScale = 1;
@@ -67,15 +102,20 @@ public class MenusController : MonoBehaviour
 
     public void ReturnToMainMenu()
     {
+        //masterBus.stopAllEvents(STOP_MODE.IMMEDIATE);
+
         Time.timeScale = 1;
         SceneManager.LoadSceneAsync(0);
+        //SceneManager.LoadSceneAsync("Main Menu");
     }
     #endregion
 
     #region Common Methods
     public void RestartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        //masterBus.stopAllEvents(STOP_MODE.IMMEDIATE);
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
         ResumeGame();
     }
@@ -91,6 +131,111 @@ public class MenusController : MonoBehaviour
     {
         //Update this to the actual scene index of main map.
         SceneManager.LoadSceneAsync(1);
+    }
+    #endregion
+
+    #region Options
+    public void ShowOptions()
+    {
+        optionsPanel.SetActive(true);
+
+        if(pausePanel != null)
+        {
+            pausePanel.SetActive(false);
+        }
+        else if(mainMenuPanel != null)
+        {
+            mainMenuPanel.SetActive(false);
+        }
+    }
+
+    public void HideOptions()
+    {
+        optionsPanel.SetActive(false);
+
+        if(pausePanel != null)
+        {
+            pausePanel.SetActive(true);
+        }
+        else if(mainMenuPanel != null)
+        {
+            mainMenuPanel.SetActive(true);
+        }
+    }
+
+    private void LoadSettings()
+    {
+        masterSlider.value = PlayerPrefs.GetFloat("MasterVolume", 1f);
+        sfxSlider.value = PlayerPrefs.GetFloat("SFXVolume", 1f);
+        musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", 1f);
+
+        SetMasterVolume(masterSlider.value);
+        SetSFXVolume(sfxSlider.value);
+        SetMusicVolume(musicSlider.value);
+
+        masterSlider.onValueChanged.AddListener(SetMasterVolume);
+        sfxSlider.onValueChanged.AddListener(SetSFXVolume);
+        musicSlider.onValueChanged.AddListener(SetMusicVolume);
+    }
+
+    public void SetMasterVolume(float volume)
+    {
+        //masterBus.setVolume(volume);
+
+        PlayerPrefs.SetFloat("MasterVolume", volume);
+    }
+
+    public void SetSFXVolume(float volume)
+    {
+        //sfxBus.setVolume(volume);
+
+        PlayerPrefs.SetFloat("SFXVolume", volume);
+    }
+
+    public void SetMusicVolume(float volume)
+    {
+        //musicBus.setVolume(volume);
+
+        PlayerPrefs.SetFloat("MusicVolume", volume);
+    }
+
+    public void IncreaseSpeed()
+    {
+        currentSpeedIndex++;
+
+        if(currentSpeedIndex >= speedOptions.Length)
+        {
+            currentSpeedIndex = speedOptions.Length - 1;
+        }
+
+        ApplySpeed();
+    }
+
+    public void DecreaseSpeed()
+    {
+        currentSpeedIndex--;
+
+        if(currentSpeedIndex < 0)
+        {
+            currentSpeedIndex = 0;
+        }
+
+        ApplySpeed();
+    }
+
+    private void ApplySpeed()
+    {
+        BlackjackGame.gameSpeedMultiplier = speedOptions[currentSpeedIndex];
+
+        UpdateSpeedUI();
+    }
+
+    private void UpdateSpeedUI()
+    {
+        if(speedText != null)
+        {
+            speedText.text = speedOptions[currentSpeedIndex].ToString("0.0") + "x";
+        }
     }
     #endregion
 }
