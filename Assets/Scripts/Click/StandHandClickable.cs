@@ -3,14 +3,14 @@ using UnityEngine;
 public class StandHandClickable : Clickable
 {
     [SerializeField] private BlackjackGame gameReference;
-    [SerializeField] private string standardHitTooltip = "Left-click: Stand";
-    [SerializeField] private string splitTooltip = "Left-click: Stand\nRight-click: Split";
+    [SerializeField] [TextArea] private string standardStandTooltip;
+    [SerializeField] [TextArea] private string splitTooltip;
 
     protected override void OnMouseEnter()
     {
         if(!IsActive) return;
 
-        string activeContent = gameReference.CanSplit() ? splitTooltip : standardHitTooltip;
+        string activeContent = gameReference.CanSplit() ? splitTooltip : standardStandTooltip;
 
         TooltipManager.instance.ShowTooltip(activeContent, tooltipHeader);
 
@@ -33,6 +33,8 @@ public class StandHandClickable : Clickable
         else
         {
             gameReference.OnStand();
+
+            OnRemoveOutline();
         }
     }
 }

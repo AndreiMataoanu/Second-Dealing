@@ -3,8 +3,8 @@ using UnityEngine;
 public class HitHandClickable : Clickable
 {
     [SerializeField] private BlackjackGame gameReference;
-    [SerializeField] private string standardHitTooltip = "Left-click: Hit";
-    [SerializeField] private string doubleDownTooltip = "Left-click: Hit\nRight-click: Double Down";
+    [SerializeField] [TextArea] private string standardHitTooltip;
+    [SerializeField] [TextArea] private string doubleDownTooltip;
 
     protected override void OnMouseEnter()
     {
@@ -33,6 +33,8 @@ public class HitHandClickable : Clickable
         else if(mouseButton == 1 && gameReference.canDoubleDown)
         {
             gameReference.OnDoubleDown();
+
+            OnRemoveOutline();
         }
     }
 }

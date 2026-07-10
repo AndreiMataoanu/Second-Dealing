@@ -183,11 +183,11 @@ public class BlackjackGame : MonoBehaviour
     {
         if(currentBustCoroutine != null || isActionLocked || isRoundActive) return;
 
-        if(Input.mouseScrollDelta.y > 0f)
+        if(Input.mouseScrollDelta.y > 0f && Time.timeScale != 0f)
         {
             IncreaseBet();
         }
-        else if(Input.mouseScrollDelta.y < 0f)
+        else if(Input.mouseScrollDelta.y < 0f && Time.timeScale != 0f)
         {
             DecreaseBet();
         }

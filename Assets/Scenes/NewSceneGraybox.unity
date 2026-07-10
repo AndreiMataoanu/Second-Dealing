@@ -2221,9 +2221,26 @@ PrefabInstance:
       value: 1.5930126
       objectReference: {fileID: 0}
     - target: {fileID: 3384233393079924373, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
+      propertyPath: outline
+      value: 
+      objectReference: {fileID: 2100000, guid: 845ab195a79e98442a99a906b739c853, type: 2}
+    - target: {fileID: 3384233393079924373, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
       propertyPath: gameReference
       value: 
       objectReference: {fileID: 1343293108}
+    - target: {fileID: 3384233393079924373, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
+      propertyPath: doubleDownTooltip
+      value: 'Hit [Left-click]
+
+
+        Double Down [Right-click]
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3384233393079924373, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
+      propertyPath: standardHitTooltip
+      value: 'Hit [Left-click]'
+      objectReference: {fileID: 0}
     - target: {fileID: 3384233393079924373, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
       propertyPath: clickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -2245,9 +2262,24 @@ PrefabInstance:
       value: 4.075531
       objectReference: {fileID: 0}
     - target: {fileID: 3781399002905546207, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
+      propertyPath: outline
+      value: 
+      objectReference: {fileID: 2100000, guid: 845ab195a79e98442a99a906b739c853, type: 2}
+    - target: {fileID: 3781399002905546207, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
+      propertyPath: splitTooltip
+      value: 'Stand [Left-click]
+
+
+        Split [Right-click]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3781399002905546207, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
       propertyPath: gameReference
       value: 
       objectReference: {fileID: 1343293108}
+    - target: {fileID: 3781399002905546207, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
+      propertyPath: standardStandTooltip
+      value: 'Stand [Left-click]'
+      objectReference: {fileID: 0}
     - target: {fileID: 3781399002905546207, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
       propertyPath: clickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -3957,7 +3989,7 @@ MonoBehaviour:
         m_CallState: 2
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
   tooltipHeader: Decrease Bet
-  tooltipContent: 'Shortcut: scrollwheel'
+  tooltipContent: 'Shortcut: [Scrollwheel]'
 --- !u!64 &741130250
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -5169,6 +5201,58 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 275698759}
     m_Modifications:
+    - target: {fileID: 681653707522026913, guid: 888789034740c35428917d11720891be, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 681653707522026913, guid: 888789034740c35428917d11720891be, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 681653707522026913, guid: 888789034740c35428917d11720891be, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 890460073347582658, guid: 888789034740c35428917d11720891be, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 890460073347582658, guid: 888789034740c35428917d11720891be, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1734315533092374109, guid: 888789034740c35428917d11720891be, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1734315533092374109, guid: 888789034740c35428917d11720891be, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1734315533092374109, guid: 888789034740c35428917d11720891be, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3726866210320583632, guid: 888789034740c35428917d11720891be, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3726866210320583632, guid: 888789034740c35428917d11720891be, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3726866210320583632, guid: 888789034740c35428917d11720891be, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4886117115623324193, guid: 888789034740c35428917d11720891be, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4886117115623324193, guid: 888789034740c35428917d11720891be, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5510594154060938744, guid: 888789034740c35428917d11720891be, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -5248,6 +5332,18 @@ PrefabInstance:
     - target: {fileID: 5510594154060938744, guid: 888789034740c35428917d11720891be, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5546670205504818618, guid: 888789034740c35428917d11720891be, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6729403645152660153, guid: 888789034740c35428917d11720891be, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6729403645152660153, guid: 888789034740c35428917d11720891be, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8062237158920053517, guid: 888789034740c35428917d11720891be, type: 3}
       propertyPath: m_Name
