@@ -2,23 +2,30 @@ using UnityEngine;
 
 public class StandHandClickable : Clickable
 {
-    [SerializeField] private BlackjackGame gameReference;
+    [SerializeField] private BlackjackGame blackjackManager;
     [SerializeField] [TextArea] private string standardStandTooltip;
     [SerializeField] [TextArea] private string splitTooltip;
+    private string activeTooltipString = "";
 
     protected override void OnMouseEnter()
     {
         if(!IsActive) return;
 
-        string activeContent = gameReference.CanSplit() ? splitTooltip : standardStandTooltip;
-
-        TooltipManager.instance.ShowTooltip(activeContent, tooltipHeader);
-
+        UpdateTooltip();
         ApplyOutline();
+    }
+
+    private void OnMouseOver()
+    {
+        if(!IsActive) return;
+
+        UpdateTooltip();
     }
 
     protected override void OnMouseExit()
     {
+        activeTooltipString = "";
+
         base.OnMouseExit();
     }
 
@@ -26,15 +33,29 @@ public class StandHandClickable : Clickable
     {
         if(!IsActive) return;
 
-        if(mouseButton == 1)
+        if(mouseButton == 0)
         {
-            gameReference.OnSplit();
+            blackjackManager.OnStand();
+
+            UpdateTooltip();
         }
-        else
+        else if(mouseButton == 1 && blackjackManager.CanSplit())
         {
-            gameReference.OnStand();
+            blackjackManager.OnSplit();
 
             OnRemoveOutline();
+        }
+    }
+
+    private void UpdateTooltip()
+    {
+        string content = blackjackManager.CanSplit() ? splitTooltip : standardStandTooltip;
+
+        if(activeTooltipString != content)
+        {
+            activeTooltipString = content;
+
+            TooltipManager.instance.ShowTooltip(activeTooltipString, tooltipHeader);
         }
     }
 }

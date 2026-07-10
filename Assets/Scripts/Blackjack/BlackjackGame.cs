@@ -713,7 +713,6 @@ public class BlackjackGame : MonoBehaviour
         else
         {
             isActionLocked = false;
-            statusText.text = "";
 
             EvaluateDoubleDownCondition();
         }
@@ -1395,12 +1394,11 @@ public class BlackjackGame : MonoBehaviour
 
         AudioManager.instance.Play("Button");
 
-        yield return WaitForSecondsScaled(0.5f); //qqq
+        yield return WaitForSecondsScaled(0.5f);
         yield return eventManager.ChangeBlackjackGoal();
 
         ChangeToCamera(CameraType.Playing);
 
-        statusText.text = "Dealing cards...";
         cursorDetection.OnRoundActive();
         itemManager.ChangeItemAction(true);
 
@@ -1419,7 +1417,6 @@ public class BlackjackGame : MonoBehaviour
         if(IsBlackjack(CalculateHandValue(playerHands[0], true)))
         {
             canDoubleDown = false;
-            statusText.text = "Blackjack!";
             dialogueSystem.ShowPlayerBlackjackTaunt();
 
             yield return new WaitWhile(() => dialogueSystem.IsPlaying);
@@ -1429,7 +1426,6 @@ public class BlackjackGame : MonoBehaviour
         }
         else
         {
-            statusText.text = "";
             isActionLocked = false;
 
             EvaluateDoubleDownCondition();
@@ -1813,7 +1809,6 @@ public class BlackjackGame : MonoBehaviour
         KeepsakeManager.instance.AllowPostStandItem(this);
         if(isMedicineActive) StartCoroutine(ActivateMedicineCoroutine());
         
-        statusText.text = "You stand";
         standHandAnimator.SetTrigger("standTrigger");
 
         yield return StartCoroutine(CheckPowerballCurrentHand());
@@ -1852,8 +1847,6 @@ public class BlackjackGame : MonoBehaviour
         handBets[currentHandIndex] *= 2;
 
         UpdateBettingUI();
-
-        statusText.text = "You Double Down...";
 
         AudioManager.instance.Play("BetUp");
 
@@ -1905,12 +1898,9 @@ public class BlackjackGame : MonoBehaviour
 
         AudioManager.instance.Play("BetUp");
 
-        statusText.text = "Splitting Hand...";
         standHandAnimator.SetTrigger("splitTrigger");
 
         yield return WaitForSecondsScaled(1f);
-
-        statusText.text = "";
 
         List<CardInstance> activeHand = playerHands[currentHandIndex];
         CardInstance cardToMove = activeHand[0];
@@ -1953,7 +1943,7 @@ public class BlackjackGame : MonoBehaviour
         UpdateHandVisuals(activeHand, handPositions[currentHandIndex], true);
         UpdateHandVisuals(newHand, targetPosition, true);
 
-        yield return WaitForSecondsScaled(0.5f); //qqq
+        yield return WaitForSecondsScaled(0.5f);
 
         isActionLocked = false;
 
@@ -1972,11 +1962,8 @@ public class BlackjackGame : MonoBehaviour
         }
         else
         {
-            statusText.text = "Playing next hand...";
-
             yield return WaitForSecondsScaled(1f);
 
-            statusText.text = "";
             isActionLocked = false;
 
             EvaluateDoubleDownCondition();
@@ -1997,8 +1984,6 @@ public class BlackjackGame : MonoBehaviour
             }
         }
 
-        statusText.text = "Dealer turn...";
-
         yield return WaitForSecondsScaled(1f);
 
         bool allHandsBust = true;
@@ -2017,8 +2002,6 @@ public class BlackjackGame : MonoBehaviour
 
         if(allHandsBust && !isKnifeActive)
         {
-            statusText.text = "Bust";
-
             yield return WaitForSecondsScaled(1f);
         }
         else
@@ -2055,8 +2038,6 @@ public class BlackjackGame : MonoBehaviour
                 }
                 else
                 {
-                    statusText.text = "Dealer also has Blackjack";
-
                     yield return WaitForSecondsScaled(1f);
 
                     StartCoroutine(EndGameCoroutine("Both have Blackjack. Its a tie"));
@@ -2088,9 +2069,6 @@ public class BlackjackGame : MonoBehaviour
                 statusText.text = "Dealer hand full";
                 yield return WaitForSecondsScaled(1f);
             }
-            else
-                statusText.text = "Dealer stands";
-
         }
 
         UpdateUI(false);
@@ -2311,8 +2289,6 @@ public class BlackjackGame : MonoBehaviour
         }
         else
         {
-            statusText.text = "Hand Bust";
-
             yield return WaitForSecondsScaled(1f);
             yield return StartCoroutine(AdvanceHandCoroutine());
         }
