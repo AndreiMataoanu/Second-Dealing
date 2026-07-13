@@ -38,7 +38,7 @@ public class BlackjackGame : MonoBehaviour
     private int roundsCompleted = 0;
     private int maxSplits = 3;
     public bool isSplitting = false;
-    private bool isActionLocked = false;
+    public bool isActionLocked = false;
     private bool isMedicineActive = false;
     private bool useAfterStand = false;
     private bool tutorialCompleted = false;
@@ -83,8 +83,8 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private GameObject redParticlePrefab;
     [SerializeField] private Transform particleSpawnPoint;
     [SerializeField] private ParticleSystem smokeParticle;
-    [SerializeField] private GameObject distortion;
-    [SerializeField] private Animator bottleAnimation;
+    [SerializeField] public GameObject distortion;
+    [SerializeField] public Animator bottleAnimation;
     public GameObject peekedCardObject = null;
     private const float zOverlap = 0.001f;
     private const float cardAnimationDuration = 0.25f;
@@ -464,39 +464,14 @@ public class BlackjackGame : MonoBehaviour
 
         return Mathf.Max(0, currentHandIndex - 1);
     }
-
-    public IEnumerator AlcoholCoroutine()
+    
+    public void CalculateBust()
     {
-        isActionLocked = true;
+        StartCoroutine(CalculateBustCoroutine());
+    }
     
-        bottleAnimation.gameObject.SetActive(true);
-        bottleAnimation.SetTrigger("Drink");
-    
-        AudioManager.instance.Play("Drink");
-    
-        var tiltDegree = Quaternion.Euler(-30f, 0f, 0f);
-        var duration = 1f;
-        yield return gameCamera.TiltPlayerCameraUpDown(tiltDegree, duration);
-        yield return new WaitForSeconds(1f);
-    
-        AudioManager.instance.isMuffled = true;
-    
-        distortion.SetActive(true);
-        bottleAnimation.gameObject.SetActive(false);
-    
-        gameCamera.StartCameraSway(0f, 0.2f, 0f, 0.1f, 1f);
-    
-        foreach(var hand in playerHands)
-        {
-            foreach(CardInstance card in hand)
-            {
-                CardEffects.AddAlcoholCard(card);
-                card.displayComponent.SetDoubledVisual(true);
-            }
-        }
-    
-        UpdateUI(true);
-    
+    private IEnumerator CalculateBustCoroutine()
+    {
         List<CardInstance> activeHand = playerHands[currentHandIndex];
     
         int handValue = CalculateHandValue(activeHand, true);
@@ -509,7 +484,12 @@ public class BlackjackGame : MonoBehaviour
         {
             isActionLocked = false;
         }
-    
+    }
+
+    public void UpdateAlcoholCards()
+    {
+        playerHands.ForEach(CardEffects.AddAlcoholCardList);
+        UpdateUI();
         UpdateCardVFX();
     }
 
@@ -971,15 +951,6 @@ public class BlackjackGame : MonoBehaviour
         KeepsakeManager.instance.ResetKeepsake();
 
         StartCoroutine(ButtonCoroutine());
-
-        if(AlcoholItem.isAlcoholActive)
-        {
-            AudioManager.instance.isMuffled = false;
-
-            distortion.SetActive(false);
-            
-            gameCamera.StopCameraSway();
-        }
 
         ClearTable();
         gameCamera.ChangeToCamera(CameraType.Sitting);

@@ -13,6 +13,7 @@ public abstract class Item : Clickable
     [SerializeField] public int spawnWeight = 10;
     
     [HideInInspector] public bool isPurchased;
+    [HideInInspector] public bool delayDestroy = false;
     private float multiplier = 1.0f;
 
     internal CardEffectActions cardEffect;

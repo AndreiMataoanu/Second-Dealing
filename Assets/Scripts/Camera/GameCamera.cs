@@ -21,6 +21,9 @@ public class GameCamera : MonoBehaviour
     [SerializeField] private CinemachineCamera playingCamera;
     [SerializeField] private CinemachineCamera eventCamera;
 
+    [Header("VFX")]
+    [SerializeField] public GameObject distortion;
+
     private Coroutine swayCoroutine;
     
     private void Start()
@@ -88,12 +91,12 @@ public class GameCamera : MonoBehaviour
         }
     }
 
-    public void StartCameraSway(float minAmp, float maxAmp, float minFreq, float maxFreq, float speed)
+    private void StartCameraSway(float minAmp, float maxAmp, float minFreq, float maxFreq, float speed)
     {
         swayCoroutine = StartCoroutine(AlcoholCameraSwayCoroutine(minAmp, maxAmp, minFreq, maxFreq, speed));
     }
 
-    public void StopCameraSway()
+    private void StopCameraSway()
     {
         ResetNoise();
         
@@ -120,5 +123,20 @@ public class GameCamera : MonoBehaviour
 
             yield return null;
         }
+    }
+    
+        
+    public void UseDistortedVision()
+    {
+        AudioManager.instance.isMuffled = true;
+        distortion.SetActive(true);
+        StartCameraSway(0f, 0.2f, 0f, 0.1f, 1f);
+    }
+
+    public void UseClearVision()
+    {
+        AudioManager.instance.isMuffled = false;
+        distortion.SetActive(false);
+        StopCameraSway();
     }
 }

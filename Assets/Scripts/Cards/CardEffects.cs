@@ -11,15 +11,21 @@ public static class CardEffects
     
     public static void AddCutCard(CardInstance cardInstance, int reduction)
     {
-        if(!cutCards.TryAdd(cardInstance, reduction))
-            cutCards[cardInstance] *= reduction;
+        if (cutCards.TryAdd(cardInstance, reduction)) return;
+        cutCards[cardInstance] *= reduction;
+        SetCutVisual(cardInstance.displayComponent, true);
     }
     public static void RemoveCutCard(CardInstance cardInstance) => cutCards.Remove(cardInstance);
     public static void ClearCutCards() => cutCards.Clear();
     
     public static void AddNegativeSuit(Card.Suit suit) => negativeSuits.Add(suit);
     
-    public static void AddAlcoholCard(CardInstance cardInstance) => alcoholCards.Add(cardInstance);
+    private static void AddAlcoholCard(CardInstance cardInstance)
+    {
+        alcoholCards.Add(cardInstance);
+        SetDoubledVisual(cardInstance.displayComponent, true);
+    }
+    public static void AddAlcoholCardList(List<CardInstance> cards) => cards.ForEach(AddAlcoholCard);
     public static void RemoveAlcoholCard(CardInstance cardInstance) => alcoholCards.Remove(cardInstance);
     public static void ClearAlcoholCards() => alcoholCards.Clear();
 
@@ -27,7 +33,8 @@ public static class CardEffects
 
     #region Set Visuals
 
-    public static void SetCutVisual(CardDisplay cardDisplay, bool active) => cardDisplay.SetCutVisual(active);
+    private static void SetCutVisual(CardDisplay cardDisplay, bool active) => cardDisplay.SetCutVisual(active);
+    private static void SetDoubledVisual(CardDisplay cardDisplay, bool active) => cardDisplay.SetDoubledVisual(active);
 
     #endregion
 

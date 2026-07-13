@@ -10,6 +10,7 @@ public class AcidItem : Item
 
     public override void SetMembers()
     {
+        delayDestroy = true;
         cardEffect = new CardEffectActions(
             blackjackGame,
             blackjackGame.CursorFollow,
