@@ -1,15 +1,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum CardTrigger
+{
+    None,
+    Acid,
+    Scissors,
+    AddCardsEvent,
+    AntiMatter,
+    Pyro,
+    HatTrick
+}
+
 public class CursorDetection : MonoBehaviour
 {
     [SerializeField] private new Camera camera;
     [SerializeField] private List<Clickable> roundActiveClickables;
     [SerializeField] private List<Clickable> roundInactiveClickables;
     [SerializeField] private List<Transform> cardTransforms;
+    [SerializeField] private Transform cardOptions;
 
     private List<Clickable> cardClickables;
-    
+
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.None;
@@ -67,54 +79,79 @@ public class CursorDetection : MonoBehaviour
     }
 
     #region Clickable Cards
-
-    public void OnUseCardItem(BlackjackGame blackjackGame, ItemType itemType)
+    public void OnSelectCardOption(BlackjackGame blackjackGame, CardTrigger cardTrigger)
     {
-        AddAllClickableCards(blackjackGame, itemType);
+        cardClickables = new List<Clickable>();
+        AddClickableCards(cardOptions, blackjackGame, cardTrigger);
         SetClickables(cardClickables, true);
         SetClickables(roundActiveClickables, false);
     }
 
-    private void AddAllClickableCards(BlackjackGame blackjackGame, ItemType itemType)
+    public void OnUseCardItem(BlackjackGame blackjackGame, CardTrigger cardTrigger)
+    {
+        AddAllClickableCards(blackjackGame, cardTrigger);
+        SetClickables(cardClickables, true);
+        SetClickables(roundActiveClickables, false);
+
+        KeepsakeUnlockProgression.instance.AddStat(ChallengeType.AlterDealerHand);
+    }
+
+    private void AddAllClickableCards(BlackjackGame blackjackGame, CardTrigger cardTrigger)
     {
         cardClickables = new List<Clickable>();
         foreach (var cardsTransform in cardTransforms)
-            AddClickableCards(cardsTransform, blackjackGame, itemType);
+            AddClickableCards(cardsTransform, blackjackGame, cardTrigger);
     }
 
-    private void AddClickableCards(Transform cardsTransform, BlackjackGame blackjackGame, ItemType itemType)
+    private void AddClickableCards(Transform cardsTransform, BlackjackGame blackjackGame, CardTrigger cardTrigger)
     {
-        foreach (Transform card in cardsTransform)
+        foreach(Transform card in cardsTransform)
         {
             var cardDisplay = card.GetComponent<CardDisplay>();
             var face = card.transform.GetChild(0);
-            if (face)
+
+            if(face)
             {
                 var clickableCard = face.GetComponent<ClickableCard>();
-                if (clickableCard)
+
+                if(clickableCard)
                 {
-                    if(blackjackGame.IsCardScissored(cardDisplay.GetCardInstance())) continue;
+                    if(cardTrigger == CardTrigger.Scissors && blackjackGame.IsCardScissored(cardDisplay.GetCardInstance())) continue;
 
                     clickableCard.SetCardInstance(cardDisplay.GetCardInstance());
                     clickableCard.SetBlackjackGame(blackjackGame);
                     clickableCard.AddAction(OnClickCard);
-                    AddCardAction(clickableCard, itemType);
+                    AddCardAction(blackjackGame, clickableCard, cardTrigger);
                     clickableCard.AddAction(ReactivateClickables);
+
                     cardClickables.Add(clickableCard);
                 }
             }
         }
     }
 
-    private void AddCardAction(ClickableCard clickableCard, ItemType itemType)
+    private void AddCardAction(BlackjackGame blackjackGame, ClickableCard clickableCard, CardTrigger cardTrigger)
     {
-        switch (itemType)
+        switch (cardTrigger)
         {
-            case ItemType.Scissors:
+            case CardTrigger.Scissors:
                 clickableCard.AddAction(clickableCard.OnCutCard);
                 break;
-            case ItemType.Acid:
+            case CardTrigger.Acid:
                 clickableCard.AddAction(clickableCard.OnDissolveCard);
+                break;
+            case CardTrigger.AddCardsEvent:
+                clickableCard.AddAction(clickableCard.OnAddCardsOption);
+                clickableCard.AddAction(() => blackjackGame.SelectCursorHand(false));
+                break;
+            case CardTrigger.AntiMatter:
+                clickableCard.AddAction(clickableCard.OnAntiMatterCard);
+                break;
+            case CardTrigger.Pyro:
+                clickableCard.AddAction(clickableCard.OnPyroCard);
+                break;
+            case CardTrigger.HatTrick:
+                clickableCard.AddAction(clickableCard.OnHatTrickCard);
                 break;
         }
     }
@@ -128,21 +165,42 @@ public class CursorDetection : MonoBehaviour
 
     private void RemoveCardActions()
     {
-        foreach (var clickable in cardClickables)
+        foreach(var clickable in cardClickables)
         {
             var cardClickable = (ClickableCard)clickable;
 
-            if (cardClickable)
+            if(cardClickable)
             {
                 cardClickable.RemoveAction(OnClickCard);
                 cardClickable.RemoveAction(cardClickable.OnCutCard);
+                cardClickable.RemoveAction(cardClickable.OnAntiMatterCard);
+                cardClickable.RemoveAction(cardClickable.OnPyroCard);
+                cardClickable.RemoveAction(cardClickable.OnHatTrickCard);
                 cardClickable.RemoveAction(ReactivateClickables);
             }
         }
     }
 
-    private void ReactivateClickables() => SetClickables(roundActiveClickables, true);
+    public void AddRoundActiveClickable(Clickable clickable)
+    {
+        if(!roundActiveClickables.Contains(clickable))
+        {
+            roundActiveClickables.Add(clickable);
+        }
+    }
 
+    public void RemoveRoundActiveClickable(Clickable clickable)
+    {
+        if(roundActiveClickables.Contains(clickable))
+        {
+            roundActiveClickables.Remove(clickable);
+        }
+    }
+
+    private void ReactivateClickables() => SetClickables(roundActiveClickables, true);
     #endregion
 
+    #region Getters
+    public Transform GetCardOptionsPosition() => cardOptions;
+    #endregion
 }

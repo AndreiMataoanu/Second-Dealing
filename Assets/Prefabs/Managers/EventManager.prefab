@@ -1,0 +1,164 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8245742672918616645
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4611922947172716149}
+  - component: {fileID: 4738729559518161186}
+  m_Layer: 0
+  m_Name: EventManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4611922947172716149
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8245742672918616645}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4738729559518161186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8245742672918616645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18fc257a282df534fa73b5fb4c9a96da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EventManager
+  useTurnLimit: 0
+  eventThresholds:
+  - severityToTrigger: 1
+    moneyAmount: 600
+    maxTurns: 3
+  - severityToTrigger: 0
+    moneyAmount: 1200
+    maxTurns: 5
+  - severityToTrigger: 2
+    moneyAmount: 2000
+    maxTurns: 20
+  - severityToTrigger: 0
+    moneyAmount: 5000
+    maxTurns: 20
+  - severityToTrigger: 0
+    moneyAmount: 7500
+    maxTurns: 20
+  - severityToTrigger: 2
+    moneyAmount: 10000
+    maxTurns: 20
+  - severityToTrigger: 1
+    moneyAmount: 20000
+    maxTurns: 20
+  - severityToTrigger: 0
+    moneyAmount: 40000
+    maxTurns: 20
+  - severityToTrigger: 2
+    moneyAmount: 60000
+    maxTurns: 20
+  lowSeverityEvents:
+  - {fileID: 11400000, guid: 204739df0ccfea64ab4ef255a2a5bab7, type: 2}
+  - {fileID: 11400000, guid: f8f5262ed691a2643b68cfe3e83e9d93, type: 2}
+  - {fileID: 11400000, guid: 1b6a6919b4e3bcc4786499add0fe4591, type: 2}
+  - {fileID: 11400000, guid: 31ff245295f50c84287d8d7fd59872c3, type: 2}
+  - {fileID: 11400000, guid: a2e7be97f71409e458d409648c8b0b05, type: 2}
+  - {fileID: 11400000, guid: d59fe0786b321334cae4ee54009c518d, type: 2}
+  - {fileID: 11400000, guid: aa96aa46492df3e4db76c4a69310aefb, type: 2}
+  - {fileID: 11400000, guid: 2c40c03f0fc098e4e8b9ddbddb3d482d, type: 2}
+  - {fileID: 11400000, guid: 90e916027f496dc438ffa740073bf320, type: 2}
+  - {fileID: 11400000, guid: 2abb42800d64dda4c892a33a05c2856b, type: 2}
+  mediumSeverityEvents:
+  - {fileID: 11400000, guid: a9a8993cbd530094985a4dcea8afa488, type: 2}
+  - {fileID: 11400000, guid: 3b2a0ca89cf99cf468c8b8194beb91db, type: 2}
+  - {fileID: 11400000, guid: 8dd6a5c9f92458843b89d3577fc5c243, type: 2}
+  - {fileID: 11400000, guid: 16f803c2a8c8cae4b83d83c657ad3736, type: 2}
+  - {fileID: 11400000, guid: 40dd43a7e1baf33479325c4c8079abca, type: 2}
+  - {fileID: 11400000, guid: 2c8cce2d0e09e354fa259a7d81357cc0, type: 2}
+  - {fileID: 11400000, guid: f9969251b08054a4b9f872af95840548, type: 2}
+  highSeverityEvents:
+  - {fileID: 11400000, guid: 6d1cb0823b67dd541a8a8e684dbf6102, type: 2}
+  - {fileID: 11400000, guid: 2dc03149c01ac4d4488d5a8f15b31c36, type: 2}
+  - {fileID: 11400000, guid: afea2f41da830234381ee2148e0ed747, type: 2}
+  - {fileID: 11400000, guid: 898d7592c2e56784d80d5cf6fdc7b203, type: 2}
+  - {fileID: 11400000, guid: 474aaa61c37bc374384ce45c3db390d2, type: 2}
+  - {fileID: 11400000, guid: 18758e0d7866558419cc4975fc50924b, type: 2}
+  - {fileID: 11400000, guid: cc43a268f3e2a1d40bf4ee12f04d3fc0, type: 2}
+  - {fileID: 11400000, guid: 14b39eb2d91bb5d49ae9f816357745f4, type: 2}
+  - {fileID: 11400000, guid: a7761bfbabfaaa34e8c234738f0f907a, type: 2}
+  ChangeProgressText:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: ProgressDisplay, Assembly-CSharp
+        m_MethodName: DisplayNextMilestone
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  UpdatePowerballGoal:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: ProgressDisplay, Assembly-CSharp
+        m_MethodName: UpdatePowerballGoal
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnAddCardsEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: AddCardsEventAction, Assembly-CSharp
+        m_MethodName: DealOptions
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DeleteCopyOptions:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: AddCardsEventAction, Assembly-CSharp
+        m_MethodName: DestroyCards
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

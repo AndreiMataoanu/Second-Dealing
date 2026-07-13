@@ -3,8 +3,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "AddJokers", menuName = "Events/Add Jokers")]
 public class AddJokersEvent : BlackjackEvent
 {
-    public override void Apply(BlackjackGame game)
+    public override void Apply(EventManager events)
     {
-        game.AddJokers();
+        events.AddJokers();
+        
+        KeepsakeUnlockProgression.instance.AddStat(ChallengeType.TriggerAddEvent);
     }
 }

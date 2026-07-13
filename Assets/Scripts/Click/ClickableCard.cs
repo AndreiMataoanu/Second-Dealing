@@ -19,7 +19,9 @@ public class ClickableCard : Clickable
 
     public void OnCutCard()
     {
+        Debug.Log("cut");
         AudioManager.instance.Play("Scissors(Clone)");
+
         cardInstance.displayComponent.SetCutVisual(true);
         
         int originalValue;
@@ -32,17 +34,17 @@ public class ClickableCard : Clickable
         {
             originalValue = cardInstance.cardData.GetValue();
         
-            if(blackjackGame.IsDoubleLowActive() && originalValue < 6)
+            if(blackjackGame.EventManager.IsDoubleLowActive && originalValue < 6)
             {
                 originalValue = originalValue + originalValue;
             }
         
-            if(blackjackGame.IsHalfHighActive() && originalValue > 5)
+            if(blackjackGame.EventManager.IsDoubleLowActive && originalValue > 5)
             {
                 originalValue = Mathf.CeilToInt(originalValue / 2f);
             }
-        
-            if(blackjackGame.GetNegativeSuits().Contains(cardInstance.cardData.suit))
+
+            if(blackjackGame.IsCardNegative(cardInstance.cardData))
             {
                 originalValue = -originalValue;
             }
@@ -62,11 +64,55 @@ public class ClickableCard : Clickable
         
     }
 
+    public void OnAddCardsOption()
+    {
+        AudioManager.instance.Play("CardHit");
+        blackjackGame.EventManager.AddCardCopies(cardInstance.cardData);
+
+        Destroy(gameObject);
+        
+        blackjackGame.EventManager.SelectCardCopyEnd();
+    }
+
     public override void OnClick(int mouseButton = 0)
     {
-        if (!IsActive) return;
+        if(!IsActive) return;
         
         base.OnClick();
-        cardAction?.Invoke();
+
+        if(cardAction != null)
+        {
+            cardAction.Invoke();
+        }
+        else if(cardInstance != null && cardInstance.cardData.suit == Card.Suit.Tarot)
+        {
+            blackjackGame.SacrificeTarot(cardInstance);
+        }
+    }
+
+    public void OnAntiMatterCard()
+    {
+        AudioManager.instance.Play("ItemBuy");
+
+        blackjackGame.ApplyAntiMatterToCard(cardInstance);
+
+        bool isNowNegative = blackjackGame.IsCardNegative(cardInstance.cardData);
+
+        cardInstance.displayComponent.SetNegativeVisual(isNowNegative);
+        blackjackGame.isAntiMatterTargeting = false;
+        blackjackGame.UpdateUI(true);
+    }
+
+    public void OnPyroCard()
+    {
+        AudioManager.instance.Play("ItemBuy");
+
+        blackjackGame.ApplyPyroToCard(cardInstance);
+        blackjackGame.isPyroTargeting = false;
+    }
+
+    public void OnHatTrickCard()
+    {
+        blackjackGame.TryHatTrickCard(cardInstance);
     }
 }

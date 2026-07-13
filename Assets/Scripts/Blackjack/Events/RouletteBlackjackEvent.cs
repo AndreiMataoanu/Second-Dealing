@@ -3,8 +3,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "RouletteBlackjack", menuName = "Events/Roulette Blackjack")]
 public class RouletteBlackjackEvent : BlackjackEvent
 {
-    public override void Apply(BlackjackGame game)
+    public override void Apply(EventManager events)
     {
-        game.SetRouletteBlackjackActive(true);
+        events.SetRouletteBlackjackActive(true);
     }
 }
