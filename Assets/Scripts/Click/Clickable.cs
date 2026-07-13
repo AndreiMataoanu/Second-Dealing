@@ -86,6 +86,6 @@ public class Clickable : MonoBehaviour
 
     protected virtual string GetTooltipContent()
     {
-        return tooltipContent;
+        return $"\n{tooltipContent}";
     }
 }
