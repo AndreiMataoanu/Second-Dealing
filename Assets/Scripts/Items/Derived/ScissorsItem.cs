@@ -1,0 +1,45 @@
+using Managers;
+
+public class ScissorsItem : Item
+{
+    public static bool isScissorsActive;
+
+    public override bool Activate()
+    {
+        SetMembers();
+        return ActivateScissors();
+    }
+
+    private bool ActivateScissors()
+    {
+        if(!blackjackGame.isRoundActive || isScissorsActive || blackjackGame.CheckItemAfterStand()) return false;
+
+        isScissorsActive = true;
+        cardEffect.SelectCard();
+        cardEffect.AddCardEffectAction(OnCutCard);
+        
+        return true;
+    }
+    
+    private void OnCutCard(CardInstance cardInstance)
+    {
+        AudioManager.instance.Play("Scissors(Clone)");
+        
+        isScissorsActive = false;
+        
+        CardEffects.SetCutVisual(cardInstance.displayComponent, true);
+        CardEffects.AddCutCard(cardInstance, 2);
+        cardEffect.OnCardSelected();
+    }
+
+    public override void SetMembers()
+    {
+        cardEffect = new CardEffectActions(
+            blackjackGame,
+            blackjackGame.CursorFollow,
+            blackjackGame.CursorDetection,
+            CursorType.Scissors,
+            CardTrigger.Scissors
+        );
+    }
+}

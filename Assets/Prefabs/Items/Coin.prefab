@@ -74,7 +74,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1f831f2c606698a4d945ecabc454d991, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7630428666314340296}
+      addedObject: {fileID: 9046261249743166863}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1f831f2c606698a4d945ecabc454d991, type: 3}
       insertIndex: -1
       addedObject: {fileID: -1736431926067525896}
@@ -84,7 +84,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1f831f2c606698a4d945ecabc454d991, type: 3}
   m_PrefabInstance: {fileID: 8279451164904930202}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7630428666314340296
+--- !u!114 &9046261249743166863
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -93,9 +93,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 9090495121263625931}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b4b69a41c3e6634587c1021a34ba729, type: 3}
+  m_Script: {fileID: 11500000, guid: b77bcd7a2329a6a4c9d3e2441002da58, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PowerUpInfo
+  m_EditorClassIdentifier: Assembly-CSharp::CoinItem
   clickEvent:
     m_PersistentCalls:
       m_Calls: []

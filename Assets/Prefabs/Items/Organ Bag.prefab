@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 773640230402853183}
   - component: {fileID: 1486369379395768431}
   - component: {fileID: 2420839996289793243}
-  - component: {fileID: 1104469173180168018}
+  - component: {fileID: 2884707871050103308}
   - component: {fileID: 6708864065135472937}
   m_Layer: 0
   m_Name: Organ Bag
@@ -94,7 +94,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1104469173180168018
+--- !u!114 &2884707871050103308
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -103,21 +103,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 2913302698420253507}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b4b69a41c3e6634587c1021a34ba729, type: 3}
+  m_Script: {fileID: 11500000, guid: 4bd121e39b682aa4ca66bb6e59768bfc, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Item
+  m_EditorClassIdentifier: Assembly-CSharp::OrganBagItem
   clickEvent:
     m_PersistentCalls:
       m_Calls: []
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
-  tooltipHeader: Organ in a Bag
-  tooltipContent: 'Passive: Sacrifice instead of your life'
+  tooltipHeader: Organ in a bag
+  tooltipContent: 'Passive: Sacrifice it to save your life'
   basePrice: 600
-  percentagePrice: 0.4
+  percentagePrice: 0.1
+  resaleLossPercentage: 0.5
   type: 4
   spawnWeight: 4
   isPurchased: 0
-  lottoWorldText: {fileID: 0}
 --- !u!64 &6708864065135472937
 MeshCollider:
   m_ObjectHideFlags: 0

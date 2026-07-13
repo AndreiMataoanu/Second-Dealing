@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2220867360497766717}
   - component: {fileID: 1215626240243985124}
   - component: {fileID: 8927873350563424442}
-  - component: {fileID: -3915864665850709576}
+  - component: {fileID: 990915393017545614}
   - component: {fileID: 5368637027685150326}
   m_Layer: 0
   m_Name: Cigarette
@@ -91,7 +91,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &-3915864665850709576
+--- !u!114 &990915393017545614
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -100,14 +100,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 8317044011722196100}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b4b69a41c3e6634587c1021a34ba729, type: 3}
+  m_Script: {fileID: 11500000, guid: ef77f8aa68807054ab3320dc4ac9e573, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Item
+  m_EditorClassIdentifier: Assembly-CSharp::CigarettesItem
   clickEvent:
     m_PersistentCalls:
       m_Calls: []
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
-  tooltipHeader: Cigarette
+  tooltipHeader: Cigarettes
   tooltipContent: Swap hands with the dealer
   basePrice: 200
   percentagePrice: 0.2
@@ -115,7 +115,6 @@ MonoBehaviour:
   type: 5
   spawnWeight: 15
   isPurchased: 0
-  lottoWorldText: {fileID: 0}
 --- !u!64 &5368637027685150326
 MeshCollider:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 197260204283052266}
   - component: {fileID: 6178679673419364032}
   - component: {fileID: 3438098718679603741}
-  - component: {fileID: -3838537479509687455}
+  - component: {fileID: 1802133436138177501}
   - component: {fileID: 8674433730413865787}
   m_Layer: 0
   m_Name: Alcohol
@@ -92,7 +92,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &-3838537479509687455
+--- !u!114 &1802133436138177501
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,9 +101,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3226192414058870725}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b4b69a41c3e6634587c1021a34ba729, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f452a679ecd0ae4fb1152c69fb7cb47, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Item
+  m_EditorClassIdentifier: Assembly-CSharp::Alcoholtem
   clickEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -112,6 +112,7 @@ MonoBehaviour:
   tooltipContent: You see double
   basePrice: 100
   percentagePrice: 0.1
+  resaleLossPercentage: 0.5
   type: 6
   spawnWeight: 15
   isPurchased: 0

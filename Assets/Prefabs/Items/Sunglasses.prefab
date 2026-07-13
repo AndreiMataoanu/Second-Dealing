@@ -86,7 +86,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 65818da854c201149ad6085b9e6f0bfa, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5814093398203198464}
+      addedObject: {fileID: -7736379497400946477}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 65818da854c201149ad6085b9e6f0bfa, type: 3}
       insertIndex: -1
       addedObject: {fileID: -6949399263807025530}
@@ -96,7 +96,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 65818da854c201149ad6085b9e6f0bfa, type: 3}
   m_PrefabInstance: {fileID: 7849056492625007069}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5814093398203198464
+--- !u!114 &-7736379497400946477
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -105,15 +105,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 6929943178110708876}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b4b69a41c3e6634587c1021a34ba729, type: 3}
+  m_Script: {fileID: 11500000, guid: 759f12d9ac421ef43be19aca7253b366, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PowerUpInfo
+  m_EditorClassIdentifier: Assembly-CSharp::SunglassesItem
   clickEvent:
     m_PersistentCalls:
       m_Calls: []
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
   tooltipHeader: Sunglasses
-  tooltipContent: See the next card
+  tooltipContent: See the next card.
   basePrice: 100
   percentagePrice: 0.1
   resaleLossPercentage: 0.5

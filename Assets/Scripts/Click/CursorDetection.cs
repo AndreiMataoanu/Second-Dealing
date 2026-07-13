@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -116,13 +117,13 @@ public class CursorDetection : MonoBehaviour
 
                 if(clickableCard)
                 {
-                    if(cardTrigger == CardTrigger.Scissors && blackjackGame.IsCardScissored(cardDisplay.GetCardInstance())) continue;
+                    if(cardTrigger == CardTrigger.Scissors && CardEffects.IsCardCut(cardDisplay.GetCardInstance())) continue;
 
                     clickableCard.SetCardInstance(cardDisplay.GetCardInstance());
                     clickableCard.SetBlackjackGame(blackjackGame);
-                    clickableCard.AddAction(OnClickCard);
+                    clickableCard.AddCardAction(OnClickCard);
                     AddCardAction(blackjackGame, clickableCard, cardTrigger);
-                    clickableCard.AddAction(ReactivateClickables);
+                    clickableCard.AddCardAction(ReactivateClickables);
 
                     cardClickables.Add(clickableCard);
                 }
@@ -130,54 +131,55 @@ public class CursorDetection : MonoBehaviour
         }
     }
 
+    public void AddActionToClickableCards(Action<CardInstance> cardAction)
+    {
+        foreach (var clickable in cardClickables)
+        {
+            var card = (ClickableCard)clickable;
+            card.AddCardEffect(cardAction);
+        }
+    }
+
+    // TODO: shouldn't need blackjack game
     private void AddCardAction(BlackjackGame blackjackGame, ClickableCard clickableCard, CardTrigger cardTrigger)
     {
         switch (cardTrigger)
         {
             case CardTrigger.Scissors:
-                clickableCard.AddAction(clickableCard.OnCutCard);
+                // clickableCard.AddAction(clickableCard.OnCutCard);
                 break;
             case CardTrigger.Acid:
-                clickableCard.AddAction(clickableCard.OnDissolveCard);
+                // clickableCard.AddCardAction(clickableCard.OnDissolveCard);
                 break;
             case CardTrigger.AddCardsEvent:
-                clickableCard.AddAction(clickableCard.OnAddCardsOption);
-                clickableCard.AddAction(() => blackjackGame.SelectCursorHand(false));
+                clickableCard.AddCardAction(clickableCard.OnAddCardsOption);
+                clickableCard.AddCardAction(() => blackjackGame.SelectCursorHand(false));
                 break;
             case CardTrigger.AntiMatter:
-                clickableCard.AddAction(clickableCard.OnAntiMatterCard);
+                clickableCard.AddCardAction(clickableCard.OnAntiMatterCard);
                 break;
             case CardTrigger.Pyro:
-                clickableCard.AddAction(clickableCard.OnPyroCard);
+                clickableCard.AddCardAction(clickableCard.OnPyroCard);
                 break;
             case CardTrigger.HatTrick:
-                clickableCard.AddAction(clickableCard.OnHatTrickCard);
+                clickableCard.AddCardAction(clickableCard.OnHatTrickCard);
                 break;
         }
     }
     
     private void OnClickCard()
     {
-        RemoveCardActions();
+        RemoveCardEffects();
         SetClickables(cardClickables, false);
         cardClickables.RemoveAll(_ => true);
     }
 
-    private void RemoveCardActions()
+    private void RemoveCardEffects()
     {
         foreach(var clickable in cardClickables)
         {
-            var cardClickable = (ClickableCard)clickable;
-
-            if(cardClickable)
-            {
-                cardClickable.RemoveAction(OnClickCard);
-                cardClickable.RemoveAction(cardClickable.OnCutCard);
-                cardClickable.RemoveAction(cardClickable.OnAntiMatterCard);
-                cardClickable.RemoveAction(cardClickable.OnPyroCard);
-                cardClickable.RemoveAction(cardClickable.OnHatTrickCard);
-                cardClickable.RemoveAction(ReactivateClickables);
-            }
+            var cardClickable = clickable as ClickableCard;
+            cardClickable?.RemoveCardEffect();
         }
     }
 
@@ -189,6 +191,7 @@ public class CursorDetection : MonoBehaviour
         }
     }
 
+    // TODO: remove methods
     public void RemoveRoundActiveClickable(Clickable clickable)
     {
         if(roundActiveClickables.Contains(clickable))
