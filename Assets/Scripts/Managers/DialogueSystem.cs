@@ -37,19 +37,22 @@ public class DialogueSystem : MonoBehaviour
     [SerializeField] private List<string> tieTaunts;
     [Tooltip("Taunts shown when player is out of turns.")]
     [SerializeField] private List<string> turnLimitTaunts;
-    [Tooltip("Taunts shown when player chooses which card to copy.")] 
+    [Tooltip("Taunts shown when player chooses which card to copy.")]
     [SerializeField] private List<string> copyOptionTaunts;
-    [Tooltip("Taunts shown when player gets all powerball number.")] 
+    [Tooltip("Taunts shown when player gets all powerball number.")]
     [SerializeField] private List<string> powerballWinTaunts;
-    [Tooltip("Taunts shown when new powerball numbers are generated.")] 
+    [Tooltip("Taunts shown when new powerball numbers are generated.")]
     [SerializeField] private List<string> powerballGenerateTaunts;
     [Tooltip("Taunts shown when the player has consumed the trust fund keepsake.")]
     [SerializeField] private List<string> trustFundTaunts;
-    [Tooltip("Taunts shown when player gets lucky after coin flip.")] 
+    [Tooltip("Taunts shown when player gets lucky after coin flip.")]
     [SerializeField] private List<string> luckyCoinFlip;
-    [Tooltip("Taunts shown when player gets unlucky after coin flip.")] 
+    [Tooltip("Taunts shown when player gets unlucky after coin flip.")]
     [SerializeField] private List<string> unluckyCoinFlip;
 
+    [Header("Cash out")]
+    [Tooltip("Shown when the player gets more than 100000 dollars")]
+    [SerializeField] private string[] cashOutText;
     private Coroutine sequenceCoroutine;
     private Coroutine typingCoroutine;
     private bool isPlaying = false;
@@ -59,7 +62,7 @@ public class DialogueSystem : MonoBehaviour
 
     private void Update()
     {
-        if(isPlaying && allowSkip && Input.anyKeyDown)
+        if (isPlaying && allowSkip && Input.anyKeyDown)
         {
             SkipDialogue();
         }
@@ -85,7 +88,7 @@ public class DialogueSystem : MonoBehaviour
 
         sequenceCoroutine = StartCoroutine(SequenceCoroutine(doubleDownTutorialLines));
     }
-    
+
     public void PlayPowerballTutorial()
     {
         StopCurrentDialogue();
@@ -93,12 +96,18 @@ public class DialogueSystem : MonoBehaviour
         sequenceCoroutine = StartCoroutine(SequenceCoroutine(powerballTutorialLines));
     }
 
+    public void playCashOutText()
+    {
+        StopCurrentDialogue();
+
+        sequenceCoroutine = StartCoroutine(SequenceCoroutine(cashOutText));
+    }
 
     public void ShowAddCardsText(int copyNumber)
     {
         StopCurrentDialogue();
         string text = "Choose which card to copy " + copyNumber + " ";
-        text += copyNumber == 1 ? "time." : "times."; 
+        text += copyNumber == 1 ? "time." : "times.";
         sequenceCoroutine = StartCoroutine(SingleMessageCoroutine(text, 4f));
     }
 
@@ -107,13 +116,13 @@ public class DialogueSystem : MonoBehaviour
         isPlaying = true;
         allowSkip = false;
 
-        if(panel != null) panel.gameObject.SetActive(true);
+        if (panel != null) panel.gameObject.SetActive(true);
 
         yield return new WaitForSeconds(0.1f);
 
         allowSkip = true;
 
-        foreach(string line in lines)
+        foreach (string line in lines)
         {
             typingCoroutine = StartCoroutine(TypeText(line));
 
@@ -131,12 +140,12 @@ public class DialogueSystem : MonoBehaviour
         sequenceCoroutine = StartCoroutine(SingleMessageCoroutine(message));
     }
 
-    private IEnumerator SingleMessageCoroutine(string message, float delay=2f)
+    private IEnumerator SingleMessageCoroutine(string message, float delay = 2f)
     {
         isPlaying = true;
         allowSkip = false;
 
-        if(panel != null) panel.gameObject.SetActive(true);
+        if (panel != null) panel.gameObject.SetActive(true);
 
         yield return new WaitForSeconds(0.1f);
 
@@ -154,11 +163,11 @@ public class DialogueSystem : MonoBehaviour
     {
         dialogueText.text = "";
 
-        foreach(char letter in line.ToCharArray())
+        foreach (char letter in line.ToCharArray())
         {
             dialogueText.text += letter;
 
-            if(AudioManager.instance != null) AudioManager.instance.Play("Typing");
+            if (AudioManager.instance != null) AudioManager.instance.Play("Typing");
 
             yield return new WaitForSeconds(typingSpeed);
         }
@@ -166,9 +175,9 @@ public class DialogueSystem : MonoBehaviour
 
     private void StopCurrentDialogue()
     {
-        if(sequenceCoroutine != null) StopCoroutine(sequenceCoroutine);
+        if (sequenceCoroutine != null) StopCoroutine(sequenceCoroutine);
 
-        if(typingCoroutine != null) StopCoroutine(typingCoroutine);
+        if (typingCoroutine != null) StopCoroutine(typingCoroutine);
     }
 
     private void EndDialogue()
@@ -176,7 +185,7 @@ public class DialogueSystem : MonoBehaviour
         isPlaying = false;
         allowSkip = false;
 
-        if(panel != null) panel.gameObject.SetActive(false);
+        if (panel != null) panel.gameObject.SetActive(false);
 
         dialogueText.text = "";
     }
@@ -200,10 +209,9 @@ public class DialogueSystem : MonoBehaviour
     public void ShowTrustFundTaunt() => ShowMessage(GetRandomTaunt(trustFundTaunts));
     public void ShowLuckyCoinFlip() => ShowMessage(GetRandomTaunt(luckyCoinFlip));
     public void ShowUnluckyCoinFlip() => ShowMessage(GetRandomTaunt(unluckyCoinFlip));
-
     private string GetRandomTaunt(List<string> taunts)
     {
-        if(taunts == null || taunts.Count == 0) return "";
+        if (taunts == null || taunts.Count == 0) return "";
 
         int index = Random.Range(0, taunts.Count);
 
