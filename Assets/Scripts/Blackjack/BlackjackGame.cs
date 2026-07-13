@@ -198,13 +198,13 @@ public class BlackjackGame : MonoBehaviour
         if(!isRoundActive && PlayerMoney >= currentBet)
             StartCoroutine(DealRoundCoroutine());
     }
-       
+        
     public void OnHit() => StartCoroutine(HitCoroutine());
-       
+        
     public void OnStand() => StartCoroutine(StandCoroutine());
 
     public void OnIncreaseBet() => IncreaseBet();
-       
+        
     public void OnDecreaseBet() => DecreaseBet();
 
     public void OnDoubleDown()
@@ -630,7 +630,7 @@ public class BlackjackGame : MonoBehaviour
     {
         isActionLocked = true;
         isRoundActive = false;
-
+        
         if (dealToDealerCoroutine != null)
         {
             StopCoroutine(dealToDealerCoroutine);
@@ -1425,7 +1425,7 @@ public class BlackjackGame : MonoBehaviour
         Card newCardData = new Card { rank = Card.Rank.None };
 
         bool cardFound = false;
-
+        
         if(CrucifixItem.isCrucifixActive)
         {
             int dealerValue = CalculateHandValue(dealerHand, true);
@@ -1484,7 +1484,7 @@ public class BlackjackGame : MonoBehaviour
         }
         
         CardInstance newCardInstance;
-        if(peekCardInstance == null)
+        if (peekCardInstance == null)
             newCardInstance = DealCardInstance(newCardData, dealerHand, dealerCardPosition, isHidden);
         else
         {
@@ -1912,7 +1912,7 @@ public class BlackjackGame : MonoBehaviour
             }
         }
 
-        if (isTutorialActive)
+        if(isTutorialActive)
         {
             yield return GameUtils.WaitForSecondsScaled(1f);
             yield break;
