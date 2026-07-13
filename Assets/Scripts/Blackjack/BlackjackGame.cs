@@ -89,7 +89,6 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private GameObject redParticlePrefab;
     [SerializeField] private Transform particleSpawnPoint;
     [SerializeField] private ParticleSystem smokeParticle;
-    [SerializeField] public GameObject distortion;
     [SerializeField] public Animator bottleAnimation;
     public GameObject peekedCardObject = null;
     private const float zOverlap = 0.001f;
