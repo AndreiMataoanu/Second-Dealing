@@ -1,4 +1,4 @@
-public class Alcoholtem : Item
+public class AlcoholItem : Item
 {
     // [SerializeField] private GameObject distortion;
 

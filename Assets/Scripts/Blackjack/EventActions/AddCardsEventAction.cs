@@ -23,7 +23,7 @@ public class AddCardsEventAction : MonoBehaviour
 
     private IEnumerator DealAllOptionsCoroutine()
     {
-        blackjackGame.ChangeToCamera(CameraType.Playing);
+        blackjackGame.GameCamera.ChangeToCamera(CameraType.Playing);
         yield return new WaitForSeconds(1.5f);
 
         for (int i = 0; i < OptionCount; i++)

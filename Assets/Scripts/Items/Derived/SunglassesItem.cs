@@ -34,7 +34,7 @@ public class SunglassesItem : Item
             cardDisplay.SetHidden(false);
     
             bool isSuitNegative = blackjackGame.IsCardNegative(newCardData);
-            bool isDoubled = blackjackGame.EventManager.CheckIfDoubled(newCardData) || Alcoholtem.isAlcoholActive;
+            bool isDoubled = blackjackGame.EventManager.CheckIfDoubled(newCardData) || AlcoholItem.isAlcoholActive;
             bool isHalved = blackjackGame.EventManager.CheckIfHalved(newCardData);
     
             cardDisplay.SetNegativeVisual(isSuitNegative);
