@@ -610,17 +610,6 @@ public class BlackjackGame : MonoBehaviour
         }
     }
 
-    public bool ActivateFan()
-    {
-        if(CheckItemAfterStand()) return false;
-
-        if(!isRoundActive || (isActionLocked && !useAfterStand)) return false;
-        
-        StartCoroutine(FanCoroutine());
-
-        return true;
-    }
-
     public IEnumerator FanCoroutine()
     {
         isActionLocked = true;

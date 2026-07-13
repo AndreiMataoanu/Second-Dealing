@@ -11,8 +11,6 @@ public class CardEffectActions
     private CursorType cursorType;
     private CardTrigger cardTrigger;
 
-    private float dissolveTime;
-
     // Keep cursor objects as parameters for blackjack game removal
     public CardEffectActions(BlackjackGame blackjackGame, CursorFollow cursorFollow, CursorDetection cursorDetection,
         CursorType cursorType, CardTrigger cardTrigger)
@@ -23,8 +21,6 @@ public class CardEffectActions
         this.cursorType = cursorType;
         this.cardTrigger = cardTrigger;
     }
-
-    public void SetDissolveTime(float time) => dissolveTime = time;
 
     public void SelectCard()
     {
