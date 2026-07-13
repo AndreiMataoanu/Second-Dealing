@@ -1013,6 +1013,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 737917822548636709, guid: b75c1670a2109b640afcf80005cfc088, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 737917822548636709, guid: b75c1670a2109b640afcf80005cfc088, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -1043,6 +1047,10 @@ PrefabInstance:
     - target: {fileID: 4323102649848680636, guid: b75c1670a2109b640afcf80005cfc088, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4323102649848680636, guid: b75c1670a2109b640afcf80005cfc088, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4323102649848680636, guid: b75c1670a2109b640afcf80005cfc088, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -1107,6 +1115,10 @@ PrefabInstance:
     - target: {fileID: 8870285072084359870, guid: b75c1670a2109b640afcf80005cfc088, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8870285072084359870, guid: b75c1670a2109b640afcf80005cfc088, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8870285072084359870, guid: b75c1670a2109b640afcf80005cfc088, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -2209,9 +2221,30 @@ PrefabInstance:
       value: 1.5930126
       objectReference: {fileID: 0}
     - target: {fileID: 3384233393079924373, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
+      propertyPath: outline
+      value: 
+      objectReference: {fileID: 2100000, guid: 845ab195a79e98442a99a906b739c853, type: 2}
+    - target: {fileID: 3384233393079924373, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
       propertyPath: gameReference
       value: 
       objectReference: {fileID: 1343293108}
+    - target: {fileID: 3384233393079924373, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
+      propertyPath: blackjackManager
+      value: 
+      objectReference: {fileID: 1343293108}
+    - target: {fileID: 3384233393079924373, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
+      propertyPath: doubleDownTooltip
+      value: 'Hit [Left-click]
+
+
+        Double Down [Right-click]
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3384233393079924373, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
+      propertyPath: standardHitTooltip
+      value: 'Hit [Left-click]'
+      objectReference: {fileID: 0}
     - target: {fileID: 3384233393079924373, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
       propertyPath: clickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -2233,9 +2266,28 @@ PrefabInstance:
       value: 4.075531
       objectReference: {fileID: 0}
     - target: {fileID: 3781399002905546207, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
+      propertyPath: outline
+      value: 
+      objectReference: {fileID: 2100000, guid: 845ab195a79e98442a99a906b739c853, type: 2}
+    - target: {fileID: 3781399002905546207, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
+      propertyPath: splitTooltip
+      value: 'Stand [Left-click]
+
+
+        Split [Right-click]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3781399002905546207, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
       propertyPath: gameReference
       value: 
       objectReference: {fileID: 1343293108}
+    - target: {fileID: 3781399002905546207, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
+      propertyPath: blackjackManager
+      value: 
+      objectReference: {fileID: 1343293108}
+    - target: {fileID: 3781399002905546207, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
+      propertyPath: standardStandTooltip
+      value: 'Stand [Left-click]'
+      objectReference: {fileID: 0}
     - target: {fileID: 3781399002905546207, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
       propertyPath: clickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -3945,7 +3997,7 @@ MonoBehaviour:
         m_CallState: 2
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
   tooltipHeader: Decrease Bet
-  tooltipContent: 'Shortcut: scrollwheel'
+  tooltipContent: 'Shortcut: [Scrollwheel]'
 --- !u!64 &741130250
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -5157,34 +5209,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 275698759}
     m_Modifications:
-    - target: {fileID: 133634237104746576, guid: 888789034740c35428917d11720891be, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 133634237104746576, guid: 888789034740c35428917d11720891be, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 133634237104746576, guid: 888789034740c35428917d11720891be, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -152.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2603450666566652494, guid: 888789034740c35428917d11720891be, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 1093
-      objectReference: {fileID: 0}
-    - target: {fileID: 3976960833465378606, guid: 888789034740c35428917d11720891be, type: 3}
-      propertyPath: m_AdditionalShaderChannelsFlag
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 4869580775675336787, guid: 888789034740c35428917d11720891be, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5218380670294111485, guid: 888789034740c35428917d11720891be, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 1093
-      objectReference: {fileID: 0}
     - target: {fileID: 5510594154060938744, guid: 888789034740c35428917d11720891be, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -5265,66 +5289,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5991719403855458396, guid: 888789034740c35428917d11720891be, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6358875835178339658, guid: 888789034740c35428917d11720891be, type: 3}
-      propertyPath: m_text
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6628969377739844607, guid: 888789034740c35428917d11720891be, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6628969377739844607, guid: 888789034740c35428917d11720891be, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6628969377739844607, guid: 888789034740c35428917d11720891be, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -382.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6742755508724280189, guid: 888789034740c35428917d11720891be, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6742755508724280189, guid: 888789034740c35428917d11720891be, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6742755508724280189, guid: 888789034740c35428917d11720891be, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -267.5
-      objectReference: {fileID: 0}
     - target: {fileID: 8062237158920053517, guid: 888789034740c35428917d11720891be, type: 3}
       propertyPath: m_Name
-      value: Default Canvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 8504165199712081987, guid: 888789034740c35428917d11720891be, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8504165199712081987, guid: 888789034740c35428917d11720891be, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8504165199712081987, guid: 888789034740c35428917d11720891be, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -37.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8715197724809331898, guid: 888789034740c35428917d11720891be, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 9086748794786831360, guid: 888789034740c35428917d11720891be, type: 3}
-      propertyPath: m_text
-      value: 
+      value: UI Canvas
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 1242530134859065638, guid: 888789034740c35428917d11720891be, type: 3}
-    - {fileID: 5201098582304211722, guid: 888789034740c35428917d11720891be, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 888789034740c35428917d11720891be, type: 3}
@@ -6760,6 +6730,10 @@ PrefabInstance:
       propertyPath: cursorFollowManager
       value: 
       objectReference: {fileID: 708047837}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: gameSpeedMultiplier
+      value: 2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: sunglassesCardPosition
       value: 
@@ -10243,10 +10217,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tooltip Canvas
       objectReference: {fileID: 0}
-    - target: {fileID: 3541483967672690090, guid: 40ab288ea42b16a4eb566d5aeb3be1c1, type: 3}
-      propertyPath: m_PreferredWidth
-      value: 1050
-      objectReference: {fileID: 0}
     - target: {fileID: 6896360752514835711, guid: 40ab288ea42b16a4eb566d5aeb3be1c1, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -10325,14 +10295,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6896360752514835711, guid: 40ab288ea42b16a4eb566d5aeb3be1c1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8350205044617290054, guid: 40ab288ea42b16a4eb566d5aeb3be1c1, type: 3}
-      propertyPath: m_VertexColorAlwaysGammaSpace
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8350205044617290054, guid: 40ab288ea42b16a4eb566d5aeb3be1c1, type: 3}
-      propertyPath: m_AdditionalShaderChannelsFlag
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -10495,106 +10457,74 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 36366832078275221, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 19.7
-      objectReference: {fileID: 0}
     - target: {fileID: 452393188812297846, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: blackjackGame
       value: 
       objectReference: {fileID: 1343293108}
+    - target: {fileID: 452393188812297846, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
+      propertyPath: lockedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 0a832a2e81c13f949bb53db9acc6b339, type: 2}
     - target: {fileID: 516886836536070212, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: blackjackGame
       value: 
       objectReference: {fileID: 1343293108}
-    - target: {fileID: 815305041096098012, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 868414382173514219, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 20.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 911001280434813227, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
+    - target: {fileID: 516886836536070212, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
+      propertyPath: lockedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 0a832a2e81c13f949bb53db9acc6b339, type: 2}
     - target: {fileID: 911575697712452226, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: blackjackGame
       value: 
       objectReference: {fileID: 1343293108}
-    - target: {fileID: 1446032172909477900, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 19.51
-      objectReference: {fileID: 0}
+    - target: {fileID: 911575697712452226, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
+      propertyPath: lockedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 0a832a2e81c13f949bb53db9acc6b339, type: 2}
     - target: {fileID: 1451009221993462026, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: m_Name
       value: Keepsakes
       objectReference: {fileID: 0}
-    - target: {fileID: 1810711894634738487, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2020329909444052542, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2037345501548978446, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 20.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2342012282872764057, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 20.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2628419885280275922, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3363845420032303589, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: keepsake
-      value: 
-      objectReference: {fileID: 11400000, guid: a815397d89741834fb2e9742ad3c7b83, type: 2}
     - target: {fileID: 3363845420032303589, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: blackjackGame
       value: 
       objectReference: {fileID: 1343293108}
-    - target: {fileID: 3482811157631772901, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3677911708978420232, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 21.07
-      objectReference: {fileID: 0}
+    - target: {fileID: 3363845420032303589, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
+      propertyPath: lockedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 0a832a2e81c13f949bb53db9acc6b339, type: 2}
     - target: {fileID: 4300470382328938508, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: blackjackGame
       value: 
       objectReference: {fileID: 1343293108}
-    - target: {fileID: 4511233512572514436, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 20.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4841384410794594574, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 19.9
-      objectReference: {fileID: 0}
+    - target: {fileID: 4300470382328938508, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
+      propertyPath: lockedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 0a832a2e81c13f949bb53db9acc6b339, type: 2}
     - target: {fileID: 4846051652731105430, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: blackjackGame
       value: 
       objectReference: {fileID: 1343293108}
+    - target: {fileID: 4846051652731105430, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
+      propertyPath: lockedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 0a832a2e81c13f949bb53db9acc6b339, type: 2}
     - target: {fileID: 4872147661024556460, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: blackjackGame
       value: 
       objectReference: {fileID: 1343293108}
+    - target: {fileID: 4872147661024556460, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
+      propertyPath: lockedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 0a832a2e81c13f949bb53db9acc6b339, type: 2}
     - target: {fileID: 5162878259669473225, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: blackjackGame
       value: 
       objectReference: {fileID: 1343293108}
-    - target: {fileID: 5321876896776416877, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
+    - target: {fileID: 5162878259669473225, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
+      propertyPath: lockedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 0a832a2e81c13f949bb53db9acc6b339, type: 2}
     - target: {fileID: 5372428982862247798, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -10636,69 +10566,45 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5592926720199198344, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: keepsake
-      value: 
-      objectReference: {fileID: 11400000, guid: 01fcafe4f6a2d4b44b08823893a0dadc, type: 2}
-    - target: {fileID: 5592926720199198344, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: blackjackGame
       value: 
       objectReference: {fileID: 1343293108}
-    - target: {fileID: 5616993612565364171, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5699337217021059656, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5874137656377705350, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 20.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 6624206119709449870, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 21.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6800314405720819609, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
+    - target: {fileID: 5592926720199198344, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
+      propertyPath: lockedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 0a832a2e81c13f949bb53db9acc6b339, type: 2}
     - target: {fileID: 7058561348228269487, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: blackjackGame
       value: 
       objectReference: {fileID: 1343293108}
+    - target: {fileID: 7058561348228269487, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
+      propertyPath: lockedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 0a832a2e81c13f949bb53db9acc6b339, type: 2}
     - target: {fileID: 7218902011896573506, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: blackjackGame
       value: 
       objectReference: {fileID: 1343293108}
+    - target: {fileID: 7218902011896573506, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
+      propertyPath: lockedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 0a832a2e81c13f949bb53db9acc6b339, type: 2}
     - target: {fileID: 7500902492820570474, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: blackjackGame
       value: 
       objectReference: {fileID: 1343293108}
-    - target: {fileID: 7581688550545038301, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7650252107163627382, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
+    - target: {fileID: 7500902492820570474, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
+      propertyPath: lockedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 0a832a2e81c13f949bb53db9acc6b339, type: 2}
     - target: {fileID: 7771372226783443124, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
       propertyPath: blackjackGame
       value: 
       objectReference: {fileID: 1343293108}
-    - target: {fileID: 8223191251668752074, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 21.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8849441083528438474, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 20.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 9186716506486884956, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
+    - target: {fileID: 7771372226783443124, guid: 7373e45471532ce4591c8e771778ceb1, type: 3}
+      propertyPath: lockedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 0a832a2e81c13f949bb53db9acc6b339, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11243,6 +11149,22 @@ PrefabInstance:
       propertyPath: suitcaseAnimator
       value: 
       objectReference: {fileID: 1688790259}
+    - target: {fileID: 6917493003461796987, guid: 637802685cb82c8408715413db95dd14, type: 3}
+      propertyPath: itemPrefabs.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6917493003461796987, guid: 637802685cb82c8408715413db95dd14, type: 3}
+      propertyPath: 'itemPrefabs.Array.data[4]'
+      value: 
+      objectReference: {fileID: 9090495121263625931, guid: 67a688aecdef10547bb6132e7ef51989, type: 3}
+    - target: {fileID: 6917493003461796987, guid: 637802685cb82c8408715413db95dd14, type: 3}
+      propertyPath: 'itemPrefabs.Array.data[6]'
+      value: 
+      objectReference: {fileID: 3247029996075764086, guid: 0e1526c2b64e7f04aa27b1188867eddd, type: 3}
+    - target: {fileID: 6917493003461796987, guid: 637802685cb82c8408715413db95dd14, type: 3}
+      propertyPath: 'itemPrefabs.Array.data[7]'
+      value: 
+      objectReference: {fileID: 6929943178110708876, guid: 96176d5594c1c0e4c953255859f5fe50, type: 3}
     - target: {fileID: 6917493003461796987, guid: 637802685cb82c8408715413db95dd14, type: 3}
       propertyPath: 'buySpawnPoints.Array.data[0]'
       value: 

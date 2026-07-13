@@ -2,23 +2,30 @@ using UnityEngine;
 
 public class HitHandClickable : Clickable
 {
-    [SerializeField] private BlackjackGame gameReference;
-    [SerializeField] private string standardHitTooltip = "Left-click: Hit";
-    [SerializeField] private string doubleDownTooltip = "Left-click: Hit\nRight-click: Double Down";
+    [SerializeField] private BlackjackGame blackjackManager;
+    [SerializeField] [TextArea] private string standardHitTooltip;
+    [SerializeField] [TextArea] private string doubleDownTooltip;
+    private string activeTooltipString = "";
 
     protected override void OnMouseEnter()
     {
         if(!IsActive) return;
 
-        string activeContent = gameReference.canDoubleDown ? doubleDownTooltip : standardHitTooltip;
-
-        TooltipManager.instance.ShowTooltip(activeContent, tooltipHeader);
-
+        UpdateTooltip();
         ApplyOutline();
+    }
+
+    private void OnMouseOver()
+    {
+        if(!IsActive || !blackjackManager.canDoubleDown) return;
+
+        UpdateTooltip();
     }
 
     protected override void OnMouseExit()
     {
+        activeTooltipString = "";
+
         base.OnMouseExit();
     }
 
@@ -28,11 +35,27 @@ public class HitHandClickable : Clickable
 
         if(mouseButton == 0)
         {
-            gameReference.OnHit();
+            blackjackManager.OnHit();
+
+            UpdateTooltip();
         }
-        else if(mouseButton == 1 && gameReference.canDoubleDown)
+        else if(mouseButton == 1 && blackjackManager.canDoubleDown)
         {
-            gameReference.OnDoubleDown();
+            blackjackManager.OnDoubleDown();
+
+            OnRemoveOutline();
+        }
+    }
+
+    private void UpdateTooltip()
+    {
+        string content = blackjackManager.canDoubleDown ? doubleDownTooltip : standardHitTooltip;
+
+        if(activeTooltipString != content)
+        {
+            activeTooltipString = content;
+
+            TooltipManager.instance.ShowTooltip(activeTooltipString, tooltipHeader);
         }
     }
 }
