@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 2451222929879398548}
   - component: {fileID: 7862763377030525982}
   - component: {fileID: 8767737854247702758}
-  - component: {fileID: 2043880058871481977}
+  - component: {fileID: 6413081789626157585}
   - component: {fileID: 8462082567563038245}
   m_Layer: 0
   m_Name: Fan
@@ -199,7 +199,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &2043880058871481977
+--- !u!114 &6413081789626157585
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -208,9 +208,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7098207735584986369}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b4b69a41c3e6634587c1021a34ba729, type: 3}
+  m_Script: {fileID: 11500000, guid: 6c9605dd9cc03ce45b7d36d1eb55c0a6, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Item
+  m_EditorClassIdentifier: Assembly-CSharp::FanItem
   clickEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -223,7 +223,6 @@ MonoBehaviour:
   type: 7
   spawnWeight: 15
   isPurchased: 0
-  lottoWorldText: {fileID: 0}
 --- !u!64 &8462082567563038245
 MeshCollider:
   m_ObjectHideFlags: 0

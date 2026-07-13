@@ -42,15 +42,14 @@ public class EventManager : MonoBehaviour
     private List<BlackjackEvent> availableMediumEvents;
     private List<BlackjackEvent> availableHighEvents;
     private List<EventThreshold> triggeredThresholds = new List<EventThreshold>();
-    private List<Card.Suit> negativeSuits = new List<Card.Suit>();
     private List<int> powerballNumbers = new List<int>();
 
     private AceValueRule currentAceRule = AceValueRule.Flexible;
     
     private int targetMoneyBalance;
     
-    private bool isDoubleLowActive = false;
-    private bool isHalfHighActive = false;
+    public static bool isDoubleLowActive = false;
+    public static bool isHalfHighActive = false;
     private bool isRouletteBlackjackActive = false;
     private bool isPowerballTriggered = false;
     private bool isNewPowerball = false;
@@ -98,7 +97,6 @@ public class EventManager : MonoBehaviour
     #region Check Event Rules
 
     public bool IsAceRule(AceValueRule aceRule) => currentAceRule == aceRule;
-    public bool IsSuitNegative(Card.Suit suit) => negativeSuits.Contains(suit);
 
     #endregion
     
@@ -116,7 +114,7 @@ public class EventManager : MonoBehaviour
 
     public void SetNegativeSuit(Card.Suit suit)
     {
-        negativeSuits.Add(suit);
+        CardEffects.AddNegativeSuit(suit);
         blackjackGame.UpdateCardVFX();
     }
 

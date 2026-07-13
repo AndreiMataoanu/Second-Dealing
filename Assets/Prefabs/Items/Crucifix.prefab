@@ -70,7 +70,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1f831f2c606698a4d945ecabc454d991, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7630428666314340296}
+      addedObject: {fileID: -313870782001036962}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1f831f2c606698a4d945ecabc454d991, type: 3}
       insertIndex: -1
       addedObject: {fileID: -1736431926067525896}
@@ -80,7 +80,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1f831f2c606698a4d945ecabc454d991, type: 3}
   m_PrefabInstance: {fileID: 8279451164904930202}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7630428666314340296
+--- !u!114 &-313870782001036962
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -89,9 +89,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 9090495121263625931}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b4b69a41c3e6634587c1021a34ba729, type: 3}
+  m_Script: {fileID: 11500000, guid: b67a0667e20926d4997f2f0aa96e55ac, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PowerUpInfo
+  m_EditorClassIdentifier: Assembly-CSharp::CrucifixItem
   clickEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -104,7 +104,6 @@ MonoBehaviour:
   type: 2
   spawnWeight: 5
   isPurchased: 0
-  lottoWorldText: {fileID: 0}
 --- !u!64 &-1736431926067525896
 MeshCollider:
   m_ObjectHideFlags: 0

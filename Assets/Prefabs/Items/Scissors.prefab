@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7136337199276034087}
   - component: {fileID: 7070223952244996954}
   - component: {fileID: 4414410135799797022}
-  - component: {fileID: 1696113365053242763}
+  - component: {fileID: 2502868540072495648}
   - component: {fileID: 7760549102183914475}
   m_Layer: 0
   m_Name: Scissors
@@ -91,7 +91,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1696113365053242763
+--- !u!114 &2502868540072495648
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -100,9 +100,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6253389534292605265}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b4b69a41c3e6634587c1021a34ba729, type: 3}
+  m_Script: {fileID: 11500000, guid: ccc86c56203929442816172ab99860ff, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PowerUpInfo
+  m_EditorClassIdentifier: Assembly-CSharp::ScissorsItem
   clickEvent:
     m_PersistentCalls:
       m_Calls: []

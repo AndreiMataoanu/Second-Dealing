@@ -14,7 +14,6 @@ public class ShopManager : MonoBehaviour
     
     [Header("Sound")]
     [SerializeField] private float denySoundCooldown = 0.3f;
-    [HideInInspector] public int organRoundsLeft = 0; // TODO: move to item manager
 
     [Header("Suitcase")] 
     [SerializeField] private Animator suitcaseAnimator;
@@ -53,6 +52,7 @@ public class ShopManager : MonoBehaviour
 
             item.SetMultiplier(coinMultiplier);
             item.SetBlackjackGame(blackjackGame);
+            item.SetMembers();
             item.SetActive(true);
             item.AddAction(BuyAction);
         }
@@ -60,20 +60,21 @@ public class ShopManager : MonoBehaviour
     
     private GameObject GetWeightedRandomPrefab()
     {
-        bool hasOrgan = blackjackGame.isOrganActive;
+        bool hasOrgan = OrganBagItem.isOrganActive;
         int currentTotalWeight = 0;
 
         // revise valid prefabs should be member
-        List<GameObject> validPrefabs = new List<GameObject>();
-
+        List<GameObject> validPrefabs = new();
         foreach(var prefab in itemPrefabs)
         {
             var item = prefab.GetComponent<Item>();
 
-            if(hasOrgan && item.type == ItemType.Organ) continue;
+            if((OrganBagItem.isInShop || hasOrgan) && item.type == ItemType.Organ) continue;
 
             validPrefabs.Add(prefab);
             currentTotalWeight += item.spawnWeight;
+
+            if (item.type == ItemType.Organ) OrganBagItem.isInShop = true;
         }
 
         int roll = Random.Range(0, currentTotalWeight);
@@ -95,6 +96,7 @@ public class ShopManager : MonoBehaviour
     
     public void OnCloseShop()
     {
+        OrganBagItem.isInShop = false;
         if (inventoryItemCount != buySpawnPoints.Count) return;
         
         DespawnShopItems();
@@ -169,18 +171,27 @@ public class ShopManager : MonoBehaviour
     
     public void RemoveFromInventory(Item item)
     {
+        if (!item) return;
+        
         TooltipManager.instance.HideTooltip();
         
-        DeactivateItemPassiveEffects(item);
-        Destroy(item.gameObject);
+        item.DeactivatePassive();
         inventoryItemCount--;
         inventoryItems.Remove(item);
+        
+        Destroy(item.gameObject);
     }
     
     public void RemoveFromInventory(ItemType type)
     {
-        foreach(var item in inventoryItems)
-            RemoveFromInventory(item);
+        foreach (var item in inventoryItems)
+        {
+            if (item.type == type)
+            {
+                RemoveFromInventory(item);
+                return;
+            }
+        }
     }
     
     public Item SpawnItemInventory(GameObject prefab)
@@ -224,26 +235,7 @@ public class ShopManager : MonoBehaviour
 
     private void ActivateItemPassiveEffects(Item item)
     {
-        switch (item.type)
-        {
-            case ItemType.Organ:
-                blackjackGame.ActivateOrgan();
-                organRoundsLeft = 2;
-                break;
-            case ItemType.Nft:
-                item.SetNftRoundsLeft();
-                break;
-        }
-    }
-
-    private void DeactivateItemPassiveEffects(Item item)
-    {
-        switch (item.type)
-        {
-            case ItemType.Organ:
-                blackjackGame.DeactivateOrgan();
-                break;
-        }
+        item.ActivatePassive();
     }
     
     #endregion

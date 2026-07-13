@@ -213,4 +213,26 @@ public class Deck
 
         permanentAddedCards.Add(newCard);
     }
+    
+    public static Card.Rank GetRankForValue(int value)
+    {
+        if(value >= 11 || value == 1)
+        {
+            return Card.Rank.Ace;
+        }
+
+        switch(value)
+        {
+            case 10: return Card.Rank.Ten;
+            case 9: return Card.Rank.Nine;
+            case 8: return Card.Rank.Eight;
+            case 7: return Card.Rank.Seven;
+            case 6: return Card.Rank.Six;
+            case 5: return Card.Rank.Five;
+            case 4: return Card.Rank.Four;
+            case 3: return Card.Rank.Three;
+            case 2: return Card.Rank.Two;
+            default: return Card.Rank.None;
+        }
+    }
 }

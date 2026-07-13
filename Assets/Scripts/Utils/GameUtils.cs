@@ -5,6 +5,8 @@ namespace Utils
 {
     public static class GameUtils
     {
+        public static float gameSpeedMultiplier = 1f;
+
         public static IEnumerator WaitDelayOrInput(float duration)
         {
             float timer = 0f;
@@ -21,6 +23,11 @@ namespace Utils
 
                 yield return null;
             }
+        }
+        
+        public static WaitForSeconds WaitForSecondsScaled(float baseTime)
+        {
+            return new WaitForSeconds(baseTime / gameSpeedMultiplier);
         }
     }
 }
