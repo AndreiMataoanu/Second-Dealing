@@ -1,68 +1,23 @@
 using System;
-using UnityEngine;
 
 public class ClickableCard : Clickable
 {
-    [Header("Card VFX")] 
-    [SerializeField] private float dissolveTime = 1.3f;
-    
     private int index;
     private CardInstance cardInstance;
     private BlackjackGame blackjackGame;
-    
+
     private Action cardAction;
-    public void AddAction(Action action) => cardAction += action;
-    public void RemoveAction(Action action) => cardAction -= action;
+    private Action<CardInstance> cardEffect;
+    
+    public void AddCardAction(Action action) => cardAction += action;
+    public void RemoveCardAction(Action action) => cardAction -= action;
+    public void AddCardEffect(Action<CardInstance> action) => cardEffect += action;
+    public void RemoveCardEffect(Action<CardInstance> action) => cardEffect -= action;
 
     public void SetCardInstance(CardInstance instance) => cardInstance = instance;
     public void SetBlackjackGame(BlackjackGame blackjack) => blackjackGame = blackjack;
 
-    public void OnCutCard()
-    {
-        Debug.Log("cut");
-        AudioManager.instance.Play("Scissors(Clone)");
-
-        cardInstance.displayComponent.SetCutVisual(true);
-        
-        int originalValue;
-        
-        if(cardInstance.cardData.rank == Card.Rank.Joker)
-        {
-            originalValue = 0;
-        }
-        else
-        {
-            originalValue = cardInstance.cardData.GetValue();
-        
-            if(blackjackGame.EventManager.IsDoubleLowActive && originalValue < 6)
-            {
-                originalValue = originalValue + originalValue;
-            }
-        
-            if(blackjackGame.EventManager.IsDoubleLowActive && originalValue > 5)
-            {
-                originalValue = Mathf.CeilToInt(originalValue / 2f);
-            }
-
-            if(blackjackGame.IsCardNegative(cardInstance.cardData))
-            {
-                originalValue = -originalValue;
-            }
-        }
-
-        blackjackGame.ApplyCutToCard(cardInstance, 2);
-        blackjackGame.SetScissorsActive(false);
-        blackjackGame.UpdateUI(true);
-    }
-
-    public void OnDissolveCard()
-    {
-        // TODO: AudioManager.instance.Play("AcidSound");
-        // TODO: add shader effect
-        
-        blackjackGame.ApplyDissolveToCard(cardInstance, dissolveTime);
-        
-    }
+    public void RemoveCardEffect() => cardEffect = null;
 
     public void OnAddCardsOption()
     {
@@ -80,14 +35,11 @@ public class ClickableCard : Clickable
         
         base.OnClick();
 
-        if(cardAction != null)
-        {
-            cardAction.Invoke();
-        }
-        else if(cardInstance != null && cardInstance.cardData.suit == Card.Suit.Tarot)
-        {
+        cardEffect?.Invoke(cardInstance);
+        cardAction?.Invoke();
+        
+        if(cardInstance != null && cardInstance.cardData.suit == Card.Suit.Tarot)
             blackjackGame.SacrificeTarot(cardInstance);
-        }
     }
 
     public void OnAntiMatterCard()

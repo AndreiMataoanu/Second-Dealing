@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8269581312285230984}
   - component: {fileID: 8971211930413345447}
   - component: {fileID: 8359143841880107014}
-  - component: {fileID: 8107229075581035292}
+  - component: {fileID: 1749399959942769279}
   - component: {fileID: -3876307792271350307}
   m_Layer: 0
   m_Name: Knife
@@ -91,7 +91,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &8107229075581035292
+--- !u!114 &1749399959942769279
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -100,22 +100,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 3247029996075764086}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b4b69a41c3e6634587c1021a34ba729, type: 3}
+  m_Script: {fileID: 11500000, guid: d752493893f3d0847b387be4c3fde906, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PowerUpInfo
+  m_EditorClassIdentifier: Assembly-CSharp::KnifeItem
   clickEvent:
     m_PersistentCalls:
       m_Calls: []
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
   tooltipHeader: Knife
-  tooltipContent: Forces the dealer to stand
+  tooltipContent: Forces the dealer to stand after 1 hit
   basePrice: 200
-  percentagePrice: 0.2
+  percentagePrice: 0.1
   resaleLossPercentage: 0.5
   type: 0
   spawnWeight: 15
   isPurchased: 0
-  lottoWorldText: {fileID: 0}
 --- !u!64 &-3876307792271350307
 MeshCollider:
   m_ObjectHideFlags: 0

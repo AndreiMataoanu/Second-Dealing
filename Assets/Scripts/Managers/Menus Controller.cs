@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Utils;
 
 public class MenusController : MonoBehaviour
 {
@@ -235,7 +236,7 @@ public class MenusController : MonoBehaviour
 
     private void ApplySpeed()
     {
-        BlackjackGame.gameSpeedMultiplier = speedOptions[currentSpeedIndex];
+        GameUtils.gameSpeedMultiplier = speedOptions[currentSpeedIndex];
         PlayerPrefs.SetInt("GameSpeedIndex", currentSpeedIndex);
         PlayerPrefs.Save();
 

@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class CardInstance
 {
     public Card cardData;
@@ -7,6 +9,8 @@ public class CardInstance
     public bool isHidden;
 
     public int jokerValue = 0;
+    
+    public GameObject CardObject => displayComponent?.gameObject; 
 
     public CardInstance(Card card, CardDisplay display, bool hidden = false)
     {

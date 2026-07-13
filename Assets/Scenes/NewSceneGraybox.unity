@@ -6854,6 +6854,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 665891693}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: cursorFollow
+      value: 
+      objectReference: {fileID: 708047837}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: deckPosition
       value: 
       objectReference: {fileID: 595901487}
@@ -11425,22 +11429,6 @@ PrefabInstance:
       propertyPath: suitcaseAnimator
       value: 
       objectReference: {fileID: 1688790259}
-    - target: {fileID: 6917493003461796987, guid: 637802685cb82c8408715413db95dd14, type: 3}
-      propertyPath: itemPrefabs.Array.size
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 6917493003461796987, guid: 637802685cb82c8408715413db95dd14, type: 3}
-      propertyPath: 'itemPrefabs.Array.data[4]'
-      value: 
-      objectReference: {fileID: 9090495121263625931, guid: 67a688aecdef10547bb6132e7ef51989, type: 3}
-    - target: {fileID: 6917493003461796987, guid: 637802685cb82c8408715413db95dd14, type: 3}
-      propertyPath: 'itemPrefabs.Array.data[6]'
-      value: 
-      objectReference: {fileID: 3247029996075764086, guid: 0e1526c2b64e7f04aa27b1188867eddd, type: 3}
-    - target: {fileID: 6917493003461796987, guid: 637802685cb82c8408715413db95dd14, type: 3}
-      propertyPath: 'itemPrefabs.Array.data[7]'
-      value: 
-      objectReference: {fileID: 6929943178110708876, guid: 96176d5594c1c0e4c953255859f5fe50, type: 3}
     - target: {fileID: 6917493003461796987, guid: 637802685cb82c8408715413db95dd14, type: 3}
       propertyPath: 'buySpawnPoints.Array.data[0]'
       value: 

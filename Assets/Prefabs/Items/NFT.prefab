@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 197260204283052266}
   - component: {fileID: 6178679673419364032}
   - component: {fileID: 3438098718679603741}
-  - component: {fileID: -3838537479509687455}
+  - component: {fileID: 9113825753430763150}
   - component: {fileID: 8674433730413865787}
   m_Layer: 0
   m_Name: NFT
@@ -92,7 +92,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &-3838537479509687455
+--- !u!114 &9113825753430763150
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,9 +101,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3226192414058870725}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b4b69a41c3e6634587c1021a34ba729, type: 3}
+  m_Script: {fileID: 11500000, guid: f98de50356a0ddf4a9e2f999f04ebd82, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Item
+  m_EditorClassIdentifier: Assembly-CSharp::NftItem
   clickEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -116,6 +116,7 @@ MonoBehaviour:
   type: 9
   spawnWeight: 15
   isPurchased: 0
+  nftRoundsLeft: 0
 --- !u!64 &8674433730413865787
 MeshCollider:
   m_ObjectHideFlags: 0

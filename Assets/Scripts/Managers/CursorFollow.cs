@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Prefabs.Managers
+namespace Managers
 {
     public enum CursorType
     {
@@ -9,7 +9,7 @@ namespace Prefabs.Managers
         Flip
     }
 
-    public class CursorFollowManager : MonoBehaviour
+    public class CursorFollow : MonoBehaviour
     {
         [SerializeField] private GameObject scissorsFollow;
         [SerializeField] private GameObject acidFollow;
