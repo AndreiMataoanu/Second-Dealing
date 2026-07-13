@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using Unity.Cinemachine;
 using UnityEngine.SceneManagement;
 public class ElevatorScript : MonoBehaviour
 {
@@ -11,10 +12,14 @@ public class ElevatorScript : MonoBehaviour
     public GameObject keepsakesFloor;
     public GameObject casinoFloor;
     public GameObject optionsFloor;
+    public CinemachineCamera elevatorCamera;
+    public CinemachineBasicMultiChannelPerlin noise;
+    public CinemachineCamera blackjackCamera;
 
     String currentFloor;
     bool doorsOpen = false;
     public float doorTime = 3f;
+    public float moveTime = 3f;
     public void BlackJackButton()
     {
         StartCoroutine(StartGameCoroutine());
@@ -38,50 +43,50 @@ public class ElevatorScript : MonoBehaviour
     IEnumerator OpenDoors()
     {
         doorsOpen = true;
-        Vector3 rightDoorGoToPos = new Vector3(rightDoor.transform.position.x + 2f, rightDoor.transform.position.y, rightDoor.transform.position.z);
-        Vector3 leftDoorGoToPos = new Vector3(leftDoor.transform.position.x - 2f, leftDoor.transform.position.y, leftDoor.transform.position.z);
+        Vector3 rightDoorGoToPos = new Vector3(rightDoor.transform.localPosition.x + 2f, rightDoor.transform.localPosition.y, rightDoor.transform.localPosition.z);
+        Vector3 leftDoorGoToPos = new Vector3(leftDoor.transform.localPosition.x - 2f, leftDoor.transform.localPosition.y, leftDoor.transform.localPosition.z);
         float elapsedTime = 0;
         float waitTime = doorTime;
-        Vector3 currentRightpos = rightDoor.transform.position;
-        Vector3 currentLeftpos = leftDoor.transform.position;
+        Vector3 currentRightpos = rightDoor.transform.localPosition;
+        Vector3 currentLeftpos = leftDoor.transform.localPosition;
         while (elapsedTime < waitTime)
         {
-            Debug.Log("timeisgoing");
-            leftDoor.transform.position = Vector3.Lerp(currentLeftpos, leftDoorGoToPos, elapsedTime / waitTime);
-            rightDoor.transform.position = Vector3.Lerp(currentRightpos, rightDoorGoToPos, elapsedTime / waitTime);
+            leftDoor.transform.localPosition = Vector3.Lerp(currentLeftpos, leftDoorGoToPos, elapsedTime / waitTime);
+            rightDoor.transform.localPosition = Vector3.Lerp(currentRightpos, rightDoorGoToPos, elapsedTime / waitTime);
             elapsedTime += Time.deltaTime;
 
             yield return null;
         }
-        rightDoor.transform.position = rightDoorGoToPos;
-        leftDoor.transform.position = leftDoorGoToPos;
+        rightDoor.transform.localPosition = rightDoorGoToPos;
+        leftDoor.transform.localPosition = leftDoorGoToPos;
         doorsOpen = true;
         yield return null;
     }
     IEnumerator CloseDoors()
     {
         doorsOpen = false;
-        Vector3 rightDoorGoToPos = new Vector3(rightDoor.transform.position.x - 2f, rightDoor.transform.position.y, rightDoor.transform.position.z);
-        Vector3 leftDoorGoToPos = new Vector3(leftDoor.transform.position.x + 2f, leftDoor.transform.position.y, leftDoor.transform.position.z);
+        Vector3 rightDoorGoToPos = new Vector3(rightDoor.transform.localPosition.x - 2f, rightDoor.transform.localPosition.y, rightDoor.transform.localPosition.z);
+        Vector3 leftDoorGoToPos = new Vector3(leftDoor.transform.localPosition.x + 2f, leftDoor.transform.localPosition.y, leftDoor.transform.localPosition.z);
         float elapsedTime = 0;
         float waitTime = doorTime;
-        Vector3 currentRightpos = rightDoor.transform.position;
-        Vector3 currentLeftpos = leftDoor.transform.position;
+        Vector3 currentRightpos = rightDoor.transform.localPosition;
+        Vector3 currentLeftpos = leftDoor.transform.localPosition;
         while (elapsedTime < waitTime)
         {
-            leftDoor.transform.position = Vector3.Lerp(currentLeftpos, leftDoorGoToPos, elapsedTime / waitTime);
-            rightDoor.transform.position = Vector3.Lerp(currentRightpos, rightDoorGoToPos, elapsedTime / waitTime);
+            leftDoor.transform.localPosition = Vector3.Lerp(currentLeftpos, leftDoorGoToPos, elapsedTime / waitTime);
+            rightDoor.transform.localPosition = Vector3.Lerp(currentRightpos, rightDoorGoToPos, elapsedTime / waitTime);
             elapsedTime += Time.deltaTime;
 
             yield return null;
         }
-        rightDoor.transform.position = rightDoorGoToPos;
-        leftDoor.transform.position = leftDoorGoToPos;
+        rightDoor.transform.localPosition = rightDoorGoToPos;
+        leftDoor.transform.localPosition = leftDoorGoToPos;
         yield return null;
 
     }
     IEnumerator StartGameCoroutine()
     {
+
         if (currentFloor == casinoFloor.name)
         {
             yield return null;
@@ -95,9 +100,23 @@ public class ElevatorScript : MonoBehaviour
         yield return StartCoroutine(WaitDelay(3f));
         StartCoroutine(OpenDoors());
         yield return StartCoroutine(WaitDelay(doorTime));
+        Vector3 startCamPos = elevatorCamera.transform.position;
+        Vector3 endCamPos = blackjackCamera.transform.position;
+        Quaternion startCamRot = elevatorCamera.transform.rotation;
+        Quaternion endCamRot = blackjackCamera.transform.rotation;
+        float elapsedTime = 0;
+        float waitTime = moveTime;
+        while (elapsedTime < waitTime)
+        {
+            noise.AmplitudeGain = 1;
+            elevatorCamera.transform.position = Vector3.Lerp(startCamPos, endCamPos, elapsedTime / waitTime);
+            //elevatorCamera.transform.rotation = Quaternion.Lerp(startCamRot, endCamRot, elapsedTime / 7f);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
 
-        SceneManager.LoadScene(1);
-
+        elevatorCamera.Priority = 0;
+        yield return null;
 
     }
     IEnumerator OptionsCoroutine()

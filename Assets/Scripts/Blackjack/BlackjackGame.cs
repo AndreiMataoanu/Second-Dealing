@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Managers;
+using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Utils;
 using Random = UnityEngine.Random;
 
@@ -47,7 +50,7 @@ public class BlackjackGame : MonoBehaviour
     private bool isTutorialActive => roundsCompleted < tutorialRoundsLimit;
     [HideInInspector] public bool canDoubleDown = false;
     [HideInInspector] public bool isRoundActive = false;
-
+    private bool stayed = false;
     //Keepsakes
     private HashSet<(Card.Rank, Card.Suit)> antiMatterCards = new HashSet<(Card.Rank, Card.Suit)>();
     [HideInInspector] public bool isAntiMatterTargeting = false;
@@ -74,6 +77,9 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI statusText;
     [SerializeField] private TMPro.TextMeshProUGUI dealerTotalText;
     [SerializeField] private TMPro.TextMeshProUGUI rouletteText;
+    [SerializeField] private Button leavebutton;
+    [SerializeField] private Button staybutton;
+
 
     [Header("VFX")]
     [SerializeField] private Animator standHandAnimator;
@@ -2464,11 +2470,11 @@ public class BlackjackGame : MonoBehaviour
 
         yield return eventManager.CheckTurnLimit();
 
-        if(PlayerMoney >= 100000)
+        if(PlayerMoney >= 100000 && stayed == false)
         {
-            SceneManager.LoadSceneAsync(2);
 
-            yield break;
+            StartCoroutine(LeaveOrStay());
+
         }
 
         StartGame();
@@ -2581,4 +2587,25 @@ public class BlackjackGame : MonoBehaviour
     {
         return blackjackGoal - KeepsakeManager.instance.GetDealerBustModifier();
     }
+
+    private IEnumerator LeaveOrStay()
+    {
+        dialogueSystem.playCashOutText();
+        yield return new WaitWhile(() => dialogueSystem.IsPlaying);
+        cursorDetection.OnDealerTurn();
+        leavebutton.gameObject.SetActive(true);
+        staybutton.gameObject.SetActive(true);
+    }
+    public void Leave()
+    {
+        SceneManager.LoadSceneAsync(2);
+    }
+    public void Stay()
+    {
+        leavebutton.gameObject.SetActive(false);
+        staybutton.gameObject.SetActive(false);
+        cursorDetection.OnRoundInactive();
+        stayed = true;
+    }
+
 }

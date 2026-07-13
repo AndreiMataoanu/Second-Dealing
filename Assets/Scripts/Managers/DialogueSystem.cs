@@ -50,6 +50,9 @@ public class DialogueSystem : MonoBehaviour
     [Tooltip("Taunts shown when player gets unlucky after coin flip.")] 
     [SerializeField] private List<string> unluckyCoinFlip;
 
+    [Header("Cash out")]
+    [Tooltip("Shown when the player gets more than 100000 dollars")]
+    [SerializeField] private string[] cashOutText;
     private Coroutine sequenceCoroutine;
     private Coroutine typingCoroutine;
     private bool isPlaying = false;
@@ -93,6 +96,12 @@ public class DialogueSystem : MonoBehaviour
         sequenceCoroutine = StartCoroutine(SequenceCoroutine(powerballTutorialLines));
     }
 
+    public void playCashOutText()
+    {
+        StopCurrentDialogue();
+
+        sequenceCoroutine = StartCoroutine(SequenceCoroutine(cashOutText));
+    }
 
     public void ShowAddCardsText(int copyNumber)
     {
@@ -200,7 +209,6 @@ public class DialogueSystem : MonoBehaviour
     public void ShowTrustFundTaunt() => ShowMessage(GetRandomTaunt(trustFundTaunts));
     public void ShowLuckyCoinFlip() => ShowMessage(GetRandomTaunt(luckyCoinFlip));
     public void ShowUnluckyCoinFlip() => ShowMessage(GetRandomTaunt(unluckyCoinFlip));
-
     private string GetRandomTaunt(List<string> taunts)
     {
         if(taunts == null || taunts.Count == 0) return "";
