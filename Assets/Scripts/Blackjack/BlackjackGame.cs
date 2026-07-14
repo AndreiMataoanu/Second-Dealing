@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Managers;
-using Unity.Cinemachine;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -1017,7 +1015,6 @@ public class BlackjackGame : MonoBehaviour
 
         if(isRoundActive || PlayerMoney < currentBet) yield break;
 
-        cinemachineBrain.DefaultBlend.Time = cameraTransitionTime;
 
         isActionLocked = true;
         isRoundActive = true;
