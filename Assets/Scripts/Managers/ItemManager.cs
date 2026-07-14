@@ -87,6 +87,8 @@ public class ItemManager : MonoBehaviour
         AudioManager.instance.Play("ItemBuy");
         
         shopManager.RemoveFromInventory(item);
+
+        shopManager.PlaySuitcaseOpen();
     }
     
     #endregion
