@@ -162,9 +162,6 @@ public class BlackjackGame : MonoBehaviour
     {
         gameDeck = new Deck();
         ManagerSetup();
-
-        cinemachineBrain.DefaultBlend.Time = cameraTransitionTime;
-
         InitializeCardLookup();
         StartGame();
 
@@ -1155,6 +1152,8 @@ public class BlackjackGame : MonoBehaviour
         }
 
         if(isRoundActive || PlayerMoney < currentBet) yield break;
+
+        cinemachineBrain.DefaultBlend.Time = cameraTransitionTime;
 
         isActionLocked = true;
         isRoundActive = true;
