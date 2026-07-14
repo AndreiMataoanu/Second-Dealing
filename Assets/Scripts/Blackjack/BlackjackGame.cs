@@ -562,7 +562,7 @@ public class BlackjackGame : MonoBehaviour
         }
     }
 
-    //Helper method for Crucifix.
+    //Helper method for Crucifix and jokers.
     private Card.Rank GetRankForValue(int bestValue)
     {
         if(bestValue >= 11 || bestValue == 1)
@@ -2288,13 +2288,39 @@ public class BlackjackGame : MonoBehaviour
     private IEnumerator RevealJokers()
     {
         List<CardInstance> allPlayerJokers = new List<CardInstance>();
-
+        int handIndex = 0;
         foreach(var hand in playerHands)
         {
             allPlayerJokers.AddRange(hand.Where(c => c.cardData.rank == Card.Rank.Joker));
+            foreach(CardInstance card in hand)
+            {
+                if(card.cardData.rank == Card.Rank.Joker)
+                {
+                    cardPrefabLookup.TryGetValue((GetRankForValue(Mathf.Abs(card.jokerValue)),card.cardData.suit), out GameObject realCard);
+                    GameObject realCardObject = Instantiate(realCard,card.CardObject.transform.position,card.CardObject.transform.rotation,handPositions[handIndex]);
+                    if(card.jokerValue <0)
+                    {
+                        realCardObject.GetComponent<CardDisplay>().SetNegativeVisual(true);
+                    }
+                    card.displayComponent.SetHidden(true);     
+                }
+            }
+        handIndex++;
         }
-
         var dealerJokers = dealerHand.Where(c => c.cardData.rank == Card.Rank.Joker).ToList();
+            foreach(CardInstance card in dealerHand)
+            {
+                if(card.cardData.rank == Card.Rank.Joker)
+                {
+                    cardPrefabLookup.TryGetValue((GetRankForValue(Mathf.Abs(card.jokerValue)),card.cardData.suit), out GameObject realCard);
+                    GameObject realCardObject = Instantiate(realCard,card.CardObject.transform.position,card.CardObject.transform.rotation,dealerCardPosition);
+                    if(card.jokerValue <0)
+                    {
+                        realCardObject.GetComponent<CardDisplay>().SetNegativeVisual(true);
+                    }
+                    card.displayComponent.SetHidden(true);    
+                }
+            }
         string revealMessage = "";
 
         if(allPlayerJokers.Count > 0)
@@ -2310,7 +2336,6 @@ public class BlackjackGame : MonoBehaviour
             revealMessage += string.Join(", ", dealerJokers.Select(j => j.jokerValue.ToString()));
             revealMessage += ".";
         }
-
         if(!string.IsNullOrEmpty(revealMessage))
         {
             statusText.text = revealMessage;
