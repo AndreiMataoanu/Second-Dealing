@@ -74,6 +74,8 @@ public class KeepsakeInteractable : Clickable
             if(equipped)
             {
                 AudioManager.instance.Play("ItemBuy");
+
+                gameObject.SetActive(false);
             }
             else
             {

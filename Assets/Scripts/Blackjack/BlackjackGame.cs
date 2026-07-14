@@ -1017,6 +1017,8 @@ public class BlackjackGame : MonoBehaviour
 
         if(isRoundActive || PlayerMoney < currentBet) yield break;
 
+        cinemachineBrain.DefaultBlend.Time = cameraTransitionTime;
+
         isActionLocked = true;
         isRoundActive = true;
         playerHands.Clear();
