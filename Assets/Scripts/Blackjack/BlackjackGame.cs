@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Managers;
-using Unity.Cinemachine;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -20,13 +18,6 @@ public class EventThreshold
     public int maxTurns;
 }
 
-public enum CameraType
-{
-    Sitting,
-    Playing,
-    Event
-}
-
 public class BlackjackGame : MonoBehaviour
 {
     #region Attributes
@@ -37,10 +28,10 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private CursorFollow cursorFollow;
     [SerializeField] private DialogueSystem dialogueSystem;
     [SerializeField] private EventManager eventManager;
+    [SerializeField] private GameCamera gameCamera;
     [SerializeField] private Collider betUpCollider;
     [SerializeField] private Collider betDownCollider;
     [SerializeField] private int riggedRoundsLimit = 5;
-    private Dictionary<CardInstance, int> scissoredCards = new Dictionary<CardInstance, int>();
     private Coroutine currentBustCoroutine = null;
     private Coroutine dealToDealerCoroutine = null;
     private Deck gameDeck;
@@ -48,7 +39,7 @@ public class BlackjackGame : MonoBehaviour
     private int roundsCompleted = 0;
     private int maxSplits = 3;
     public bool isSplitting = false;
-    private bool isActionLocked = false;
+    public bool isActionLocked = false;
     private bool isMedicineActive = false;
     private bool useAfterStand = false;
     private bool tutorialCompleted = false;
@@ -78,14 +69,6 @@ public class BlackjackGame : MonoBehaviour
     private bool priceChanged = false;
     private int targetMoneyBalance;
 
-    [Header("Camera")]
-    [SerializeField] private CinemachineBrain cinemachineBrain;
-    [SerializeField] private CinemachineCamera sittingCamera;
-    [SerializeField] private CinemachineCamera playingCamera;
-    [SerializeField] private CinemachineCamera eventCamera;
-    [SerializeField] private CinemachineBasicMultiChannelPerlin noise;
-    [SerializeField] private float cameraTransitionTime;
-
     [Header("UI")]
     [SerializeField] private TMPro.TextMeshProUGUI moneyText;
     [SerializeField] private TMPro.TextMeshProUGUI betText;
@@ -104,8 +87,7 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private GameObject redParticlePrefab;
     [SerializeField] private Transform particleSpawnPoint;
     [SerializeField] private ParticleSystem smokeParticle;
-    [SerializeField] private GameObject distortion;
-    [SerializeField] private Animator bottleAnimation;
+    [SerializeField] public Animator bottleAnimation;
     public GameObject peekedCardObject = null;
     private const float zOverlap = 0.001f;
     private const float cardAnimationDuration = 0.25f;
@@ -154,6 +136,7 @@ public class BlackjackGame : MonoBehaviour
     public List<List<CardInstance>> PlayerHands => playerHands;
     public int CurrentBet => currentBet;
     public int TargetMoneyBalance => targetMoneyBalance;
+    public GameCamera GameCamera => gameCamera;
     #endregion
 
     #region Monobehaviour Methods
@@ -324,29 +307,6 @@ public class BlackjackGame : MonoBehaviour
     }
     #endregion
 
-    #region Camera Methods
-    public void ChangeToCamera(CameraType cameraType)
-    {
-        sittingCamera.Priority = 0;
-        eventCamera.Priority = 0;
-        playingCamera.Priority = 0;
-        
-        switch (cameraType)
-        {
-            case CameraType.Sitting:
-                sittingCamera.Priority = 10;
-                break;
-            case CameraType.Playing:
-                playingCamera.Priority = 10;
-                break;
-            case CameraType.Event:
-                eventCamera.Priority = 10;
-                break;
-        }
-    }
-    
-    #endregion
-
     #region Item Methods
     //Decreases the player's money by the amount and updates the bet if necessary.
     public void BuyItem(int amount)
@@ -507,37 +467,14 @@ public class BlackjackGame : MonoBehaviour
 
         return Mathf.Max(0, currentHandIndex - 1);
     }
-
-    public IEnumerator AlcoholCoroutine()
+    
+    public void CalculateBust()
     {
-        isActionLocked = true;
+        StartCoroutine(CalculateBustCoroutine());
+    }
     
-        bottleAnimation.gameObject.SetActive(true);
-        bottleAnimation.SetTrigger("Drink");
-    
-        AudioManager.instance.Play("Drink");
-    
-        yield return StartCoroutine(DrinkAlcoholCoroutine());
-        yield return new WaitForSeconds(1f);
-    
-        AudioManager.instance.isMuffled = true;
-    
-        distortion.SetActive(true);
-        bottleAnimation.gameObject.SetActive(false);
-    
-        StartCoroutine(AlcoholCameraSway(0f, 0.2f, 0f, 0.1f, 1f));
-    
-        foreach(var hand in playerHands)
-        {
-            foreach(CardInstance card in hand)
-            {
-                CardEffects.AddAlcoholCard(card);
-                card.displayComponent.SetDoubledVisual(true);
-            }
-        }
-    
-        UpdateUI(true);
-    
+    private IEnumerator CalculateBustCoroutine()
+    {
         List<CardInstance> activeHand = playerHands[currentHandIndex];
     
         int handValue = CalculateHandValue(activeHand, true);
@@ -550,77 +487,13 @@ public class BlackjackGame : MonoBehaviour
         {
             isActionLocked = false;
         }
-    
+    }
+
+    public void UpdateAlcoholCards()
+    {
+        playerHands.ForEach(CardEffects.AddAlcoholCardList);
+        UpdateUI();
         UpdateCardVFX();
-    }
-    
-    //Tilt camera down and back up to simulate the player taking a drink.
-    private IEnumerator DrinkAlcoholCoroutine()
-    {
-        float elapsedTime = 0f;
-    
-        Quaternion startRot = playingCamera.transform.rotation;
-        Quaternion targetRot = startRot * Quaternion.Euler(-30f, 0f, 0f);
-    
-        float halfDuration = 1f / 2f;
-    
-        while(elapsedTime < halfDuration)
-        {
-            elapsedTime += Time.deltaTime;
-    
-            float tLerp = elapsedTime / halfDuration;
-            float smoothT = tLerp * tLerp * (3f - 2f * tLerp);
-    
-            playingCamera.transform.rotation = Quaternion.Slerp(startRot, targetRot, smoothT);
-    
-            yield return null;
-        }
-    
-        elapsedTime = 0f;
-    
-        while(elapsedTime < halfDuration)
-        {
-            elapsedTime += Time.deltaTime;
-    
-            float tLerp = elapsedTime / halfDuration;
-            float smoothT = tLerp * tLerp * (3f - 2f * tLerp);
-    
-            playingCamera.transform.rotation = Quaternion.Slerp(targetRot, startRot, smoothT);
-    
-            yield return null;
-        }
-    
-        playingCamera.transform.rotation = startRot;
-    }
-    
-    // TODO: move to camera script
-    private IEnumerator AlcoholCameraSway(float minAmp, float maxAmp, float minFreq, float maxFreq, float speed)
-    {
-        float elapsedTime = 0f;
-
-        while(Alcoholtem.isAlcoholActive)
-        {
-            elapsedTime += Time.deltaTime * speed;
-            float lerpValue = Mathf.PingPong(elapsedTime, 1f);
-
-            lerpValue = lerpValue * lerpValue * (3f - 2f * lerpValue);
-
-            noise.AmplitudeGain = Mathf.Lerp(minAmp, maxAmp, lerpValue);
-            noise.FrequencyGain = Mathf.Lerp(minFreq, maxFreq, lerpValue);
-
-            yield return null;
-        }
-    }
-
-    public bool ActivateFan()
-    {
-        if(CheckItemAfterStand()) return false;
-
-        if(!isRoundActive || (isActionLocked && !useAfterStand)) return false;
-        
-        StartCoroutine(FanCoroutine());
-
-        return true;
     }
 
     public IEnumerator FanCoroutine()
@@ -1001,7 +874,7 @@ public class BlackjackGame : MonoBehaviour
         {
             priceChanged = true;
 
-            ChangeToCamera(CameraType.Event);
+            gameCamera.ChangeToCamera(CameraType.Event);
 
             AudioManager.instance.Play("Laugh");
 
@@ -1015,7 +888,7 @@ public class BlackjackGame : MonoBehaviour
 
             yield return StartCoroutine(GameUtils.WaitDelayOrInput(4.0f));
 
-            ChangeToCamera(CameraType.Sitting);
+            gameCamera.ChangeToCamera(CameraType.Sitting);
 
             statusText.text = "";
         }
@@ -1082,17 +955,8 @@ public class BlackjackGame : MonoBehaviour
 
         StartCoroutine(ButtonCoroutine());
 
-        if(Alcoholtem.isAlcoholActive)
-        {
-            AudioManager.instance.isMuffled = false;
-
-            distortion.SetActive(false);
-
-            StartCoroutine(AlcoholCameraSway(0f, 0f, 0f, 0f, 1.0f));
-        }
-
         ClearTable();
-        ChangeToCamera(CameraType.Sitting);
+        gameCamera.ChangeToCamera(CameraType.Sitting);
         eventManager.ShowNewPowerballTaunt();
 
         AudioManager.instance.Play("Shuffle");
@@ -1116,14 +980,12 @@ public class BlackjackGame : MonoBehaviour
         AcidItem.isAcidActive = false;
         CrucifixItem.isCrucifixActive = false;
         CigarettesItem.isCigaretteActive = false;
-        Alcoholtem.isAlcoholActive = false;
+        AlcoholItem.isAlcoholActive = false;
         isAntiMatterTargeting = false;
         isPyroTargeting = false;
         isHatTrickTargeting = false;
 
         ResetTexts();
-        noise.AmplitudeGain = 0f;
-        noise.FrequencyGain = 0f;
 
         //Set bet to the last valid bet
         if(PlayerMoney < minBet) currentBet = PlayerMoney;
@@ -1153,7 +1015,6 @@ public class BlackjackGame : MonoBehaviour
 
         if(isRoundActive || PlayerMoney < currentBet) yield break;
 
-        cinemachineBrain.DefaultBlend.Time = cameraTransitionTime;
 
         isActionLocked = true;
         isRoundActive = true;
@@ -1169,7 +1030,7 @@ public class BlackjackGame : MonoBehaviour
         yield return GameUtils.WaitForSecondsScaled(0.5f);
         yield return eventManager.ChangeBlackjackGoal();
 
-        ChangeToCamera(CameraType.Playing);
+        gameCamera.ChangeToCamera(CameraType.Playing);
 
         cursorDetection.OnRoundActive();
         itemManager.ChangeItemAction(true);
@@ -1950,7 +1811,7 @@ public class BlackjackGame : MonoBehaviour
 
                 standHandAnimator.SetTrigger("flipperTrigger");
 
-                yield return GameUtils.WaitForSecondsScaled(0.5f); //qqq
+                yield return GameUtils.WaitForSecondsScaled(0.5f);
 
                 // TODO: move to organ item class
                 AudioManager.instance.Play("OrganExpire");
@@ -2139,7 +2000,7 @@ public class BlackjackGame : MonoBehaviour
             foreach(CardInstance card in hand)
             {
                 bool isNegative = IsCardNegative(card.cardData);
-                bool isDoubled = eventManager.CheckIfDoubled(card.cardData) || Alcoholtem.isAlcoholActive;
+                bool isDoubled = eventManager.CheckIfDoubled(card.cardData) || AlcoholItem.isAlcoholActive;
                 bool isHalved = eventManager.CheckIfHalved(card.cardData) || CardEffects.IsCardCut(card);
 
                 card.displayComponent.SetNegativeVisual(isNegative);
@@ -2172,7 +2033,7 @@ public class BlackjackGame : MonoBehaviour
                     Card cardData = topCard.Value;
 
                     bool isNegative = IsCardNegative(cardData);
-                    bool isDoubled = eventManager.CheckIfDoubled(cardData) || Alcoholtem.isAlcoholActive;
+                    bool isDoubled = eventManager.CheckIfDoubled(cardData) || AlcoholItem.isAlcoholActive;
                     bool isHalved = eventManager.CheckIfHalved(cardData);
 
                     display.SetNegativeVisual(isNegative);
@@ -2561,7 +2422,7 @@ public class BlackjackGame : MonoBehaviour
 
         if(roundsCompleted == tutorialRoundsLimit - 1)
         {
-            ChangeToCamera(CameraType.Event);
+            gameCamera.ChangeToCamera(CameraType.Event);
 
             AudioManager.instance.Play("Laugh");
 
@@ -2575,7 +2436,7 @@ public class BlackjackGame : MonoBehaviour
 
             yield return StartCoroutine(GameUtils.WaitDelayOrInput(5.0f));
 
-            ChangeToCamera(CameraType.Sitting);
+            gameCamera.ChangeToCamera(CameraType.Sitting);
 
             betUpCollider.enabled = true;
             betDownCollider.enabled = true;

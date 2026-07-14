@@ -209,7 +209,7 @@ public class EventManager : MonoBehaviour
     {
         if (!isRouletteBlackjackActive) yield break;
         
-        blackjackGame.ChangeToCamera(CameraType.Event);
+        blackjackGame.GameCamera.ChangeToCamera(CameraType.Event);
 
         var goal = Random.Range(21, 37);
         blackjackGame.SetStatusText($"New Blackjack goal: {goal}");
@@ -217,7 +217,7 @@ public class EventManager : MonoBehaviour
 
         yield return StartCoroutine(GameUtils.WaitDelayOrInput(4f));
 
-        blackjackGame.ChangeToCamera(CameraType.Playing);
+        blackjackGame.GameCamera.ChangeToCamera(CameraType.Playing);
     }
 
     #endregion
@@ -309,7 +309,7 @@ public class EventManager : MonoBehaviour
 
             if(!introPlayed)
             {
-                blackjackGame.ChangeToCamera(CameraType.Event);
+                blackjackGame.GameCamera.ChangeToCamera(CameraType.Event);
 
                 blackjackGame.SetStatusText("Lets make it more interesting");
 
@@ -358,7 +358,7 @@ public class EventManager : MonoBehaviour
             
             ChangeProgressText?.Invoke();
             UpdatePowerballGoal?.Invoke();
-            blackjackGame.ChangeToCamera(CameraType.Sitting);
+            blackjackGame.GameCamera.ChangeToCamera(CameraType.Sitting);
             
             if (isPowerballTriggered)
             {

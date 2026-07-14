@@ -27,13 +27,13 @@ public class ScissorsItem : Item
         
         isScissorsActive = false;
         
-        CardEffects.SetCutVisual(cardInstance.displayComponent, true);
         CardEffects.AddCutCard(cardInstance, 2);
         cardEffect.OnCardSelected();
     }
 
     public override void SetMembers()
     {
+        delayDestroy = true;
         cardEffect = new CardEffectActions(
             blackjackGame,
             blackjackGame.CursorFollow,
