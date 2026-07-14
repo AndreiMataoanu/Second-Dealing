@@ -4263,6 +4263,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1048893903873369169, guid: 6c29181922dfb1749a7bf2bb6994e105, type: 3}
+      propertyPath: showTooltip
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2593066385908097970, guid: 6c29181922dfb1749a7bf2bb6994e105, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -4271,6 +4275,14 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: d6250913fd66ce243bab56d85d560e90, type: 2}
+    - target: {fileID: 4072930295127223952, guid: 6c29181922dfb1749a7bf2bb6994e105, type: 3}
+      propertyPath: showTooltip
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4476893396077469819, guid: 6c29181922dfb1749a7bf2bb6994e105, type: 3}
+      propertyPath: showTooltip
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5188939572269920026, guid: 6c29181922dfb1749a7bf2bb6994e105, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -4278,6 +4290,10 @@ PrefabInstance:
     - target: {fileID: 5685698367197039759, guid: 6c29181922dfb1749a7bf2bb6994e105, type: 3}
       propertyPath: m_Name
       value: Elevator
+      objectReference: {fileID: 0}
+    - target: {fileID: 5751749609857502214, guid: 6c29181922dfb1749a7bf2bb6994e105, type: 3}
+      propertyPath: showTooltip
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4913,6 +4929,7 @@ MonoBehaviour:
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
   tooltipHeader: Decrease Bet
   tooltipContent: 'Shortcut: [Scrollwheel]'
+  showTooltip: 1
 --- !u!64 &741130250
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -8640,6 +8657,7 @@ MonoBehaviour:
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
   tooltipHeader: Start Round
   tooltipContent: 
+  showTooltip: 1
 --- !u!136 &1370196141
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -10521,6 +10539,7 @@ MonoBehaviour:
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
   tooltipHeader: Increase Bet
   tooltipContent: 'Shortcut: [Scrollwheel]'
+  showTooltip: 1
 --- !u!64 &1712160668
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -13296,6 +13315,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2097837783}
     m_Modifications:
+    - target: {fileID: 8735115422997862411, guid: 9360ab99ce5ac7144a2e20ea4b495a0f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1028207999998079401, guid: b86f4f0c17e8f7d4492b47378589876a, type: 3}
       propertyPath: blackjackGame
       value: 
@@ -13347,10 +13370,6 @@ PrefabInstance:
     - target: {fileID: 3380520176487024487, guid: b86f4f0c17e8f7d4492b47378589876a, type: 3}
       propertyPath: m_text
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8735115422997862411, guid: 9360ab99ce5ac7144a2e20ea4b495a0f, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

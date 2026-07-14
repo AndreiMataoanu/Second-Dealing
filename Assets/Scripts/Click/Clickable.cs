@@ -10,6 +10,7 @@ public class Clickable : MonoBehaviour
     [Header("Tooltip Settings")]
     [SerializeField] public string tooltipHeader;
     [TextArea][SerializeField] private string tooltipContent;
+    [SerializeField] protected bool showTooltip = true;
 
     private MeshCollider meshCollider;
     private Renderer meshRenderer;
@@ -34,6 +35,8 @@ public class Clickable : MonoBehaviour
         if(!IsActive) return;
 
         ApplyOutline();
+
+        if(!showTooltip) return;
 
         TooltipManager.instance.ShowTooltip(GetTooltipContent(), GetTooltipHeader());
     }
