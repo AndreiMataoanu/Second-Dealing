@@ -52,7 +52,6 @@ public class BlackjackGame : MonoBehaviour
     //Keepsakes
     private HashSet<(Card.Rank, Card.Suit)> antiMatterCards = new HashSet<(Card.Rank, Card.Suit)>();
     [HideInInspector] public bool isAntiMatterTargeting = false;
-    [HideInInspector] public bool isPyroTargeting = false;
     [HideInInspector] public bool isHatTrickTargeting = false;
 
     [Header("Money")]
@@ -441,8 +440,8 @@ public class BlackjackGame : MonoBehaviour
             card.displayComponent.transform.SetParent(dealerCardPosition);
         }
 
-        UpdateHandVisuals(playerHands[currentHandIndex], currentParent, true);
-        UpdateHandVisuals(dealerHand, dealerCardPosition, false);
+        UpdateHandVisuals(playerHands[currentHandIndex], true);
+        UpdateHandVisuals(dealerHand, false);
         UpdateUI(true);
 
         smokeParticle.Stop();
@@ -638,56 +637,7 @@ public class BlackjackGame : MonoBehaviour
 
         return isSuitNegative ^ isAntiMatter;
     }
-
-    public bool ActivatePyro()
-    {
-        if(!isRoundActive || isActionLocked || isPyroTargeting) return false;
-
-        isPyroTargeting = true;
-        cursorDetection.OnUseCardItem(this, CardTrigger.Pyro);
-
-        return true;
-    }
-
-    public void ApplyPyroToCard(CardInstance cardInstance)
-    {
-        gameDeck.AddRemovedSpecificCard(cardInstance.cardData.rank, cardInstance.cardData.suit);
-        CardEffects.RemoveCutCard(cardInstance);
-        CardEffects.RemoveAlcoholCard(cardInstance);
-
-        bool foundAndRemoved = false;
-
-        foreach(var hand in playerHands)
-        {
-            if(hand.Contains(cardInstance))
-            {
-                hand.Remove(cardInstance);
-
-                UpdateHandVisuals(hand, cardInstance.displayComponent.transform.parent, true);
-
-                foundAndRemoved = true;
-
-                break;
-            }
-        }
-
-        if(!foundAndRemoved)
-        {
-            if(dealerHand.Contains(cardInstance))
-            {
-                dealerHand.Remove(cardInstance);
-
-                UpdateHandVisuals(dealerHand, dealerCardPosition, false);
-            }
-        }
-
-        activeCardObjects.Remove(cardInstance.displayComponent.gameObject);
-
-        Destroy(cardInstance.displayComponent.gameObject);
-        UpdateUI(true);
-        EvaluateDoubleDownCondition();
-    }
-
+    
     public bool ActivateBpMedicine()
     {
         if (!isRoundActive) return false;
@@ -758,7 +708,7 @@ public class BlackjackGame : MonoBehaviour
         isActionLocked = true;
         isHatTrickTargeting = false;
         canDoubleDown = false;
-        gameDeck.AddPermanentCard(targetCard.cardData.rank, targetCard.cardData.suit);
+        gameDeck.AddCardCopies(targetCard.cardData, 1);
 
         AudioManager.instance.Play("ItemBuy");
         List<CardInstance> currentHand = playerHands[currentHandIndex];
@@ -789,7 +739,7 @@ public class BlackjackGame : MonoBehaviour
             newCardInstance.displayComponent.transform.localPosition = targetLocalPos;
             newCardInstance.displayComponent.transform.localRotation = targetRotation;
 
-            UpdateHandVisuals(currentHand, currentParent, true);
+            UpdateHandVisuals(currentHand, true);
             UpdateUI(true);
             UpdateSplitOutlines();
         }
@@ -843,7 +793,7 @@ public class BlackjackGame : MonoBehaviour
 
         Transform currentParent = handPositions[currentHandIndex];
 
-        UpdateHandVisuals(currentHand, currentParent, true);
+        UpdateHandVisuals(currentHand, true);
         UpdateUI(true);
     }
 
@@ -982,7 +932,7 @@ public class BlackjackGame : MonoBehaviour
         CigarettesItem.isCigaretteActive = false;
         AlcoholItem.isAlcoholActive = false;
         isAntiMatterTargeting = false;
-        isPyroTargeting = false;
+        Pyro.isPyroActive = false;
         isHatTrickTargeting = false;
 
         ResetTexts();
@@ -1272,7 +1222,7 @@ public class BlackjackGame : MonoBehaviour
             newCardInstance.displayComponent.transform.localPosition = targetLocalPos;
             newCardInstance.displayComponent.transform.localRotation = targetRotation;
 
-            UpdateHandVisuals(currentHand, currentParent, true);
+            UpdateHandVisuals(currentHand, true);
             UpdateUI(true);
             UpdateSplitOutlines();
         }
@@ -1379,7 +1329,7 @@ public class BlackjackGame : MonoBehaviour
             newCardInstance.displayComponent.transform.localRotation = targetRotation;
             newCardInstance.displayComponent.transform.localScale = cardScaleVector;
 
-            UpdateHandVisuals(dealerHand, dealerCardPosition, false);
+            UpdateHandVisuals(dealerHand, false);
             UpdateUI(true);
         }
     }
@@ -1556,7 +1506,7 @@ public class BlackjackGame : MonoBehaviour
                 card.displayComponent.transform.SetParent(shiftTarget);
             }
 
-            UpdateHandVisuals(playerHands[i], shiftTarget, true);
+            UpdateHandVisuals(playerHands[i], true);
         }
 
         AudioManager.instance.Play("CardHit");
@@ -1573,8 +1523,8 @@ public class BlackjackGame : MonoBehaviour
         cardToMove.displayComponent.transform.SetParent(targetPosition);
         cardToMove.displayComponent.transform.localPosition = Vector3.zero;
 
-        UpdateHandVisuals(activeHand, handPositions[currentHandIndex], true);
-        UpdateHandVisuals(newHand, targetPosition, true);
+        UpdateHandVisuals(activeHand, true);
+        UpdateHandVisuals(newHand, true);
 
         yield return GameUtils.WaitForSecondsScaled(0.5f);
 
@@ -1958,8 +1908,9 @@ public class BlackjackGame : MonoBehaviour
     #endregion
 
     #region Card Visuals
+    
     //The dealer hand is in a straight line, the player hand creates a staircase effect.
-    private void UpdateHandVisuals(List<CardInstance> hand, Transform parentPos, bool isPlayerHand)
+    public void UpdateHandVisuals(List<CardInstance> hand, bool isPlayerHand)
     {
         int cardCount = hand.Count;
 
@@ -2523,7 +2474,7 @@ public class BlackjackGame : MonoBehaviour
         return cardValue;
     }
 
-    private void EvaluateDoubleDownCondition()
+    public void EvaluateDoubleDownCondition()
     {
         if(currentHandIndex >= playerHands.Count)
         {

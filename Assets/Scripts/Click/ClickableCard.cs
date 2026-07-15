@@ -55,14 +55,6 @@ public class ClickableCard : Clickable
         blackjackGame.UpdateUI(true);
     }
 
-    public void OnPyroCard()
-    {
-        AudioManager.instance.Play("ItemBuy");
-
-        blackjackGame.ApplyPyroToCard(cardInstance);
-        blackjackGame.isPyroTargeting = false;
-    }
-
     public void OnHatTrickCard()
     {
         blackjackGame.TryHatTrickCard(cardInstance);

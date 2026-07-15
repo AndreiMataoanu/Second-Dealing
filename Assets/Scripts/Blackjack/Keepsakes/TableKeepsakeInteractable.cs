@@ -6,7 +6,7 @@ public class TableKeepsakeInteractable : Clickable
     private Keepsake keepsake;
     private bool usedThisRound = false;
 
-    private void Start()
+    private void Awake()
     {
         blackjackGame = FindFirstObjectByType<BlackjackGame>();
 
@@ -24,6 +24,7 @@ public class TableKeepsakeInteractable : Clickable
     {
         keepsake = k;
         tooltipHeader = k.keepsakeName;
+        k.SetMembers(blackjackGame);
     }
 
     public void ResetUse()

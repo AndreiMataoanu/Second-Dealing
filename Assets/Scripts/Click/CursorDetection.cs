@@ -159,7 +159,7 @@ public class CursorDetection : MonoBehaviour
                 clickableCard.AddCardAction(clickableCard.OnAntiMatterCard);
                 break;
             case CardTrigger.Pyro:
-                clickableCard.AddCardAction(clickableCard.OnPyroCard);
+                // clickableCard.AddCardAction(clickableCard.OnPyroCard);
                 break;
             case CardTrigger.HatTrick:
                 clickableCard.AddCardAction(clickableCard.OnHatTrickCard);

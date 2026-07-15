@@ -53,16 +53,24 @@ public class AcidItem : Item
         yield return new WaitForSeconds(dissolveTime);
         
         var cardObject = cardInstance.displayComponent.gameObject;
+        CardEffects.RemoveCutCard(cardInstance);
+        CardEffects.RemoveAlcoholCard(cardInstance);
         blackjackGame.activeCardObjects.Remove(cardObject);
         blackjackGame.GameDeck.AddRemovedCard(cardInstance.cardData.rank, cardInstance.cardData.suit); // TODO: move to card effects
 
         blackjackGame.dealerHand.Remove(cardInstance);
-        blackjackGame.playerHands.ForEach(hand => hand.Remove(cardInstance));
+        blackjackGame.UpdateHandVisuals(blackjackGame.dealerHand, false);
+        blackjackGame.playerHands.ForEach(hand =>
+        {
+            hand.Remove(cardInstance);
+            blackjackGame.UpdateHandVisuals(hand, true);
+        });
         if (cardInstance == blackjackGame.peekCardInstance)
             blackjackGame.peekCardInstance = null;
         
         Destroy(cardObject);
         blackjackGame.UpdateUI();
+        blackjackGame.EvaluateDoubleDownCondition();
         
         yield return null;
     }

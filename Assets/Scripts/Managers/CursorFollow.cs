@@ -6,7 +6,11 @@ namespace Managers
     {
         Scissors,
         Acid,
-        Flip
+        Flip,
+        Pyro,
+        HatTrick,
+        Antimatter,
+        None
     }
 
     public class CursorFollow : MonoBehaviour
@@ -17,6 +21,7 @@ namespace Managers
 
         public void SetCursorTypeActive(bool isActive, CursorType cursorType)
         {
+            if (cursorType == CursorType.None) return;
             Cursor.visible = !isActive;
 
             switch (cursorType)
