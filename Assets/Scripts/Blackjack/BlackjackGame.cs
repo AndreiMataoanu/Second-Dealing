@@ -2296,13 +2296,7 @@ public class BlackjackGame : MonoBehaviour
             {
                 if(card.cardData.rank == Card.Rank.Joker)
                 {
-                    cardPrefabLookup.TryGetValue((GetRankForValue(Mathf.Abs(card.jokerValue)),card.cardData.suit), out GameObject realCard);
-                    GameObject realCardObject = Instantiate(realCard,card.CardObject.transform.position,card.CardObject.transform.rotation,handPositions[handIndex]);
-                    if(card.jokerValue <0)
-                    {
-                        realCardObject.GetComponent<CardDisplay>().SetNegativeVisual(true);
-                    }
-                    card.displayComponent.SetHidden(true);     
+                    createRealJokerCard(card,handPositions[handIndex]);
                 }
             }
         handIndex++;
@@ -2312,13 +2306,7 @@ public class BlackjackGame : MonoBehaviour
             {
                 if(card.cardData.rank == Card.Rank.Joker)
                 {
-                    cardPrefabLookup.TryGetValue((GetRankForValue(Mathf.Abs(card.jokerValue)),card.cardData.suit), out GameObject realCard);
-                    GameObject realCardObject = Instantiate(realCard,card.CardObject.transform.position,card.CardObject.transform.rotation,dealerCardPosition);
-                    if(card.jokerValue <0)
-                    {
-                        realCardObject.GetComponent<CardDisplay>().SetNegativeVisual(true);
-                    }
-                    card.displayComponent.SetHidden(true);    
+                    createRealJokerCard(card,dealerCardPosition);      
                 }
             }
         string revealMessage = "";
@@ -2629,6 +2617,29 @@ public class BlackjackGame : MonoBehaviour
         staybutton.gameObject.SetActive(false);
         cursorDetection.OnRoundInactive();
         stayed = true;
+    }
+    private void createRealJokerCard(CardInstance card,Transform parent)
+    {
+        int realValue = card.jokerValue;
+        if(card.jokerValue >11 || card.jokerValue <-11)
+        {
+            realValue = realValue/2;
+        }
+        if(card.jokerValue != 0)
+        {
+            cardPrefabLookup.TryGetValue((GetRankForValue(Mathf.Abs(realValue)),card.cardData.suit), out GameObject realCard);
+            GameObject realCardObject = Instantiate(realCard,card.CardObject.transform.position,card.CardObject.transform.rotation,parent);
+            if(card.jokerValue <0)
+            {
+                realCardObject.GetComponent<CardDisplay>().SetNegativeVisual(true);
+            }
+            if(card.jokerValue >11 || card.jokerValue <-11)
+            {
+                realCardObject.GetComponent<CardDisplay>().SetDoubledVisual(true);
+            }          
+            activeCardObjects.Add(realCardObject);      
+        }
+        CardEffects.SetDissolvedVisual(card.displayComponent,2.3f,Color.aliceBlue);                
     }
 
 }

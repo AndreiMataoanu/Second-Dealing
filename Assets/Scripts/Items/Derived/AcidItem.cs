@@ -6,6 +6,7 @@ using Utils;
 public class AcidItem : Item
 {
     [SerializeField] private float dissolveTime = 1.3f;
+    [SerializeField] private Color color = Color.green;
     public static bool isAcidActive;
 
     public override void SetMembers()
@@ -41,7 +42,7 @@ public class AcidItem : Item
     {
         isAcidActive = false;
         
-        // CardEffects.UseDissolveShaderOrSmth(); 
+        CardEffects.SetDissolvedVisual(cardInstance.displayComponent,dissolveTime,color);
         // CardEffects.AddAcidCard(cardInstance);
         cardEffect.OnCardSelected();
         StartCoroutine(DissolveCard(cardInstance));
