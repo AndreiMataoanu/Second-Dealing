@@ -619,6 +619,11 @@ public class BlackjackGame : MonoBehaviour
 
     public void ApplyAntiMatterToCard(CardInstance cardInstance)
     {
+        if(dealerHand.Contains(cardInstance))
+        {
+            KeepsakeUnlockProgression.instance.AddStat(ChallengeType.AlterDealerHand);
+        }
+
         var cardId = (cardInstance.cardData.rank, cardInstance.cardData.suit);
 
         if(antiMatterCards.Contains(cardId))
@@ -675,6 +680,8 @@ public class BlackjackGame : MonoBehaviour
         {
             if(dealerHand.Contains(cardInstance))
             {
+                KeepsakeUnlockProgression.instance.AddStat(ChallengeType.AlterDealerHand);
+
                 dealerHand.Remove(cardInstance);
 
                 UpdateHandVisuals(dealerHand, dealerCardPosition, false);
@@ -2486,6 +2493,7 @@ public class BlackjackGame : MonoBehaviour
 
         if(!isTutorialActive && PlayerMoney <= 0)
         {
+            KeepsakeUnlockProgression.instance.EndRun();
             SceneManager.LoadSceneAsync(3);
 
             yield break;
@@ -2621,6 +2629,14 @@ public class BlackjackGame : MonoBehaviour
     }
     public void Leave()
     {
+        KeepsakeUnlockProgression.instance.AddStat(ChallengeType.CashOut);
+        KeepsakeUnlockProgression.instance.EndRun();
+
+        if(playerMoney >= 1000000)
+        {
+            KeepsakeUnlockProgression.instance.AddStat(ChallengeType.Millionaire);
+        }
+
         SceneManager.LoadSceneAsync(2);
     }
     public void Stay()

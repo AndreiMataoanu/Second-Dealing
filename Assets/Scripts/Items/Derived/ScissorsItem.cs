@@ -23,6 +23,11 @@ public class ScissorsItem : Item
     
     private void OnCutCard(CardInstance cardInstance)
     {
+        if(blackjackGame.dealerHand.Contains(cardInstance))
+        {
+            KeepsakeUnlockProgression.instance.AddStat(ChallengeType.AlterDealerHand);
+        }
+
         AudioManager.instance.Play("Scissors(Clone)");
         
         isScissorsActive = false;
