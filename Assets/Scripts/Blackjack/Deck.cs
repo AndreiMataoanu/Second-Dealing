@@ -50,7 +50,7 @@ public class Deck
         {
             foreach(Card.Suit s in Enum.GetValues(typeof(Card.Suit)))
             {
-                if(s == Card.Suit.Tarot && !KeepsakeManager.instance.AddTarotCards()) continue;
+                if(s == Card.Suit.Tarot) continue;
 
                 if(!removedSuits.Contains(s))
                 {
