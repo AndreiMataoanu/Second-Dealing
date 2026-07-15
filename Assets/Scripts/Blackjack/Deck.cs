@@ -14,7 +14,6 @@ public class Deck
     public List<Card> permanentAddedCards = new List<Card>();
 
     private bool jokersInDeck = false;
-    private const float CoinProbability = 0.7f;
 
     public Deck()
     {
@@ -49,8 +48,10 @@ public class Deck
 
         if(jokersInDeck)
         {
-            foreach(Card.Suit s in System.Enum.GetValues(typeof(Card.Suit)))
+            foreach(Card.Suit s in Enum.GetValues(typeof(Card.Suit)))
             {
+                if(s == Card.Suit.Tarot && !KeepsakeManager.instance.AddTarotCards()) continue;
+
                 if(!removedSuits.Contains(s))
                 {
                     cards.Add(new Card { rank = Card.Rank.Joker, suit = s });
