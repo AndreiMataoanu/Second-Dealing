@@ -77,13 +77,18 @@ public class Pyro : Keepsake
         game.activeCardObjects.Remove(cardObject);
         game.GameDeck.AddRemovedCard(cardInstance.cardData.rank, cardInstance.cardData.suit); // TODO: move to card effects
 
-        game.dealerHand.Remove(cardInstance);
-        game.UpdateHandVisuals(game.dealerHand, false);
+        if (game.dealerHand.Remove(cardInstance))
+        {
+            KeepsakeUnlockProgression.instance.AddStat(ChallengeType.AlterDealerHand);
+            game.UpdateHandVisuals(game.dealerHand, false);
+        }
+        
         game.playerHands.ForEach(hand =>
         {
             hand.Remove(cardInstance);
             game.UpdateHandVisuals(hand, true);
         });
+        
         if (cardInstance == game.peekCardInstance)
             game.peekCardInstance = null;
         
