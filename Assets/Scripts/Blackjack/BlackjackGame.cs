@@ -451,7 +451,7 @@ public class BlackjackGame : MonoBehaviour
 
         if(handValue > blackjackGoal || handValue < -blackjackGoal)
         {
-            yield return StartCoroutine(BustCheckCoroutine(playerHands[targetIndex]));
+            yield return StartCoroutine(BustCheckCoroutine(playerHands[targetIndex],targetIndex));
         }
         else
         {
@@ -481,7 +481,7 @@ public class BlackjackGame : MonoBehaviour
     
         if(handValue > blackjackGoal || handValue < -blackjackGoal)
         {
-            yield return StartCoroutine(BustCheckCoroutine(activeHand));
+            yield return StartCoroutine(BustCheckCoroutine(activeHand,currentHandIndex));
         }
         else
         {
@@ -805,7 +805,7 @@ public class BlackjackGame : MonoBehaviour
         }
         else if(handValue > blackjackGoal || handValue < -blackjackGoal)
         {
-            yield return StartCoroutine(BustCheckCoroutine(currentHand));
+            yield return StartCoroutine(BustCheckCoroutine(currentHand,currentHandIndex));
         }
         else
         {
@@ -1418,7 +1418,7 @@ public class BlackjackGame : MonoBehaviour
         }
         else if(handValue > blackjackGoal || handValue < -blackjackGoal)
         {
-            yield return StartCoroutine(BustCheckCoroutine(activeHand));
+            yield return StartCoroutine(BustCheckCoroutine(activeHand,currentHandIndex));
         }
         else
         {
@@ -1510,7 +1510,7 @@ public class BlackjackGame : MonoBehaviour
             }
             else if(handValue > blackjackGoal || handValue < -blackjackGoal)
             {
-                yield return StartCoroutine(BustCheckCoroutine(activeHand));
+                yield return StartCoroutine(BustCheckCoroutine(activeHand,currentHandIndex));
             }
             else
             {
@@ -1893,12 +1893,20 @@ public class BlackjackGame : MonoBehaviour
         }
     }
 
-    private IEnumerator BustCheckCoroutine(List<CardInstance> activeHand)
+    private IEnumerator BustCheckCoroutine(List<CardInstance> activeHand,int handIndex)
     {
         yield return StartCoroutine(CheckPowerballCurrentHand());
         yield return GameUtils.WaitForSecondsScaled(1f);
+        List<Coroutine> dissolveCoroutines = new List<Coroutine>();
 
         var playerJokers = activeHand.Where(c => c.cardData.rank == Card.Rank.Joker).ToList();
+        foreach(CardInstance card in activeHand)
+            {
+                if(card.cardData.rank == Card.Rank.Joker)
+                {
+                    dissolveCoroutines.Add(createRealJokerCard(card, handPositions[handIndex]));
+                }
+            }
         string revealMessage = "";
 
         if(playerJokers.Count > 0)
@@ -1925,6 +1933,10 @@ public class BlackjackGame : MonoBehaviour
         {
             yield return GameUtils.WaitForSecondsScaled(1f);
             yield return StartCoroutine(AdvanceHandCoroutine());
+        }
+        foreach(Coroutine coroutine in dissolveCoroutines)
+        {
+            yield return coroutine;
         }
     }
 
@@ -2296,13 +2308,7 @@ public class BlackjackGame : MonoBehaviour
             {
                 if(card.cardData.rank == Card.Rank.Joker)
                 {
-                    cardPrefabLookup.TryGetValue((GetRankForValue(Mathf.Abs(card.jokerValue)),card.cardData.suit), out GameObject realCard);
-                    GameObject realCardObject = Instantiate(realCard,card.CardObject.transform.position,card.CardObject.transform.rotation,handPositions[handIndex]);
-                    if(card.jokerValue <0)
-                    {
-                        realCardObject.GetComponent<CardDisplay>().SetNegativeVisual(true);
-                    }
-                    card.displayComponent.SetHidden(true);     
+                    createRealJokerCard(card,handPositions[handIndex]);
                 }
             }
         handIndex++;
@@ -2312,13 +2318,7 @@ public class BlackjackGame : MonoBehaviour
             {
                 if(card.cardData.rank == Card.Rank.Joker)
                 {
-                    cardPrefabLookup.TryGetValue((GetRankForValue(Mathf.Abs(card.jokerValue)),card.cardData.suit), out GameObject realCard);
-                    GameObject realCardObject = Instantiate(realCard,card.CardObject.transform.position,card.CardObject.transform.rotation,dealerCardPosition);
-                    if(card.jokerValue <0)
-                    {
-                        realCardObject.GetComponent<CardDisplay>().SetNegativeVisual(true);
-                    }
-                    card.displayComponent.SetHidden(true);    
+                    createRealJokerCard(card,dealerCardPosition);      
                 }
             }
         string revealMessage = "";
@@ -2629,6 +2629,29 @@ public class BlackjackGame : MonoBehaviour
         staybutton.gameObject.SetActive(false);
         cursorDetection.OnRoundInactive();
         stayed = true;
+    }
+    private Coroutine createRealJokerCard(CardInstance card,Transform parent)
+    {
+        int realValue = card.jokerValue;
+        if(card.jokerValue >11 || card.jokerValue <-11)
+        {
+            realValue = realValue/2;
+        }
+        if(card.jokerValue != 0)
+        {
+            cardPrefabLookup.TryGetValue((GetRankForValue(Mathf.Abs(realValue)),card.cardData.suit), out GameObject realCard);
+            GameObject realCardObject = Instantiate(realCard,card.CardObject.transform.position,card.CardObject.transform.rotation,parent);
+            if(card.jokerValue <0)
+            {
+                realCardObject.GetComponent<CardDisplay>().SetNegativeVisual(true);
+            }
+            if(card.jokerValue >11 || card.jokerValue <-11)
+            {
+                realCardObject.GetComponent<CardDisplay>().SetDoubledVisual(true);
+            }          
+            activeCardObjects.Add(realCardObject);      
+        }
+        return CardEffects.SetDissolvedVisual(card.displayComponent, 2.0f, Color.aliceBlue);                
     }
 
 }

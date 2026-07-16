@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class CardDisplay : MonoBehaviour
@@ -48,5 +49,19 @@ public class CardDisplay : MonoBehaviour
         float boolValue = isCut ? 1f : 0f;
 
         render.material.SetFloat("_CutInHalf", boolValue);
+    }
+
+    public IEnumerator SetDissolvedVisual(float dissolveTime,Color color)
+    {
+        render.material.SetColor("_DissolveColor",color);
+        float elapsedTime = 0f;
+        while (elapsedTime < dissolveTime)
+        {
+            render.material.SetFloat("_Dissolve",Mathf.Lerp(0,1,elapsedTime/dissolveTime));   
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        render.material.SetFloat("_Dissolve", 1f);
+        
     }
 }
