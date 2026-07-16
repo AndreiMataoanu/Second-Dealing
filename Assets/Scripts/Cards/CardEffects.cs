@@ -30,14 +30,26 @@ public static class CardEffects
     public static void RemoveAlcoholCard(CardInstance cardInstance) => alcoholCards.Remove(cardInstance);
     public static void ClearAlcoholCards() => alcoholCards.Clear();
 
+    public static bool AddAntiMatterCard(CardInstance cardInstance)
+    {
+        return antiMatterCards.Add((cardInstance.cardData.rank, cardInstance.cardData.suit));
+    }
+
+    public static bool RemoveAntiMatterCard(CardInstance cardInstance)
+    {
+        return antiMatterCards.Remove((cardInstance.cardData.rank, cardInstance.cardData.suit));
+    }
+    
     #endregion
 
     #region Set Visuals
 
     private static void SetCutVisual(CardDisplay cardDisplay, bool active) => cardDisplay.SetCutVisual(active);
+    
     private static void SetDoubledVisual(CardDisplay cardDisplay, bool active) => cardDisplay.SetDoubledVisual(active);
-
-    public static Coroutine SetDissolvedVisual(CardDisplay cardDisplay, float dissolveTime,Color color) => cardDisplay.StartCoroutine(cardDisplay.SetDissolvedVisual(dissolveTime, color));
+    
+    public static Coroutine SetDissolvedVisual(CardDisplay cardDisplay, float dissolveTime, Color color) 
+        => cardDisplay.StartCoroutine(cardDisplay.SetDissolvedVisual(dissolveTime, color));
 
     #endregion
 
@@ -58,9 +70,4 @@ public static class CardEffects
     public static bool IsCardDrunk(CardInstance cardInstance) => alcoholCards.Contains(cardInstance);
 
     #endregion
-
-
-
-
-
 }

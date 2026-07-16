@@ -10,7 +10,6 @@ public class ItemManager : MonoBehaviour
     private ShopManager shopManager;
 
     private List<Item> itemsToRemove = new();
-    private bool delayDestroy = false;
     
     #region Setup
 

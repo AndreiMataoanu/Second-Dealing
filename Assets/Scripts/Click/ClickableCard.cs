@@ -42,19 +42,6 @@ public class ClickableCard : Clickable
             blackjackGame.SacrificeTarot(cardInstance);
     }
 
-    public void OnAntiMatterCard()
-    {
-        AudioManager.instance.Play("ItemBuy");
-
-        blackjackGame.ApplyAntiMatterToCard(cardInstance);
-
-        bool isNowNegative = blackjackGame.IsCardNegative(cardInstance.cardData);
-
-        cardInstance.displayComponent.SetNegativeVisual(isNowNegative);
-        blackjackGame.isAntiMatterTargeting = false;
-        blackjackGame.UpdateUI(true);
-    }
-
     public void OnHatTrickCard()
     {
         blackjackGame.TryHatTrickCard(cardInstance);

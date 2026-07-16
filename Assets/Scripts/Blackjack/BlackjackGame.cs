@@ -38,8 +38,8 @@ public class BlackjackGame : MonoBehaviour
     private int blackjackGoal = 21;
     private int roundsCompleted = 0;
     private int maxSplits = 3;
-    public bool isSplitting = false;
-    public bool isActionLocked = false;
+    [HideInInspector] public bool isSplitting = false;
+    [HideInInspector] public bool isActionLocked = false;
     private bool isMedicineActive = false;
     private bool useAfterStand = false;
     private bool tutorialCompleted = false;
@@ -50,8 +50,6 @@ public class BlackjackGame : MonoBehaviour
     [HideInInspector] public bool isRoundActive = false;
     private bool stayed = false;
     //Keepsakes
-    private HashSet<(Card.Rank, Card.Suit)> antiMatterCards = new HashSet<(Card.Rank, Card.Suit)>();
-    [HideInInspector] public bool isAntiMatterTargeting = false;
     [HideInInspector] public bool isHatTrickTargeting = false;
 
     [Header("Money")]
@@ -76,8 +74,7 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI rouletteText;
     [SerializeField] private Button leavebutton;
     [SerializeField] private Button staybutton;
-
-
+    
     [Header("VFX")]
     [SerializeField] private Animator standHandAnimator;
     [SerializeField] private Animator hitHandAnimator;
@@ -606,42 +603,6 @@ public class BlackjackGame : MonoBehaviour
     #endregion
 
     #region Keepsakes
-    public bool ActivateAntiMatter()
-    {
-        if(!isRoundActive || isActionLocked || isAntiMatterTargeting) return false;
-
-        isAntiMatterTargeting = true;
-        cursorDetection.OnUseCardItem(this, CardTrigger.AntiMatter);
-
-        return true;
-    }
-
-    public void ApplyAntiMatterToCard(CardInstance cardInstance)
-    {
-        if(dealerHand.Contains(cardInstance))
-        {
-            KeepsakeUnlockProgression.instance.AddStat(ChallengeType.AlterDealerHand);
-        }
-
-        var cardId = (cardInstance.cardData.rank, cardInstance.cardData.suit);
-
-        if(antiMatterCards.Contains(cardId))
-        {
-            antiMatterCards.Remove(cardId);
-        }
-        else
-        {
-            antiMatterCards.Add(cardId);
-        }
-    }
-
-    public bool IsCardNegative(Card card)
-    {
-        bool isSuitNegative = CardEffects.IsSuitNegative(card.suit);
-        bool isAntiMatter = antiMatterCards.Contains((card.rank, card.suit));
-
-        return isSuitNegative ^ isAntiMatter;
-    }
     
     public bool ActivateBpMedicine()
     {
@@ -936,7 +897,7 @@ public class BlackjackGame : MonoBehaviour
         CrucifixItem.isCrucifixActive = false;
         CigarettesItem.isCigaretteActive = false;
         AlcoholItem.isAlcoholActive = false;
-        isAntiMatterTargeting = false;
+        AntiMatter.isAntiMatterActive = false;
         Pyro.isPyroActive = false;
         isHatTrickTargeting = false;
 
@@ -1055,11 +1016,11 @@ public class BlackjackGame : MonoBehaviour
 
         CardDisplay cardDisplay = cardObject.GetComponent<CardDisplay>();
 
-        bool isSuitNegative = IsCardNegative(newCardData);
+        bool isNegative = CardEffects.IsCardNegative(newCardData);
         bool isDoubled = eventManager.CheckIfDoubled(newCardData);
         bool isHalved = eventManager.CheckIfHalved(newCardData);
 
-        cardDisplay.SetNegativeVisual(isSuitNegative);
+        cardDisplay.SetNegativeVisual(isNegative);
         cardDisplay.SetDoubledVisual(isDoubled);
         cardDisplay.SetCutVisual(isHalved);
 
@@ -1964,7 +1925,7 @@ public class BlackjackGame : MonoBehaviour
         {
             foreach(CardInstance card in hand)
             {
-                bool isNegative = IsCardNegative(card.cardData);
+                bool isNegative = CardEffects.IsCardNegative(card.cardData);
                 bool isDoubled = eventManager.CheckIfDoubled(card.cardData) || AlcoholItem.isAlcoholActive;
                 bool isHalved = eventManager.CheckIfHalved(card.cardData) || CardEffects.IsCardCut(card);
 
@@ -1976,7 +1937,7 @@ public class BlackjackGame : MonoBehaviour
 
         foreach(CardInstance card in dealerHand)
         {
-            bool isNegative = IsCardNegative(card.cardData);
+            bool isNegative = CardEffects.IsCardNegative(card.cardData);
             bool isDoubled = eventManager.CheckIfDoubled(card.cardData);
             bool isHalved = eventManager.CheckIfHalved(card.cardData) || CardEffects.IsCardCut(card);
 
@@ -1997,7 +1958,7 @@ public class BlackjackGame : MonoBehaviour
                 {
                     Card cardData = topCard.Value;
 
-                    bool isNegative = IsCardNegative(cardData);
+                    bool isNegative = CardEffects.IsCardNegative(cardData);
                     bool isDoubled = eventManager.CheckIfDoubled(cardData) || AlcoholItem.isAlcoholActive;
                     bool isHalved = eventManager.CheckIfHalved(cardData);
 
@@ -2183,7 +2144,7 @@ public class BlackjackGame : MonoBehaviour
                 }
             }
 
-            if(IsCardNegative(card))
+            if(CardEffects.IsCardNegative(card))
             {
                 cardValue = -cardValue;
                 valueAsOne = -valueAsOne;

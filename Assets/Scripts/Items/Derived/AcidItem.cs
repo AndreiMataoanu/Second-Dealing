@@ -42,7 +42,7 @@ public class AcidItem : Item
     {
         isAcidActive = false;
         
-        CardEffects.SetDissolvedVisual(cardInstance.displayComponent,dissolveTime,color);
+        CardEffects.SetDissolvedVisual(cardInstance.displayComponent, dissolveTime, color);
         // CardEffects.AddAcidCard(cardInstance);
         cardEffect.OnCardSelected();
         StartCoroutine(DissolveCard(cardInstance));
