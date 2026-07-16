@@ -15,5 +15,9 @@ MonoBehaviour:
   keepsakeName: Trust Fund
   description: Receive money every turn. Dying consumes the keepsake and revivies
     you
+  unlockDescription: Reach 1 Million $ and Cash Out
+  requiredChallenge: 16
+  requiredTarget: 1
   tablePrefab: {fileID: 2708514875635923006, guid: a7b02f6b1741b76458a7ae23276f97a0, type: 3}
+  isActive: 0
   passiveIncomeAmount: 50

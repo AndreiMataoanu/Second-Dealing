@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::KeepsakeAntiMatter
   keepsakeName: Anti Matter
   description: Make 1 card negative per round
-  tablePrefab: {fileID: 2708514875635923006, guid: 4434f6f741ce327469a7fbd0663a11fe, type: 3}
-  isActive: 1
+  unlockDescription: Trigger negative events
   requiredChallenge: 2
   requiredTarget: 21
+  tablePrefab: {fileID: 2708514875635923006, guid: 4434f6f741ce327469a7fbd0663a11fe, type: 3}
+  isActive: 1

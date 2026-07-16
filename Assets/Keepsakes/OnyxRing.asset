@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::OnyxRing
   keepsakeName: Onyx Ring
   description: Get 2x payout when your hand is all black
-  tablePrefab: {fileID: 2708514875635923006, guid: 90b39c55b4e262541a5451d4ab452e3b, type: 3}
-  isActive: 0
+  unlockDescription: Win a turn with only black suits
   requiredChallenge: 8
   requiredTarget: 21
+  tablePrefab: {fileID: 2708514875635923006, guid: 90b39c55b4e262541a5451d4ab452e3b, type: 3}
+  isActive: 0
   payoutMultiplier: 2

@@ -93,8 +93,6 @@ public class CursorDetection : MonoBehaviour
         AddAllClickableCards(blackjackGame, cardTrigger);
         SetClickables(cardClickables, true);
         SetClickables(roundActiveClickables, false);
-
-        KeepsakeUnlockProgression.instance.AddStat(ChallengeType.AlterDealerHand);
     }
 
     private void AddAllClickableCards(BlackjackGame blackjackGame, CardTrigger cardTrigger)

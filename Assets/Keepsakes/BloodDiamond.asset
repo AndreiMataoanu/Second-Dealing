@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BloodDiamond
   keepsakeName: Blood Diamond
   description: Get 2x payout when your hand is all red
-  tablePrefab: {fileID: 2708514875635923006, guid: 81206ffb360af8e438476cb40a44442e, type: 3}
-  isActive: 0
+  unlockDescription: Win a turn with only red suits
   requiredChallenge: 7
   requiredTarget: 21
+  tablePrefab: {fileID: 2708514875635923006, guid: 81206ffb360af8e438476cb40a44442e, type: 3}
+  isActive: 0
   payoutMultiplier: 2

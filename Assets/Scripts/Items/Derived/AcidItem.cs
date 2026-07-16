@@ -57,7 +57,13 @@ public class AcidItem : Item
         blackjackGame.activeCardObjects.Remove(cardObject);
         blackjackGame.GameDeck.AddRemovedCard(cardInstance.cardData.rank, cardInstance.cardData.suit); // TODO: move to card effects
 
-        blackjackGame.dealerHand.Remove(cardInstance);
+        if(blackjackGame.dealerHand.Contains(cardInstance))
+        {
+            KeepsakeUnlockProgression.instance.AddStat(ChallengeType.AlterDealerHand);
+
+            blackjackGame.dealerHand.Remove(cardInstance);
+        }
+
         blackjackGame.playerHands.ForEach(hand => hand.Remove(cardInstance));
         if (cardInstance == blackjackGame.peekCardInstance)
             blackjackGame.peekCardInstance = null;
