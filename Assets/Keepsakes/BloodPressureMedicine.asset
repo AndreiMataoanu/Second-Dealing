@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BloodPressureMedicine
   keepsakeName: Blood Pressure Medicine
   description: Use items for a short period after standing
-  tablePrefab: {fileID: 2708514875635923006, guid: f57db073399474649b27616713bb75ad, type: 3}
-  isActive: 0
+  unlockDescription: Try to use an item after standing
   requiredChallenge: 5
   requiredTarget: 21
+  tablePrefab: {fileID: 2708514875635923006, guid: f57db073399474649b27616713bb75ad, type: 3}
+  isActive: 0

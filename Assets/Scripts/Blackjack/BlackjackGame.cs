@@ -450,7 +450,7 @@ public class BlackjackGame : MonoBehaviour
 
         if(handValue > blackjackGoal || handValue < -blackjackGoal)
         {
-            yield return StartCoroutine(BustCheckCoroutine(playerHands[targetIndex]));
+            yield return StartCoroutine(BustCheckCoroutine(playerHands[targetIndex], targetIndex));
         }
         else
         {
@@ -480,7 +480,7 @@ public class BlackjackGame : MonoBehaviour
     
         if(handValue > blackjackGoal || handValue < -blackjackGoal)
         {
-            yield return StartCoroutine(BustCheckCoroutine(activeHand));
+            yield return StartCoroutine(BustCheckCoroutine(activeHand, currentHandIndex));
         }
         else
         {
@@ -561,7 +561,7 @@ public class BlackjackGame : MonoBehaviour
         }
     }
 
-    //Helper method for Crucifix.
+    //Helper method for Crucifix and jokers.
     private Card.Rank GetRankForValue(int bestValue)
     {
         if(bestValue >= 11 || bestValue == 1)
@@ -618,6 +618,11 @@ public class BlackjackGame : MonoBehaviour
 
     public void ApplyAntiMatterToCard(CardInstance cardInstance)
     {
+        if(dealerHand.Contains(cardInstance))
+        {
+            KeepsakeUnlockProgression.instance.AddStat(ChallengeType.AlterDealerHand);
+        }
+
         var cardId = (cardInstance.cardData.rank, cardInstance.cardData.suit);
 
         if(antiMatterCards.Contains(cardId))
@@ -755,7 +760,7 @@ public class BlackjackGame : MonoBehaviour
         }
         else if(handValue > blackjackGoal || handValue < -blackjackGoal)
         {
-            yield return StartCoroutine(BustCheckCoroutine(currentHand));
+            yield return StartCoroutine(BustCheckCoroutine(currentHand, currentHandIndex));
         }
         else
         {
@@ -1368,7 +1373,7 @@ public class BlackjackGame : MonoBehaviour
         }
         else if(handValue > blackjackGoal || handValue < -blackjackGoal)
         {
-            yield return StartCoroutine(BustCheckCoroutine(activeHand));
+            yield return StartCoroutine(BustCheckCoroutine(activeHand, currentHandIndex));
         }
         else
         {
@@ -1460,7 +1465,7 @@ public class BlackjackGame : MonoBehaviour
             }
             else if(handValue > blackjackGoal || handValue < -blackjackGoal)
             {
-                yield return StartCoroutine(BustCheckCoroutine(activeHand));
+                yield return StartCoroutine(BustCheckCoroutine(activeHand, currentHandIndex));
             }
             else
             {
@@ -1843,12 +1848,17 @@ public class BlackjackGame : MonoBehaviour
         }
     }
 
-    private IEnumerator BustCheckCoroutine(List<CardInstance> activeHand)
+    private IEnumerator BustCheckCoroutine(List<CardInstance> activeHand, int handIndex)
     {
         yield return StartCoroutine(CheckPowerballCurrentHand());
         yield return GameUtils.WaitForSecondsScaled(1f);
+        List<Coroutine> dissolveCoroutines = new List<Coroutine>();
 
         var playerJokers = activeHand.Where(c => c.cardData.rank == Card.Rank.Joker).ToList();
+        foreach(CardInstance card in activeHand)
+            if(card.cardData.rank == Card.Rank.Joker)
+                dissolveCoroutines.Add(CreateRealJokerCard(card, handPositions[handIndex]));
+        
         string revealMessage = "";
 
         if(playerJokers.Count > 0)
@@ -1875,6 +1885,10 @@ public class BlackjackGame : MonoBehaviour
         {
             yield return GameUtils.WaitForSecondsScaled(1f);
             yield return StartCoroutine(AdvanceHandCoroutine());
+        }
+        foreach(Coroutine coroutine in dissolveCoroutines)
+        {
+            yield return coroutine;
         }
     }
 
@@ -2239,13 +2253,23 @@ public class BlackjackGame : MonoBehaviour
     private IEnumerator RevealJokers()
     {
         List<CardInstance> allPlayerJokers = new List<CardInstance>();
-
+        int handIndex = 0;
+        
         foreach(var hand in playerHands)
         {
             allPlayerJokers.AddRange(hand.Where(c => c.cardData.rank == Card.Rank.Joker));
+            foreach(CardInstance card in hand)
+                if(card.cardData.rank == Card.Rank.Joker)
+                    CreateRealJokerCard(card,handPositions[handIndex]);
+            
+            handIndex++;
         }
-
+        
         var dealerJokers = dealerHand.Where(c => c.cardData.rank == Card.Rank.Joker).ToList();
+        foreach(CardInstance card in dealerHand)
+            if(card.cardData.rank == Card.Rank.Joker)
+                CreateRealJokerCard(card,dealerCardPosition);      
+        
         string revealMessage = "";
 
         if(allPlayerJokers.Count > 0)
@@ -2412,6 +2436,7 @@ public class BlackjackGame : MonoBehaviour
 
         if(!isTutorialActive && PlayerMoney <= 0)
         {
+            KeepsakeUnlockProgression.instance.EndRun();
             SceneManager.LoadSceneAsync(3);
 
             yield break;
@@ -2545,16 +2570,49 @@ public class BlackjackGame : MonoBehaviour
         leavebutton.gameObject.SetActive(true);
         staybutton.gameObject.SetActive(true);
     }
+    
     public void Leave()
     {
+        KeepsakeUnlockProgression.instance.AddStat(ChallengeType.CashOut);
+        KeepsakeUnlockProgression.instance.EndRun();
+
+        if(playerMoney >= 1000000)
+        {
+            KeepsakeUnlockProgression.instance.AddStat(ChallengeType.Millionaire);
+        }
+
         SceneManager.LoadSceneAsync(2);
     }
+    
     public void Stay()
     {
         leavebutton.gameObject.SetActive(false);
         staybutton.gameObject.SetActive(false);
         cursorDetection.OnRoundInactive();
         stayed = true;
+    }
+    
+    private Coroutine CreateRealJokerCard(CardInstance card, Transform parent)
+    {
+        int realValue = card.jokerValue;
+        if(card.jokerValue > 11 || card.jokerValue < -11)
+            realValue = realValue / 2;
+        
+        if(card.jokerValue != 0)
+        {
+            cardPrefabLookup.TryGetValue((GetRankForValue(Mathf.Abs(realValue)),card.cardData.suit), out GameObject realCard);
+            GameObject realCardObject = Instantiate(realCard,card.CardObject.transform.position,card.CardObject.transform.rotation,parent);
+            
+            if(card.jokerValue < 0)
+                realCardObject.GetComponent<CardDisplay>().SetNegativeVisual(true);
+
+            if(card.jokerValue > 11 || card.jokerValue < -11)
+                realCardObject.GetComponent<CardDisplay>().SetDoubledVisual(true);
+
+            activeCardObjects.Add(realCardObject);      
+        }
+        
+        return CardEffects.SetDissolvedVisual(card.displayComponent, 2.0f, Color.aliceBlue);                
     }
 
 }

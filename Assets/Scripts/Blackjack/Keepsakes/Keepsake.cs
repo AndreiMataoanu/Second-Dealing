@@ -17,7 +17,9 @@ public enum ChallengeType
     DoubleDown,
     DoubleDownAndSplit,
     ThreeOfAKind,
-    CompleteRound
+    CompleteRound,
+    CashOut,
+    Millionaire
 }
 
 public abstract class Keepsake : ScriptableObject

@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Tarot
   keepsakeName: Tarot
   description: Adds tarot cards. Using tarot cards gives an item
-  tablePrefab: {fileID: 2708514875635923006, guid: a1472184a28738049b7bfcfef8a0cd26, type: 3}
-  isActive: 0
+  unlockDescription: Use 21 items
   requiredChallenge: 9
   requiredTarget: 21
+  tablePrefab: {fileID: 2708514875635923006, guid: a1472184a28738049b7bfcfef8a0cd26, type: 3}
+  isActive: 0

@@ -128,7 +128,16 @@ public class KeepsakeUnlockProgression : MonoBehaviour
 
     public int GetProgress(ChallengeType type)
     {
-        playthroughStats.TryGetValue(type, out int progress);
+        int progress = 0;
+
+        if(IsRoundChallenge(type))
+        {
+            roundStats.TryGetValue(type, out progress);
+        }
+        else
+        {
+            playthroughStats.TryGetValue(type, out progress);
+        }
 
         return progress;
     }
@@ -138,7 +147,6 @@ public class KeepsakeUnlockProgression : MonoBehaviour
         return type == ChallengeType.ItemAfterStand || type == ChallengeType.AlterDealerHand || type == ChallengeType.DoubleDownAndSplit;
     }
 
-    //Call KeepsakeUnlockProgression.instance.EndRun() where the player dies / chashes out.
     public void EndRun()
     {
         AddStat(ChallengeType.CompleteRound);
