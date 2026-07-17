@@ -8392,8 +8392,24 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 708047837}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: dealerCardsOffset.z
+      value: -0.001
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: gameSpeedMultiplier
       value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: playerCardsOffset.x
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: playerCardsOffset.y
+      value: 0.034
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: playerCardsOffset.z
+      value: -0.001
       objectReference: {fileID: 0}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: sunglassesCardPosition
@@ -13784,6 +13800,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2097837783}
     m_Modifications:
+    - target: {fileID: 8735115422997862411, guid: 9360ab99ce5ac7144a2e20ea4b495a0f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1028207999998079401, guid: b86f4f0c17e8f7d4492b47378589876a, type: 3}
       propertyPath: blackjackGame
       value: 
@@ -13835,10 +13855,6 @@ PrefabInstance:
     - target: {fileID: 3380520176487024487, guid: b86f4f0c17e8f7d4492b47378589876a, type: 3}
       propertyPath: m_text
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8735115422997862411, guid: 9360ab99ce5ac7144a2e20ea4b495a0f, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

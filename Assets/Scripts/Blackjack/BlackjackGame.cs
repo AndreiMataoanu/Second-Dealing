@@ -49,8 +49,6 @@ public class BlackjackGame : MonoBehaviour
     [HideInInspector] public bool canDoubleDown = false;
     [HideInInspector] public bool isRoundActive = false;
     private bool stayed = false;
-    //Keepsakes
-    [HideInInspector] public bool isHatTrickTargeting = false;
 
     [Header("Money")]
     [SerializeField] private int tutorialRoundsLimit = 3;
@@ -84,8 +82,8 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private Transform particleSpawnPoint;
     [SerializeField] private ParticleSystem smokeParticle;
     [SerializeField] public Animator bottleAnimation;
+
     public GameObject peekedCardObject = null;
-    private const float zOverlap = 0.001f;
     private const float cardAnimationDuration = 0.25f;
 
     [Header("Visual Setup")]
@@ -96,9 +94,9 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] public Transform sunglassesCardPosition;
     [SerializeField] private Transform deckPosition;
     [Tooltip("Offsets the player cards to create the staircase layout.")]
-    [SerializeField] private Vector2 playerCardOffset = new Vector2(10f, -10f);
-    [Tooltip("Space between the dealers cards.")]
-    [SerializeField] private float dealerCardHorizontalSpacing = 35f;
+    [SerializeField] private Vector3 playerCardsOffset = new(0.03f, 0.034f, -0.001f);
+    [Tooltip("Offsets the dealer cards to create a horizontal line.")]
+    [SerializeField] private Vector3 dealerCardsOffset = new(0.13f, 0f, -0.001f);
 
     public Dictionary<(Card.Rank, Card.Suit), GameObject> cardPrefabLookup;
     private readonly Vector3 cardScaleVector = Vector3.one * 0.05f;
@@ -387,11 +385,7 @@ public class BlackjackGame : MonoBehaviour
                 pCard.displayComponent.transform.SetParent(currentParent.parent);
 
                 int cardOrderIndex = playerHands[currentHandIndex].Count - 1 - i;
-                float xOffset = cardOrderIndex * playerCardOffset.x;
-                float yOffset = cardOrderIndex * playerCardOffset.y;
-                float zOffset = cardOrderIndex * -zOverlap;
-
-                Vector3 targetLocalPos = new Vector3(xOffset, yOffset, zOffset);
+                Vector3 targetLocalPos = playerCardsOffset * cardOrderIndex;
 
                 StartCoroutine(CardAnimationCoroutine(
                     pCard.displayComponent.transform,
@@ -409,11 +403,7 @@ public class BlackjackGame : MonoBehaviour
                 dCard.displayComponent.transform.SetParent(dealerCardPosition.parent);
 
                 int cardOrderIndex = dealerHand.Count - 1 - i;
-                float xOffset = cardOrderIndex * dealerCardHorizontalSpacing;
-                float yOffset = 0f;
-                float zOffset = cardOrderIndex * -zOverlap;
-
-                Vector3 targetLocalPos = new Vector3(xOffset, yOffset, zOffset);
+                Vector3 targetLocalPos = dealerCardsOffset * cardOrderIndex;
 
                 StartCoroutine(CardAnimationCoroutine(
                     dCard.displayComponent.transform,
@@ -462,27 +452,6 @@ public class BlackjackGame : MonoBehaviour
         if(!isPlayerStand) return currentHandIndex;
 
         return Mathf.Max(0, currentHandIndex - 1);
-    }
-    
-    public void CalculateBust()
-    {
-        StartCoroutine(CalculateBustCoroutine());
-    }
-    
-    private IEnumerator CalculateBustCoroutine()
-    {
-        List<CardInstance> activeHand = playerHands[currentHandIndex];
-    
-        int handValue = CalculateHandValue(activeHand, true);
-    
-        if(handValue > blackjackGoal || handValue < -blackjackGoal)
-        {
-            yield return StartCoroutine(BustCheckCoroutine(activeHand, currentHandIndex));
-        }
-        else
-        {
-            isActionLocked = false;
-        }
     }
 
     public void UpdateAlcoholCards()
@@ -623,76 +592,76 @@ public class BlackjackGame : MonoBehaviour
         useAfterStand = false;
     }
 
-    public bool ActivateHatTrick()
+    public void HandleNewCardInPlayerHand(CardInstance cardInstance)
     {
-        if(!isRoundActive || isActionLocked || isHatTrickTargeting) return false;
-
-        isHatTrickTargeting = true;
-        cursorDetection.OnUseCardItem(this, CardTrigger.HatTrick);
-
-        return true;
+        StartCoroutine(HandleNewCardInPlayerHandCoroutine(cardInstance));
+    }
+    
+    private IEnumerator HandleNewCardInPlayerHandCoroutine(CardInstance cardInstance)
+    {
+        yield return PlaceCardInPlayerHandCoroutine(cardInstance);
+        
+        List<CardInstance> activeHand = playerHands[currentHandIndex];
+        int handValue = CalculateHandValue(activeHand, true);
+        
+        yield return EvaluatePlayerHandValue(activeHand, handValue);
     }
 
-    public void TryHatTrickCard(CardInstance cardInstance)
+    private IEnumerator EvaluatePlayerHandValue(List<CardInstance> activeHand, int handValue)
     {
-        if(cardInstance.isHidden)
+        if(activeHand.Count == 7 && handValue <= blackjackGoal)
         {
-            AudioManager.instance.Play("ItemDeny");
-
-            return;
+            statusText.text = "Hand full";
+    
+            yield return StartCoroutine(CheckPowerballCurrentHand());
+            yield return GameUtils.WaitForSecondsScaled(1f);
+            yield return StartCoroutine(AdvanceHandCoroutine());
         }
-
-        bool isValidTarget = false;
-
-        foreach(var hand in playerHands)
+        else
+            yield return CalculateBustCoroutine(activeHand, handValue);
+    }
+    
+    public void CalculateBust()
+    {
+        List<CardInstance> activeHand = playerHands[currentHandIndex];
+        int handValue = CalculateHandValue(activeHand, true);
+        StartCoroutine(CalculateBustCoroutine(activeHand, handValue));
+    }
+    
+    private IEnumerator CalculateBustCoroutine(List<CardInstance> activeHand, int handValue)
+    {
+        if(handValue > blackjackGoal || handValue < -blackjackGoal)
         {
-            if(hand.Contains(cardInstance))
-            {
-                isValidTarget = true;
-
-                break;
-            }
+            yield return StartCoroutine(BustCheckCoroutine(activeHand, currentHandIndex));
         }
-
-        if(!isValidTarget && dealerHand.Contains(cardInstance))
+        else
         {
-            isValidTarget = true;
+            isActionLocked = false;
         }
-
-        if(!isValidTarget)
-        {
-            AudioManager.instance.Play("ItemDeny");
-
-            return;
-        }
-
-        StartCoroutine(HatTrickCoroutine(cardInstance));
     }
 
-    private IEnumerator HatTrickCoroutine(CardInstance targetCard)
+    private IEnumerator PlaceCardInPlayerHandCoroutine(CardInstance cardInstance)
     {
-        isActionLocked = true;
-        isHatTrickTargeting = false;
-        canDoubleDown = false;
-        gameDeck.AddCardCopies(targetCard.cardData, 1);
-
-        AudioManager.instance.Play("ItemBuy");
         List<CardInstance> currentHand = playerHands[currentHandIndex];
         Transform currentParent = handPositions[currentHandIndex];
-        CardInstance newCardInstance = DealCardInstance(targetCard.cardData, currentHand, currentParent, false);
+        CardInstance newCardInstance = DealCardInstance(cardInstance.cardData, currentHand, currentParent, false);
 
+        yield return PlaceCardInHand(newCardInstance, currentHand, currentParent, playerCardsOffset);
+        UpdateHandVisuals(currentHand, true);
+        UpdateSplitOutlines();
+    }
+    
+    private IEnumerator PlaceCardInHand(CardInstance newCardInstance, List<CardInstance> currentHand,
+        Transform currentParent, Vector3 offset)
+    {
         if(newCardInstance != null)
         {
             int cardOrderIndex = currentHand.Count - 1;
-            float xOffset = cardOrderIndex * playerCardOffset.x;
-            float yOffset = cardOrderIndex * playerCardOffset.y;
-            float zOffset = cardOrderIndex * -zOverlap;
-
-            Vector3 targetLocalPos = new Vector3(xOffset, yOffset, zOffset);
+            Vector3 targetLocalPos = offset * cardOrderIndex;
             Quaternion targetRotation = Quaternion.identity;
-
+    
             newCardInstance.displayComponent.transform.SetParent(currentParent.parent);
-
+    
             yield return StartCoroutine(CardAnimationCoroutine(
                 newCardInstance.displayComponent.transform,
                 currentParent.TransformPoint(targetLocalPos),
@@ -700,32 +669,13 @@ public class BlackjackGame : MonoBehaviour
                 cardScaleVector,
                 cardAnimationDuration
             ));
-
+    
             newCardInstance.displayComponent.transform.SetParent(currentParent);
             newCardInstance.displayComponent.transform.localPosition = targetLocalPos;
             newCardInstance.displayComponent.transform.localRotation = targetRotation;
-
-            UpdateHandVisuals(currentHand, true);
+            newCardInstance.displayComponent.transform.localScale = cardScaleVector;
+    
             UpdateUI(true);
-            UpdateSplitOutlines();
-        }
-
-        int handValue = CalculateHandValue(currentHand, true);
-
-        if(currentHand.Count == 7 && handValue <= blackjackGoal)
-        {
-            statusText.text = "Hand full";
-
-            yield return GameUtils.WaitForSecondsScaled(1f);
-            yield return StartCoroutine(AdvanceHandCoroutine());
-        }
-        else if(handValue > blackjackGoal || handValue < -blackjackGoal)
-        {
-            yield return StartCoroutine(BustCheckCoroutine(currentHand, currentHandIndex));
-        }
-        else
-        {
-            isActionLocked = false;
         }
     }
 
@@ -899,7 +849,7 @@ public class BlackjackGame : MonoBehaviour
         AlcoholItem.isAlcoholActive = false;
         AntiMatter.isAntiMatterActive = false;
         Pyro.isPyroActive = false;
-        isHatTrickTargeting = false;
+        HatTrick.isHatTrickActive = false;
 
         ResetTexts();
 
@@ -1164,35 +1114,9 @@ public class BlackjackGame : MonoBehaviour
         }
         AudioManager.instance.Play("CardHit");
 
-        if(newCardInstance != null)
-        {
-            int cardOrderIndex = currentHand.Count - 1;
-            float xOffset = cardOrderIndex * playerCardOffset.x;
-            float yOffset = cardOrderIndex * playerCardOffset.y;
-            float zOffset = cardOrderIndex * -zOverlap;
-
-            Vector3 targetLocalPos = new Vector3(xOffset, yOffset, zOffset);
-            Quaternion targetRotation = Quaternion.identity;
-
-            newCardInstance.displayComponent.transform.SetParent(currentParent.parent);
-
-            yield return StartCoroutine(CardAnimationCoroutine(
-                newCardInstance.displayComponent.transform,
-                currentParent.TransformPoint(targetLocalPos),
-                currentParent.rotation * targetRotation,
-                cardScaleVector,
-                cardAnimationDuration
-            ));
-
-            newCardInstance.displayComponent.transform.SetParent(currentParent);
-            newCardInstance.displayComponent.transform.localPosition = targetLocalPos;
-            newCardInstance.displayComponent.transform.localRotation = targetRotation;
-
-            UpdateHandVisuals(currentHand, true);
-            UpdateUI(true);
-            UpdateSplitOutlines();
-        }
-
+        yield return PlaceCardInHand(newCardInstance, currentHand, currentParent, playerCardsOffset);
+        UpdateHandVisuals(currentHand, true);
+        UpdateSplitOutlines();
         deckPosition.position = savedPosition;
     }
 
@@ -1269,35 +1193,9 @@ public class BlackjackGame : MonoBehaviour
             peekCardInstance = null;
         }
         AudioManager.instance.Play("CardHit");
-
-        if(newCardInstance != null)
-        {
-            int cardOrderIndex = dealerHand.Count - 1;
-            float xOffset = cardOrderIndex * dealerCardHorizontalSpacing;
-            float yOffset = 0f;
-            float zOffset = cardOrderIndex * -zOverlap;
-
-            Vector3 targetLocalPos = new Vector3(xOffset, yOffset, zOffset);
-            Quaternion targetRotation = Quaternion.identity;
-
-            newCardInstance.displayComponent.transform.SetParent(dealerCardPosition.parent);
-
-            yield return StartCoroutine(CardAnimationCoroutine(
-                newCardInstance.displayComponent.transform,
-                dealerCardPosition.TransformPoint(targetLocalPos),
-                dealerCardPosition.rotation * targetRotation,
-                cardScaleVector,
-                cardAnimationDuration
-            ));
-
-            newCardInstance.displayComponent.transform.SetParent(dealerCardPosition);
-            newCardInstance.displayComponent.transform.localPosition = targetLocalPos;
-            newCardInstance.displayComponent.transform.localRotation = targetRotation;
-            newCardInstance.displayComponent.transform.localScale = cardScaleVector;
-
-            UpdateHandVisuals(dealerHand, false);
-            UpdateUI(true);
-        }
+        yield return PlaceCardInHand(newCardInstance, dealerHand, dealerCardPosition, dealerCardsOffset);
+        UpdateHandVisuals(dealerHand, false);
+        UpdateUI();
     }
 
     private IEnumerator HitCoroutine()
@@ -1321,30 +1219,11 @@ public class BlackjackGame : MonoBehaviour
         UpdateUI(true);
 
         List<CardInstance> activeHand = playerHands[currentHandIndex];
-
         int handValue = CalculateHandValue(activeHand, true);
 
-        if(activeHand.Count == 7 && handValue <= blackjackGoal)
-        {
-            statusText.text = "Hand full";
-
-            yield return StartCoroutine(CheckPowerballCurrentHand());
-            yield return GameUtils.WaitForSecondsScaled(1.5f);
-            yield return StartCoroutine(AdvanceHandCoroutine());
-        }
-        else if(handValue > blackjackGoal || handValue < -blackjackGoal)
-        {
-            yield return StartCoroutine(BustCheckCoroutine(activeHand, currentHandIndex));
-        }
-        else
-        {
-            isActionLocked = false;
-
-            if(endlessDouble)
-            {
-                EvaluateDoubleDownCondition();
-            }
-        }
+        yield return EvaluatePlayerHandValue(activeHand, handValue);
+        if (handValue <= blackjackGoal && handValue >= -blackjackGoal && activeHand.Count < 7 && endlessDouble)
+            EvaluateDoubleDownCondition();
     }
 
     private IEnumerator StandCoroutine()
@@ -1414,26 +1293,11 @@ public class BlackjackGame : MonoBehaviour
             UpdateUI(true);
 
             List<CardInstance> activeHand = playerHands[currentHandIndex];
-
             int handValue = CalculateHandValue(activeHand, true);
-
-            if(activeHand.Count == 7 && handValue <= blackjackGoal)
-            {
-                statusText.text = "Hand full";
-
-                yield return GameUtils.WaitForSecondsScaled(1.5f);
-                yield return StartCoroutine(AdvanceHandCoroutine());
-            }
-            else if(handValue > blackjackGoal || handValue < -blackjackGoal)
-            {
-                yield return StartCoroutine(BustCheckCoroutine(activeHand, currentHandIndex));
-            }
-            else
-            {
-                isActionLocked = false;
-
+            
+            yield return EvaluatePlayerHandValue(activeHand, handValue);
+            if (handValue <= blackjackGoal && handValue >= -blackjackGoal && activeHand.Count < 7 && endlessDouble)
                 EvaluateDoubleDownCondition();
-            }
         }
     }
 
@@ -1893,26 +1757,11 @@ public class BlackjackGame : MonoBehaviour
 
         for(int i = 0; i < cardCount; i++)
         {
+            CardInstance cardInstance = hand[i];
             int cardOrderIndex = cardCount - 1 - i;
 
-            CardInstance cardInstance = hand[i];
-
-            float xOffset, yOffset;
-
-            if(isPlayerHand)
-            {
-                xOffset = cardOrderIndex * playerCardOffset.x;
-                yOffset = cardOrderIndex * playerCardOffset.y;
-            }
-            else
-            {
-                xOffset = cardOrderIndex * dealerCardHorizontalSpacing;
-                yOffset = 0f;
-            }
-
-            float zOffset = cardOrderIndex * -zOverlap;
-
-            Vector3 targetLocalPos = new Vector3(xOffset, yOffset, zOffset);
+            var offset = isPlayerHand ? playerCardsOffset : dealerCardsOffset;
+            var targetLocalPos = cardOrderIndex * offset;
 
             cardInstance.displayComponent.transform.localPosition = targetLocalPos;
             cardInstance.displayComponent.transform.localRotation = Quaternion.identity;

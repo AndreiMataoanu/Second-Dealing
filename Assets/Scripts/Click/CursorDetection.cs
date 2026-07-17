@@ -143,24 +143,9 @@ public class CursorDetection : MonoBehaviour
     {
         switch (cardTrigger)
         {
-            case CardTrigger.Scissors:
-                // clickableCard.AddAction(clickableCard.OnCutCard);
-                break;
-            case CardTrigger.Acid:
-                // clickableCard.AddCardAction(clickableCard.OnDissolveCard);
-                break;
             case CardTrigger.AddCardsEvent:
                 clickableCard.AddCardAction(clickableCard.OnAddCardsOption);
                 clickableCard.AddCardAction(() => blackjackGame.SelectCursorHand(false));
-                break;
-            case CardTrigger.AntiMatter:
-                // clickableCard.AddCardAction(clickableCard.OnAntiMatterCard);
-                break;
-            case CardTrigger.Pyro:
-                // clickableCard.AddCardAction(clickableCard.OnPyroCard);
-                break;
-            case CardTrigger.HatTrick:
-                clickableCard.AddCardAction(clickableCard.OnHatTrickCard);
                 break;
         }
     }

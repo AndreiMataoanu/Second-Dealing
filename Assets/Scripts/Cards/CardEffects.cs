@@ -12,8 +12,9 @@ public static class CardEffects
     
     public static void AddCutCard(CardInstance cardInstance, int reduction)
     {
-        if (cutCards.TryAdd(cardInstance, reduction)) return;
-        cutCards[cardInstance] *= reduction;
+        if (!cutCards.TryAdd(cardInstance, reduction))
+            cutCards[cardInstance] *= reduction;
+        
         SetCutVisual(cardInstance.displayComponent, true);
     }
     public static void RemoveCutCard(CardInstance cardInstance) => cutCards.Remove(cardInstance);

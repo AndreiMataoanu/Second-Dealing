@@ -41,9 +41,4 @@ public class ClickableCard : Clickable
         if(cardInstance != null && cardInstance.cardData.suit == Card.Suit.Tarot)
             blackjackGame.SacrificeTarot(cardInstance);
     }
-
-    public void OnHatTrickCard()
-    {
-        blackjackGame.TryHatTrickCard(cardInstance);
-    }
 }
