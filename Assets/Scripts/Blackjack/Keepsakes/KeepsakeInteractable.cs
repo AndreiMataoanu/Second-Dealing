@@ -75,6 +75,7 @@ public class KeepsakeInteractable : Clickable
             {
                 AudioManager.instance.Play("ItemBuy");
 
+                keepsake.ApplyInheritance(blackjackGame);
                 gameObject.SetActive(false);
             }
             else
@@ -96,6 +97,11 @@ public class KeepsakeInteractable : Clickable
             int currentProgress = KeepsakeUnlockProgression.instance.GetProgress(keepsake.requiredChallenge);
 
             return $"\n{keepsake.description}\n\nUnlock: {keepsake.unlockDescription} ({currentProgress}/{keepsake.requiredTarget})";
+        }
+
+        if(this.name.Contains("Inheritance"))
+        {
+            return keepsake.GetDescription();
         }
 
         return $"\n{keepsake.description}";

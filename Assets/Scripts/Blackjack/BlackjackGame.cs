@@ -38,6 +38,7 @@ public class BlackjackGame : MonoBehaviour
     private int blackjackGoal = 21;
     private int roundsCompleted = 0;
     private int maxSplits = 3;
+    private int maxMoneyThisRun = 0;
     public bool isSplitting = false;
     public bool isActionLocked = false;
     private bool isMedicineActive = false;
@@ -77,7 +78,6 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI rouletteText;
     [SerializeField] private Button leavebutton;
     [SerializeField] private Button staybutton;
-
 
     [Header("VFX")]
     [SerializeField] private Animator standHandAnimator;
@@ -143,7 +143,9 @@ public class BlackjackGame : MonoBehaviour
 
     private void Start()
     {
+        maxMoneyThisRun = playerMoney;
         gameDeck = new Deck();
+
         ManagerSetup();
         InitializeCardLookup();
         StartGame();
@@ -283,6 +285,11 @@ public class BlackjackGame : MonoBehaviour
     //Animates the change in player's money when winning or losing.
     public IEnumerator AnimateBetChange(int targetAmount, float duration)
     {
+        if(targetAmount > maxMoneyThisRun)
+        {
+            maxMoneyThisRun = targetAmount;
+        }
+
         float elapsedTime = 0;
         int startingAmount = PlayerMoney;
 
@@ -865,6 +872,18 @@ public class BlackjackGame : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void AddIneritanceMoney(int amount)
+    {
+        playerMoney += amount;
+
+        if(playerMoney > maxMoneyThisRun)
+        {
+            maxMoneyThisRun = playerMoney;
+        }
+
+        UpdateBettingUI();
     }
     #endregion
 
@@ -2493,6 +2512,8 @@ public class BlackjackGame : MonoBehaviour
 
         if(!isTutorialActive && PlayerMoney <= 0)
         {
+            PlayerPrefs.SetInt("PreviousRunMoney", maxMoneyThisRun);
+            PlayerPrefs.Save();
             KeepsakeUnlockProgression.instance.EndRun();
             SceneManager.LoadSceneAsync(3);
 
@@ -2629,6 +2650,8 @@ public class BlackjackGame : MonoBehaviour
     }
     public void Leave()
     {
+        PlayerPrefs.SetInt("PreviousRunMoney", maxMoneyThisRun);
+        PlayerPrefs.Save();
         KeepsakeUnlockProgression.instance.AddStat(ChallengeType.CashOut);
         KeepsakeUnlockProgression.instance.EndRun();
 
