@@ -50,10 +50,8 @@ public class ItemManager : MonoBehaviour
     private void OnBuy(Item item)
     {
         if (!shopManager.CanBuyItem(item)) return;
-
         item.RemoveAction(OnBuy);
         item.AddAction(OnSell);
-        
         shopManager.AddToInventory(item);
         shopManager.OnCloseShop();
     }
@@ -87,7 +85,7 @@ public class ItemManager : MonoBehaviour
         AudioManager.instance.Play("ItemBuy");
         
         shopManager.RemoveFromInventory(item);
-        if(shopManager.InventoryItems.Count == 1)
+        if(shopManager.InventoryItems.Count == 1 && shopManager.ItemsInShop() == false || shopManager.ItemsInShop() == false)
         {
             shopManager.PlaySuitcaseOpen();   
         }

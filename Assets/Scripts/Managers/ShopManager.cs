@@ -45,6 +45,7 @@ public class ShopManager : MonoBehaviour
 
     public void SpawnPowerUps()
     {
+        Debug.Log(buySpawnPoints.Count);
         foreach (var buySpawnPoint in buySpawnPoints.ToList())
         {
             var prefab = GetWeightedRandomPrefab();
@@ -97,10 +98,8 @@ public class ShopManager : MonoBehaviour
     public void OnCloseShop()
     {
         OrganBagItem.isInShop = false;
-        if (inventoryItemCount != buySpawnPoints.Count) return;
-        
+        if (ItemsInShop() == true) return;
         DespawnShopItems();
-        StartCoroutine(SuitcaseCloseCoroutine());
     }
 
     public void DespawnShopItems()
@@ -114,15 +113,16 @@ public class ShopManager : MonoBehaviour
 
         yield return null;
         yield return new WaitForSeconds(suitcaseAnimator.GetCurrentAnimatorStateInfo(0).length);
-
-        foreach(var spawnPoint in buySpawnPoints)
+        if(ItemsInShop() == true)
         {
-            if(spawnPoint.transform.childCount > 0)
+            foreach(var spawnPoint in buySpawnPoints)
             {
-                Destroy(spawnPoint.transform.GetChild(0).gameObject);
+                if(spawnPoint.transform.childCount > 0)
+                {
+                    Destroy(spawnPoint.transform.GetChild(0).gameObject);
+                }
             }
         }
-
         ResetShopPrices();
     }
 
@@ -263,17 +263,17 @@ public class ShopManager : MonoBehaviour
         if (itemPrefabs == null || itemPrefabs.Count == 0 || inventoryItemCount == useSpawnPoints.Count) return;
 
         StartCoroutine(SuitcaseOpenCoroutine());
-        SpawnPowerUps();
     }
     
     private IEnumerator SuitcaseOpenCoroutine()
     {
         suitcaseAnimator.Play("Suitcase_Opening");
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.7f);
 
         AudioManager.instance.Play("Latch");
         AudioManager.instance.Play("SuitcaseOpen");
+        SpawnPowerUps();
     }
 
     private IEnumerator SuitcaseCloseCoroutine()
@@ -286,4 +286,25 @@ public class ShopManager : MonoBehaviour
     }
     
     #endregion
+
+    public bool ItemsInShop()
+    {
+        int items = 0;
+        foreach(var spawnPoint in buySpawnPoints)
+        {
+            if(spawnPoint.transform.childCount >0)
+            {
+                items++;
+            }
+        }
+        if(items == 0)
+        {
+            return false;    
+        }
+        else
+        {
+            return true;    
+        }
+    }
+
 }
