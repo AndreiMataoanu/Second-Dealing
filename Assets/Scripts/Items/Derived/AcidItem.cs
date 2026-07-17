@@ -7,7 +7,7 @@ public class AcidItem : Item
 {
     [SerializeField] private float dissolveTime = 1.3f;
     [SerializeField] private Color color = Color.green;
-    [SerializeField] private float dissolveBorder = -0.1f;
+    [SerializeField] private float dissolveBorder = 1.1f;
     public static bool isAcidActive;
 
     public override void SetMembers()

@@ -7,7 +7,7 @@ public class Pyro : Keepsake
     public static bool isPyroActive;
     public float burnTime = 3f;
     public Color burnColor = Color.darkRed;
-    public float burnBorder = -0.5f;
+    public float burnBorder = 1.3f;
     private CardEffectActions cardEffect;
     private BlackjackGame game;
     private int usesThisRound = 0;

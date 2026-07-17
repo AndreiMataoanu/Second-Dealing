@@ -2446,7 +2446,7 @@ public class BlackjackGame : MonoBehaviour
             activeCardObjects.Add(realCardObject);      
         }
         
-        return CardEffects.SetDissolvedVisual(card.displayComponent, 2.0f, Color.aliceBlue,-0.10f);                
+        return CardEffects.SetDissolvedVisual(card.displayComponent, 2.0f, Color.aliceBlue,1.2f);                
     }
 
 }
