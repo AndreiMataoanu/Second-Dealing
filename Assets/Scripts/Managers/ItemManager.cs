@@ -80,12 +80,15 @@ public class ItemManager : MonoBehaviour
 
     private void OnSell(Item item)
     {
-        blackjackGame.SellItem(item.GetResalePrice());
-        
-        AudioManager.instance.Play("ItemBuy");
-        
-        shopManager.RemoveFromInventory(item);
-        if(shopManager.InventoryItems.Count == 1 && shopManager.ItemsInShop() == false || shopManager.ItemsInShop() == false)
+        if(shopManager.State == ShopState.Open || shopManager.State == ShopState.Closed)
+        {
+            blackjackGame.SellItem(item.GetResalePrice());
+            
+            AudioManager.instance.Play("ItemBuy");
+            
+            shopManager.RemoveFromInventory(item); 
+        }
+        if(shopManager.State == ShopState.Closed)
         {
             shopManager.PlaySuitcaseOpen();   
         }

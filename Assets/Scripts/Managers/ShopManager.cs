@@ -7,6 +7,10 @@ using Random = UnityEngine.Random;
 
 public class ShopManager : MonoBehaviour
 {
+    private ShopState state = ShopState.Closed;
+    private Coroutine shopRoutine;
+    public ShopState State => state;
+
     [Header("Item")]
     [SerializeField] private List<GameObject> buySpawnPoints;
     [SerializeField] private List<GameObject> useSpawnPoints;
@@ -98,8 +102,9 @@ public class ShopManager : MonoBehaviour
     public void OnCloseShop()
     {
         OrganBagItem.isInShop = false;
-        if (ItemsInShop() == true) return;
-        DespawnShopItems();
+         if (state != ShopState.Open || ItemsInShop() == true && inventoryItemCount != buySpawnPoints.Count) return;
+
+            shopRoutine = StartCoroutine(DespawnCoroutine());
     }
 
     public void DespawnShopItems()
@@ -109,9 +114,12 @@ public class ShopManager : MonoBehaviour
     
     private IEnumerator DespawnCoroutine()
     {
-        StartCoroutine(SuitcaseCloseCoroutine());
+        state = ShopState.Closing;
 
-        yield return null;
+        AudioManager.instance.Play("SuitcaseClose");
+        yield return new WaitForSeconds(0.6f);
+        suitcaseAnimator.Play("Suitcase_Closing");
+
         yield return new WaitForSeconds(suitcaseAnimator.GetCurrentAnimatorStateInfo(0).length);
         if(ItemsInShop() == true)
         {
@@ -124,6 +132,9 @@ public class ShopManager : MonoBehaviour
             }
         }
         ResetShopPrices();
+
+        state = ShopState.Closed;
+        shopRoutine = null;
     }
 
     #endregion
@@ -260,29 +271,24 @@ public class ShopManager : MonoBehaviour
     
     public void PlaySuitcaseOpen()
     {
-        if (itemPrefabs == null || itemPrefabs.Count == 0 || inventoryItemCount == useSpawnPoints.Count) return;
+        if (state != ShopState.Closed || inventoryItemCount == buySpawnPoints.Count)
+        return;
 
-        StartCoroutine(SuitcaseOpenCoroutine());
+        shopRoutine = StartCoroutine(SuitcaseOpenCoroutine());
     }
     
     private IEnumerator SuitcaseOpenCoroutine()
     {
+        SpawnPowerUps();
+        state = ShopState.Opening;
         suitcaseAnimator.Play("Suitcase_Opening");
 
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForSeconds(0.2f);
 
         AudioManager.instance.Play("Latch");
         AudioManager.instance.Play("SuitcaseOpen");
-        SpawnPowerUps();
-    }
-
-    private IEnumerator SuitcaseCloseCoroutine()
-    {
-        AudioManager.instance.Play("SuitcaseClose");
-
-        yield return new WaitForSeconds(0.6f);
-
-        suitcaseAnimator.Play("Suitcase_Closing");
+        state = ShopState.Open;
+        shopRoutine = null;
     }
     
     #endregion
