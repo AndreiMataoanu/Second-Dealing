@@ -1,11 +1,12 @@
 using Managers;
 using UnityEngine;
-
+using System.Collections;
 [CreateAssetMenu(fileName = "Pyro", menuName = "Keepsakes/Pyro")]
 public class Pyro : Keepsake
 {
     public static bool isPyroActive;
-    
+    public float burnTime = 3f;
+    public Color burnColor = Color.darkRed;
     private CardEffectActions cardEffect;
     private BlackjackGame game;
     private int usesThisRound = 0;
@@ -60,20 +61,20 @@ public class Pyro : Keepsake
     private void OnBurnCard(CardInstance cardInstance)
     {
         AudioManager.instance.Play("ItemBuy");
-
+        CardEffects.SetDissolvedVisual(cardInstance.displayComponent, burnTime, burnColor);
         cardEffect.OnCardSelected();
-        DestroyCard(cardInstance);
+        game.StartCoroutine(DissolveCard(cardInstance));
         isPyroActive = false;
     }
     
     // TODO: revise, same as acid code
-    private void DestroyCard(CardInstance cardInstance)
+    private IEnumerator DissolveCard(CardInstance cardInstance)
     {
-        game.GameDeck.AddRemovedCard(cardInstance.cardData.rank, cardInstance.cardData.suit);
-        CardEffects.RemoveCutCard(cardInstance);
-        CardEffects.RemoveAlcoholCard(cardInstance);
+        yield return new WaitForSeconds(burnTime);
         
         var cardObject = cardInstance.displayComponent.gameObject;
+        CardEffects.RemoveCutCard(cardInstance);
+        CardEffects.RemoveAlcoholCard(cardInstance);
         game.activeCardObjects.Remove(cardObject);
         game.GameDeck.AddRemovedCard(cardInstance.cardData.rank, cardInstance.cardData.suit); // TODO: move to card effects
 
@@ -88,13 +89,15 @@ public class Pyro : Keepsake
             hand.Remove(cardInstance);
             game.UpdateHandVisuals(hand, true);
         });
-        
+
         if (cardInstance == game.peekCardInstance)
             game.peekCardInstance = null;
         
         Destroy(cardObject);
         game.UpdateUI();
         game.EvaluateDoubleDownCondition();
+        
+        yield return null;
     }
 
     #endregion
