@@ -87,8 +87,10 @@ public class ItemManager : MonoBehaviour
         AudioManager.instance.Play("ItemBuy");
         
         shopManager.RemoveFromInventory(item);
-
-        shopManager.PlaySuitcaseOpen();
+        if(shopManager.InventoryItems.Count == 1)
+        {
+            shopManager.PlaySuitcaseOpen();   
+        }
     }
     
     #endregion
