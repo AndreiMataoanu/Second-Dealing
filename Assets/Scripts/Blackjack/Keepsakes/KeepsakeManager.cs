@@ -194,4 +194,12 @@ public class KeepsakeManager : MonoBehaviour
 
         return false;
     }
+
+    public void ApplyInheritance(BlackjackGame game)
+    {
+        foreach(var keepsake in equippedKeepsakes)
+        {
+            keepsake.ApplyInheritance(game);
+        }
+    }
 }
