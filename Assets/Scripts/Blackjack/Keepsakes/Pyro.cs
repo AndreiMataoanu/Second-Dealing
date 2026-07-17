@@ -11,7 +11,8 @@ public class Pyro : Keepsake
     private CardEffectActions cardEffect;
     private BlackjackGame game;
     private int usesThisRound = 0;
-
+    [Header("Fire VFX")]
+    [SerializeField] private ParticleSystem fireParticlePrefab;
     #region Setup
 
     private void OnEnable()
@@ -64,6 +65,7 @@ public class Pyro : Keepsake
         AudioManager.instance.Play("ItemBuy");
         CardEffects.SetDissolvedVisual(cardInstance.displayComponent, burnTime, burnColor,burnBorder);
         cardEffect.OnCardSelected();
+        SpawnBurnParticles(cardInstance.displayComponent.transform);
         game.StartCoroutine(DissolveCard(cardInstance));
         isPyroActive = false;
     }
@@ -74,6 +76,7 @@ public class Pyro : Keepsake
         yield return new WaitForSeconds(burnTime);
         
         var cardObject = cardInstance.displayComponent.gameObject;
+         var fx = cardObject.GetComponentInChildren<ParticleSystem>();
         CardEffects.RemoveCutCard(cardInstance);
         CardEffects.RemoveAlcoholCard(cardInstance);
         game.activeCardObjects.Remove(cardObject);
@@ -102,6 +105,13 @@ public class Pyro : Keepsake
     }
 
     #endregion
-    
+    private ParticleSystem SpawnBurnParticles(Transform cardTransform)
+    {
+        if (fireParticlePrefab == null) return null;
+
+        var fx = Instantiate(fireParticlePrefab, cardTransform.position, Quaternion.Inverse(cardTransform.rotation), cardTransform);
+        fx.Play();
+        return fx;
+    }
     
 }
