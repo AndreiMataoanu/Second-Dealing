@@ -51,8 +51,9 @@ public class CardDisplay : MonoBehaviour
         render.material.SetFloat("_CutInHalf", boolValue);
     }
 
-    public IEnumerator SetDissolvedVisual(float dissolveTime,Color color)
+    public IEnumerator SetDissolvedVisual(float dissolveTime,Color color, float dissolveBorder)
     {
+        render.material.SetFloat("_DissolveEdge", dissolveBorder);
         render.material.SetColor("_DissolveColor",color);
         float elapsedTime = 0f;
         while (elapsedTime < dissolveTime)
