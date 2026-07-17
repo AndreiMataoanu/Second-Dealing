@@ -8400,24 +8400,8 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 708047837}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: dealerCardsOffset.z
-      value: -0.001
-      objectReference: {fileID: 0}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: gameSpeedMultiplier
       value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: playerCardsOffset.x
-      value: 0.03
-      objectReference: {fileID: 0}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: playerCardsOffset.y
-      value: 0.034
-      objectReference: {fileID: 0}
-    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
-      propertyPath: playerCardsOffset.z
-      value: -0.001
       objectReference: {fileID: 0}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: sunglassesCardPosition
@@ -12902,6 +12886,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Inheritance
       objectReference: {fileID: 0}
+    - target: {fileID: 3412512454478385345, guid: cf4aa979c98daff4787d74976486a720, type: 3}
+      propertyPath: keepsake
+      value: 
+      objectReference: {fileID: 11400000, guid: 46f29098556af984a9ad56619851247b, type: 2}
     - target: {fileID: 3412512454478385345, guid: cf4aa979c98daff4787d74976486a720, type: 3}
       propertyPath: blackjackGame
       value: 
