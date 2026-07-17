@@ -36,6 +36,10 @@ public abstract class Keepsake : ScriptableObject
     {
     }
 
+    public virtual void SetMembers(BlackjackGame blackjackGame)
+    {
+    }
+
     public virtual bool ActivateTableEffect(BlackjackGame game)
     {
         return false;

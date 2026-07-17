@@ -10,8 +10,6 @@ public class Deck
     private List<Card.Suit> removedSuits = new List<Card.Suit>();
     private List<Tuple<Card.Rank, Card.Suit>> removedCards = new ();
     private Tuple<Card?, int> copies = new(null, 0);
-    public List<(Card.Rank, Card.Suit)> removedSpecificCards = new List<(Card.Rank, Card.Suit)>();
-    public List<Card> permanentAddedCards = new List<Card>();
 
     private bool jokersInDeck = false;
 
@@ -36,10 +34,7 @@ public class Deck
 
                 if(removedRanks.Contains(rank)) continue;
 
-                if(removedSpecificCards.Contains((rank, s))) continue;
-
                 var card = new Tuple<Card.Rank, Card.Suit>(rank, s);
-                
                 if(removedCards.Contains(card)) continue;
                 
                 cards.Add(new Card { rank = rank, suit = s });
@@ -59,15 +54,9 @@ public class Deck
             }
         }
 
-        foreach(Card permanentCard in permanentAddedCards)
-        {
-            cards.Add(permanentCard);
-        }
-
         if (copies is not { Item2: > 0 } || copies.Item1 == null) return;
 
         var copy = (Card)copies.Item1;
-
         for(var i = 0; i < copies.Item2; i++)
             cards.Add(new Card{rank = copy.rank, suit = copy.suit});
     }
@@ -199,20 +188,10 @@ public class Deck
     {
         copies = new Tuple<Card?, int>(new Card { rank = card.rank, suit = card.suit }, copies.Item2);
     }
-
-    public void AddRemovedSpecificCard(Card.Rank rank, Card.Suit suit)
+    
+    public void AddCardCopies(Card card, int copyNumber)
     {
-        if(!removedSpecificCards.Contains((rank, suit)))
-        {
-            removedSpecificCards.Add((rank, suit));
-        }
-    }
-
-    public void AddPermanentCard(Card.Rank rank, Card.Suit suit)
-    {
-        Card newCard = new Card { rank = rank, suit = suit };
-
-        permanentAddedCards.Add(newCard);
+        copies = new Tuple<Card?, int>(new Card { rank = card.rank, suit = card.suit }, copyNumber);
     }
     
     public static Card.Rank GetRankForValue(int value)

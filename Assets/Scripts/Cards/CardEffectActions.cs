@@ -37,6 +37,5 @@ public class CardEffectActions
     {
         cursorDetection.OnUseCardItem(blackjackGame, cardTrigger);
         cursorDetection.AddActionToClickableCards(cardEffect);
-        // cursorDetection.RemoveCardEffectOnClick(cardEffect);
     }
 }

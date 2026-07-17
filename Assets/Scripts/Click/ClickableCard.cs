@@ -41,30 +41,4 @@ public class ClickableCard : Clickable
         if(cardInstance != null && cardInstance.cardData.suit == Card.Suit.Tarot)
             blackjackGame.SacrificeTarot(cardInstance);
     }
-
-    public void OnAntiMatterCard()
-    {
-        AudioManager.instance.Play("ItemBuy");
-
-        blackjackGame.ApplyAntiMatterToCard(cardInstance);
-
-        bool isNowNegative = blackjackGame.IsCardNegative(cardInstance.cardData);
-
-        cardInstance.displayComponent.SetNegativeVisual(isNowNegative);
-        blackjackGame.isAntiMatterTargeting = false;
-        blackjackGame.UpdateUI(true);
-    }
-
-    public void OnPyroCard()
-    {
-        AudioManager.instance.Play("ItemBuy");
-
-        blackjackGame.ApplyPyroToCard(cardInstance);
-        blackjackGame.isPyroTargeting = false;
-    }
-
-    public void OnHatTrickCard()
-    {
-        blackjackGame.TryHatTrickCard(cardInstance);
-    }
 }

@@ -45,65 +45,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BlackjackGame
   itemManager: {fileID: 0}
+  shopManager: {fileID: 0}
   cursorDetection: {fileID: 0}
-  cursorFollowManager: {fileID: 0}
+  cursorFollow: {fileID: 0}
   dialogueSystem: {fileID: 0}
   eventManager: {fileID: 0}
+  gameCamera: {fileID: 0}
   betUpCollider: {fileID: 0}
   betDownCollider: {fileID: 0}
   riggedRoundsLimit: 5
+  isSplitting: 0
+  isActionLocked: 0
   canDoubleDown: 0
   isRoundActive: 0
-  isOrganActive: 0
-  isAntiMatterTargeting: 0
-  isPyroTargeting: 0
-  isHatTrickTargeting: 0
   tutorialRoundsLimit: 0
   playerMoney: 500
   percentagePriceThreshold: 10000
   minBet: 100
   betStep: 100
-  cinemachineBrain: {fileID: 0}
-  sittingCamera: {fileID: 0}
-  playingCamera: {fileID: 0}
-  eventCamera: {fileID: 0}
-  noise: {fileID: 0}
-  cameraTransitionTime: 0.5
   moneyText: {fileID: 0}
   betText: {fileID: 0}
   statusText: {fileID: 0}
   dealerTotalText: {fileID: 0}
   rouletteText: {fileID: 0}
-  ChangeProgressText:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ProgressDisplay, Assembly-CSharp
-        m_MethodName: DisplayNextMilestone
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  UpdatePowerballGoal:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ProgressDisplay, Assembly-CSharp
-        m_MethodName: UpdatePowerballGoal
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  leavebutton: {fileID: 0}
+  staybutton: {fileID: 0}
   standHandAnimator: {fileID: 0}
   hitHandAnimator: {fileID: 0}
   buttonAnimator: {fileID: 0}
@@ -111,10 +77,8 @@ MonoBehaviour:
   redParticlePrefab: {fileID: 3089716248877472652, guid: a551cd01744a1dc4f95b1369b03f87bb, type: 3}
   particleSpawnPoint: {fileID: 0}
   smokeParticle: {fileID: 0}
-  distortion: {fileID: 0}
   bottleAnimation: {fileID: 0}
-  scissorsFollow: {fileID: 0}
-  acidFollow: {fileID: 0}
+  peekedCardObject: {fileID: 0}
   cardPrefabs:
   - rank: 1
     suit: 0
@@ -336,5 +300,6 @@ MonoBehaviour:
   dealerCardPosition: {fileID: 0}
   sunglassesCardPosition: {fileID: 0}
   deckPosition: {fileID: 0}
-  playerCardOffset: {x: 0.03, y: 0.034}
-  dealerCardHorizontalSpacing: 0.13
+  playerCardsOffset: {x: 0.03, y: 0.034, z: -0.001}
+  dealerCardsOffset: {x: 0.13, y: 0, z: -0.001}
+  activeCardObjects: []
