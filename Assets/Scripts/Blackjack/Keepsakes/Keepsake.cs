@@ -94,4 +94,13 @@ public abstract class Keepsake : ScriptableObject
     {
         return false;
     }
+
+    public virtual void ApplyInheritance(BlackjackGame game)
+    {
+    }
+
+    public virtual string GetDescription()
+    {
+        return description;
+    }
 }
