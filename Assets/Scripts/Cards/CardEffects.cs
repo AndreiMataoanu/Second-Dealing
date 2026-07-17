@@ -49,8 +49,8 @@ public static class CardEffects
     
     private static void SetDoubledVisual(CardDisplay cardDisplay, bool active) => cardDisplay.SetDoubledVisual(active);
     
-    public static Coroutine SetDissolvedVisual(CardDisplay cardDisplay, float dissolveTime, Color color) 
-        => cardDisplay.StartCoroutine(cardDisplay.SetDissolvedVisual(dissolveTime, color));
+    public static Coroutine SetDissolvedVisual(CardDisplay cardDisplay, float dissolveTime, Color color,float border) 
+        => cardDisplay.StartCoroutine(cardDisplay.SetDissolvedVisual(dissolveTime, color, border));
 
     #endregion
 

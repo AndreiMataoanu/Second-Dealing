@@ -7,6 +7,7 @@ public class Pyro : Keepsake
     public static bool isPyroActive;
     public float burnTime = 3f;
     public Color burnColor = Color.darkRed;
+    public float burnBorder = -0.5f;
     private CardEffectActions cardEffect;
     private BlackjackGame game;
     private int usesThisRound = 0;
@@ -61,7 +62,7 @@ public class Pyro : Keepsake
     private void OnBurnCard(CardInstance cardInstance)
     {
         AudioManager.instance.Play("ItemBuy");
-        CardEffects.SetDissolvedVisual(cardInstance.displayComponent, burnTime, burnColor);
+        CardEffects.SetDissolvedVisual(cardInstance.displayComponent, burnTime, burnColor,burnBorder);
         cardEffect.OnCardSelected();
         game.StartCoroutine(DissolveCard(cardInstance));
         isPyroActive = false;
