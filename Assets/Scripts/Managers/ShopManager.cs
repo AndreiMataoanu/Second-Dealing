@@ -7,6 +7,9 @@ using Random = UnityEngine.Random;
 
 public class ShopManager : MonoBehaviour
 {
+    private ShopState state = ShopState.Closed;
+    public ShopState State => state;
+
     [Header("Item")]
     [SerializeField] private List<GameObject> buySpawnPoints;
     [SerializeField] private List<GameObject> useSpawnPoints;
@@ -43,7 +46,7 @@ public class ShopManager : MonoBehaviour
 
     #region Open Shop
 
-    public void SpawnPowerUps()
+    private void SpawnPowerUps()
     {
         foreach (var buySpawnPoint in buySpawnPoints.ToList())
         {
@@ -97,10 +100,9 @@ public class ShopManager : MonoBehaviour
     public void OnCloseShop()
     {
         OrganBagItem.isInShop = false;
-        if (inventoryItemCount != buySpawnPoints.Count) return;
-        
-        DespawnShopItems();
-        StartCoroutine(SuitcaseCloseCoroutine());
+        if (state != ShopState.Open || ItemsInShop() && inventoryItemCount != buySpawnPoints.Count) return;
+
+        StartCoroutine(DespawnCoroutine());
     }
 
     public void DespawnShopItems()
@@ -110,20 +112,26 @@ public class ShopManager : MonoBehaviour
     
     private IEnumerator DespawnCoroutine()
     {
-        StartCoroutine(SuitcaseCloseCoroutine());
+        state = ShopState.Closing;
 
-        yield return null;
+        AudioManager.instance.Play("SuitcaseClose");
+        yield return new WaitForSeconds(0.6f);
+        suitcaseAnimator.Play("Suitcase_Closing");
+
         yield return new WaitForSeconds(suitcaseAnimator.GetCurrentAnimatorStateInfo(0).length);
-
-        foreach(var spawnPoint in buySpawnPoints)
+        if(ItemsInShop())
         {
-            if(spawnPoint.transform.childCount > 0)
+            foreach(var spawnPoint in buySpawnPoints)
             {
-                Destroy(spawnPoint.transform.GetChild(0).gameObject);
+                if(spawnPoint.transform.childCount > 0)
+                {
+                    Destroy(spawnPoint.transform.GetChild(0).gameObject);
+                }
             }
         }
-
         ResetShopPrices();
+
+        state = ShopState.Closed;
     }
 
     #endregion
@@ -260,30 +268,37 @@ public class ShopManager : MonoBehaviour
     
     public void PlaySuitcaseOpen()
     {
-        if (itemPrefabs == null || itemPrefabs.Count == 0 || inventoryItemCount == useSpawnPoints.Count) return;
+        if (state != ShopState.Closed || inventoryItemCount == buySpawnPoints.Count)
+            return;
 
         StartCoroutine(SuitcaseOpenCoroutine());
-        SpawnPowerUps();
     }
     
     private IEnumerator SuitcaseOpenCoroutine()
     {
+        SpawnPowerUps();
+        state = ShopState.Opening;
         suitcaseAnimator.Play("Suitcase_Opening");
 
         yield return new WaitForSeconds(0.2f);
 
         AudioManager.instance.Play("Latch");
         AudioManager.instance.Play("SuitcaseOpen");
-    }
-
-    private IEnumerator SuitcaseCloseCoroutine()
-    {
-        AudioManager.instance.Play("SuitcaseClose");
-
-        yield return new WaitForSeconds(0.6f);
-
-        suitcaseAnimator.Play("Suitcase_Closing");
+        state = ShopState.Open;
     }
     
     #endregion
+
+    private bool ItemsInShop()
+    {
+        int items = 0;
+        
+        foreach (var spawnPoint in buySpawnPoints)
+            if(spawnPoint.transform.childCount > 0) items++;
+        
+        if(items == 0) return false;    
+
+        return true;
+    }
+
 }
