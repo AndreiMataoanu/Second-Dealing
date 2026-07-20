@@ -8,7 +8,6 @@ using Random = UnityEngine.Random;
 public class ShopManager : MonoBehaviour
 {
     private ShopState state = ShopState.Closed;
-    private Coroutine shopRoutine;
     public ShopState State => state;
 
     [Header("Item")]
@@ -47,9 +46,8 @@ public class ShopManager : MonoBehaviour
 
     #region Open Shop
 
-    public void SpawnPowerUps()
+    private void SpawnPowerUps()
     {
-        Debug.Log(buySpawnPoints.Count);
         foreach (var buySpawnPoint in buySpawnPoints.ToList())
         {
             var prefab = GetWeightedRandomPrefab();
@@ -102,9 +100,9 @@ public class ShopManager : MonoBehaviour
     public void OnCloseShop()
     {
         OrganBagItem.isInShop = false;
-         if (state != ShopState.Open || ItemsInShop() == true && inventoryItemCount != buySpawnPoints.Count) return;
+        if (state != ShopState.Open || ItemsInShop() && inventoryItemCount != buySpawnPoints.Count) return;
 
-            shopRoutine = StartCoroutine(DespawnCoroutine());
+        StartCoroutine(DespawnCoroutine());
     }
 
     public void DespawnShopItems()
@@ -121,7 +119,7 @@ public class ShopManager : MonoBehaviour
         suitcaseAnimator.Play("Suitcase_Closing");
 
         yield return new WaitForSeconds(suitcaseAnimator.GetCurrentAnimatorStateInfo(0).length);
-        if(ItemsInShop() == true)
+        if(ItemsInShop())
         {
             foreach(var spawnPoint in buySpawnPoints)
             {
@@ -134,7 +132,6 @@ public class ShopManager : MonoBehaviour
         ResetShopPrices();
 
         state = ShopState.Closed;
-        shopRoutine = null;
     }
 
     #endregion
@@ -272,9 +269,9 @@ public class ShopManager : MonoBehaviour
     public void PlaySuitcaseOpen()
     {
         if (state != ShopState.Closed || inventoryItemCount == buySpawnPoints.Count)
-        return;
+            return;
 
-        shopRoutine = StartCoroutine(SuitcaseOpenCoroutine());
+        StartCoroutine(SuitcaseOpenCoroutine());
     }
     
     private IEnumerator SuitcaseOpenCoroutine()
@@ -288,29 +285,20 @@ public class ShopManager : MonoBehaviour
         AudioManager.instance.Play("Latch");
         AudioManager.instance.Play("SuitcaseOpen");
         state = ShopState.Open;
-        shopRoutine = null;
     }
     
     #endregion
 
-    public bool ItemsInShop()
+    private bool ItemsInShop()
     {
         int items = 0;
-        foreach(var spawnPoint in buySpawnPoints)
-        {
-            if(spawnPoint.transform.childCount >0)
-            {
-                items++;
-            }
-        }
-        if(items == 0)
-        {
-            return false;    
-        }
-        else
-        {
-            return true;    
-        }
+        
+        foreach (var spawnPoint in buySpawnPoints)
+            if(spawnPoint.transform.childCount > 0) items++;
+        
+        if(items == 0) return false;    
+
+        return true;
     }
 
 }
