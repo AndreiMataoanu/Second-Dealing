@@ -4,13 +4,12 @@ using UnityEngine;
 
 public enum CardTrigger
 {
-    None,
     Acid,
     Scissors,
     AddCardsEvent,
     AntiMatter,
     Pyro,
-    HatTrick
+    HatTrick,
 }
 
 public class CursorDetection : MonoBehaviour
@@ -22,6 +21,7 @@ public class CursorDetection : MonoBehaviour
     [SerializeField] private Transform cardOptions;
 
     private List<Clickable> cardClickables;
+    private List<Clickable> tarotClickables = new();
 
     private void Awake()
     {
@@ -72,11 +72,13 @@ public class CursorDetection : MonoBehaviour
 
     private void SetClickables(List<Clickable> clickables, bool isActive)
     {
-        foreach (var clickable in clickables)
-        {
-            clickable.SetActive(isActive);
-            clickable.OnRemoveOutline();
-        }
+        clickables.ForEach(clickable => SetClickable(clickable, isActive));
+    }
+
+    private void SetClickable(Clickable clickable, bool isActive)
+    {
+        clickable.SetActive(isActive);
+        clickable.OnRemoveOutline();
     }
 
     #region Clickable Cards
@@ -93,6 +95,7 @@ public class CursorDetection : MonoBehaviour
         AddAllClickableCards(blackjackGame, cardTrigger);
         SetClickables(cardClickables, true);
         SetClickables(roundActiveClickables, false);
+        SetClickables(tarotClickables, false);
     }
 
     private void AddAllClickableCards(BlackjackGame blackjackGame, CardTrigger cardTrigger)
@@ -107,35 +110,37 @@ public class CursorDetection : MonoBehaviour
         foreach(Transform card in cardsTransform)
         {
             var cardDisplay = card.GetComponent<CardDisplay>();
-            var face = card.transform.GetChild(0);
+            var clickableCard = card.GetComponentInChildren<ClickableCard>();
 
-            if(face)
+            if(clickableCard)
             {
-                var clickableCard = face.GetComponent<ClickableCard>();
+                var cardInstance = cardDisplay.GetCardInstance();
+                if (cardTrigger == CardTrigger.Scissors && CardEffects.IsCardCut(cardInstance)) continue;
+                if (cardInstance.tarotData) continue;
+                
+                clickableCard.SetCardInstance(cardInstance);
+                clickableCard.SetBlackjackGame(blackjackGame);
+                clickableCard.AddCardAction(OnClickCard);
+                AddCardAction(blackjackGame, clickableCard, cardTrigger);
+                clickableCard.AddCardAction(ReactivateClickables);
 
-                if(clickableCard)
-                {
-                    if(cardTrigger == CardTrigger.Scissors && CardEffects.IsCardCut(cardDisplay.GetCardInstance())) continue;
-
-                    clickableCard.SetCardInstance(cardDisplay.GetCardInstance());
-                    clickableCard.SetBlackjackGame(blackjackGame);
-                    clickableCard.AddCardAction(OnClickCard);
-                    AddCardAction(blackjackGame, clickableCard, cardTrigger);
-                    clickableCard.AddCardAction(ReactivateClickables);
-
-                    cardClickables.Add(clickableCard);
-                }
+                cardClickables.Add(clickableCard);
             }
         }
     }
 
-    public void AddActionToClickableCards(Action<CardInstance> cardAction)
+    private void AddActionToClickableCards(Action<CardInstance> cardAction, List<Clickable> clickableList)
     {
-        foreach (var clickable in cardClickables)
+        foreach (var clickable in clickableList)
         {
             var card = (ClickableCard)clickable;
             card.AddCardEffect(cardAction);
         }
+    }
+    
+    public void AddActionToClickableCards(Action<CardInstance> cardAction)
+    {
+        AddActionToClickableCards(cardAction, cardClickables);
     }
 
     // TODO: shouldn't need blackjack game
@@ -169,23 +174,54 @@ public class CursorDetection : MonoBehaviour
     public void AddRoundActiveClickable(Clickable clickable)
     {
         if(!roundActiveClickables.Contains(clickable))
-        {
             roundActiveClickables.Add(clickable);
-        }
     }
 
-    // TODO: remove methods
     public void RemoveRoundActiveClickable(Clickable clickable)
     {
-        if(roundActiveClickables.Contains(clickable))
-        {
-            roundActiveClickables.Remove(clickable);
-        }
+        roundActiveClickables.Remove(clickable);
     }
 
-    private void ReactivateClickables() => SetClickables(roundActiveClickables, true);
     #endregion
 
+    #region Clickable Tarot Cards
+
+    public void ResetTarotClickables()
+    {
+        SetClickables(tarotClickables, false);
+        tarotClickables = new List<Clickable>();
+    }
+
+    public ClickableCard AddTarotClickable(BlackjackGame blackjackGame, CardInstance cardInstance)
+    {
+        ClickableCard clickableCard = cardInstance.CardObject.GetComponentInChildren<ClickableCard>();
+        
+        if (!clickableCard || !cardInstance.tarotData || !cardInstance.tarotData.rewardItemPrefab) return null;
+                    
+        clickableCard.SetCardInstance(cardInstance);
+        clickableCard.SetBlackjackGame(blackjackGame);
+        clickableCard.AddCardAction(() => tarotClickables.Remove(clickableCard));
+
+        SetClickable(clickableCard, true);
+        tarotClickables.Add(clickableCard);
+
+        return clickableCard;
+    }
+    
+    private void ReactivateClickables()
+    {
+        SetClickables(roundActiveClickables, true);
+        SetClickables(tarotClickables, true);
+    }
+
+    public void SetCardActive(CardInstance cardInstance, bool isActive)
+    {
+        var clickableCard = cardInstance.CardObject.GetComponentInChildren<ClickableCard>();
+        SetClickable(clickableCard, isActive);
+    }
+    
+    #endregion
+    
     #region Getters
     public Transform GetCardOptionsPosition() => cardOptions;
     #endregion

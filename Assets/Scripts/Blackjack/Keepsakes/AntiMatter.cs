@@ -38,7 +38,7 @@ public class AntiMatter : Keepsake
 
     #region Activate AntiMatter
 
-    public override bool ActivateTableEffect(BlackjackGame game)
+    public override bool ActivateTableEffect()
     {
         if(usesThisRound >= 1) return false;
 

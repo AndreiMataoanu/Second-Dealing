@@ -40,9 +40,22 @@ public abstract class Keepsake : ScriptableObject
     {
     }
 
-    public virtual bool ActivateTableEffect(BlackjackGame game)
+    public virtual void OnDealPlayerCard(CardInstance cardInstance)
+    {
+    }
+
+    public virtual void OnAdvanceHand()
+    {
+    }
+
+    public virtual bool ActivateTableEffect()
     {
         return false;
+    }
+
+    public virtual void Deactivate()
+    {
+        
     }
 
     public virtual int ModifyPayout(int originalPayout, List<List<CardInstance>> allHands)

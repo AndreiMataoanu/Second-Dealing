@@ -592,19 +592,31 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 826400919}
     - target: {fileID: 3107838438023376873, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
+      propertyPath: cardTransforms.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3107838438023376873, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
       propertyPath: 'cardTransforms.Array.data[0]'
       value: 
       objectReference: {fileID: 132275048}
     - target: {fileID: 3107838438023376873, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
       propertyPath: 'cardTransforms.Array.data[1]'
       value: 
-      objectReference: {fileID: 743592358}
+      objectReference: {fileID: 1514633687}
     - target: {fileID: 3107838438023376873, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
       propertyPath: 'cardTransforms.Array.data[2]'
       value: 
-      objectReference: {fileID: 1514633687}
+      objectReference: {fileID: 907230615}
     - target: {fileID: 3107838438023376873, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
       propertyPath: 'cardTransforms.Array.data[3]'
+      value: 
+      objectReference: {fileID: 407435438}
+    - target: {fileID: 3107838438023376873, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
+      propertyPath: 'cardTransforms.Array.data[4]'
+      value: 
+      objectReference: {fileID: 743592358}
+    - target: {fileID: 3107838438023376873, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}
+      propertyPath: 'cardTransforms.Array.data[5]'
       value: 
       objectReference: {fileID: 1934868213}
     - target: {fileID: 3107838438023376873, guid: a1939d4bd1ce0e043a40a72a064a826c, type: 3}

@@ -1,4 +1,5 @@
 using Managers;
+using UnityEngine;
 
 public class ScissorsItem : Item
 {
@@ -12,6 +13,8 @@ public class ScissorsItem : Item
 
     private bool ActivateScissors()
     {
+        Debug.Log("scissors" + !blackjackGame.isRoundActive + " " + blackjackGame.CheckItemAfterStand() + " " + isScissorsActive);
+
         if(!blackjackGame.isRoundActive || isScissorsActive || blackjackGame.CheckItemAfterStand()) return false;
 
         isScissorsActive = true;

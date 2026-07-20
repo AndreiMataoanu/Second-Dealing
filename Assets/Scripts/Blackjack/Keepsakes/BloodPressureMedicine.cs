@@ -11,5 +11,5 @@ public class BloodPressureMedicine : Keepsake
         return game.ActivateBpMedicine();
     }
 
-    public void Deactivate() => blackjackGame.DeactivateBpMedicine();
+    public override void Deactivate() => blackjackGame.DeactivateBpMedicine();
 }

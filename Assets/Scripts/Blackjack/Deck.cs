@@ -24,7 +24,7 @@ public class Deck
 
         foreach(Card.Suit s in Enum.GetValues(typeof(Card.Suit)))
         {
-            if(s == Card.Suit.Tarot && !KeepsakeManager.instance.AddTarotCards()) continue;
+            if(s == Card.Suit.Tarot && !Tarot.isTarotActive) continue;
 
             if(removedSuits.Contains(s)) continue;
 
@@ -135,6 +135,33 @@ public class Deck
 
         return null;
     }
+    
+    public Card DealSpecificCard(Card.Suit suit)
+    {
+        Card dealtCard = default;
+        
+        int cardIndex = -1;
+
+        for(int i = 0; i < cards.Count; i++)
+        {
+            if(cards[i].suit == suit)
+            {
+                dealtCard = cards[i];
+                cardIndex = i;
+
+                break;
+            }
+        }
+
+        if(cardIndex != -1)
+        {
+            cards.RemoveAt(cardIndex);
+
+            return dealtCard;
+        }
+
+        return DealCard();
+    }
 
     public void AddRemovedValue(Card.Rank rank)
     {
@@ -192,27 +219,5 @@ public class Deck
     public void AddCardCopies(Card card, int copyNumber)
     {
         copies = new Tuple<Card?, int>(new Card { rank = card.rank, suit = card.suit }, copyNumber);
-    }
-    
-    public static Card.Rank GetRankForValue(int value)
-    {
-        if(value >= 11 || value == 1)
-        {
-            return Card.Rank.Ace;
-        }
-
-        switch(value)
-        {
-            case 10: return Card.Rank.Ten;
-            case 9: return Card.Rank.Nine;
-            case 8: return Card.Rank.Eight;
-            case 7: return Card.Rank.Seven;
-            case 6: return Card.Rank.Six;
-            case 5: return Card.Rank.Five;
-            case 4: return Card.Rank.Four;
-            case 3: return Card.Rank.Three;
-            case 2: return Card.Rank.Two;
-            default: return Card.Rank.None;
-        }
     }
 }

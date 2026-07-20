@@ -16,6 +16,7 @@ public class AlcoholItem : Item
     
     private bool ActivateAlcohol()
     {
+        Debug.Log("alcohol" +!blackjackGame.isRoundActive + " " + blackjackGame.CheckItemAfterStand() + " " + isAlcoholActive);
         if(!blackjackGame.isRoundActive || blackjackGame.CheckItemAfterStand() || isAlcoholActive) return false;
     
         isAlcoholActive = true;
@@ -43,7 +44,6 @@ public class AlcoholItem : Item
     public override void OnRoundEnd()
     {
         if (!isAlcoholActive) return;
-        isAlcoholActive = false;
         blackjackGame.GameCamera.UseClearVision();
         blackjackGame.ItemManager.AddItemToRemove(this);
     }

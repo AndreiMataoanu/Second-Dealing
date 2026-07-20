@@ -20,4 +20,26 @@ public struct Card
     {
         return $"{rank} of {suit}";
     }
+
+    public static Rank GetRankForValue(int value)
+    {
+        if(value >= 11 || value == 1)
+        {
+            return Rank.Ace;
+        }
+
+        switch(value)
+        {
+            case 10: return Rank.Ten;
+            case 9: return Rank.Nine;
+            case 8: return Rank.Eight;
+            case 7: return Rank.Seven;
+            case 6: return Rank.Six;
+            case 5: return Rank.Five;
+            case 4: return Rank.Four;
+            case 3: return Rank.Three;
+            case 2: return Rank.Two;
+            default: return Rank.None;
+        }
+    }
 }

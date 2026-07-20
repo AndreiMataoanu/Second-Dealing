@@ -37,11 +37,9 @@ public class KeepsakeManager : MonoBehaviour
 
     public void UnequipKeepsake(Keepsake keepsake)
     {
-        BloodPressureMedicine bpm = keepsake as BloodPressureMedicine;
-        if (bpm) bpm.Deactivate();
-        
         if(equippedKeepsakes.Remove(keepsake))
         {
+            keepsake.Deactivate();
             UpdateTableVisuals();
         }
     }
@@ -102,6 +100,16 @@ public class KeepsakeManager : MonoBehaviour
 
             interactable.ResetUse();
         }
+    }
+
+    public void OnDealPlayerCard(CardInstance cardInstance)
+    {
+        equippedKeepsakes.ForEach(keepsake => keepsake.OnDealPlayerCard(cardInstance));
+    }
+
+    public void OnAdvanceHand()
+    {
+        equippedKeepsakes.ForEach(keepsake => keepsake.OnAdvanceHand());
     }
 
     public bool AllowAnySplit()
@@ -170,16 +178,6 @@ public class KeepsakeManager : MonoBehaviour
 
                 return true;
             }
-        }
-
-        return false;
-    }
-
-    public bool AddTarotCards()
-    {
-        foreach(var keepsake in equippedKeepsakes)
-        {
-            if(keepsake.AddTarotCards()) return true;
         }
 
         return false;
