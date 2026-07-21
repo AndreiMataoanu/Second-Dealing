@@ -1051,10 +1051,12 @@ public class BlackjackGame : MonoBehaviour
             peekCardInstance = null;
         }
         
-        KeepsakeManager.instance.OnDealPlayerCard(newCardInstance);
         AudioManager.instance.Play("CardHit");
 
         yield return PlaceCardInHand(newCardInstance, currentHand, currentParent, playerCardsOffset);
+        
+        KeepsakeManager.instance.OnDealPlayerCard(newCardInstance);
+        
         UpdateHandVisuals(currentHand, true);
         UpdateSplitOutlines();
         deckPosition.position = savedPosition;

@@ -200,11 +200,6 @@ public class CursorDetection : MonoBehaviour
                     
         clickableCard.SetCardInstance(cardInstance);
         clickableCard.SetBlackjackGame(blackjackGame);
-        clickableCard.AddCardAction(() =>
-        {
-            clickableCard.SetActive(false);
-            tarotClickables.Remove(clickableCard);
-        });
 
         SetClickable(clickableCard, true);
         tarotClickables.Add(clickableCard);
