@@ -1036,7 +1036,7 @@ public class BlackjackGame : MonoBehaviour
 
         if(!cardFound)
         {
-            newCardData = gameDeck.DealSpecificCard(Card.Suit.Tarot);
+            newCardData = gameDeck.DealCard();
         }
 
         Transform currentParent = handPositions[currentHandIndex];
