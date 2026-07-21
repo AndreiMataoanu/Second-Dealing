@@ -31,16 +31,13 @@ public class ItemManager : MonoBehaviour
     {
         foreach (var item in shopManager.InventoryItems)
         {
+            item.RemoveAction(OnSell);
+            item.RemoveAction(Activate);
+
             if (isRoundActive)
-            {
-                item.RemoveAction(OnSell);
                 item.AddAction(Activate);
-            }
             else
-            {
                 item.AddAction(OnSell);
-                item.RemoveAction(Activate);
-            }
         }
     }
     
@@ -59,7 +56,6 @@ public class ItemManager : MonoBehaviour
     {
         if(!item.Activate())
         {
-            Debug.Log("deny item " + item.name);
             if(item.type != ItemType.Organ) 
                 AudioManager.instance.Play("ItemDeny");
             return;
@@ -134,7 +130,6 @@ public class ItemManager : MonoBehaviour
         var item = shopManager.SpawnItemInventory(rewardPrefab);
         if (!item)
         {
-            Debug.Log("spawn no item");
             AudioManager.instance.Play("ItemDeny");
             return false;
         }

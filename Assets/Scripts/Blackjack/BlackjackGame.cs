@@ -823,7 +823,7 @@ public class BlackjackGame : MonoBehaviour
     }
 
     //Locks the bet and starts the round
-    public IEnumerator DealRoundCoroutine()
+    private IEnumerator DealRoundCoroutine()
     {
         if(!tutorialCompleted)
         {
@@ -1313,7 +1313,6 @@ public class BlackjackGame : MonoBehaviour
         if(currentHandIndex >= playerHands.Count)
         {
              yield return dealToDealerCoroutine = StartCoroutine(DealerTurnCoroutine());
-             // itemManager.OnRoundEnd();
         }
         else
         {
@@ -1322,7 +1321,7 @@ public class BlackjackGame : MonoBehaviour
             isActionLocked = false;
 
             EvaluateDoubleDownCondition();
-            UpdateUI(true);
+            UpdateUI();
             UpdateSplitOutlines();
         }
         

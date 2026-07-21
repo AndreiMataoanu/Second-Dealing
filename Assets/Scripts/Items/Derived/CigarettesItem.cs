@@ -6,8 +6,6 @@ public class CigarettesItem : Item
     
     private bool ActivateCigarette()
     {
-        Debug.Log("cig" +!blackjackGame.isRoundActive + " " + blackjackGame.CheckItemAfterStand() + " " + isCigaretteActive + " " + blackjackGame.isSplitting);
-
         if(!blackjackGame.isRoundActive || blackjackGame.CheckItemAfterStand() 
                                         || isCigaretteActive 
                                         || blackjackGame.isSplitting) return false;

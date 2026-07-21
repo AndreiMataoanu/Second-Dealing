@@ -62,12 +62,14 @@ public class CursorDetection : MonoBehaviour
     {
         SetClickables(roundActiveClickables, false);
         SetClickables(roundInactiveClickables, true);
+        SetClickables(tarotClickables, false);
     }
 
     public void OnDealerTurn()
     {
         SetClickables(roundActiveClickables, false);
         SetClickables(roundInactiveClickables, false);
+        SetClickables(tarotClickables, false);
     }
 
     private void SetClickables(List<Clickable> clickables, bool isActive)
@@ -155,16 +157,18 @@ public class CursorDetection : MonoBehaviour
         }
     }
     
-    private void OnClickCard()
+    private void OnClickCard() => ResetClickables(cardClickables);
+
+    private void ResetClickables(List<Clickable> clickables)
     {
-        RemoveCardEffects();
-        SetClickables(cardClickables, false);
-        cardClickables.RemoveAll(_ => true);
+        RemoveCardEffects(clickables);
+        SetClickables(clickables, false);
+        clickables.RemoveAll(_ => true);
     }
 
-    private void RemoveCardEffects()
+    private void RemoveCardEffects(List<Clickable> clickableCards)
     {
-        foreach(var clickable in cardClickables)
+        foreach(var clickable in clickableCards)
         {
             var cardClickable = clickable as ClickableCard;
             cardClickable?.RemoveCardEffect();
@@ -186,11 +190,7 @@ public class CursorDetection : MonoBehaviour
 
     #region Clickable Tarot Cards
 
-    public void ResetTarotClickables()
-    {
-        SetClickables(tarotClickables, false);
-        tarotClickables = new List<Clickable>();
-    }
+    public void ResetTarotClickables() => ResetClickables(tarotClickables);
 
     public ClickableCard AddTarotClickable(BlackjackGame blackjackGame, CardInstance cardInstance)
     {

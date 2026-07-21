@@ -16,7 +16,6 @@ public class AlcoholItem : Item
     
     private bool ActivateAlcohol()
     {
-        Debug.Log("alcohol" +!blackjackGame.isRoundActive + " " + blackjackGame.CheckItemAfterStand() + " " + isAlcoholActive);
         if(!blackjackGame.isRoundActive || blackjackGame.CheckItemAfterStand() || isAlcoholActive) return false;
     
         isAlcoholActive = true;
