@@ -44,10 +44,8 @@ public class ItemManager : MonoBehaviour
     private void OnBuy(Item item)
     {
         if (!shopManager.CanBuyItem(item)) return;
-
         item.RemoveAction(OnBuy);
         item.AddAction(OnSell);
-        
         shopManager.AddToInventory(item);
         shopManager.OnCloseShop();
     }
@@ -76,13 +74,18 @@ public class ItemManager : MonoBehaviour
 
     private void OnSell(Item item)
     {
-        blackjackGame.SellItem(item.GetResalePrice());
-        
-        AudioManager.instance.Play("ItemBuy");
-        
-        shopManager.RemoveFromInventory(item);
-
-        shopManager.PlaySuitcaseOpen();
+        if(shopManager.State == ShopState.Open || shopManager.State == ShopState.Closed)
+        {
+            blackjackGame.SellItem(item.GetResalePrice());
+            
+            AudioManager.instance.Play("ItemBuy");
+            
+            shopManager.RemoveFromInventory(item); 
+        }
+        if(shopManager.State == ShopState.Closed)
+        {
+            shopManager.PlaySuitcaseOpen();   
+        }
     }
     
     #endregion
