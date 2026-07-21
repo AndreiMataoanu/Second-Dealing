@@ -21,7 +21,7 @@ public class CursorDetection : MonoBehaviour
     [SerializeField] private Transform cardOptions;
 
     private List<Clickable> cardClickables;
-    private List<Clickable> tarotClickables = new();
+    public List<Clickable> tarotClickables = new();
 
     private void Awake()
     {
@@ -200,7 +200,11 @@ public class CursorDetection : MonoBehaviour
                     
         clickableCard.SetCardInstance(cardInstance);
         clickableCard.SetBlackjackGame(blackjackGame);
-        clickableCard.AddCardAction(() => tarotClickables.Remove(clickableCard));
+        clickableCard.AddCardAction(() =>
+        {
+            clickableCard.SetActive(false);
+            tarotClickables.Remove(clickableCard);
+        });
 
         SetClickable(clickableCard, true);
         tarotClickables.Add(clickableCard);
