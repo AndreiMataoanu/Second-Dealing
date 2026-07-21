@@ -1,18 +1,22 @@
 using Managers;
 using UnityEngine;
 using System.Collections;
+
 [CreateAssetMenu(fileName = "Pyro", menuName = "Keepsakes/Pyro")]
 public class Pyro : Keepsake
 {
-    public static bool isPyroActive;
+    [Header("Fire VFX")]
+    [SerializeField] private ParticleSystem fireParticlePrefab;
     public float burnTime = 3f;
     public Color burnColor = Color.darkRed;
     public float burnBorder = 1.3f;
+    
+    public static bool isPyroActive;
+    
     private CardEffectActions cardEffect;
     private BlackjackGame game;
     private int usesThisRound = 0;
-    [Header("Fire VFX")]
-    [SerializeField] private ParticleSystem fireParticlePrefab;
+
     #region Setup
 
     private void OnEnable()
@@ -76,7 +80,6 @@ public class Pyro : Keepsake
         yield return new WaitForSeconds(burnTime);
         
         var cardObject = cardInstance.displayComponent.gameObject;
-         var fx = cardObject.GetComponentInChildren<ParticleSystem>();
         CardEffects.RemoveCutCard(cardInstance);
         CardEffects.RemoveAlcoholCard(cardInstance);
         game.activeCardObjects.Remove(cardObject);
@@ -105,13 +108,17 @@ public class Pyro : Keepsake
     }
 
     #endregion
-    private ParticleSystem SpawnBurnParticles(Transform cardTransform)
+    
+    #region VFX
+    
+    private void SpawnBurnParticles(Transform cardTransform)
     {
-        if (fireParticlePrefab == null) return null;
+        if (!fireParticlePrefab) return;
 
-        var fx = Instantiate(fireParticlePrefab, cardTransform.position, Quaternion.Inverse(cardTransform.rotation), cardTransform);
+        var fx = Instantiate(fireParticlePrefab, cardTransform.position,
+            Quaternion.Inverse(cardTransform.rotation), cardTransform);
         fx.Play();
-        return fx;
     }
     
+    #endregion
 }
