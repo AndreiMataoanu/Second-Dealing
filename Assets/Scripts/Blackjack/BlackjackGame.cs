@@ -2266,6 +2266,7 @@ public class BlackjackGame : MonoBehaviour
 
         if(!isTutorialActive && PlayerMoney <= 0)
         {
+            CardEffects.Reset();
             PlayerPrefs.SetInt("PreviousRunMoney", maxMoneyThisRun);
             PlayerPrefs.Save();
             KeepsakeUnlockProgression.instance.EndRun();
@@ -2414,7 +2415,7 @@ public class BlackjackGame : MonoBehaviour
         {
             KeepsakeUnlockProgression.instance.AddStat(ChallengeType.Millionaire);
         }
-
+        CardEffects.Reset();
         SceneManager.LoadSceneAsync(2);
     }
     
