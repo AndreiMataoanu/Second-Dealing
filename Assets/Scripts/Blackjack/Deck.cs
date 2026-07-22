@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 public class Deck
 {
     private List<Card> cards = new List<Card>();
+    private List<Card> printedCards = new List<Card>();
     private List<Card.Rank> removedRanks = new List<Card.Rank>();
     private List<Card.Suit> removedSuits = new List<Card.Suit>();
     private List<Tuple<Card.Rank, Card.Suit>> removedCards = new ();
@@ -59,6 +60,8 @@ public class Deck
         var copy = (Card)copies.Item1;
         for(var i = 0; i < copies.Item2; i++)
             cards.Add(new Card{rank = copy.rank, suit = copy.suit});
+
+        cards.AddRange(printedCards);
     }
 
     public void Shuffle()
@@ -219,5 +222,33 @@ public class Deck
     public void AddCardCopies(Card card, int copyNumber)
     {
         copies = new Tuple<Card?, int>(new Card { rank = card.rank, suit = card.suit }, copyNumber);
+    }
+
+    public void AddPrintedCard(Card card)
+    {
+        printedCards.Add(card);
+        cards.Add(card);
+    }
+
+    public static Card.Rank GetRankForValue(int value)
+    {
+        if(value >= 11 || value == 1)
+        {
+            return Card.Rank.Ace;
+        }
+
+        switch(value)
+        {
+            case 10: return Card.Rank.Ten;
+            case 9: return Card.Rank.Nine;
+            case 8: return Card.Rank.Eight;
+            case 7: return Card.Rank.Seven;
+            case 6: return Card.Rank.Six;
+            case 5: return Card.Rank.Five;
+            case 4: return Card.Rank.Four;
+            case 3: return Card.Rank.Three;
+            case 2: return Card.Rank.Two;
+            default: return Card.Rank.None;
+        }
     }
 }
