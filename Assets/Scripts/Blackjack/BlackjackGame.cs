@@ -2416,7 +2416,7 @@ public class BlackjackGame : MonoBehaviour
             KeepsakeUnlockProgression.instance.AddStat(ChallengeType.Millionaire);
         }
         CardEffects.Reset();
-        SceneManager.LoadSceneAsync(2);
+        SceneManager.LoadSceneAsync(4);
     }
     
     public void Stay()
