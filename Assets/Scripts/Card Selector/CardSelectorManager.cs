@@ -5,23 +5,54 @@ public class CardSelectorManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI display;
     [SerializeField] private BlackjackGame blackjackManager;
-    [SerializeField] private GameObject machineContainer;
+    [SerializeField] private GameObject cardSelector;
+    private CardSelectorButton[] selectorButtons;
     private Card.Suit? selectedSuit = null;
     private Card.Rank? selectedRank = null;
     private bool hasPrintedThisTurn = false;
 
-    public void OpenMachine()
+    private void Awake()
+    {
+        selectorButtons = cardSelector.GetComponentsInChildren<CardSelectorButton>(true);
+    }
+
+    private void Start()
+    {
+        cardSelector.SetActive(false);
+    }
+
+    public void OpenCardSelector()
     {
         if(hasPrintedThisTurn) return;
 
-        machineContainer.SetActive(true);
+        blackjackManager.CursorDetection.OnDealerTurn();
+        cardSelector.SetActive(true);
+
+        foreach(var button in selectorButtons)
+        {
+            button.SetActive(true);
+        }
 
         ResetInputs();
     }
 
-    public void CloseMachine()
+    public void CloseCardSelector()
     {
-        machineContainer.SetActive(false);
+        cardSelector.SetActive(false);
+        blackjackManager.CursorDetection.OnRoundActive();
+
+        if(!hasPrintedThisTurn)
+        {
+            TableKeepsakeInteractable[] tableObjects = FindObjectsByType<TableKeepsakeInteractable>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+
+            foreach(var tableObject in tableObjects)
+            {
+                if(tableObject.keepsake is SecondDealing)
+                {
+                    tableObject.ResetUse();
+                }
+            }
+        }
     }
 
     public void SetSuit(int suitIndex)
@@ -54,7 +85,7 @@ public class CardSelectorManager : MonoBehaviour
     {
         Card newCard = new Card { rank = selectedRank.Value, suit = selectedSuit.Value };
 
-        blackjackManager.GameDeck.AddPrintedCard(newCard); //change later
+        //blackjackManager.GameDeck.AddPrintedCard(newCard); //change later
 
         CardInstance instance = blackjackManager.DealCardInstanceOption(newCard, false);
 
@@ -65,7 +96,7 @@ public class CardSelectorManager : MonoBehaviour
 
             AudioManager.instance.Play("CardHit");
 
-            CloseMachine();
+            CloseCardSelector();
         }
         else
         {
@@ -75,20 +106,20 @@ public class CardSelectorManager : MonoBehaviour
 
     private void UpdateScreen()
     {
-        string suitText = selectedSuit.HasValue ? selectedSuit.Value.ToString() : "_";
-        string rankText = selectedRank.HasValue ? selectedRank.Value.ToString() : "_";
+        string suitText = selectedSuit.HasValue ? selectedSuit.Value.ToString() : " ";
+        string rankText = selectedRank.HasValue ? selectedRank.Value.ToString() : " ";
 
-        display.text = $"{suitText} {rankText}";
+        display.text = $"{rankText} {suitText}";
     }
 
     private void ResetInputs()
     {
         selectedSuit = null;
         selectedRank = null;
-        display.text = "INPUT CARD";
+        display.text = "";
     }
 
-    public void OnRoundStart()
+    public void ResetPrinting()
     {
         hasPrintedThisTurn = false;
     }

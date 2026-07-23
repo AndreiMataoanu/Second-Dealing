@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 673a88b1f07ebe94a89c5f41d71e4d3f, type: 3}
-  m_Name: Printer
+  m_Name: SecondDealing
   m_EditorClassIdentifier: Assembly-CSharp::Printer
-  keepsakeName: Printer
-  description: aaa
-  unlockDescription: aaa
-  requiredChallenge: 0
-  requiredTarget: 0
+  keepsakeName: Second Dealing
+  description: Choose one of your cards each round
+  unlockDescription: End a round
+  requiredChallenge: 14
+  requiredTarget: 1
   tablePrefab: {fileID: 2708514875635923006, guid: 48261b546de6d4249884327919cf8ef3, type: 3}
   isActive: 1
