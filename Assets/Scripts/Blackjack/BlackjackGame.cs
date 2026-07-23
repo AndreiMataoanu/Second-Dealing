@@ -65,6 +65,9 @@ public class BlackjackGame : MonoBehaviour
     private bool priceChanged = false;
     private int targetMoneyBalance;
 
+    private int TimesWon;
+    private int TimesLost;
+
     [Header("UI")]
     [SerializeField] private TMPro.TextMeshProUGUI moneyText;
     [SerializeField] private TMPro.TextMeshProUGUI betText;
@@ -83,7 +86,7 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private Transform particleSpawnPoint;
     [SerializeField] private ParticleSystem smokeParticle;
     [SerializeField] public Animator bottleAnimation;
-
+    [SerializeField] private Animator FadeInAnimator;
     public GameObject peekedCardObject = null;
     private const float cardAnimationDuration = 0.25f;
 
@@ -1580,6 +1583,7 @@ public class BlackjackGame : MonoBehaviour
 
         if(message.Contains("You win"))
         {
+            TimesWon++;
             CheckSuitWinCondition(allHands);
             CheckThreeOfAKind(allHands);
 
@@ -1593,6 +1597,7 @@ public class BlackjackGame : MonoBehaviour
         }
         else if(message.Contains("Dealer wins") || message.Contains("Bust"))
         {
+            TimesLost ++;
             if(!OrganBagItem.isOrganActive)
             {
                 targetMoneyBalance = playerMoney - betAmount;
@@ -2267,10 +2272,14 @@ public class BlackjackGame : MonoBehaviour
         if(!isTutorialActive && PlayerMoney <= 0)
         {
             PlayerPrefs.SetInt("PreviousRunMoney", maxMoneyThisRun);
+            PlayerPrefs.SetInt("PreviousRunWins",TimesWon);
+            PlayerPrefs.SetInt("PreviousRunLoss",TimesLost);
             PlayerPrefs.Save();
             KeepsakeUnlockProgression.instance.EndRun();
-            SceneManager.LoadSceneAsync(3);
-
+            
+            FadeInAnimator.SetTrigger("fadeInTrig");
+            yield return StartCoroutine(GameUtils.WaitDelayOrInput(3.0f));
+            SceneManager.LoadSceneAsync(4);
             yield break;
         }
 
@@ -2406,16 +2415,17 @@ public class BlackjackGame : MonoBehaviour
     public void Leave()
     {
         PlayerPrefs.SetInt("PreviousRunMoney", maxMoneyThisRun);
+        PlayerPrefs.SetInt("PreviousRunWins",TimesWon);
+        PlayerPrefs.SetInt("PreviousRunLoss",TimesLost);
         PlayerPrefs.Save();
         KeepsakeUnlockProgression.instance.AddStat(ChallengeType.CashOut);
         KeepsakeUnlockProgression.instance.EndRun();
-
+        FadeInAnimator.SetTrigger("fadeInTrig");
         if(playerMoney >= 1000000)
         {
             KeepsakeUnlockProgression.instance.AddStat(ChallengeType.Millionaire);
         }
-
-        SceneManager.LoadSceneAsync(2);
+        SceneManager.LoadSceneAsync(4);
     }
     
     public void Stay()
