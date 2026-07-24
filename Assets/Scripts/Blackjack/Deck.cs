@@ -251,4 +251,20 @@ public class Deck
             default: return Card.Rank.None;
         }
     }
+
+    public Card? DealSecondDealingCard(Card.Rank rank, Card.Suit suit)
+    {
+        for(int i = 0; i < cards.Count; i++)
+        {
+            if(cards[i].rank == rank && cards[i].suit == suit)
+            {
+                Card dealtCard = cards[i];
+                cards.RemoveAt(i);
+
+                return dealtCard;
+            }
+        }
+
+        return null;
+    }
 }

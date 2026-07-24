@@ -10,7 +10,8 @@ public class ProgressDisplay : MonoBehaviour
     private List<int> eventThreshHolds = new();
     private TMP_Text textComponent;
     private string defaultText;
-    
+    private int index = 0;
+
     private void AddThresholds()
     {
         foreach (var threshold in eventManager.EventThresholds)
@@ -26,6 +27,19 @@ public class ProgressDisplay : MonoBehaviour
 
     public void DisplayNextMilestone()
     {
+        if(eventManager.TriggeredThresholdsCount > index)
+        {
+            index = eventManager.TriggeredThresholdsCount;
+
+            foreach(var keepsake in KeepsakeManager.instance.equippedKeepsakes)
+            {
+                if(keepsake is SecondDealing secondDealing)
+                {
+                    secondDealing.Recharge();
+                }
+            }
+        }
+
         var next = GetNextThreshold();
         if (next == -1)
         {
@@ -59,7 +73,11 @@ public class ProgressDisplay : MonoBehaviour
     {
         eventManager = blackjackGame.EventManager;
         textComponent = GetComponent<TMP_Text>();
+
         AddThresholds();
+
+        index = eventManager.TriggeredThresholdsCount;
+
         DisplayNextMilestone();
     }
 }

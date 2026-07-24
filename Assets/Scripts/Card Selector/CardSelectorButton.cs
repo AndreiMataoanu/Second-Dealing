@@ -19,6 +19,8 @@ public class CardSelectorButton : Clickable
             return;
         }
 
+        AudioManager.instance.Play("BetUp");
+
         onClickAction.Invoke();
     }
 }

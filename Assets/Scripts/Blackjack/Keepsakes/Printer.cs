@@ -1,16 +1,14 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "SecondDealing", menuName = "Keepsakes/Second Dealing")]
-public class SecondDealing : Keepsake
+[CreateAssetMenu(fileName = "Printer", menuName = "Keepsakes/Printer")]
+public class Printer : Keepsake
 {
     private CardSelectorManager cardSelector;
     private BlackjackGame gameManager;
-    private bool isCharged = false;
 
     private void OnEnable()
     {
         isActive = true;
-        isCharged = true;
     }
 
     public override void SetMembers(BlackjackGame blackjackGame)
@@ -21,7 +19,7 @@ public class SecondDealing : Keepsake
 
     public override bool ActivateTableEffect(BlackjackGame game)
     {
-        if(!gameManager.isRoundActive || gameManager.isActionLocked || !isCharged) return false;
+        if(!gameManager.isRoundActive || gameManager.isActionLocked) return false;
 
         if(cardSelector != null)
         {
@@ -36,15 +34,5 @@ public class SecondDealing : Keepsake
     public override void OnRoundStart()
     {
         cardSelector.ResetPrinting();
-    }
-
-    public void UseCharge()
-    {
-        isCharged = false;
-    }
-
-    public void Recharge()
-    {
-        isCharged = true;
     }
 }
