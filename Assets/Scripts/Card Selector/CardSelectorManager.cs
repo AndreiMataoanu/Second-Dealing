@@ -1,4 +1,4 @@
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 public class CardSelectorManager : MonoBehaviour
@@ -24,8 +24,7 @@ public class CardSelectorManager : MonoBehaviour
 
     public void OpenCardSelector(Keepsake keepsake)
     {
-        if(hasPrintedThisTurn) return;
-
+        hasPrintedThisTurn = false;
         activeKeepsake = keepsake;
         blackjackManager.CursorDetection.OnDealerTurn();
         cardSelector.SetActive(true);
@@ -55,6 +54,8 @@ public class CardSelectorManager : MonoBehaviour
                 }
             }
         }
+
+        activeKeepsake = null;
     }
 
     public void SetSuit(int suitIndex)
@@ -147,10 +148,43 @@ public class CardSelectorManager : MonoBehaviour
 
     private void UpdateScreen()
     {
-        string suitText = selectedSuit.HasValue ? selectedSuit.Value.ToString() : " ";
-        string rankText = selectedRank.HasValue ? selectedRank.Value.ToString() : " ";
+        string suitText = selectedSuit.HasValue ? GetSuitString(selectedSuit.Value) : " ";
+        string rankText = selectedRank.HasValue ? GetRankString(selectedRank.Value) : " ";
 
         display.text = $"{rankText} {suitText}";
+    }
+
+    private string GetRankString(Card.Rank rank)
+    {
+        switch(rank)
+        {
+            case Card.Rank.Ace: return "A";
+            case Card.Rank.Two: return "2";
+            case Card.Rank.Three: return "3";
+            case Card.Rank.Four: return "4";
+            case Card.Rank.Five: return "5";
+            case Card.Rank.Six: return "6";
+            case Card.Rank.Seven: return "7";
+            case Card.Rank.Eight: return "8";
+            case Card.Rank.Nine: return "9";
+            case Card.Rank.Ten: return "10";
+            case Card.Rank.Jack: return "J";
+            case Card.Rank.Queen: return "Q";
+            case Card.Rank.King: return "K";
+            default: return " ";
+        }
+    }
+
+    private string GetSuitString(Card.Suit suit)
+    {
+        switch(suit)
+        {
+            case Card.Suit.Clubs: return "♣";
+            case Card.Suit.Diamonds: return "♦";
+            case Card.Suit.Hearts: return "♥";
+            case Card.Suit.Spades: return "♠";
+            default: return " ";
+        }
     }
 
     private void ResetInputs()
@@ -163,5 +197,6 @@ public class CardSelectorManager : MonoBehaviour
     public void ResetPrinting()
     {
         hasPrintedThisTurn = false;
+        activeKeepsake = null;
     }
 }
