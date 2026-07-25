@@ -1,10 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using Managers;
-using Unity.VisualScripting;
 using UnityEngine;
-using Utils;
 
 [CreateAssetMenu(fileName = "HatTrick", menuName = "Keepsakes/Hat Trick")]
 public class HatTrick : Keepsake
@@ -35,15 +31,15 @@ public class HatTrick : Keepsake
             game.CursorFollow,
             game.CursorDetection,
             CursorType.None,
-            CardTrigger.AntiMatter
+            CardTrigger.HatTrick
         );
     }
 
     #endregion
 
-    #region MyRegion
+    #region Activate Hat Trick
 
-    public override bool ActivateTableEffect(BlackjackGame game)
+    public override bool ActivateTableEffect()
     {
         if(usesThisRound >= 1) return false;
 

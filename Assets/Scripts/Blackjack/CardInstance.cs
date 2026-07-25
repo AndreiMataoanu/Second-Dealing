@@ -6,6 +6,8 @@ public class CardInstance
 
     public CardDisplay displayComponent;
 
+    public TarotCard tarotData;
+
     public bool isHidden;
 
     public int jokerValue = 0;
@@ -17,9 +19,10 @@ public class CardInstance
         cardData = card;
         displayComponent = display;
 
-        if(displayComponent != null)
+        if(displayComponent)
         {
             displayComponent.SetCardInstance(this);
+            tarotData = display.GetComponent<TarotCard>();
         }
 
         isHidden = hidden;

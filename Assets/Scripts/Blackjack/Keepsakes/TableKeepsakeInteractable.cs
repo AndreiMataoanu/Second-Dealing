@@ -34,12 +34,7 @@ public class TableKeepsakeInteractable : Clickable
 
     private void OnDestroy()
     {
-        var cursorDetection = FindFirstObjectByType<CursorDetection>();
-
-        if(cursorDetection != null)
-        {
-            cursorDetection.RemoveRoundActiveClickable(this);
-        }
+        blackjackGame.CursorDetection.RemoveRoundActiveClickable(this);
     }
 
     public override void OnClick(int mouseButton = 0)
@@ -49,7 +44,7 @@ public class TableKeepsakeInteractable : Clickable
         if(!keepsake.isActive || usedThisRound) return;
 
         base.OnClick(mouseButton);
-        bool activated = keepsake.ActivateTableEffect(blackjackGame);
+        bool activated = keepsake.ActivateTableEffect();
 
         if(activated)
         {

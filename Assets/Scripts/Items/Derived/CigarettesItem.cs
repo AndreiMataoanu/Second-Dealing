@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class CigarettesItem : Item
 {
     public static bool isCigaretteActive;

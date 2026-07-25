@@ -37,8 +37,5 @@ public class ClickableCard : Clickable
 
         cardEffect?.Invoke(cardInstance);
         cardAction?.Invoke();
-        
-        if(cardInstance != null && cardInstance.cardData.suit == Card.Suit.Tarot)
-            blackjackGame.SacrificeTarot(cardInstance);
     }
 }

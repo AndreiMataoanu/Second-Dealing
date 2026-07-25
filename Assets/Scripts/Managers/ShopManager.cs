@@ -26,6 +26,7 @@ public class ShopManager : MonoBehaviour
     private float coinMultiplier = 1.0f;
     
     private List<Item> inventoryItems = new();
+    private List<Item> allItems = new();
     private BlackjackGame blackjackGame;
 
     private Action<Item> BuyAction;
@@ -33,6 +34,7 @@ public class ShopManager : MonoBehaviour
     #region Getters
 
     public List<Item> InventoryItems => inventoryItems;
+    public List<Item> AllInventoryItems => allItems;
 
     #endregion
     
@@ -54,8 +56,6 @@ public class ShopManager : MonoBehaviour
             var item = SpawnItem(prefab, buySpawnPoint.transform);
 
             item.SetMultiplier(coinMultiplier);
-            item.SetBlackjackGame(blackjackGame);
-            item.SetMembers();
             item.SetActive(true);
             item.AddAction(BuyAction);
         }
@@ -170,11 +170,11 @@ public class ShopManager : MonoBehaviour
 
     private void OnAddedToInventory(Item item)
     {
-        ActivateItemPassiveEffects(item); // TODO: should be item method
-        
+        item.ActivatePassive();
         item.isPurchased = true;
         inventoryItemCount++;
         inventoryItems.Add(item);
+        allItems.Add(item);
     }
     
     public void RemoveFromInventory(Item item)
@@ -184,9 +184,13 @@ public class ShopManager : MonoBehaviour
         TooltipManager.instance.HideTooltip();
         
         item.DeactivatePassive();
-        inventoryItemCount--;
-        inventoryItems.Remove(item);
-        
+        if (!item.delayDestroy)
+        {
+            inventoryItemCount--;
+            inventoryItems.Remove(item);
+        }
+
+        allItems.Remove(item);
         Destroy(item.gameObject);
     }
     
@@ -206,7 +210,10 @@ public class ShopManager : MonoBehaviour
     {
         if(inventoryItemCount >= useSpawnPoints.Count) return null;
 
-        var item = SpawnItem(prefab, useSpawnPoints[inventoryItemCount].transform);
+        var t = FindEmptyInventorySlot();
+        if (!t) return null;
+        
+        var item = SpawnItem(prefab, t);
         OnAddedToInventory(item);
 
         return item;
@@ -218,11 +225,12 @@ public class ShopManager : MonoBehaviour
     
     private Item SpawnItem(GameObject prefab, Transform position)
     {
-        if (prefab == null) return null;
+        if (!prefab) return null;
         
         GameObject prefabInstance = Instantiate(prefab, position);
         Item item = prefabInstance.GetComponent<Item>();
         item.SetBlackjackGame(blackjackGame);
+        item.SetMembers();
 
         return item;
     }
@@ -241,9 +249,33 @@ public class ShopManager : MonoBehaviour
         return false;
     }
 
-    private void ActivateItemPassiveEffects(Item item)
+    public void DelayRemoveFromInventory(Item item)
     {
-        item.ActivatePassive();
+        if (!item.delayDestroy) return;
+        inventoryItemCount--;
+        inventoryItems.Remove(item);
+    }
+
+    private Transform FindEmptyInventorySlot()
+    {
+        if(inventoryItemCount >= useSpawnPoints.Count) return null;
+        
+        foreach(var spawnPoint in useSpawnPoints)
+            if(spawnPoint.transform.childCount == 0 || !CheckVisibleItems(spawnPoint.transform))
+                return spawnPoint.transform;
+
+        return null;
+    }
+
+    private bool CheckVisibleItems(Transform inventorySlot)
+    {
+        for (int i = 0; i < inventorySlot.childCount; i++)
+        {
+            var item = inventorySlot.GetChild(i).gameObject.GetComponent<Item>();
+            if (item.IsVisible) return true;
+        }
+
+        return false;
     }
     
     #endregion

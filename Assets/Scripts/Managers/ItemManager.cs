@@ -5,7 +5,6 @@ using UnityEngine;
 public class ItemManager : MonoBehaviour
 {
     private BlackjackGame blackjackGame;
-    private CursorDetection cursorDetection;
     private CursorFollow cursorFollow;
     private ShopManager shopManager;
 
@@ -16,7 +15,6 @@ public class ItemManager : MonoBehaviour
     public void SetBlackjackGame(BlackjackGame game)
     {
         blackjackGame = game;
-        cursorDetection = game.CursorDetection;
     }
 
     public void SetShopManager(ShopManager shop)
@@ -33,16 +31,13 @@ public class ItemManager : MonoBehaviour
     {
         foreach (var item in shopManager.InventoryItems)
         {
+            item.RemoveAction(OnSell);
+            item.RemoveAction(Activate);
+
             if (isRoundActive)
-            {
-                item.RemoveAction(OnSell);
                 item.AddAction(Activate);
-            }
             else
-            {
                 item.AddAction(OnSell);
-                item.RemoveAction(Activate);
-            }
         }
     }
     
@@ -64,7 +59,7 @@ public class ItemManager : MonoBehaviour
             return;
         }
 
-        if(item.type != ItemType.Scissors || item.type != ItemType.Acid) // TODO: add item.HasCardEffect
+        if(item.type != ItemType.Scissors || item.type != ItemType.Acid)
             AudioManager.instance.Play(item.name);
         else
             AudioManager.instance.Play("ItemBuy");
@@ -99,7 +94,7 @@ public class ItemManager : MonoBehaviour
     
     public void OnRoundEnd()
     {
-        foreach (var item in shopManager.InventoryItems)
+        foreach (var item in shopManager.AllInventoryItems)
             item.OnRoundEnd();
 
         RemovePassiveItems();
@@ -125,20 +120,21 @@ public class ItemManager : MonoBehaviour
     {
         item.SetVisibility(false);
         item.SetColliderActive(false);
+        shopManager.DelayRemoveFromInventory(item);
         itemsToRemove.Add(item);
     }
 
     #endregion
     
-    #region Tarot
+    #region Spawn Item
 
-    public void OnTarotSpawn(GameObject rewardPrefab)
+    public bool SpawnInventoryItem(GameObject rewardPrefab)
     {
         var item = shopManager.SpawnItemInventory(rewardPrefab);
-        if (item == null)
+        if (!item)
         {
             AudioManager.instance.Play("ItemDeny");
-            return;
+            return false;
         }
         
         AudioManager.instance.Play("ItemBuy");
@@ -146,7 +142,7 @@ public class ItemManager : MonoBehaviour
         item.AddAction(Activate);
         item.SetActive(true);
         
-        cursorDetection.AddRoundActiveClickable(item);
+        return true;
     }
 
     #endregion

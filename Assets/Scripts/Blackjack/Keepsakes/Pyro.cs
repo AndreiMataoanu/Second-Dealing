@@ -45,7 +45,7 @@ public class Pyro : Keepsake
 
     #region Activate Pyro
 
-    public override bool ActivateTableEffect(BlackjackGame blackjackGame)
+    public override bool ActivateTableEffect()
     {
         if(usesThisRound >= 1) return false;
         
@@ -121,4 +121,5 @@ public class Pyro : Keepsake
     }
     
     #endregion
+    
 }

@@ -20,6 +20,7 @@ public class Clickable : MonoBehaviour
     public void SetActive(bool active) => IsActive = active;
     public void SetVisibility(bool active) => meshRenderer.enabled = active;
     public void SetColliderActive(bool active) => meshCollider.enabled = active;
+    public bool IsVisible => meshRenderer.enabled;
     
     private void Awake()
     {

@@ -99,18 +99,18 @@ public class TableCards : MonoBehaviour
     private void DestroyActiveCards()
     {
         // TODO: revise tarot cards
-        foreach(GameObject cardObject in activeCardObjects)
-        {
-            if(cardObject != null)
-            {
-                ClickableCard clickable = cardObject.GetComponentInChildren<ClickableCard>();
-
-                if(clickable != null && cursorDetection != null)
-                    cursorDetection.RemoveRoundActiveClickable(clickable);
-
-                Destroy(cardObject);
-            }
-        }
+        // foreach(GameObject cardObject in activeCardObjects)
+        // {
+        //     if(cardObject != null)
+        //     {
+        //         ClickableCard clickable = cardObject.GetComponentInChildren<ClickableCard>();
+        //
+        //         if(clickable != null && cursorDetection != null)
+        //             cursorDetection.RemoveRoundActiveClickable(clickable);
+        //
+        //         Destroy(cardObject);
+        //     }
+        // }
         
         activeCardObjects.Clear();
     }

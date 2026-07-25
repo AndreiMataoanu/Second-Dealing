@@ -43,7 +43,6 @@ public class AlcoholItem : Item
     public override void OnRoundEnd()
     {
         if (!isAlcoholActive) return;
-        isAlcoholActive = false;
         blackjackGame.GameCamera.UseClearVision();
         blackjackGame.ItemManager.AddItemToRemove(this);
     }
