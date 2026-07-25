@@ -102,6 +102,13 @@ public class KeepsakeManager : MonoBehaviour
         }
     }
 
+    public void DeactivateKeepsakes()
+    {
+        AntiMatter.isAntiMatterActive = false;
+        Pyro.isPyroActive = false;
+        HatTrick.isHatTrickActive = false;
+    }
+
     public void OnDealPlayerCard(CardInstance cardInstance)
     {
         equippedKeepsakes.ForEach(keepsake => keepsake.OnDealPlayerCard(cardInstance));

@@ -22,6 +22,16 @@ public class ItemManager : MonoBehaviour
         shopManager = shop;
         shopManager.SetBuyAction(OnBuy);
     }
+
+    public void DeactivateItems()
+    {
+        KnifeItem.isKnifeActive = false;
+        ScissorsItem.isScissorsActive = false;
+        AcidItem.isAcidActive = false;
+        CrucifixItem.isCrucifixActive = false;
+        CigarettesItem.isCigaretteActive = false;
+        AlcoholItem.isAlcoholActive = false;
+    }
     
     #endregion
     

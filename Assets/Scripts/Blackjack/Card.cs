@@ -1,19 +1,44 @@
-public struct Card
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+
+public class Card
 {
     public enum Rank { None = 0, Ace, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Jack, Queen, King, Joker }
     public enum Suit { Clubs, Diamonds, Hearts, Spades, Tarot }
 
     public Rank rank;
     public Suit suit;
+    public int jokerValue;
 
     //Calculates the numerical value of the card (Ace = 11, J/Q/K Faces = 10)
-    public int GetValue()
+    public int GetValue(bool useJokers=false)
     {
-        if(rank >= Rank.Ten && rank <= Rank.King) return 10;
-        if(rank == Rank.Ace) return 11;
-        if(rank == Rank.Joker) return 0;
+        if (rank >= Rank.Ten && rank <= Rank.King) return 10;
+        if (rank == Rank.Ace) return (EventManager.currentAceRule == AceValueRule.Always1) ? 1 : 11;
+        if (!useJokers && rank == Rank.Joker) return 0;
+        if (useJokers && rank == Rank.Joker) return jokerValue;
+        
+        return (int)rank;
+    }
+
+    public int GetValueNoJokers()
+    {
+        if (rank >= Rank.Ten && rank <= Rank.King) return 10;
+        if (rank == Rank.Ace) return (EventManager.currentAceRule == AceValueRule.Always1) ? 1 : 11;
 
         return (int)rank;
+    }
+
+    public float GetCardValueForSplit()
+    {
+        float cardValue = GetValueNoJokers();
+
+        if (EventManager.isDoubleLowActive && cardValue < 6 && rank != Rank.Joker) cardValue *= 2;
+
+        if (EventManager.isHalfHighActive && cardValue > 5 && rank != Rank.Joker) cardValue = Mathf.CeilToInt(cardValue / 2f);
+
+        return cardValue;
     }
 
     public override string ToString()
@@ -23,23 +48,26 @@ public struct Card
 
     public static Rank GetRankForValue(int value)
     {
-        if(value >= 11 || value == 1)
+        return value switch
         {
-            return Rank.Ace;
-        }
-
-        switch(value)
-        {
-            case 10: return Rank.Ten;
-            case 9: return Rank.Nine;
-            case 8: return Rank.Eight;
-            case 7: return Rank.Seven;
-            case 6: return Rank.Six;
-            case 5: return Rank.Five;
-            case 4: return Rank.Four;
-            case 3: return Rank.Three;
-            case 2: return Rank.Two;
-            default: return Rank.None;
-        }
+            11 or 1 => Rank.Ace,
+            10 => Rank.Ten,
+            9 => Rank.Nine,
+            8 => Rank.Eight,
+            7 => Rank.Seven,
+            6 => Rank.Six,
+            5 => Rank.Five,
+            4 => Rank.Four,
+            3 => Rank.Three,
+            2 => Rank.Two,
+            _ => Rank.None
+        };
+    }
+    
+    public static List<Rank> GetRanksForValue(int value)
+    {
+        return value != 10 ? 
+            new List<Rank> { GetRankForValue(value) } :
+            new List<Rank> { Rank.Ten, Rank.Jack, Rank.Queen, Rank.King };
     }
 }

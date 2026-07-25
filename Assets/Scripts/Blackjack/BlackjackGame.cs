@@ -22,6 +22,7 @@ public class BlackjackGame : MonoBehaviour
 {
     #region Attributes
     [Header("Set-Up")]
+    [SerializeField] private TableCards tableCards;
     [SerializeField] private ItemManager itemManager;
     [SerializeField] private ShopManager shopManager;
     [SerializeField] private CursorDetection cursorDetection;
@@ -34,10 +35,8 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private int riggedRoundsLimit = 5;
     private Coroutine currentBustCoroutine = null;
     private Coroutine dealToDealerCoroutine = null;
-    private Deck gameDeck;
-    private int blackjackGoal = 21;
+    public static int blackjackGoal = 21;
     private int roundsCompleted = 0;
-    private int maxSplits = 3;
     private int maxMoneyThisRun = 0;
     [HideInInspector] public bool isSplitting = false;
     [HideInInspector] public bool isActionLocked = false;
@@ -84,29 +83,10 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private ParticleSystem smokeParticle;
     [SerializeField] public Animator bottleAnimation;
 
-    public GameObject peekedCardObject = null;
-    private const float cardAnimationDuration = 0.25f;
-
     [Header("Visual Setup")]
-    [SerializeField] private List<CardVisuals> cardPrefabs = new List<CardVisuals>();
-    [SerializeField] private List<Transform> handPositions = new List<Transform>();
     [SerializeField] private List<TMPro.TextMeshProUGUI> handTotalTexts;
-    [SerializeField] private Transform dealerCardPosition;
-    [SerializeField] public Transform sunglassesCardPosition;
-    [SerializeField] private Transform deckPosition;
-    [Tooltip("Offsets the player cards to create the staircase layout.")]
-    [SerializeField] private Vector3 playerCardsOffset = new(0.03f, 0.034f, -0.001f);
-    [Tooltip("Offsets the dealer cards to create a horizontal line.")]
-    [SerializeField] private Vector3 dealerCardsOffset = new(0.13f, 0f, -0.001f);
 
-    public Dictionary<(Card.Rank, Card.Suit), GameObject> cardPrefabLookup;
-    private readonly Vector3 cardScaleVector = Vector3.one * 0.05f;
-    public List<CardInstance> dealerHand = new List<CardInstance>();
-    public List<GameObject> activeCardObjects = new List<GameObject>();
-    public List<List<CardInstance>> playerHands = new List<List<CardInstance>>();
-    public CardInstance peekCardInstance = null;
     private List<int> handBets = new List<int>();
-    private int currentHandIndex = 0;
     private bool isPlayerStand = false;
 
     #endregion
@@ -117,7 +97,6 @@ public class BlackjackGame : MonoBehaviour
     public Transform CardOptionPosition => cursorDetection.GetCardOptionsPosition();
     public DialogueSystem DialogueSystem => dialogueSystem;
     public EventManager EventManager => eventManager;
-    public Deck GameDeck => gameDeck;
     public CursorDetection CursorDetection => cursorDetection;
     public CursorFollow CursorFollow => cursorFollow;
     public ShopManager ShopManager => shopManager;
@@ -128,12 +107,9 @@ public class BlackjackGame : MonoBehaviour
         blackjackGoal = gameGoal;
         rouletteText.text = blackjackGoal.ToString();
     }
-    public List<List<CardInstance>> PlayerHands => playerHands;
     public int CurrentBet => currentBet;
     public int TargetMoneyBalance => targetMoneyBalance;
     public GameCamera GameCamera => gameCamera;
-    public bool IsPlayerHandValid => currentHandIndex < playerHands.Count;
-    public List<CardInstance> CurrentHand => playerHands[currentHandIndex];
     #endregion
 
     #region Monobehaviour Methods
@@ -141,11 +117,9 @@ public class BlackjackGame : MonoBehaviour
     private void Start()
     {
         maxMoneyThisRun = playerMoney;
-        gameDeck = new Deck();
 
         ManagerSetup();
-        InitializeCardLookup();
-        StartGame();
+        ResetGame();
 
         AudioManager.instance.Play("MainTheme");
     }
@@ -339,205 +313,203 @@ public class BlackjackGame : MonoBehaviour
 
         StartCoroutine(AnimateBetChange(targetBalance, 3f / GameUtils.gameSpeedMultiplier));
     }
-
-    public IEnumerator CigaretteCoroutine()
-    {
-        isActionLocked = true;
-
-        if(dealToDealerCoroutine != null)
-        {
-            StopCoroutine(dealToDealerCoroutine);
-
-            dealToDealerCoroutine = null;
-        }
-
-        int targetIndex = ChooseHandIndex();
-
-        currentHandIndex = targetIndex;
-        isPlayerStand = false;
-
-        cursorDetection.OnRoundActive();
-
-        List<CardInstance> tempHand = new List<CardInstance>(playerHands[currentHandIndex]);
-
-        playerHands[currentHandIndex] = new List<CardInstance>(dealerHand);
-        dealerHand = new List<CardInstance>(tempHand);
-
-        AudioManager.instance.Play("Smoking");
-
-        yield return new WaitForSeconds(1f);
-
-        smokeParticle.Play();
-
-        yield return new WaitForSeconds(1f);
-
-        foreach(var card in playerHands[targetIndex])
-        {
-            if(card.isHidden)
-            {
-                yield return StartCoroutine(FlipCardCoroutine(card.displayComponent, 0.4f));
-
-                card.isHidden = false;
-            }
-        }
-
-        float animDuration = 0.5f;
-        int maxCards = Mathf.Max(playerHands[currentHandIndex].Count, dealerHand.Count);
-
-        Transform currentParent = handPositions[currentHandIndex];
-
-        for(int i = 0; i < maxCards; i++)
-        {
-            if(i < playerHands[currentHandIndex].Count)
-            {
-                CardInstance pCard = playerHands[currentHandIndex][i];
-
-                pCard.displayComponent.transform.SetParent(currentParent.parent);
-
-                int cardOrderIndex = playerHands[currentHandIndex].Count - 1 - i;
-                Vector3 targetLocalPos = playerCardsOffset * cardOrderIndex;
-
-                StartCoroutine(CardAnimationCoroutine(
-                    pCard.displayComponent.transform,
-                    currentParent.TransformPoint(targetLocalPos),
-                    currentParent.rotation,
-                    cardScaleVector,
-                    animDuration
-                ));
-            }
-
-            if(i < dealerHand.Count)
-            {
-                CardInstance dCard = dealerHand[i];
-
-                dCard.displayComponent.transform.SetParent(dealerCardPosition.parent);
-
-                int cardOrderIndex = dealerHand.Count - 1 - i;
-                Vector3 targetLocalPos = dealerCardsOffset * cardOrderIndex;
-
-                StartCoroutine(CardAnimationCoroutine(
-                    dCard.displayComponent.transform,
-                    dealerCardPosition.TransformPoint(targetLocalPos),
-                    dealerCardPosition.rotation,
-                    cardScaleVector,
-                    animDuration
-                ));
-            }
-        }
-
-        yield return new WaitForSeconds(animDuration);
-
-        foreach(CardInstance card in playerHands[currentHandIndex])
-        {
-            card.displayComponent.transform.SetParent(currentParent);
-        }
-
-        foreach(CardInstance card in dealerHand)
-        {
-            card.displayComponent.transform.SetParent(dealerCardPosition);
-        }
-
-        UpdateHandVisuals(playerHands[currentHandIndex], true);
-        UpdateHandVisuals(dealerHand, false);
-        UpdateUI(true);
-
-        smokeParticle.Stop();
-
-        int handValue = CalculateHandValue(playerHands[targetIndex], true);
-
-        if(handValue > blackjackGoal || handValue < -blackjackGoal)
-        {
-            yield return StartCoroutine(BustCheckCoroutine(playerHands[targetIndex], targetIndex));
-        }
-        else
-        {
-            isActionLocked = false;
-
-            EvaluateDoubleDownCondition();
-        }
-    }
-
-    private int ChooseHandIndex()
-    {
-        if(!isPlayerStand) return currentHandIndex;
-
-        return Mathf.Max(0, currentHandIndex - 1);
-    }
-
-    public void UpdateAlcoholCards()
-    {
-        playerHands.ForEach(CardEffects.AddAlcoholCardList);
-        UpdateUI();
-        UpdateCardVFX();
-    }
-
-    public IEnumerator FanCoroutine()
-    {
-        isActionLocked = true;
-        isRoundActive = false;
-        
-        if (dealToDealerCoroutine != null)
-        {
-            StopCoroutine(dealToDealerCoroutine);
-            dealToDealerCoroutine = null;
-
-            yield return null;
-        }
-        
-        yield return StartCoroutine(AnimateCardsOffScreen());
-
-        ClearTable();
-
-        playerHands.Add(new List<CardInstance>());
-        handBets.Add(currentBet);
-        currentHandIndex = 0;
-
-        OnStartGame();
-    }
-
-    private IEnumerator AnimateCardsOffScreen()
-    {
-        float animDuration = 2f;
-
-        List<Coroutine> moveCoroutines = new List<Coroutine>();
-
-        foreach(GameObject card in activeCardObjects)
-        {
-            Vector3 randomWindDirection = new Vector3(Random.Range(-25f, -15f), Random.Range(5f, 15f), Random.Range(-10f, 10f));
-            Vector3 offScreenPos = card.transform.position + randomWindDirection;
-            Vector3 randomSpin = new Vector3(Random.Range(-500f, 500f), Random.Range(-500f, 500f), Random.Range(-500f, 500f));
-
-            moveCoroutines.Add(StartCoroutine(BlowCardAwayCoroutine(card.transform, offScreenPos, randomSpin, animDuration)));
-        }
-
-        foreach(Coroutine c in moveCoroutines)
-        {
-            yield return c;
-        }
-    }
-
-    //Helps with spinning cards away when the fan is used.
-    private IEnumerator BlowCardAwayCoroutine(Transform cardTransform, Vector3 targetPosition, Vector3 spinSpeed, float duration)
-    {
-        Vector3 startPosition = cardTransform.position;
-
-        float time = 0;
-
-        while(time < duration)
-        {
-            time += Time.deltaTime;
-
-            float t = time / duration;
-            float moveT = t * t * (3f - 2f * t);
-
-            cardTransform.position = Vector3.Lerp(startPosition, targetPosition, moveT);
-            cardTransform.Rotate(spinSpeed * Time.deltaTime, Space.World);
-
-            yield return null;
-        }
-    }
-
-    private IEnumerator CheckPowerballCurrentHand() => eventManager.CheckPowerballAtIndex(currentHandIndex);
+    //
+    // public IEnumerator CigaretteCoroutine()
+    // {
+    //     isActionLocked = true;
+    //
+    //     if(dealToDealerCoroutine != null)
+    //     {
+    //         StopCoroutine(dealToDealerCoroutine);
+    //
+    //         dealToDealerCoroutine = null;
+    //     }
+    //
+    //     int targetIndex = ChooseHandIndex();
+    //
+    //     currentHandIndex = targetIndex;
+    //     isPlayerStand = false;
+    //
+    //     cursorDetection.OnRoundActive();
+    //
+    //     List<CardInstance> tempHand = new List<CardInstance>(playerHands[currentHandIndex]);
+    //
+    //     playerHands[currentHandIndex] = new List<CardInstance>(dealerHand);
+    //     dealerHand = new List<CardInstance>(tempHand);
+    //
+    //     AudioManager.instance.Play("Smoking");
+    //
+    //     yield return new WaitForSeconds(1f);
+    //
+    //     smokeParticle.Play();
+    //
+    //     yield return new WaitForSeconds(1f);
+    //
+    //     foreach(var card in playerHands[targetIndex])
+    //     {
+    //         if(card.isHidden)
+    //         {
+    //             yield return StartCoroutine(TableCards.FlipCardCoroutine(card.displayComponent, 0.4f));
+    //
+    //             card.isHidden = false;
+    //         }
+    //     }
+    //
+    //     float animDuration = 0.5f;
+    //     int maxCards = Mathf.Max(playerHands[currentHandIndex].Count, dealerHand.Count);
+    //
+    //     Transform currentParent = handPositions[currentHandIndex];
+    //
+    //     for(int i = 0; i < maxCards; i++)
+    //     {
+    //         if(i < playerHands[currentHandIndex].Count)
+    //         {
+    //             CardInstance pCard = playerHands[currentHandIndex][i];
+    //
+    //             pCard.displayComponent.transform.SetParent(currentParent.parent);
+    //
+    //             int cardOrderIndex = playerHands[currentHandIndex].Count - 1 - i;
+    //             Vector3 targetLocalPos = playerCardsOffset * cardOrderIndex;
+    //
+    //             StartCoroutine(CardAnimationCoroutine(
+    //                 pCard.displayComponent.transform,
+    //                 currentParent.TransformPoint(targetLocalPos),
+    //                 currentParent.rotation,
+    //                 cardScaleVector,
+    //                 animDuration
+    //             ));
+    //         }
+    //
+    //         if(i < dealerHand.Count)
+    //         {
+    //             CardInstance dCard = dealerHand[i];
+    //
+    //             dCard.displayComponent.transform.SetParent(dealerCardPosition.parent);
+    //
+    //             int cardOrderIndex = dealerHand.Count - 1 - i;
+    //             Vector3 targetLocalPos = dealerCardsOffset * cardOrderIndex;
+    //
+    //             StartCoroutine(CardAnimationCoroutine(
+    //                 dCard.displayComponent.transform,
+    //                 dealerCardPosition.TransformPoint(targetLocalPos),
+    //                 dealerCardPosition.rotation,
+    //                 cardScaleVector,
+    //                 animDuration
+    //             ));
+    //         }
+    //     }
+    //
+    //     yield return new WaitForSeconds(animDuration);
+    //
+    //     foreach(CardInstance card in playerHands[currentHandIndex])
+    //     {
+    //         card.displayComponent.transform.SetParent(currentParent);
+    //     }
+    //
+    //     foreach(CardInstance card in dealerHand)
+    //     {
+    //         card.displayComponent.transform.SetParent(dealerCardPosition);
+    //     }
+    //
+    //     UpdateHandVisuals(playerHands[currentHandIndex], true);
+    //     UpdateHandVisuals(dealerHand, false);
+    //     UpdateUI(true);
+    //
+    //     smokeParticle.Stop();
+    //
+    //     int handValue = tableCards.CalculateHandValue(playerHands[targetIndex], true);
+    //
+    //     if(handValue > blackjackGoal || handValue < -blackjackGoal)
+    //     {
+    //         yield return StartCoroutine(BustCheckCoroutine(playerHands[targetIndex], targetIndex));
+    //     }
+    //     else
+    //     {
+    //         isActionLocked = false;
+    //
+    //         EvaluateDoubleDownCondition();
+    //     }
+    // }
+    //
+    // private int ChooseHandIndex()
+    // {
+    //     if(!isPlayerStand) return currentHandIndex;
+    //
+    //     return Mathf.Max(0, currentHandIndex - 1);
+    // }
+    //
+    // public void UpdateAlcoholCards()
+    // {
+    //     playerHands.ForEach(CardEffects.AddAlcoholCardList);
+    //     UpdateUI();
+    //     tableCards.UpdateCardVFX();
+    // }
+    //
+    // public IEnumerator FanCoroutine()
+    // {
+    //     isActionLocked = true;
+    //     isRoundActive = false;
+    //     
+    //     if (dealToDealerCoroutine != null)
+    //     {
+    //         StopCoroutine(dealToDealerCoroutine);
+    //         dealToDealerCoroutine = null;
+    //
+    //         yield return null;
+    //     }
+    //     
+    //     yield return StartCoroutine(AnimateCardsOffScreen());
+    //
+    //     tableCards.ClearTable();
+    //
+    //     playerHands.Add(new List<CardInstance>());
+    //     handBets.Add(currentBet);
+    //     currentHandIndex = 0;
+    //
+    //     OnStartGame();
+    // }
+    //
+    // private IEnumerator AnimateCardsOffScreen()
+    // {
+    //     float animDuration = 2f;
+    //
+    //     List<Coroutine> moveCoroutines = new List<Coroutine>();
+    //
+    //     foreach(GameObject card in activeCardObjects)
+    //     {
+    //         Vector3 randomWindDirection = new Vector3(Random.Range(-25f, -15f), Random.Range(5f, 15f), Random.Range(-10f, 10f));
+    //         Vector3 offScreenPos = card.transform.position + randomWindDirection;
+    //         Vector3 randomSpin = new Vector3(Random.Range(-500f, 500f), Random.Range(-500f, 500f), Random.Range(-500f, 500f));
+    //
+    //         moveCoroutines.Add(StartCoroutine(BlowCardAwayCoroutine(card.transform, offScreenPos, randomSpin, animDuration)));
+    //     }
+    //
+    //     foreach(Coroutine c in moveCoroutines)
+    //     {
+    //         yield return c;
+    //     }
+    // }
+    //
+    // //Helps with spinning cards away when the fan is used.
+    // private IEnumerator BlowCardAwayCoroutine(Transform cardTransform, Vector3 targetPosition, Vector3 spinSpeed, float duration)
+    // {
+    //     Vector3 startPosition = cardTransform.position;
+    //
+    //     float time = 0;
+    //
+    //     while(time < duration)
+    //     {
+    //         time += Time.deltaTime;
+    //
+    //         float t = time / duration;
+    //         float moveT = t * t * (3f - 2f * t);
+    //
+    //         cardTransform.position = Vector3.Lerp(startPosition, targetPosition, moveT);
+    //         cardTransform.Rotate(spinSpeed * Time.deltaTime, Space.World);
+    //
+    //         yield return null;
+    //     }
+    // }
 
     public void GainMoney(int moneyAmount)
     {
@@ -586,12 +558,11 @@ public class BlackjackGame : MonoBehaviour
     
     private IEnumerator HandleNewCardInPlayerHandCoroutine(CardInstance cardInstance)
     {
-        yield return PlaceCardInPlayerHandCoroutine(cardInstance);
+        yield return tableCards.PlaceCardInPlayerHandCoroutine(cardInstance);
         
-        List<CardInstance> activeHand = playerHands[currentHandIndex];
-        int handValue = CalculateHandValue(activeHand, true);
+        int handValue = tableCards.CalculateHandValue(tableCards.CurrentHand, true);
         
-        yield return EvaluatePlayerHandValue(activeHand, handValue);
+        yield return EvaluatePlayerHandValue(tableCards.CurrentHand, handValue);
     }
 
     private IEnumerator EvaluatePlayerHandValue(List<CardInstance> activeHand, int handValue)
@@ -600,7 +571,7 @@ public class BlackjackGame : MonoBehaviour
         {
             statusText.text = "Hand full";
     
-            yield return StartCoroutine(CheckPowerballCurrentHand());
+            yield return StartCoroutine(eventManager.CheckPowerballCompletion());
             yield return GameUtils.WaitForSecondsScaled(1f);
             yield return StartCoroutine(AdvanceHandCoroutine());
         }
@@ -610,63 +581,22 @@ public class BlackjackGame : MonoBehaviour
     
     public void CalculateBust()
     {
-        List<CardInstance> activeHand = playerHands[currentHandIndex];
-        int handValue = CalculateHandValue(activeHand, true);
-        StartCoroutine(CalculateBustCoroutine(activeHand, handValue));
+        int handValue = tableCards.CalculateHandValue(tableCards.CurrentHand, true);
+        StartCoroutine(CalculateBustCoroutine(tableCards.CurrentHand, handValue));
     }
     
     private IEnumerator CalculateBustCoroutine(List<CardInstance> activeHand, int handValue)
     {
         if(handValue > blackjackGoal || handValue < -blackjackGoal)
         {
-            yield return StartCoroutine(BustCheckCoroutine(activeHand, currentHandIndex));
+            yield return StartCoroutine(BustCheckCoroutine(activeHand));
         }
         else
         {
             isActionLocked = false;
         }
     }
-
-    private IEnumerator PlaceCardInPlayerHandCoroutine(CardInstance cardInstance)
-    {
-        List<CardInstance> currentHand = playerHands[currentHandIndex];
-        Transform currentParent = handPositions[currentHandIndex];
-        CardInstance newCardInstance = DealCardInstance(cardInstance.cardData, currentHand, false);
-
-        yield return PlaceCardInHand(newCardInstance, currentHand, currentParent, playerCardsOffset);
-        UpdateHandVisuals(currentHand, true);
-        UpdateSplitOutlines();
-    }
     
-    private IEnumerator PlaceCardInHand(CardInstance newCardInstance, List<CardInstance> currentHand,
-        Transform currentParent, Vector3 offset)
-    {
-        if(newCardInstance != null)
-        {
-            int cardOrderIndex = currentHand.Count - 1;
-            Vector3 targetLocalPos = offset * cardOrderIndex;
-            Quaternion targetRotation = Quaternion.identity;
-    
-            newCardInstance.displayComponent.transform.SetParent(currentParent.parent);
-    
-            yield return StartCoroutine(CardAnimationCoroutine(
-                newCardInstance.displayComponent.transform,
-                currentParent.TransformPoint(targetLocalPos),
-                currentParent.rotation * targetRotation,
-                cardScaleVector,
-                cardAnimationDuration
-            ));
-    
-            newCardInstance.displayComponent.transform.SetParent(currentParent);
-            newCardInstance.displayComponent.transform.localPosition = targetLocalPos;
-            newCardInstance.displayComponent.transform.localRotation = targetRotation;
-            newCardInstance.displayComponent.transform.localScale = cardScaleVector;
-    
-            UpdateUI(true);
-        }
-    }
-    
-
     //Keepsake unlock progression.
     public bool CheckItemAfterStand()
     {
@@ -680,7 +610,7 @@ public class BlackjackGame : MonoBehaviour
         return false;
     }
 
-    public void AddIneritanceMoney(int amount)
+    public void AddInheritanceMoney(int amount)
     {
         playerMoney += amount;
 
@@ -694,6 +624,38 @@ public class BlackjackGame : MonoBehaviour
     #endregion
 
     #region Event Methods
+    
+    // TODO: move to other class
+    private IEnumerator RevealJokers()
+    {
+        var (allPlayerJokers, _) = tableCards.CreatePlayerJokers();
+        var (dealerJokers, _) = tableCards.CreateDealerJokers();
+        
+        string revealMessage = "";
+        revealMessage += GetJokersText(allPlayerJokers, true);
+        revealMessage += GetJokersText(dealerJokers, false);
+
+        if(!string.IsNullOrEmpty(revealMessage))
+        {
+            statusText.text = revealMessage;
+            yield return StartCoroutine(GameUtils.WaitDelayOrInput(4f));
+        }
+        else
+            yield return StartCoroutine(GameUtils.WaitDelayOrInput(1.5f));
+    }
+
+    private string GetJokersText(List<CardInstance> jokers, bool isPlayer)
+    {
+        if (jokers == null || jokers.Count == 0) return "";
+        
+        string revealMessage = isPlayer ? "Your" : "Dealer's";
+        revealMessage += jokers.Count > 1 ? " Jokers: " : " Joker: ";
+        revealMessage += string.Join(", ", jokers.Select(j => j.cardData.jokerValue.ToString()));
+        revealMessage += ". ";
+
+        return revealMessage;
+    }
+    
     public void SelectCursorHand(bool isActive)
     {
         cursorFollow.SetCursorTypeActive(isActive, CursorType.Flip);
@@ -728,61 +690,18 @@ public class BlackjackGame : MonoBehaviour
     #endregion
 
     #region Game Flow
-    //Initializes the card prefab lookup dictionary for quick access.
-    private void InitializeCardLookup()
-    {
-        cardPrefabLookup = new Dictionary<(Card.Rank, Card.Suit), GameObject>();
 
-        foreach(var cardVisual in cardPrefabs)
-        {
-            if(cardVisual.rank != Card.Rank.None)
-            {
-                cardPrefabLookup.Add((cardVisual.rank, cardVisual.suit), cardVisual.cardPrefab);
-            }
-        }
-    }
-
-    public void ClearTable()
-    {
-        foreach(GameObject cardObject in activeCardObjects)
-            if(cardObject) Destroy(cardObject);
-
-        activeCardObjects.Clear();
-
-        foreach(var hand in playerHands)
-        {
-            hand.Clear();
-        }
-
-        playerHands.Clear();
-        handBets.Clear();
-        dealerHand.Clear();
-        CardEffects.ClearAlcoholCards();
-        CardEffects.ClearCutCards();
-
-        if(peekedCardObject != null)
-        {
-            Destroy(peekedCardObject);
-
-            peekedCardObject = null;
-            peekCardInstance = null;
-        }
-    }
-
-    public void StartGame()
+    public void ResetGame()
     {
         KeepsakeManager.instance.ResetKeepsake();
 
         StartCoroutine(ButtonCoroutine());
 
-        ClearTable();
+        tableCards.ClearTable();
         gameCamera.ChangeToCamera(CameraType.Sitting);
         eventManager.ShowNewPowerballTaunt();
 
-        AudioManager.instance.Play("Shuffle");
-
-        gameDeck.InitializeDeck();
-        gameDeck.Shuffle();
+        tableCards.ShuffleCards();
         cursorDetection.OnRoundInactive();
 
         if(!isTutorialActive)
@@ -795,15 +714,9 @@ public class BlackjackGame : MonoBehaviour
         isActionLocked = false;
         canDoubleDown = false;
         isSplitting = false;
-        KnifeItem.isKnifeActive = false;
-        ScissorsItem.isScissorsActive = false;
-        AcidItem.isAcidActive = false;
-        CrucifixItem.isCrucifixActive = false;
-        CigarettesItem.isCigaretteActive = false;
-        AlcoholItem.isAlcoholActive = false;
-        AntiMatter.isAntiMatterActive = false;
-        Pyro.isPyroActive = false;
-        HatTrick.isHatTrickActive = false;
+        
+        itemManager.DeactivateItems();
+        KeepsakeManager.instance.DeactivateKeepsakes();
 
         ResetTexts();
 
@@ -834,15 +747,11 @@ public class BlackjackGame : MonoBehaviour
         }
 
         if(isRoundActive || PlayerMoney < currentBet) yield break;
-
-
+        
         isActionLocked = true;
         isRoundActive = true;
-        playerHands.Clear();
-        playerHands.Add(new List<CardInstance>());
         handBets.Clear();
         handBets.Add(isTutorialActive ? 0 : currentBet);
-        currentHandIndex = 0;
         buttonAnimator.SetBool("StartActive", false);
 
         AudioManager.instance.Play("Button");
@@ -855,25 +764,16 @@ public class BlackjackGame : MonoBehaviour
         cursorDetection.OnRoundActive();
         itemManager.ChangeItemAction(true);
 
-        if(roundsCompleted < riggedRoundsLimit)
-        {
-            RigPlayerHand();
-        }
+        bool isRiggedHand = roundsCompleted < riggedRoundsLimit;
+        yield return tableCards.DealRoundCoroutine(isRiggedHand);
 
-        yield return StartCoroutine(DealCardToPlayerCoroutine());
-        yield return StartCoroutine(DealCardToDealerCoroutine(true));
-        yield return StartCoroutine(DealCardToPlayerCoroutine());
-        yield return StartCoroutine(DealCardToDealerCoroutine(false));
-
-        UpdateUI();
-
-        if(IsBlackjack(CalculateHandValue(playerHands[0], true)))
+        if(IsBlackjack(tableCards.CalculateHandValue(tableCards.PlayerHands[0], true)))
         {
             canDoubleDown = false;
             dialogueSystem.ShowPlayerBlackjackTaunt();
 
             yield return new WaitWhile(() => dialogueSystem.IsPlaying);
-            yield return StartCoroutine(CheckPowerballCurrentHand());
+            yield return StartCoroutine(eventManager.CheckPowerballCompletion());
 
             StartCoroutine(DealerTurnCoroutine(true));
         }
@@ -907,239 +807,6 @@ public class BlackjackGame : MonoBehaviour
         }
     }
 
-    //Instantiates a card, sets its data, and adds it to the specified hand.
-    private CardInstance DealCardInstance(Card newCardData, List<CardInstance> hand, bool isHidden)
-    {
-        if(!cardPrefabLookup.TryGetValue((newCardData.rank, newCardData.suit), out GameObject cardPrefabToUse)) return null;
-
-        GameObject cardObject = Instantiate(cardPrefabToUse, deckPosition);
-
-        cardObject.transform.localScale = cardScaleVector;
-
-        activeCardObjects.Add(cardObject);
-
-        CardDisplay cardDisplay = cardObject.GetComponent<CardDisplay>();
-
-        bool isNegative = CardEffects.IsCardNegative(newCardData);
-        bool isDoubled = eventManager.CheckIfDoubled(newCardData);
-        bool isHalved = eventManager.CheckIfHalved(newCardData);
-
-        cardDisplay?.SetNegativeVisual(isNegative);
-        cardDisplay?.SetDoubledVisual(isDoubled);
-        cardDisplay?.SetCutVisual(isHalved);
-        cardDisplay?.SetHidden(isHidden);
-
-        CardInstance newCardInstance = new CardInstance(newCardData, cardDisplay, isHidden);
-
-        if(newCardInstance.cardData.rank == Card.Rank.Joker)
-        {
-            newCardInstance.jokerValue = Random.Range(-10, 11); //Joker value between -10 and 10
-        }
-
-        hand?.Insert(0, newCardInstance);
-
-        return newCardInstance;
-    }
-    
-    public CardInstance DealCardInstanceOption(Card newCardData, bool isHidden)
-    {
-        if(!cardPrefabLookup.TryGetValue((newCardData.rank, newCardData.suit), out GameObject cardPrefabToUse)) return null;
-
-        GameObject cardObject = Instantiate(cardPrefabToUse, deckPosition);
-
-        cardObject.transform.localScale = cardScaleVector;
-
-        CardDisplay cardDisplay = cardObject.GetComponent<CardDisplay>();
-
-        bool isSuitNegative = CardEffects.IsSuitNegative(newCardData.suit);
-        bool isDoubled = eventManager.CheckIfDoubled(newCardData);
-        bool isHalved = eventManager.CheckIfHalved(newCardData);
-
-        cardDisplay.SetNegativeVisual(isSuitNegative);
-        cardDisplay.SetDoubledVisual(isDoubled);
-        cardDisplay.SetCutVisual(isHalved);
-
-        if(cardDisplay != null) cardDisplay.SetHidden(isHidden);
-
-        CardInstance newCardInstance = new CardInstance(newCardData, cardDisplay, isHidden);
-
-        if(newCardInstance.cardData.rank == Card.Rank.Joker)
-        {
-            newCardInstance.jokerValue = Random.Range(-10, 11); //Joker value between -10 and 10
-        }
-
-        return newCardInstance;
-    }
-
-    public Card DealCard()
-    {
-        return gameDeck.DealCard();
-    }
-
-    private IEnumerator DealCardToPlayerCoroutine()
-    {
-        var savedPosition = deckPosition.position;
-
-        Card newCardData = new Card { rank = Card.Rank.None };
-
-        bool cardFound = false;
-
-        List<CardInstance> currentHand = playerHands[currentHandIndex];
-
-        if(CrucifixItem.isCrucifixActive)
-        {
-            int playerValue = CalculateHandValue(currentHand, true);
-            int idealValue = blackjackGoal - playerValue;
-
-            Card.Rank targetRank = Card.GetRankForValue(idealValue);
-            Card? dealtCard = gameDeck.DealSpecificCard(targetRank);
-            
-            CrucifixItem.isCrucifixActive = false;
-
-            if(!dealtCard.HasValue)
-            {
-                int searchStart = Mathf.Min(idealValue, 10);
-
-                for(int v = searchStart; v >= 2; v--)
-                {
-                    if(v == 10)
-                    {
-                        Card.Rank[] faces = { Card.Rank.Ten, Card.Rank.Jack, Card.Rank.Queen, Card.Rank.King };
-
-                        foreach(var f in faces)
-                        {
-                            dealtCard = gameDeck.DealSpecificCard(f);
-
-                            if(dealtCard.HasValue) break;
-                        }
-                    }
-                    else
-                    {
-                        dealtCard = gameDeck.DealSpecificCard((Card.Rank)v);
-                    }
-
-                    if(dealtCard.HasValue) break;
-                }
-            }
-
-            if(!dealtCard.HasValue)
-            {
-                dealtCard = gameDeck.DealSpecificCard(Card.Rank.Ace);
-            }
-
-            if(dealtCard.HasValue)
-            {
-                newCardData = dealtCard.Value;
-                cardFound = true;
-            }
-        }
-
-        if(!cardFound)
-        {
-            newCardData = gameDeck.DealCard();
-        }
-
-        Transform currentParent = handPositions[currentHandIndex];
-        
-        CardInstance newCardInstance;
-        if (peekCardInstance == null)
-            newCardInstance = DealCardInstance(newCardData, currentHand, false);
-        else
-        {
-            newCardInstance = peekCardInstance;
-            currentHand.Insert(0, newCardInstance);
-            peekCardInstance = null;
-        }
-        
-        AudioManager.instance.Play("CardHit");
-
-        yield return PlaceCardInHand(newCardInstance, currentHand, currentParent, playerCardsOffset);
-        
-        KeepsakeManager.instance.OnDealPlayerCard(newCardInstance);
-        
-        UpdateHandVisuals(currentHand, true);
-        UpdateSplitOutlines();
-        deckPosition.position = savedPosition;
-    }
-
-    private IEnumerator DealCardToDealerCoroutine(bool isHidden)
-    {
-        Card newCardData = new Card { rank = Card.Rank.None };
-
-        bool cardFound = false;
-        
-        if(CrucifixItem.isCrucifixActive)
-        {
-            int dealerValue = CalculateHandValue(dealerHand, true);
-            int idealValue;
-
-            if (dealerValue >= 12) idealValue = 10;
-            else if (dealerValue >= 6) idealValue = 16 - dealerValue;
-            else idealValue = 12 - dealerValue; 
-
-            Card.Rank targetRank = Card.GetRankForValue(idealValue);
-            Card? dealtCard = gameDeck.DealSpecificCard(targetRank);
-            
-            CrucifixItem.isCrucifixActive = false;
-
-            if(!dealtCard.HasValue)
-            {
-                int searchStart = Mathf.Min(idealValue, 10);
-
-                for(int v = searchStart; v >= 2; v--)
-                {
-                    if(v == 10)
-                    {
-                        Card.Rank[] faces = { Card.Rank.Ten, Card.Rank.Jack, Card.Rank.Queen, Card.Rank.King };
-
-                        foreach(var f in faces)
-                        {
-                            dealtCard = gameDeck.DealSpecificCard(f);
-
-                            if(dealtCard.HasValue) break;
-                        }
-                    }
-                    else
-                    {
-                        dealtCard = gameDeck.DealSpecificCard((Card.Rank)v);
-                    }
-
-                    if(dealtCard.HasValue) break;
-                }
-            }
-
-            if(!dealtCard.HasValue)
-            {
-                dealtCard = gameDeck.DealSpecificCard(Card.Rank.Ace);
-            }
-
-            if(dealtCard.HasValue)
-            {
-                newCardData = dealtCard.Value;
-                cardFound = true;
-            }
-        }
-
-        if(!cardFound)
-        {
-            newCardData = gameDeck.DealCard();
-        }
-        
-        CardInstance newCardInstance;
-        if (peekCardInstance == null)
-            newCardInstance = DealCardInstance(newCardData, dealerHand, isHidden);
-        else
-        {
-            newCardInstance = peekCardInstance;
-            dealerHand.Insert(0, newCardInstance);
-            peekCardInstance = null;
-        }
-        AudioManager.instance.Play("CardHit");
-        yield return PlaceCardInHand(newCardInstance, dealerHand, dealerCardPosition, dealerCardsOffset);
-        UpdateHandVisuals(dealerHand, false);
-        UpdateUI();
-    }
-
     private IEnumerator HitCoroutine()
     {
         if(!isRoundActive || isActionLocked) yield break;
@@ -1156,15 +823,18 @@ public class BlackjackGame : MonoBehaviour
         hitHandAnimator.SetTrigger("hitTrigger");
 
         yield return GameUtils.WaitForSecondsScaled(1f);
-        yield return StartCoroutine(DealCardToPlayerCoroutine());
+        yield return StartCoroutine(tableCards.DealCardToPlayerCoroutine());
 
-        UpdateUI(true);
+        UpdateUI();
 
-        List<CardInstance> activeHand = playerHands[currentHandIndex];
-        int handValue = CalculateHandValue(activeHand, true);
+        // TODO: change stuff here
+        int handValue = tableCards.CalculateHandValue(tableCards.CurrentHand, true);
 
-        yield return EvaluatePlayerHandValue(activeHand, handValue);
-        if (handValue <= blackjackGoal && handValue >= -blackjackGoal && activeHand.Count < 7 && endlessDouble)
+        yield return EvaluatePlayerHandValue(tableCards.CurrentHand, handValue);
+        if (handValue <= blackjackGoal &&
+            handValue >= -blackjackGoal && 
+            tableCards.CurrentHand.Count < 7 &&
+            endlessDouble)
             EvaluateDoubleDownCondition();
     }
 
@@ -1181,7 +851,7 @@ public class BlackjackGame : MonoBehaviour
         
         standHandAnimator.SetTrigger("standTrigger");
 
-        yield return StartCoroutine(CheckPowerballCurrentHand());
+        yield return StartCoroutine(eventManager.CheckPowerballCompletion());
 
         float standTimer = 0f;
 
@@ -1214,7 +884,7 @@ public class BlackjackGame : MonoBehaviour
             canDoubleDown = false;
         }
 
-        handBets[currentHandIndex] *= 2;
+        handBets[tableCards.CurrentHandIndex] *= 2;
 
         UpdateBettingUI();
 
@@ -1223,22 +893,24 @@ public class BlackjackGame : MonoBehaviour
         hitHandAnimator.SetTrigger("doubleDownTrigger");
 
         yield return GameUtils.WaitForSecondsScaled(1f);
-        yield return StartCoroutine(DealCardToPlayerCoroutine());
+        yield return StartCoroutine(tableCards.DealCardToPlayerCoroutine());
 
         if(!endlessDouble)
         {
             yield return StartCoroutine(AdvanceHandCoroutine());
-            yield return StartCoroutine(CheckPowerballCurrentHand());
+            yield return StartCoroutine(eventManager.CheckPowerballCompletion());
         }
         else
         {
             UpdateUI(true);
 
-            List<CardInstance> activeHand = playerHands[currentHandIndex];
-            int handValue = CalculateHandValue(activeHand, true);
+            int handValue = tableCards.CalculateHandValue(tableCards.CurrentHand, true);
             
-            yield return EvaluatePlayerHandValue(activeHand, handValue);
-            if (handValue <= blackjackGoal && handValue >= -blackjackGoal && activeHand.Count < 7 && endlessDouble)
+            yield return EvaluatePlayerHandValue(tableCards.CurrentHand, handValue);
+            if (handValue <= blackjackGoal &&
+                handValue >= -blackjackGoal &&
+                tableCards.CurrentHand.Count < 7 &&
+                endlessDouble)
                 EvaluateDoubleDownCondition();
         }
     }
@@ -1249,70 +921,29 @@ public class BlackjackGame : MonoBehaviour
 
         KeepsakeUnlockProgression.instance.AddStat(ChallengeType.Split);
 
-        int betToAdd = handBets[currentHandIndex];
-
         AudioManager.instance.Play("BetUp");
 
         standHandAnimator.SetTrigger("splitTrigger");
 
         yield return GameUtils.WaitForSecondsScaled(1f);
 
-        List<CardInstance> activeHand = playerHands[currentHandIndex];
-        CardInstance cardToMove = activeHand[0];
-        cursorDetection.SetCardActive(cardToMove, false);
-
-        activeHand.RemoveAt(0);
-
-        List<CardInstance> newHand = new List<CardInstance> { cardToMove };
-
-        playerHands.Insert(currentHandIndex + 1, newHand);
-        handBets.Insert(currentHandIndex + 1, betToAdd);
-
+        int betToAdd = handBets[tableCards.CurrentHandIndex];
+        handBets.Insert(tableCards.CurrentHandIndex + 1, betToAdd);
         UpdateBettingUI();
 
-        for(int i = currentHandIndex + 2; i < playerHands.Count; i++)
-        {
-            Transform shiftTarget = handPositions[i];
-
-            foreach(var card in playerHands[i])
-            {
-                card.displayComponent.transform.SetParent(shiftTarget);
-            }
-
-            UpdateHandVisuals(playerHands[i], true);
-        }
-
-        AudioManager.instance.Play("CardHit");
-        Transform targetPosition = handPositions[currentHandIndex + 1];
-
-        yield return StartCoroutine(CardAnimationCoroutine(
-            cardToMove.displayComponent.transform,
-            targetPosition.position,
-            targetPosition.rotation,
-            cardScaleVector,
-            cardAnimationDuration
-        ));
-
-        cardToMove.displayComponent.transform.SetParent(targetPosition);
-        cardToMove.displayComponent.transform.localPosition = Vector3.zero;
-
-        UpdateHandVisuals(activeHand, true);
-        UpdateHandVisuals(newHand, true);
-
-        yield return GameUtils.WaitForSecondsScaled(0.5f);
+        yield return tableCards.SplitCardsCoroutine();
 
         isActionLocked = false;
 
         EvaluateDoubleDownCondition();
         UpdateUI();
-        UpdateSplitOutlines();
     }
 
     private IEnumerator AdvanceHandCoroutine()
     {
-        currentHandIndex++;
+        tableCards.GoNextHand();
 
-        if(currentHandIndex >= playerHands.Count)
+        if(!tableCards.IsPlayerTurn)
         {
              yield return dealToDealerCoroutine = StartCoroutine(DealerTurnCoroutine());
         }
@@ -1324,17 +955,19 @@ public class BlackjackGame : MonoBehaviour
 
             EvaluateDoubleDownCondition();
             UpdateUI();
-            UpdateSplitOutlines();
+            tableCards.UpdateSplitOutlines();
         }
         
         KeepsakeManager.instance.OnAdvanceHand();
     }
 
+    // TODO: change stuff here too
     private IEnumerator DealerTurnCoroutine(bool playerHasBlackjack = false)
     {
         cursorDetection.OnDealerTurn();
 
-        foreach(var hand in playerHands)
+        // TODO: maybe move to cursor
+        foreach(var hand in tableCards.PlayerHands)
         {
             foreach(var card in hand)
             {
@@ -1346,9 +979,9 @@ public class BlackjackGame : MonoBehaviour
 
         bool allHandsBust = true;
 
-        foreach(var hand in playerHands)
+        foreach(var hand in tableCards.PlayerHands)
         {
-            int val = CalculateHandValue(hand, true);
+            int val = tableCards.CalculateHandValue(hand, true);
 
             if(val <= blackjackGoal && val >= -blackjackGoal)
             {
@@ -1364,20 +997,10 @@ public class BlackjackGame : MonoBehaviour
         }
         else
         {
-            CardInstance hiddenCard = dealerHand.FirstOrDefault(x => x.isHidden);
+            yield return tableCards.FlipDealerHiddenCard();
+            UpdateUI();
 
-            if(hiddenCard != null)
-            {
-                yield return StartCoroutine(FlipCardCoroutine(hiddenCard.displayComponent, 0.4f));
-
-                hiddenCard.isHidden = false;
-
-                UpdateUI(true);
-
-                yield return GameUtils.WaitForSecondsScaled(1f);
-            }
-
-            int dealerValueInit = CalculateHandValue(dealerHand, false);
+            int dealerValueInit = tableCards.CalculateDealerHandValue(false);
 
             if(!playerHasBlackjack && IsBlackjack(dealerValueInit))
             {
@@ -1394,35 +1017,33 @@ public class BlackjackGame : MonoBehaviour
 
                     yield break;
                 }
-                else
-                {
-                    yield return GameUtils.WaitForSecondsScaled(1f);
 
-                    StartCoroutine(EndGameCoroutine("Both have Blackjack. Its a tie"));
+                yield return GameUtils.WaitForSecondsScaled(1f);
 
-                    yield break;
-                }
+                StartCoroutine(EndGameCoroutine("Both have Blackjack. Its a tie"));
+
+                yield break;
             }
 
-            int dealerAIValue = CalculateHandValue(dealerHand, false);
+            int dealerAIValue = tableCards.CalculateDealerHandValue(false);
             IEnumerator DealerHit()
             {
-                yield return StartCoroutine(DealCardToDealerCoroutine(false));
+                yield return StartCoroutine(tableCards.DealCardToDealerCoroutine(false));
 
-                UpdateUI(true);
-                dealerAIValue = CalculateHandValue(dealerHand, false);
+                UpdateUI();
+                dealerAIValue = tableCards.CalculateDealerHandValue(false);
 
                 yield return GameUtils.WaitForSecondsScaled(1f);
             }
             
-            if(Mathf.Abs(dealerAIValue) < (blackjackGoal - 4) && dealerHand.Count < 7)
+            if(Mathf.Abs(dealerAIValue) < (blackjackGoal - 4) && !tableCards.IsDealerHandFull)
                 yield return DealerHit();
 
             if(!KnifeItem.isKnifeActive)
-                while (Mathf.Abs(dealerAIValue) < (blackjackGoal - 4) && dealerHand.Count < 7)
+                while (Mathf.Abs(dealerAIValue) < (blackjackGoal - 4) && !tableCards.IsDealerHandFull)
                     yield return DealerHit();
             
-            if(dealerHand.Count == 7)
+            if(!tableCards.IsDealerHandFull)
             {
                 statusText.text = "Dealer hand full";
                 yield return GameUtils.WaitForSecondsScaled(1f);
@@ -1433,18 +1054,13 @@ public class BlackjackGame : MonoBehaviour
 
         yield return StartCoroutine(RevealJokers());
 
-        int finalDealerValue = CalculateHandValue(dealerHand, true);
-        int playerValue = CalculateHandValue(playerHands[0], true);
+        int finalDealerValue = tableCards.CalculateDealerHandValue(true);
+        int playerValue = tableCards.CalculateHandValue(tableCards.PlayerHands[0], true);
         bool playerBust = playerValue > blackjackGoal || playerValue < -blackjackGoal;
         bool dealerBust = finalDealerValue > GetDealerBustThreshold() || finalDealerValue < -GetDealerBustThreshold();
         int playerDiff = Mathf.Abs(Mathf.Abs(playerValue) - blackjackGoal);
         int dealerDiff = Mathf.Abs(Mathf.Abs(finalDealerValue) - blackjackGoal);
-        bool wonByOne = false;
-
-        if(!playerBust && !dealerBust && playerDiff - dealerDiff == 1)
-        {
-            wonByOne = true;
-        }
+        bool wonByOne = !playerBust && !dealerBust && playerDiff - dealerDiff == 1;
 
         if(wonByOne)
         {
@@ -1455,14 +1071,14 @@ public class BlackjackGame : MonoBehaviour
             yield return new WaitWhile(() => dialogueSystem.IsPlaying);
         }
 
-        if(playerHands.Count > 1)
+        if(tableCards.PlayerHandsCount > 1)
         {
-            for(int i = 0; i < playerHands.Count; i++)
+            for(int i = 0; i < tableCards.PlayerHandsCount; i++)
             {
-                int finalPlayerValue = CalculateHandValue(playerHands[i], true);
+                int finalPlayerValue = tableCards.CalculateHandValue(tableCards.PlayerHands[i], true);
                 string resultMessage = DetermineWinner(finalPlayerValue, finalDealerValue);
 
-                yield return StartCoroutine(ProcessPayout(resultMessage, handBets[i], playerHands));
+                yield return StartCoroutine(ProcessPayout(resultMessage, handBets[i], tableCards.PlayerHands));
                 yield return GameUtils.WaitForSecondsScaled(1f);
             }
 
@@ -1470,7 +1086,7 @@ public class BlackjackGame : MonoBehaviour
         }
         else
         {
-            int finalPlayerValue = CalculateHandValue(playerHands[0], true);
+            int finalPlayerValue = tableCards.CalculateHandValue(tableCards.PlayerHands[0], true);
             string resultMessage = DetermineWinner(finalPlayerValue, finalDealerValue);
 
             yield return StartCoroutine(EndGameCoroutine(resultMessage));
@@ -1538,10 +1154,7 @@ public class BlackjackGame : MonoBehaviour
 
                 yield return GameUtils.WaitForSecondsScaled(0.5f);
 
-                // TODO: move to organ item class
-                AudioManager.instance.Play("OrganExpire");
-                shopManager.RemoveFromInventory(ItemType.Organ);
-                OrganBagItem.isOrganActive = false;
+                OrganBagItem.Expire(shopManager);
                 
                 targetMoneyBalance = playerMoney;
 
@@ -1618,25 +1231,14 @@ public class BlackjackGame : MonoBehaviour
         }
     }
 
-    private IEnumerator BustCheckCoroutine(List<CardInstance> activeHand, int handIndex)
+    private IEnumerator BustCheckCoroutine(List<CardInstance> activeHand)
     {
-        yield return StartCoroutine(CheckPowerballCurrentHand());
+        yield return StartCoroutine(eventManager.CheckPowerballCompletion());
         yield return GameUtils.WaitForSecondsScaled(1f);
-        List<Coroutine> dissolveCoroutines = new List<Coroutine>();
 
-        var playerJokers = activeHand.Where(c => c.cardData.rank == Card.Rank.Joker).ToList();
-        foreach(CardInstance card in activeHand)
-            if(card.cardData.rank == Card.Rank.Joker)
-                dissolveCoroutines.Add(CreateRealJokerCard(card, handPositions[handIndex]));
-        
-        string revealMessage = "";
-
-        if(playerJokers.Count > 0)
-        {
-            revealMessage += "Your Joker(s): ";
-            revealMessage += string.Join(", ", playerJokers.Select(j => j.jokerValue.ToString()));
-            revealMessage += ". ";
-        }
+        var (playerJokers, coroutines) = 
+            tableCards.CreateJokers(activeHand, tableCards.CurrentHandPosition);
+        string revealMessage = GetJokersText(playerJokers, true);
 
         if(!string.IsNullOrEmpty(revealMessage))
         {
@@ -1647,7 +1249,7 @@ public class BlackjackGame : MonoBehaviour
 
         currentBustCoroutine = null;
 
-        if(playerHands.Count == 1)
+        if(tableCards.PlayerHands.Count == 1)
         {
             yield return StartCoroutine(EndGameCoroutine("Bust... You lose"));
         }
@@ -1656,10 +1258,8 @@ public class BlackjackGame : MonoBehaviour
             yield return GameUtils.WaitForSecondsScaled(1f);
             yield return StartCoroutine(AdvanceHandCoroutine());
         }
-        foreach(Coroutine coroutine in dissolveCoroutines)
-        {
-            yield return coroutine;
-        }
+        
+        foreach(var coroutine in coroutines) yield return coroutine;
     }
 
     private string DetermineWinner(int playerValue, int dealerValue)
@@ -1686,181 +1286,12 @@ public class BlackjackGame : MonoBehaviour
 
         int activeBetAmount = (handBets != null && handBets.Count > 0) ? handBets[0] : currentBet;
 
-        yield return StartCoroutine(ProcessPayout(message, activeBetAmount, playerHands));
+        yield return StartCoroutine(ProcessPayout(message, activeBetAmount, tableCards.PlayerHands));
         yield return StartCoroutine(EndRoundSequence());
     }
     #endregion
 
     #region Card Visuals
-    
-    //The dealer hand is in a straight line, the player hand creates a staircase effect.
-    public void UpdateHandVisuals(List<CardInstance> hand, bool isPlayerHand)
-    {
-        int cardCount = hand.Count;
-
-        if(cardCount == 0) return;
-
-        for(int i = 0; i < cardCount; i++)
-        {
-            CardInstance cardInstance = hand[i];
-            int cardOrderIndex = cardCount - 1 - i;
-
-            var offset = isPlayerHand ? playerCardsOffset : dealerCardsOffset;
-            var targetLocalPos = cardOrderIndex * offset;
-
-            cardInstance.displayComponent.transform.localPosition = targetLocalPos;
-            cardInstance.displayComponent.transform.localRotation = Quaternion.identity;
-        }
-    }
-
-    public void UpdateCardVFX()
-    {
-        foreach(var hand in playerHands)
-        {
-            foreach(CardInstance card in hand)
-            {
-                bool isNegative = CardEffects.IsCardNegative(card.cardData);
-                bool isDoubled = eventManager.CheckIfDoubled(card.cardData) || AlcoholItem.isAlcoholActive;
-                bool isHalved = eventManager.CheckIfHalved(card.cardData) || CardEffects.IsCardCut(card);
-
-                card.displayComponent.SetNegativeVisual(isNegative);
-                card.displayComponent.SetDoubledVisual(isDoubled);
-                card.displayComponent.SetCutVisual(isHalved);
-            }
-        }
-
-        foreach(CardInstance card in dealerHand)
-        {
-            bool isNegative = CardEffects.IsCardNegative(card.cardData);
-            bool isDoubled = eventManager.CheckIfDoubled(card.cardData);
-            bool isHalved = eventManager.CheckIfHalved(card.cardData) || CardEffects.IsCardCut(card);
-
-            card.displayComponent.SetNegativeVisual(isNegative);
-            card.displayComponent.SetDoubledVisual(isDoubled);
-            card.displayComponent.SetCutVisual(isHalved);
-        }
-
-        if(peekedCardObject != null)
-        {
-            Card? topCard = gameDeck.PeekCard();
-
-            if(topCard.HasValue)
-            {
-                CardDisplay display = peekedCardObject.GetComponent<CardDisplay>();
-
-                if(display != null)
-                {
-                    Card cardData = topCard.Value;
-
-                    bool isNegative = CardEffects.IsCardNegative(cardData);
-                    bool isDoubled = eventManager.CheckIfDoubled(cardData) || AlcoholItem.isAlcoholActive;
-                    bool isHalved = eventManager.CheckIfHalved(cardData);
-
-                    display.SetNegativeVisual(isNegative);
-                    display.SetDoubledVisual(isDoubled);
-                    display.SetCutVisual(isHalved);
-                }
-            }
-        }
-    }
-
-    //Animates a card moving from the deck to its position in the hand.
-    public void DrawCardAnimation(Transform cardTransform, Vector3 targetPosition, Quaternion targetRotation,
-        Vector3 targetScale, float duration)
-    {
-        StartCoroutine(CardAnimationCoroutine(cardTransform, targetPosition, targetRotation, targetScale, duration));
-    }
-    public IEnumerator CardAnimationCoroutine(Transform cardTransform, Vector3 targetPosition, Quaternion targetRotation, Vector3 targetScale, float duration)
-    {
-        Vector3 startPosition = cardTransform.position;
-        Quaternion startRotation = cardTransform.rotation;
-        Vector3 startScale = cardTransform.localScale;
-
-        float time = 0;
-
-        while(time < duration)
-        {
-            if(!cardTransform) yield break;
-
-            time += Time.deltaTime;
-
-            float t = time / duration;
-
-            t = t * t * (3f - 2f * t);
-
-            cardTransform.position = Vector3.Lerp(startPosition, targetPosition, t);
-            cardTransform.rotation = Quaternion.Lerp(startRotation, targetRotation, t);
-            cardTransform.localScale = Vector3.Lerp(startScale, targetScale, t);
-
-            yield return null;
-        }
-
-        cardTransform.position = targetPosition;
-        cardTransform.rotation = targetRotation;
-        cardTransform.localScale = targetScale;
-    }
-
-    //Flip animation for revealing the hidden card.
-    private IEnumerator FlipCardCoroutine(CardDisplay cardDisplay, float duration)
-    {
-        Transform cardTransform = cardDisplay.transform;
-
-        Quaternion startRotation = cardTransform.localRotation;
-        Quaternion ninetyDegrees = Quaternion.Euler(0, 90f, startRotation.eulerAngles.z);
-
-        float halfDuration = duration / 2.0f;
-        float elapsedTime = 0;
-
-        if(!CigarettesItem.isCigaretteActive)
-        {
-            AudioManager.instance.Play("Flip");
-        }
-
-        while(elapsedTime < halfDuration)
-        {
-            cardTransform.localRotation = Quaternion.Slerp(startRotation, ninetyDegrees, elapsedTime / halfDuration);
-            elapsedTime += Time.deltaTime;
-
-            yield return null;
-        }
-
-        cardDisplay.SetHidden(false);
-
-        Quaternion flippedStartRotation = Quaternion.Euler(0, -90f, startRotation.eulerAngles.z);
-
-        cardTransform.localRotation = flippedStartRotation;
-        elapsedTime = 0;
-
-        while(elapsedTime < halfDuration)
-        {
-            cardTransform.localRotation = Quaternion.Slerp(flippedStartRotation, startRotation, elapsedTime / halfDuration);
-            elapsedTime += Time.deltaTime;
-
-            yield return null;
-        }
-
-        cardTransform.localRotation = startRotation;
-    }
-
-    //Outlines every card in the active hand that is being played when splitting.
-    private void UpdateSplitOutlines()
-    {
-        if(playerHands.Count <= 1) return;
-
-        for(int i = 0; i < playerHands.Count; i++)
-        {
-            foreach(CardInstance card in playerHands[i])
-            {
-                ClickableCard clickable = card.displayComponent.GetComponentInChildren<ClickableCard>();
-
-                if(clickable != null)
-                {
-                    if(i == currentHandIndex) clickable.ApplyOutline();
-                    else clickable.OnRemoveOutline(false);
-                }
-            }
-        }
-    }
 
     private IEnumerator ButtonCoroutine()
     {
@@ -1872,187 +1303,6 @@ public class BlackjackGame : MonoBehaviour
     }
     #endregion
 
-    //Calculates the total value of a hand. Aces are 1 or 11.
-    public int CalculateHandValue(List<CardInstance> hand, bool countJoker)
-    {
-        float value = 0f;
-
-        List<float> aceReductions = new List<float>();
-
-        for(int i = 0; i < hand.Count; i++)
-        {
-            CardInstance cardInstance = hand[i];
-
-            Card card = cardInstance.cardData;
-
-            float cardValue;
-            float valueAsOne = 1f;
-
-            if(card.rank == Card.Rank.Joker)
-            {
-                if(countJoker)
-                {
-                    cardValue = cardInstance.jokerValue;
-                }
-                else
-                {
-                    cardValue = 0;
-                }
-            }
-            else if(card.rank == Card.Rank.Ace)
-            {
-                cardValue = eventManager.IsAceRule(AceValueRule.Always1) ? 1 : 11;
-            }
-            else if(card.rank >= Card.Rank.Ten && card.rank <= Card.Rank.King)
-            {
-                cardValue = 10;
-            }
-            else
-            {
-                cardValue = (int)card.rank;
-            }
-
-            if(eventManager.IsDoubleLowActive && card.rank != Card.Rank.Joker)
-            {
-                if(cardValue < 6)
-                {
-                    cardValue *= 2;
-                }
-
-                if(valueAsOne < 6)
-                {
-                    valueAsOne *= 2;
-                }
-            }
-
-            if(eventManager.IsHalfHighActive && card.rank != Card.Rank.Joker)
-            {
-                if(cardValue > 5)
-                {
-                    cardValue = Mathf.CeilToInt(cardValue / 2f);
-                }
-
-                if(valueAsOne > 5)
-                {
-                    valueAsOne = Mathf.CeilToInt(valueAsOne / 2f);
-                }
-            }
-
-            if(CardEffects.IsCardNegative(card))
-            {
-                cardValue = -cardValue;
-                valueAsOne = -valueAsOne;
-            }
-
-            if(CardEffects.cutCards.TryGetValue(cardInstance, out int reduction))
-            {
-                if(card.rank == Card.Rank.Joker)
-                {
-                    cardValue = 0;
-                    valueAsOne = 0;
-                }
-                else
-                {
-                    var half = Mathf.CeilToInt(Mathf.Abs(cardValue) / reduction);
-                    if(cardValue > 0)
-                    {
-                        cardValue = half;
-                    }
-                    else if(cardValue < 0)
-                    {
-                        cardValue = -half;
-                    }
-
-                    var halfAce = Mathf.CeilToInt(Mathf.Abs(valueAsOne) / reduction);
-                    if(valueAsOne > 0)
-                    {
-                        valueAsOne = halfAce;
-                    }
-                    else if(valueAsOne < 0)
-                    {
-                        valueAsOne = -halfAce;
-                    }
-                }
-            }
-
-            if(CardEffects.IsCardDrunk(cardInstance) && card.rank != Card.Rank.Joker)
-            {
-                cardValue *= 2;
-                valueAsOne *= 2;
-            }
-
-            if(card.rank == Card.Rank.Ace && eventManager.IsAceRule(AceValueRule.Flexible))
-            {
-                aceReductions.Add(Mathf.Abs(cardValue - valueAsOne));
-            }
-
-            value += cardValue;
-        }
-
-        if(eventManager.IsAceRule(AceValueRule.Flexible))
-        {
-            aceReductions.Sort((a, b) => b.CompareTo(a));
-
-            foreach(float reduction in aceReductions)
-            {
-                if(value > blackjackGoal || value < -blackjackGoal)
-                {
-                    value += (value > 0) ? -reduction : reduction;
-                }
-            }
-        }
-
-        return Mathf.RoundToInt(value);
-    }
-
-    private IEnumerator RevealJokers()
-    {
-        List<CardInstance> allPlayerJokers = new List<CardInstance>();
-        int handIndex = 0;
-        
-        foreach(var hand in playerHands)
-        {
-            allPlayerJokers.AddRange(hand.Where(c => c.cardData.rank == Card.Rank.Joker));
-            foreach(CardInstance card in hand)
-                if(card.cardData.rank == Card.Rank.Joker)
-                    CreateRealJokerCard(card,handPositions[handIndex]);
-            
-            handIndex++;
-        }
-        
-        var dealerJokers = dealerHand.Where(c => c.cardData.rank == Card.Rank.Joker).ToList();
-        foreach(CardInstance card in dealerHand)
-            if(card.cardData.rank == Card.Rank.Joker)
-                CreateRealJokerCard(card,dealerCardPosition);      
-        
-        string revealMessage = "";
-
-        if(allPlayerJokers.Count > 0)
-        {
-            revealMessage += "Your Joker(s): ";
-            revealMessage += string.Join(", ", allPlayerJokers.Select(j => j.jokerValue.ToString()));
-            revealMessage += ". ";
-        }
-
-        if(dealerJokers.Count > 0)
-        {
-            revealMessage += "Dealers Joker(s): ";
-            revealMessage += string.Join(", ", dealerJokers.Select(j => j.jokerValue.ToString()));
-            revealMessage += ".";
-        }
-
-        if(!string.IsNullOrEmpty(revealMessage))
-        {
-            statusText.text = revealMessage;
-
-            yield return StartCoroutine(GameUtils.WaitDelayOrInput(4f));
-        }
-        else
-        {
-            yield return StartCoroutine(GameUtils.WaitDelayOrInput(1.5f));
-        }
-    }
-
     //Updates the score, money, and checks for busts.
     public void UpdateUI(bool dealerHidden = true)
     {
@@ -2062,13 +1312,13 @@ public class BlackjackGame : MonoBehaviour
         {
             for(int i = 0; i < handTotalTexts.Count; i++)
             {
-                if(handTotalTexts[i] == null) continue;
+                if(!handTotalTexts[i]) continue;
 
-                if(i < playerHands.Count)
+                if(i < tableCards.PlayerHands.Count)
                 {
-                    string prefix = playerHands.Count > 1 ? $"" : "";
+                    string prefix = tableCards.PlayerHands.Count > 1 ? $"" : "";
 
-                    handTotalTexts[i].text = FormatHandText(prefix, playerHands[i], revealJokers, false);
+                    handTotalTexts[i].text = FormatHandText(prefix, tableCards.PlayerHands[i], revealJokers, false);
                 }
                 else
                 {
@@ -2077,18 +1327,18 @@ public class BlackjackGame : MonoBehaviour
             }
         }
 
-        if(dealerTotalText != null)
+        if(dealerTotalText)
         {
-            if(dealerHand.Count > 0)
+            if(tableCards.DealerHand.Count > 0)
             {
-                if(dealerHidden && dealerHand.Any(c => c.isHidden))
+                if(dealerHidden && tableCards.DealerHand.Any(c => c.isHidden))
                 {
-                    List<CardInstance> visibleCards = dealerHand.Where(x => !x.isHidden).ToList();
+                    List<CardInstance> visibleCards = tableCards.DealerHand.Where(x => !x.isHidden).ToList();
                     dealerTotalText.text = FormatHandText("", visibleCards, revealJokers, true);
                 }
                 else
                 {
-                    dealerTotalText.text = FormatHandText("", dealerHand, revealJokers, false);
+                    dealerTotalText.text = FormatHandText("", tableCards.DealerHand, revealJokers, false);
                 }
             }
             else
@@ -2104,7 +1354,7 @@ public class BlackjackGame : MonoBehaviour
     {
         if(cards.Count == 0) return "";
 
-        int totalValue = CalculateHandValue(cards, true);
+        int totalValue = tableCards.CalculateHandValue(cards, true);
         bool hasJoker = cards.Any(c => c.cardData.rank == Card.Rank.Joker);
 
         if(revealJokers || !hasJoker)
@@ -2112,7 +1362,7 @@ public class BlackjackGame : MonoBehaviour
             return prefix + (dealerHasHiddenCard ? $"{totalValue}" : totalValue.ToString());
         }
 
-        int baseValue = CalculateHandValue(cards, false);
+        int baseValue = tableCards.CalculateHandValue(cards, false);
 
         return prefix + (dealerHasHiddenCard ? $"{baseValue}" : $"{baseValue}");
     }
@@ -2202,13 +1452,9 @@ public class BlackjackGame : MonoBehaviour
         yield return eventManager.CheckTurnLimit();
 
         if(PlayerMoney >= 100000 && stayed == false)
-        {
-
             StartCoroutine(LeaveOrStay());
 
-        }
-
-        StartGame();
+        ResetGame();
     }
 
     private bool IsBlackjack(int handValue)
@@ -2220,48 +1466,30 @@ public class BlackjackGame : MonoBehaviour
 
     public bool CanSplit()
     {
-        if(!isRoundActive || isActionLocked || playerHands.Count >= maxSplits + 1) return false;
+        if(!isRoundActive || isActionLocked || tableCards.AreSplitHandsFull) return false;
 
-        List<CardInstance> currentHand = playerHands[currentHandIndex];
+        List<CardInstance> currentHand = tableCards.CurrentHand;
 
         if(currentHand.Count != 2) return false;
 
-        float val1 = GetCardValueForSplit(currentHand[0].cardData);
-        float val2 = GetCardValueForSplit(currentHand[1].cardData);
         int totalBets = 0;
 
         foreach(int b in handBets) totalBets += b;
 
-        bool hasEnoughMoney = playerMoney >= (totalBets + handBets[currentHandIndex]);
+        bool hasEnoughMoney = playerMoney >= (totalBets + handBets[tableCards.CurrentHandIndex]);
         bool allowsOverdraft = KeepsakeManager.instance.AllowOverdraft();
         bool keepsakeAllowsSplit = KeepsakeManager.instance.AllowAnySplit();
-        bool validSplit = val1 == val2 || keepsakeAllowsSplit;
+        bool validSplit = tableCards.IsPlayerHandEqual() || keepsakeAllowsSplit;
         bool validFunds = hasEnoughMoney || allowsOverdraft;
 
         return validSplit && validFunds;
     }
 
-    private float GetCardValueForSplit(Card card)
-    {
-        float cardValue;
-
-        if(card.rank >= Card.Rank.Ten && card.rank <= Card.Rank.King) cardValue = 10;
-        else if(card.rank == Card.Rank.Ace) cardValue = 11;
-        else cardValue = (int)card.rank;
-
-        if(eventManager.IsDoubleLowActive && cardValue < 6 && card.rank != Card.Rank.Joker) cardValue *= 2;
-
-        if(eventManager.IsHalfHighActive && cardValue > 5 && card.rank != Card.Rank.Joker) cardValue = Mathf.CeilToInt(cardValue / 2f);
-
-        return cardValue;
-    }
-
     public void EvaluateDoubleDownCondition()
     {
-        if(currentHandIndex >= playerHands.Count)
+        if(!tableCards.IsPlayerTurn)
         {
             canDoubleDown = false;
-
             return;
         }
 
@@ -2269,49 +1497,10 @@ public class BlackjackGame : MonoBehaviour
 
         foreach(int b in handBets) totalBets += b;
 
-        bool hasEnoughMoney = playerMoney >= (totalBets + handBets[currentHandIndex]);
+        bool hasEnoughMoney = playerMoney >= (totalBets + handBets[tableCards.CurrentHandIndex]);
         bool allowsOverdraft = KeepsakeManager.instance.AllowOverdraft();
 
         canDoubleDown = hasEnoughMoney || allowsOverdraft;
-    }
-
-    private void RigPlayerHand()
-    {
-        int maxAttempts = 50;
-        int attempts = 0;
-
-        while(attempts < maxAttempts)
-        {
-            Card? firstCard = gameDeck.PeekCardAt(0);
-            Card? secondCard = gameDeck.PeekCardAt(2);
-
-            if(!firstCard.HasValue || !secondCard.HasValue) break;
-
-            int simulatedValue = SimulateInitialHandValue(firstCard.Value, secondCard.Value);
-
-            if(simulatedValue >= 12 && simulatedValue <= 16)
-            {
-                gameDeck.Shuffle();
-
-                attempts++;
-            }
-            else
-            {
-                break;
-            }
-        }
-    }
-
-    private int SimulateInitialHandValue(Card c1, Card c2)
-    {
-        List<CardInstance> tempHand = new List<CardInstance>();
-        CardInstance tempCard1 = new CardInstance(c1, null, false);
-        CardInstance tempCard2 = new CardInstance(c2, null, false);
-
-        tempHand.Add(tempCard1);
-        tempHand.Add(tempCard2);
-
-        return CalculateHandValue(tempHand, true);
     }
 
     private int GetDealerBustThreshold()
@@ -2349,29 +1538,6 @@ public class BlackjackGame : MonoBehaviour
         staybutton.gameObject.SetActive(false);
         cursorDetection.OnRoundInactive();
         stayed = true;
-    }
-    
-    private Coroutine CreateRealJokerCard(CardInstance card, Transform parent)
-    {
-        int realValue = card.jokerValue;
-        if(card.jokerValue > 11 || card.jokerValue < -11)
-            realValue = realValue / 2;
-        
-        if(card.jokerValue != 0)
-        {
-            cardPrefabLookup.TryGetValue((Card.GetRankForValue(Mathf.Abs(realValue)),card.cardData.suit), out GameObject realCard);
-            GameObject realCardObject = Instantiate(realCard,card.CardObject.transform.position,card.CardObject.transform.rotation,parent);
-            
-            if(card.jokerValue < 0)
-                realCardObject.GetComponent<CardDisplay>().SetNegativeVisual(true);
-
-            if(card.jokerValue > 11 || card.jokerValue < -11)
-                realCardObject.GetComponent<CardDisplay>().SetDoubledVisual(true);
-
-            activeCardObjects.Add(realCardObject);      
-        }
-        
-        return CardEffects.SetDissolvedVisual(card.displayComponent, 2.0f, Color.aliceBlue,1.2f);                
     }
 
 }

@@ -19,15 +19,8 @@ public class CardDisplay : MonoBehaviour
     
     public void SetHidden(bool isHidden)
     {
-        if(cardBack != null)
-        {
-            cardBack.SetActive(isHidden);
-        }
-
-        if(cardFace != null)
-        {
-            cardFace.SetActive(!isHidden);
-        }
+        cardBack?.SetActive(isHidden);
+        cardFace?.SetActive(!isHidden);
     }
 
     public void SetNegativeVisual(bool isNegative)
@@ -55,6 +48,7 @@ public class CardDisplay : MonoBehaviour
     {
         render.material.SetFloat("_DissolveEdge", dissolveBorder);
         render.material.SetColor("_DissolveColor",color);
+        
         float elapsedTime = 0f;
         while (elapsedTime < dissolveTime)
         {
@@ -62,7 +56,7 @@ public class CardDisplay : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        render.material.SetFloat("_Dissolve", 1f);
         
+        render.material.SetFloat("_Dissolve", 1f);
     }
 }

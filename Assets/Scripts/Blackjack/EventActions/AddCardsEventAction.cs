@@ -10,6 +10,7 @@ public class AddCardsEventAction : MonoBehaviour
     private const int OptionCount = 3;
     private const float CardAnimationDuration = 0.25f;
     private readonly Vector3 cardScaleVector = Vector3.one * 0.05f;
+    private TableCards tableCards;
 
     private void Awake()
     {
@@ -39,8 +40,8 @@ public class AddCardsEventAction : MonoBehaviour
     private IEnumerator DealCardOption(int optionIndex)
     {
         var cardsPosition = blackjackGame.CardOptionPosition;
-        var card = blackjackGame.DealCard();
-        var cardInstance = blackjackGame.DealCardInstanceOption(card, false);
+        var card = tableCards.DealCard();
+        var cardInstance = tableCards.DealCardInstance(card, false);
         AudioManager.instance.Play("CardHit");
 
         if (cardInstance != null)
@@ -53,7 +54,7 @@ public class AddCardsEventAction : MonoBehaviour
 
             cardInstance.displayComponent.transform.SetParent(cardsPosition.parent);
 
-            yield return StartCoroutine(blackjackGame.CardAnimationCoroutine(
+            yield return StartCoroutine(tableCards.CardAnimationCoroutine(
                 cardInstance.displayComponent.transform,
                 cardsPosition.TransformPoint(targetLocalPos),
                 cardsPosition.rotation * targetRotation,

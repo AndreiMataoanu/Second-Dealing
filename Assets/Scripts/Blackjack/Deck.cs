@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -9,7 +10,7 @@ public class Deck
     private List<Card.Rank> removedRanks = new List<Card.Rank>();
     private List<Card.Suit> removedSuits = new List<Card.Suit>();
     private List<Tuple<Card.Rank, Card.Suit>> removedCards = new ();
-    private Tuple<Card?, int> copies = new(null, 0);
+    private Tuple<Card, int> copies = new(null, 0);
 
     private bool jokersInDeck = false;
 
@@ -56,7 +57,7 @@ public class Deck
 
         if (copies is not { Item2: > 0 } || copies.Item1 == null) return;
 
-        var copy = (Card)copies.Item1;
+        var copy = copies.Item1;
         for(var i = 0; i < copies.Item2; i++)
             cards.Add(new Card{rank = copy.rank, suit = copy.suit});
     }
@@ -68,13 +69,9 @@ public class Deck
         while(n > 1)
         {
             n--;
-
             int k = Random.Range(0, n + 1);
 
-            Card value = cards[k];
-
-            cards[k] = cards[n];
-            cards[n] = value;
+            (cards[k], cards[n]) = (cards[n], cards[k]);
         }
     }
 
@@ -94,70 +91,50 @@ public class Deck
     }
 
     //Sunglasses ability: Peek at the next card without removing it from the deck
-    public Card? PeekCard()
+    public Card PeekCard()
     {
         if(cards.Count == 0) return null;
 
         return cards[0];
     }
 
-    public Card? PeekCardAt(int index)
+    public Card PeekCardAt(int index)
     {
         if(index < 0 || index >= cards.Count) return null;
 
         return cards[index];
     }
 
-    //Prayer Beads ability: Try to deal a specific card rank if available
-    public Card? DealSpecificCard(Card.Rank rank)
-    {
-        Card? dealtCard = null;
-
-        int cardIndex = -1;
-
-        for(int i = 0; i < cards.Count; i++)
-        {
-            if(cards[i].rank == rank)
-            {
-                dealtCard = cards[i];
-                cardIndex = i;
-
-                break;
-            }
-        }
-
-        if(cardIndex != -1)
-        {
-            cards.RemoveAt(cardIndex);
-
-            return dealtCard;
-        }
-
-        return null;
-    }
-    
     public Card DealSpecificCard(Card.Suit suit)
     {
-        Card dealtCard = default;
-        
-        int cardIndex = -1;
+        Card dealtCard = cards.Find(card => card.suit == suit);
+        if (dealtCard != null) cards.Remove(dealtCard);
 
-        for(int i = 0; i < cards.Count; i++)
+        dealtCard = DealCard();
+        return dealtCard;
+    }
+    
+    public Card DealSpecificCard(Card.Rank rank)
+    {
+        Card dealtCard = cards.Find(card => card.rank == rank);
+        if (dealtCard != null) cards.Remove(dealtCard);
+
+        return dealtCard;
+    }
+
+    public Card DealBestCard(int value)
+    {
+        while (value > 0)
         {
-            if(cards[i].suit == suit)
+            var ranks = Card.GetRanksForValue(value);
+            var dealtCard = cards.Find(card => ranks.Contains(card.rank));
+            if (dealtCard != null)
             {
-                dealtCard = cards[i];
-                cardIndex = i;
-
-                break;
+                cards.Remove(dealtCard);
+                return dealtCard;
             }
-        }
 
-        if(cardIndex != -1)
-        {
-            cards.RemoveAt(cardIndex);
-
-            return dealtCard;
+            value--;
         }
 
         return DealCard();
@@ -218,6 +195,6 @@ public class Deck
     
     public void AddCardCopies(Card card, int copyNumber)
     {
-        copies = new Tuple<Card?, int>(new Card { rank = card.rank, suit = card.suit }, copyNumber);
+        copies = new Tuple<Card, int>(new Card { rank = card.rank, suit = card.suit }, copyNumber);
     }
 }

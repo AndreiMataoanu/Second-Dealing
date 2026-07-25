@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public static class CardEffects
@@ -9,6 +10,14 @@ public static class CardEffects
     private static HashSet<CardInstance> alcoholCards = new();
 
     #region Card Collection
+
+    public static int? GetCutReduction(CardInstance cardInstance)
+    {
+        if (cutCards.TryGetValue(cardInstance, out int reduction))
+            return reduction;
+
+        return null;
+    }
     
     public static void AddCutCard(CardInstance cardInstance, int reduction)
     {
@@ -70,5 +79,62 @@ public static class CardEffects
 
     public static bool IsCardDrunk(CardInstance cardInstance) => alcoholCards.Contains(cardInstance);
 
+    public static bool IsCardDoubled(Card card)
+    {
+        if(!EventManager.isDoubleLowActive || card.rank == Card.Rank.Joker) return false;
+
+        return card.GetValueNoJokers() < 6f;
+    }
+    
+    public static bool IsCardHalved(Card card)
+    {
+        if(!EventManager.isHalfHighActive || card.rank == Card.Rank.Joker) return false;
+
+        return card.GetValueNoJokers() > 5f;
+    }
+    
+    #endregion
+    
+    #region Add effects to cards
+    
+    // returns 2 possible values for ace, 1 possible value for the rest
+    public static List<float> GetCardValuesFromEffects(CardInstance cardInstance, bool countJoker)
+    {
+        var card = cardInstance.cardData;
+        var values = new List<float> { card.GetValue(countJoker) };
+        if (card.rank == Card.Rank.Ace) values.Add(1); // ace can have value GetValue() - 11 or 1
+
+        if (EventManager.isDoubleLowActive && values.First() < 6)
+            values = values.ConvertAll(cardValue => cardValue * 2);
+
+        if (EventManager.isHalfHighActive && values.First() > 5)
+            values = values.ConvertAll(cardValue => (float)Mathf.CeilToInt(cardValue / 2f));
+
+        if (IsCardNegative(card))
+            values = values.ConvertAll(cardValue => -cardValue);
+
+        var cut = GetCutReduction(cardInstance);
+        if (cut != null)
+            values = values.ConvertAll(cardValue => cardValue / (float)cut);
+
+        if (IsCardDrunk(cardInstance))
+            values = values.ConvertAll(cardValue => cardValue * 2);
+
+        return values;
+    }
+    
+    public static void SetVisualEffects(CardInstance cardInstance, bool isHidden, bool countAlcohol, bool countScissors)
+    {
+        bool isNegative = IsCardNegative(cardInstance.cardData);
+        bool isDoubled = IsCardDoubled(cardInstance.cardData) || (countAlcohol && AlcoholItem.isAlcoholActive);
+        bool isHalved = IsCardHalved(cardInstance.cardData) || (countScissors && IsCardCut(cardInstance));
+
+        var display = cardInstance.displayComponent;
+        display?.SetNegativeVisual(isNegative);
+        display?.SetDoubledVisual(isDoubled);
+        display?.SetCutVisual(isHalved);
+        display?.SetHidden(isHidden);
+    }
+    
     #endregion
 }

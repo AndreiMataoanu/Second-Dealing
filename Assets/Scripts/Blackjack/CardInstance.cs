@@ -9,8 +9,6 @@ public class CardInstance
     public TarotCard tarotData;
 
     public bool isHidden;
-
-    public int jokerValue = 0;
     
     public GameObject CardObject => displayComponent?.gameObject; 
 

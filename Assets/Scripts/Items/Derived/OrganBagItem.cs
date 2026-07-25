@@ -40,11 +40,18 @@ public class OrganBagItem : Item
 
     protected override string GetTooltipContent()
     {
-        if (organRoundsLeft == 0)
-            return base.GetTooltipContent();
-        if (organRoundsLeft == 1)
-            return base.GetTooltipContent() + "\nExpires in 1 round";
+        return organRoundsLeft switch
+        {
+            0 => base.GetTooltipContent(),
+            1 => base.GetTooltipContent() + "\nExpires in 1 round",
+            _ => base.GetTooltipContent() + $"\nExpires in {organRoundsLeft} rounds"
+        };
+    }
 
-        return base.GetTooltipContent() + $"\nExpires in {organRoundsLeft} rounds";
+    public static void Expire(ShopManager shopManager)
+    {
+        AudioManager.instance.Play("OrganExpire");
+        shopManager.RemoveFromInventory(ItemType.Organ);
+        isOrganActive = false;
     }
 }

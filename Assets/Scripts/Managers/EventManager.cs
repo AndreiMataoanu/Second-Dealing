@@ -44,10 +44,10 @@ public class EventManager : MonoBehaviour
     private List<EventThreshold> triggeredThresholds = new List<EventThreshold>();
     private List<int> powerballNumbers = new List<int>();
 
-    private AceValueRule currentAceRule = AceValueRule.Flexible;
     
     private int targetMoneyBalance;
     
+    public static AceValueRule currentAceRule = AceValueRule.Flexible;
     public static bool isDoubleLowActive = false;
     public static bool isHalfHighActive = false;
     private bool isRouletteBlackjackActive = false;
@@ -56,16 +56,14 @@ public class EventManager : MonoBehaviour
 
     private IEnumerator eventTriggerCoroutine;
     
-    private BlackjackGame blackjackGame;
+    private BlackjackGame blackjackGame; // TODO: use table cards instead
+    private TableCards tableCards;
     
     #region Getters
     
     public bool UseTurnLimit => useTurnLimit;
     public int TriggeredThresholdsCount => triggeredThresholdsCount;
     public int TurnsLeft => currentMaxTurns - currentTurns;
-    public bool IsDoubleLowActive => isDoubleLowActive;
-    public bool IsHalfHighActive => isHalfHighActive;
-    public bool IsRouletteBlackjackActive => isRouletteBlackjackActive;
     public List<int> PowerballGoal => powerballNumbers;
     public List<EventThreshold> EventThresholds => eventThresholds;
     
@@ -94,19 +92,13 @@ public class EventManager : MonoBehaviour
 
     #endregion
     
-    #region Check Event Rules
-
-    public bool IsAceRule(AceValueRule aceRule) => currentAceRule == aceRule;
-
-    #endregion
-    
     #region Activate Events
     
-    public void RemoveValueFromDeck(Card.Rank rank) => blackjackGame.GameDeck.AddRemovedValue(rank);
+    public void RemoveValueFromDeck(Card.Rank rank) => tableCards.GameDeck.AddRemovedValue(rank);
     
-    public void RemoveSuitFromDeck(Card.Suit suit) => blackjackGame.GameDeck.AddRemovedSuit(suit);
+    public void RemoveSuitFromDeck(Card.Suit suit) => tableCards.GameDeck.AddRemovedSuit(suit);
     
-    public void AddJokers() => blackjackGame.GameDeck.AddJokersToDeck();
+    public void AddJokers() => tableCards.GameDeck.AddJokersToDeck();
 
     public void SetAceRule(AceValueRule newRule) => currentAceRule = newRule;
     
@@ -115,19 +107,19 @@ public class EventManager : MonoBehaviour
     public void SetNegativeSuit(Card.Suit suit)
     {
         CardEffects.AddNegativeSuit(suit);
-        blackjackGame.UpdateCardVFX();
+        tableCards.UpdateCardVFX();
     }
 
     public void SetDoubleLowActive(bool active)
     {
         isDoubleLowActive = active;
-        blackjackGame.UpdateCardVFX();
+        tableCards.UpdateCardVFX();
     }
 
     public void SetHalfHighActive(bool active)
     {
         isHalfHighActive = active;
-        blackjackGame.UpdateCardVFX();
+        tableCards.UpdateCardVFX();
     }
     
     public void SetPowerballEventActive(List<int> goal)
@@ -142,7 +134,7 @@ public class EventManager : MonoBehaviour
 
     public void DisplayCardOptions(int minValue, int maxValue)
     {
-        var copyCount = blackjackGame.GameDeck.GetCopyCount(minValue, maxValue);
+        var copyCount = tableCards.GameDeck.GetCopyCount(minValue, maxValue);
         OnAddCardsEvent?.Invoke();
         
         StopEventFlow();
@@ -152,7 +144,7 @@ public class EventManager : MonoBehaviour
 
     public void AddClickableCardOptions() => blackjackGame.CursorDetection.OnSelectCardOption(blackjackGame, CardTrigger.AddCardsEvent);
     
-    public void AddCardCopies(Card card) => blackjackGame.GameDeck.AddCardCopies(card);
+    public void AddCardCopies(Card card) => tableCards.GameDeck.AddCardCopies(card);
     
     public void SelectCardCopyEnd() => StartCoroutine(SelectCardCopyEndCoroutine());
     private IEnumerator SelectCardCopyEndCoroutine()
@@ -162,19 +154,19 @@ public class EventManager : MonoBehaviour
         
         yield return new WaitForSeconds(1.5f);
         DeleteCopyOptions?.Invoke();
-        blackjackGame.StartGame();
+        blackjackGame.ResetGame();
     }
     
     #endregion
 
     #region Powerball Event
 
-    public IEnumerator CheckPowerballAtIndex(int index)
+    public IEnumerator CheckPowerballCompletion()
     {
         if (powerballNumbers == null || powerballNumbers.Count == 0) yield break;
 
-        var hand = blackjackGame.PlayerHands[index];
-        int handValue = Mathf.Abs(blackjackGame.CalculateHandValue(hand, true));
+        var hand = tableCards.CurrentHand;
+        int handValue = Mathf.Abs(tableCards.CalculateHandValue(hand, true));
         powerballNumbers.RemoveAll(number => number == handValue);
 
         if (powerballNumbers.Count == 0)
@@ -220,41 +212,6 @@ public class EventManager : MonoBehaviour
         blackjackGame.GameCamera.ChangeToCamera(CameraType.Playing);
     }
 
-    #endregion
-    
-    // TODO: move method to other script
-    #region Check Cards
-    
-    public bool CheckIfDoubled(Card card)
-    {
-        if(card.rank == Card.Rank.Joker) return false;
-
-        if(!isDoubleLowActive) return false;
-
-        float cardValue = 0f;
-
-        if(card.rank >= Card.Rank.Ten && card.rank <= Card.Rank.King) cardValue = 10f;
-        else if(card.rank == Card.Rank.Ace) cardValue = currentAceRule == AceValueRule.Always1 ? 1f : 11f;
-        else cardValue = (int)card.rank;
-
-        return cardValue < 6f;
-    }
-
-    public bool CheckIfHalved(Card card)
-    {
-        if(card.rank == Card.Rank.Joker) return false;
-
-        if(!isHalfHighActive) return false;
-
-        float cardValue = 0f;
-
-        if(card.rank >= Card.Rank.Ten && card.rank <= Card.Rank.King) cardValue = 10f;
-        else if(card.rank == Card.Rank.Ace) cardValue = currentAceRule == AceValueRule.Always1 ? 1f : 11f;
-        else cardValue = (int)card.rank;
-
-        return cardValue > 5f;
-    }
-    
     #endregion
     
     #region End Blackjack Turn
@@ -375,7 +332,7 @@ public class EventManager : MonoBehaviour
     private void StopEventFlow()
     {
         StopCoroutine(eventTriggerCoroutine);
-        blackjackGame.ClearTable();
+        tableCards.ClearTable();
         blackjackGame.UpdateBettingUI();
         blackjackGame.ResetTexts();
     }
