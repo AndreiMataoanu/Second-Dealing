@@ -71,4 +71,12 @@ public static class CardEffects
     public static bool IsCardDrunk(CardInstance cardInstance) => alcoholCards.Contains(cardInstance);
 
     #endregion
+
+    public static void Reset()
+    {
+        cutCards.Clear();
+        negativeSuits.Clear();
+        antiMatterCards.Clear();
+        alcoholCards.Clear();
+    }
 }

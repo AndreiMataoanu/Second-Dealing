@@ -48,8 +48,8 @@ public class EventManager : MonoBehaviour
     
     private int targetMoneyBalance;
     
-    public static bool isDoubleLowActive = false;
-    public static bool isHalfHighActive = false;
+    public bool isDoubleLowActive = false;
+    public bool isHalfHighActive = false;
     private bool isRouletteBlackjackActive = false;
     private bool isPowerballTriggered = false;
     private bool isNewPowerball = false;
