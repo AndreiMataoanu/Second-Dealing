@@ -149,8 +149,6 @@ public class BlackjackGame : MonoBehaviour
         ManagerSetup();
         InitializeCardLookup();
         StartGame();
-
-        AudioManager.instance.Play("MainTheme");
     }
 
     private void Update()

@@ -19,7 +19,7 @@ public class SecondDealing : Keepsake
         cardSelector = FindFirstObjectByType<CardSelectorManager>(FindObjectsInactive.Include);
     }
 
-    public override bool ActivateTableEffect(BlackjackGame game)
+    public override bool ActivateTableEffect()
     {
         if(!gameManager.isRoundActive || gameManager.isActionLocked || !isCharged) return false;
 

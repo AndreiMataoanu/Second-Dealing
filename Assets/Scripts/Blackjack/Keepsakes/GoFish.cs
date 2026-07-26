@@ -17,7 +17,7 @@ public class GoFish : Keepsake
         cardSelector = FindFirstObjectByType<CardSelectorManager>(FindObjectsInactive.Include);
     }
 
-    public override bool ActivateTableEffect(BlackjackGame game)
+    public override bool ActivateTableEffect()
     {
         if(!gameManager.isRoundActive || gameManager.isActionLocked) return false;
 
