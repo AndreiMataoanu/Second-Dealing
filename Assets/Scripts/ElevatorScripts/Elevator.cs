@@ -251,6 +251,7 @@ public class Elevator : MonoBehaviour
         elevatorCamera.Priority = 10;
 
         AudioManager.instance.Play("ElevatorTravel");
+        AudioManager.instance.Play("ElevatorMusic");
 
         StartCoroutine(ShakeCamera(moveAmplitude, moveFrequency, 0.5f));
 
@@ -272,6 +273,7 @@ public class Elevator : MonoBehaviour
         currentFloor = nextFloor.name;
         transform.position = nextFloorPos;
 
+        AudioManager.instance.Stop("ElevatorMusic");
         AudioManager.instance.Play("ElevatorDing");
 
         StartCoroutine(ShakeCamera(idleAmplitude, idleFrequency, 0.5f));
