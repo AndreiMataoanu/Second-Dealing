@@ -6,7 +6,6 @@ using Random = UnityEngine.Random;
 public class Deck
 {
     private List<Card> cards = new List<Card>();
-    private List<Card> printedCards = new List<Card>();
     private List<Card.Rank> removedRanks = new List<Card.Rank>();
     private List<Card.Suit> removedSuits = new List<Card.Suit>();
     private List<Tuple<Card.Rank, Card.Suit>> removedCards = new ();
@@ -60,8 +59,6 @@ public class Deck
         var copy = (Card)copies.Item1;
         for(var i = 0; i < copies.Item2; i++)
             cards.Add(new Card{rank = copy.rank, suit = copy.suit});
-
-        cards.AddRange(printedCards);
     }
 
     public void Shuffle()
@@ -226,7 +223,7 @@ public class Deck
 
     public void AddPrintedCard(Card card)
     {
-        printedCards.Add(card);
+        copies = new Tuple<Card?, int>(new Card { rank = card.rank, suit = card.suit }, copies.Item2 + 1);
         cards.Add(card);
     }
 
