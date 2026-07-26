@@ -2273,14 +2273,14 @@ public class BlackjackGame : MonoBehaviour
         {
             CardEffects.Reset();
             PlayerPrefs.SetInt("PreviousRunMoney", maxMoneyThisRun);
-            PlayerPrefs.SetInt("PreviousRunWins",TimesWon);
-            PlayerPrefs.SetInt("PreviousRunLoss",TimesLost);
+            PlayerPrefs.SetInt("PreviousRunWins", TimesWon);
+            PlayerPrefs.SetInt("PreviousRunLoss", TimesLost);
             PlayerPrefs.Save();
             KeepsakeUnlockProgression.instance.EndRun();
             
             FadeInAnimator.SetTrigger("fadeInTrig");
             yield return StartCoroutine(GameUtils.WaitDelayOrInput(3.0f));
-            SceneManager.LoadSceneAsync(4);
+            SceneManager.LoadSceneAsync(2);
             yield break;
         }
 
