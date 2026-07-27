@@ -110,12 +110,14 @@ MonoBehaviour:
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
   tooltipHeader: NFT
   tooltipContent: Can change its resale value.
-  basePrice: 300
+  showTooltip: 1
+  basePrice: 200
   percentagePrice: 0.1
   resaleLossPercentage: 0
   type: 9
   spawnWeight: 15
   isPurchased: 0
+  delayDestroy: 0
   nftRoundsLeft: 0
 --- !u!64 &8674433730413865787
 MeshCollider:
