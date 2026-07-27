@@ -9,6 +9,7 @@ public class HatTrick : Keepsake
     
     private CardEffectActions cardEffect;
     private BlackjackGame game;
+    private TableCards tableCards;
     private int usesThisRound = 0;
 
     #region Setup
@@ -26,6 +27,7 @@ public class HatTrick : Keepsake
     public override void SetMembers(BlackjackGame blackjackGame)
     {
         game = blackjackGame;
+        tableCards = blackjackGame.TableCards;
         cardEffect = new CardEffectActions(
             game,
             game.CursorFollow,
@@ -67,9 +69,9 @@ public class HatTrick : Keepsake
 
     private bool CheckHatTrickValid(CardInstance cardInstance)
     {
-        bool isValidTarget = game.playerHands.Any(hand => hand.Contains(cardInstance));
+        bool isValidTarget = tableCards.PlayerHands.Any(hand => hand.Contains(cardInstance));
 
-        if(!isValidTarget && game.dealerHand.Contains(cardInstance))
+        if(!isValidTarget && tableCards.DealerHand.Contains(cardInstance))
             isValidTarget = true;
 
         if (isValidTarget && !cardInstance.isHidden) return true;
@@ -85,7 +87,7 @@ public class HatTrick : Keepsake
         game.isActionLocked = true;
         game.canDoubleDown = false;
         
-        game.GameDeck.AddCardCopies(cardInstance.cardData, 1);
+        tableCards.GameDeck.AddCardCopies(cardInstance.cardData, 1);
         game.HandleNewCardInPlayerHand(cardInstance);
     }
 

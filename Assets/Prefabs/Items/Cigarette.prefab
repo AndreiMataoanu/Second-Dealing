@@ -109,12 +109,14 @@ MonoBehaviour:
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
   tooltipHeader: Cigarettes
   tooltipContent: Swap hands with the dealer
+  showTooltip: 1
   basePrice: 200
   percentagePrice: 0.2
   resaleLossPercentage: 0.5
   type: 5
   spawnWeight: 15
   isPurchased: 0
+  delayDestroy: 0
 --- !u!64 &5368637027685150326
 MeshCollider:
   m_ObjectHideFlags: 0

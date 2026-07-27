@@ -15,6 +15,7 @@ public class AcidItem : Item
     public override void SetMembers()
     {
         delayDestroy = true;
+        tableCards = blackjackGame.TableCards;
         cardEffect = new CardEffectActions(
             blackjackGame,
             blackjackGame.CursorFollow,
@@ -40,7 +41,6 @@ public class AcidItem : Item
         return true;
     }
     
-
     private void OnDissolveCard(CardInstance cardInstance)
     {
         isAcidActive = false;
@@ -49,7 +49,6 @@ public class AcidItem : Item
         StartCoroutine(DissolveCard(cardInstance));
     }
     
-    // TODO: revise after finishing table cards class
     private IEnumerator DissolveCard(CardInstance cardInstance)
     {
         CardEffects.SetDissolvedVisual(cardInstance.displayComponent, dissolveTime, color,dissolveBorder);

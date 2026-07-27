@@ -15,11 +15,7 @@ public class ItemManager : MonoBehaviour
     public void SetBlackjackGame(BlackjackGame game)
     {
         blackjackGame = game;
-    }
-
-    public void SetShopManager(ShopManager shop)
-    {
-        shopManager = shop;
+        shopManager = blackjackGame.ShopManager;
         shopManager.SetBuyAction(OnBuy);
     }
 

@@ -71,7 +71,11 @@ public class EventManager : MonoBehaviour
 
     #region Setters
 
-    public void SetBlackjackGame(BlackjackGame game) => blackjackGame = game;
+    public void SetBlackjackGame(BlackjackGame game)
+    {
+        blackjackGame = game;
+        tableCards = game.TableCards;
+    }
 
     #endregion
     

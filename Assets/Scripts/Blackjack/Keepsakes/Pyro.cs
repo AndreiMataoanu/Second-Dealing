@@ -33,6 +33,7 @@ public class Pyro : Keepsake
     public override void SetMembers(BlackjackGame blackjackGame)
     {
         game = blackjackGame;
+        tableCards = blackjackGame.TableCards;
         cardEffect = new CardEffectActions(
             game,
             game.CursorFollow,
@@ -74,7 +75,6 @@ public class Pyro : Keepsake
         isPyroActive = false;
     }
     
-    // TODO: revise, same as acid code
     private IEnumerator BurnCard(CardInstance cardInstance)
     {
         CardEffects.SetDissolvedVisual(cardInstance.displayComponent, burnTime, burnColor, burnBorder);
