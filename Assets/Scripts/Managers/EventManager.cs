@@ -50,13 +50,15 @@ public class EventManager : MonoBehaviour
     public static AceValueRule currentAceRule = AceValueRule.Flexible;
     public static bool isDoubleLowActive = false;
     public static bool isHalfHighActive = false;
+    // public bool isDoubleLowActive = false;
+    // public bool isHalfHighActive = false;
     private bool isRouletteBlackjackActive = false;
     private bool isPowerballTriggered = false;
     private bool isNewPowerball = false;
 
     private IEnumerator eventTriggerCoroutine;
     
-    private BlackjackGame blackjackGame; // TODO: use table cards instead
+    private BlackjackGame blackjackGame;
     private TableCards tableCards;
     
     #region Getters

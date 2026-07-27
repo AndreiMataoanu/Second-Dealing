@@ -23,7 +23,7 @@ public static class CardEffects
     {
         if (!cutCards.TryAdd(cardInstance, reduction))
             cutCards[cardInstance] *= reduction;
-        
+
         SetCutVisual(cardInstance.displayComponent, true);
     }
     public static void RemoveCutCard(CardInstance cardInstance) => cutCards.Remove(cardInstance);
@@ -137,4 +137,12 @@ public static class CardEffects
     }
     
     #endregion
+
+    public static void Reset()
+    {
+        cutCards.Clear();
+        negativeSuits.Clear();
+        antiMatterCards.Clear();
+        alcoholCards.Clear();
+    }
 }

@@ -1,11 +1,9 @@
 using System.Collections.Generic;
-using Managers;
 using UnityEngine;
 
 public class ItemManager : MonoBehaviour
 {
     private BlackjackGame blackjackGame;
-    private CursorFollow cursorFollow;
     private ShopManager shopManager;
 
     private List<Item> itemsToRemove = new();
@@ -65,11 +63,7 @@ public class ItemManager : MonoBehaviour
             return;
         }
 
-        if(item.type != ItemType.Scissors || item.type != ItemType.Acid)
-            AudioManager.instance.Play(item.name);
-        else
-            AudioManager.instance.Play("ItemBuy");
-
+        AudioManager.instance.Play("ItemBuy");
         KeepsakeUnlockProgression.instance.AddStat(ChallengeType.UseItems);
 
         if (!item.delayDestroy)

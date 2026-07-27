@@ -120,7 +120,7 @@ public class MenusController : MonoBehaviour
     public void RestartGame()
     {
         //masterBus.stopAllEvents(STOP_MODE.IMMEDIATE);
-
+        CardEffects.Reset();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
         ResumeGame();
@@ -135,6 +135,7 @@ public class MenusController : MonoBehaviour
     #region Main Menu
     public void StartGame()
     {
+        CardEffects.Reset();
         //Update this to the actual scene index of main map.
         SceneManager.LoadSceneAsync(1);
     }

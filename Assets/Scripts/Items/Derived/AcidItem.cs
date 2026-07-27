@@ -1,11 +1,10 @@
 using System.Collections;
 using Managers;
 using UnityEngine;
-using Utils;
 
 public class AcidItem : Item
 {
-    [SerializeField] private float dissolveTime = 1.3f;
+    [SerializeField] private float dissolveTime = 1.5f;
     [SerializeField] private Color color = Color.green;
     [SerializeField] private float dissolveBorder = 1.1f;
     public static bool isAcidActive;
@@ -37,14 +36,19 @@ public class AcidItem : Item
         isAcidActive = true;
         cardEffect.SelectCard();
         cardEffect.AddCardEffectAction(OnDissolveCard);
- 
+
         return true;
     }
     
     private void OnDissolveCard(CardInstance cardInstance)
     {
+        if(tableCards.DealerHand.Contains(cardInstance))
+            KeepsakeUnlockProgression.instance.AddStat(ChallengeType.AlterDealerHand);
+
+        AudioManager.instance.Play("Acid(Clone)");
+
         isAcidActive = false;
-        
+
         cardEffect.OnCardSelected();
         StartCoroutine(DissolveCard(cardInstance));
     }

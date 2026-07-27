@@ -44,6 +44,7 @@ public class BlackjackGame : MonoBehaviour
     private bool tutorialCompleted = false;
     private bool hasSeenSplitTutorial = false;
     private bool hasSeenDoubleDownTutorial = false;
+    private bool tieTauntPlayed = false;
     private bool isTutorialActive => roundsCompleted < tutorialRoundsLimit;
     [HideInInspector] public bool canDoubleDown = false;
     [HideInInspector] public bool isRoundActive = false;
@@ -63,6 +64,9 @@ public class BlackjackGame : MonoBehaviour
     private bool priceChanged = false;
     private int targetMoneyBalance;
 
+    private int TimesWon;
+    private int TimesLost;
+
     [Header("UI")]
     [SerializeField] private TMPro.TextMeshProUGUI moneyText;
     [SerializeField] private TMPro.TextMeshProUGUI betText;
@@ -81,6 +85,7 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private Transform particleSpawnPoint;
     [SerializeField] public ParticleSystem smokeParticle;
     [SerializeField] public Animator bottleAnimation;
+    [SerializeField] private Animator FadeInAnimator;
 
     [Header("Visual Setup")]
     [SerializeField] private List<TMPro.TextMeshProUGUI> handTotalTexts;
@@ -109,6 +114,7 @@ public class BlackjackGame : MonoBehaviour
     public int CurrentBet => currentBet;
     public int TargetMoneyBalance => targetMoneyBalance;
     public GameCamera GameCamera => gameCamera;
+    public bool UseAfterStand => useAfterStand;
     public TableCards TableCards => tableCards;
     public void SetPlayerStand(bool isStand) => isPlayerStand = isStand;
     #endregion
@@ -122,8 +128,6 @@ public class BlackjackGame : MonoBehaviour
 
         ManagerSetup();
         ResetGame();
-
-        AudioManager.instance.Play("MainTheme");
     }
 
     private void Update()
@@ -425,6 +429,83 @@ public class BlackjackGame : MonoBehaviour
 
         UpdateBettingUI();
     }
+
+    public void GoFishRank(Card.Rank targetRank, System.Action<bool> onComplete)
+    {
+        StartCoroutine(GoFishCoroutine(targetRank, onComplete));
+    }
+
+    private IEnumerator GoFishCoroutine(Card.Rank targetRank, System.Action<bool> onComplete)
+    {
+        bool found = false;
+
+        List<CardInstance> stolenCards = new List<CardInstance>();
+
+        for(int i = dealerHand.Count - 1; i >= 0; i--)
+        {
+            if(dealerHand[i].cardData.rank == targetRank)
+            {
+                stolenCards.Add(dealerHand[i]);
+
+                dealerHand.RemoveAt(i);
+
+                found = true;
+            }
+        }
+
+        if(!found)
+        {
+            onComplete?.Invoke(false);
+
+            yield break;
+        }
+
+        isActionLocked = true;
+
+        onComplete?.Invoke(true);
+
+        List<CardInstance> currentHand = playerHands[currentHandIndex];
+        Transform currentParent = handPositions[currentHandIndex];
+
+        foreach(CardInstance card in stolenCards)
+        {
+            if(card.isHidden)
+            {
+                yield return StartCoroutine(FlipCardCoroutine(card.displayComponent, 0.4f));
+
+                card.isHidden = false;
+            }
+
+            currentHand.Insert(0, card);
+            card.displayComponent.transform.SetParent(currentParent.parent);
+
+            int cardOrderIndex = currentHand.Count - 1;
+
+            Vector3 targetLocalPos = playerCardsOffset * cardOrderIndex;
+
+            yield return StartCoroutine(CardAnimationCoroutine(
+                card.displayComponent.transform,
+                currentParent.TransformPoint(targetLocalPos),
+                currentParent.rotation,
+                cardScaleVector,
+                cardAnimationDuration
+            ));
+
+            card.displayComponent.transform.SetParent(currentParent);
+        }
+
+        bool dealerHidden = false;
+
+        foreach(var c in dealerHand)
+        {
+            if(c.isHidden) dealerHidden = true;
+        }
+
+        UpdateHandVisuals(dealerHand, false);
+        UpdateHandVisuals(currentHand, true);
+        UpdateUI(dealerHidden);
+        CalculateBust();
+    }
     #endregion
 
     #region Event Methods
@@ -526,6 +607,7 @@ public class BlackjackGame : MonoBehaviour
         isActionLocked = false;
         canDoubleDown = false;
         isSplitting = false;
+        tieTauntPlayed = false;
         
         itemManager.DeactivateItems();
         KeepsakeManager.instance.DeactivateKeepsakes();
@@ -915,9 +997,13 @@ public class BlackjackGame : MonoBehaviour
     {
         bool shouldPlayBetLostTaunt = false;
 
-        if(message == "Its a tie")
+        if(message.Contains("tie"))
         {
-            dialogueSystem.ShowTieTaunt();
+            if(!tieTauntPlayed)
+            {
+                dialogueSystem.ShowTieTaunt();
+                shouldPlayBetLostTaunt = true;
+            }
 
             yield return new WaitWhile(() => dialogueSystem.IsPlaying);
         }
@@ -939,6 +1025,7 @@ public class BlackjackGame : MonoBehaviour
 
         if(message.Contains("You win"))
         {
+            TimesWon++;
             KeepsakeUnlockProgression.instance.CheckSuitWinCondition(allHands);
             KeepsakeUnlockProgression.instance.CheckThreeOfAKind(allHands);
 
@@ -952,6 +1039,7 @@ public class BlackjackGame : MonoBehaviour
         }
         else if(message.Contains("Dealer wins") || message.Contains("Bust"))
         {
+            TimesLost ++;
             if(!OrganBagItem.isOrganActive)
             {
                 targetMoneyBalance = playerMoney - betAmount;
@@ -1204,11 +1292,16 @@ public class BlackjackGame : MonoBehaviour
 
         if(!isTutorialActive && PlayerMoney <= 0)
         {
+            CardEffects.Reset();
             PlayerPrefs.SetInt("PreviousRunMoney", maxMoneyThisRun);
+            PlayerPrefs.SetInt("PreviousRunWins", TimesWon);
+            PlayerPrefs.SetInt("PreviousRunLoss", TimesLost);
             PlayerPrefs.Save();
             KeepsakeUnlockProgression.instance.EndRun();
-            SceneManager.LoadSceneAsync(3);
-
+            
+            FadeInAnimator.SetTrigger("fadeInTrig");
+            yield return StartCoroutine(GameUtils.WaitDelayOrInput(3.0f));
+            SceneManager.LoadSceneAsync(2);
             yield break;
         }
 
@@ -1294,16 +1387,18 @@ public class BlackjackGame : MonoBehaviour
     public void Leave()
     {
         PlayerPrefs.SetInt("PreviousRunMoney", maxMoneyThisRun);
+        PlayerPrefs.SetInt("PreviousRunWins",TimesWon);
+        PlayerPrefs.SetInt("PreviousRunLoss",TimesLost);
         PlayerPrefs.Save();
         KeepsakeUnlockProgression.instance.AddStat(ChallengeType.CashOut);
         KeepsakeUnlockProgression.instance.EndRun();
-
+        FadeInAnimator.SetTrigger("fadeInTrig");
+        
         if(playerMoney >= 1000000)
-        {
             KeepsakeUnlockProgression.instance.AddStat(ChallengeType.Millionaire);
-        }
 
-        SceneManager.LoadSceneAsync(2);
+        CardEffects.Reset();
+        SceneManager.LoadSceneAsync(4);
     }
     
     public void Stay()

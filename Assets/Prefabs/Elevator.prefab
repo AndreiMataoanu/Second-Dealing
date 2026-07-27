@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -17, y: 0}
+  m_AnchoredPosition: {x: -25.56, y: 5}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5182759399911677463
@@ -67,8 +67,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Keepsakes
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: bf3232326a37ba048b75f7c80f5fc6ce, type: 2}
-  m_sharedMaterial: {fileID: 1298699047271294162, guid: bf3232326a37ba048b75f7c80f5fc6ce, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 36decb9e658cdb942b82505b7e66849f, type: 2}
+  m_sharedMaterial: {fileID: -5685195804513400171, guid: 36decb9e658cdb942b82505b7e66849f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -100,7 +100,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -216,7 +216,7 @@ GameObject:
   - component: {fileID: 4476893396077469819}
   - component: {fileID: 3587844824113857005}
   m_Layer: 0
-  m_Name: startButton
+  m_Name: StartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -309,8 +309,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 297515996973785350}
-        m_TargetAssemblyTypeName: ElevatorScript, Assembly-CSharp
-        m_MethodName: BlackJackButton
+        m_TargetAssemblyTypeName: Elevator, Assembly-CSharp
+        m_MethodName: BlackjackButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -321,8 +321,9 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
-  tooltipHeader: 
+  tooltipHeader: Blackjack
   tooltipContent: 
+  showTooltip: 0
 --- !u!64 &3587844824113857005
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -481,7 +482,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -17, y: 0}
+  m_AnchoredPosition: {x: -25.56, y: 5}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8878664209132563890
@@ -514,8 +515,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Go Home
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: bf3232326a37ba048b75f7c80f5fc6ce, type: 2}
-  m_sharedMaterial: {fileID: 1298699047271294162, guid: bf3232326a37ba048b75f7c80f5fc6ce, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 36decb9e658cdb942b82505b7e66849f, type: 2}
+  m_sharedMaterial: {fileID: -5685195804513400171, guid: 36decb9e658cdb942b82505b7e66849f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -547,7 +548,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -713,7 +714,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 297515996973785350}
         m_TargetAssemblyTypeName: ElevatorScript, Assembly-CSharp
-        m_MethodName: KeepSakesMenu
+        m_MethodName: KeepsakesButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -724,8 +725,9 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
-  tooltipHeader: 
+  tooltipHeader: Keepsakes
   tooltipContent: 
+  showTooltip: 0
 --- !u!1 &2013010280444908947
 GameObject:
   m_ObjectHideFlags: 0
@@ -886,7 +888,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: d6250913fd66ce243bab56d85d560e90, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -965,7 +967,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -17, y: 0}
+  m_AnchoredPosition: {x: -25.56, y: 5}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3487990390161116100
@@ -996,10 +998,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: BlackJack
+  m_text: Blackjack
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: bf3232326a37ba048b75f7c80f5fc6ce, type: 2}
-  m_sharedMaterial: {fileID: 1298699047271294162, guid: bf3232326a37ba048b75f7c80f5fc6ce, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 36decb9e658cdb942b82505b7e66849f, type: 2}
+  m_sharedMaterial: {fileID: -5685195804513400171, guid: 36decb9e658cdb942b82505b7e66849f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1031,7 +1033,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -1157,8 +1159,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineBasicMultiChannelPerlin
   NoiseProfile: {fileID: 11400000, guid: 46965f9cbaf525742a6da4c2172a99cd, type: 2}
   PivotOffset: {x: 0, y: 0, z: 0}
-  AmplitudeGain: 0
-  FrequencyGain: 1
+  AmplitudeGain: 0.4
+  FrequencyGain: 0.7
   m_NoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1 &2701765276557515192
 GameObject:
@@ -1329,7 +1331,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 4fb862bece0a5ca45b87f98bfe148579, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1577,6 +1579,7 @@ Transform:
   - {fileID: 638139827249093007}
   - {fileID: 3260684405535630370}
   - {fileID: 5142168605465971417}
+  - {fileID: 8741858533063749553}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &297515996973785350
@@ -1594,13 +1597,29 @@ MonoBehaviour:
   rightDoor: {fileID: 3046406966697823032}
   leftDoor: {fileID: 7474040763245909820}
   keepsakesFloor: {fileID: 0}
-  casinoFloor: {fileID: 0}
+  blackjackFloor: {fileID: 0}
   optionsFloor: {fileID: 0}
+  hands: {fileID: 0}
   elevatorCamera: {fileID: 8396271884428731217}
+  keepsakeCamera: {fileID: 8660209032545698681}
   noise: {fileID: 6006647719750130142}
   blackjackCamera: {fileID: 0}
-  doorTime: 3
-  moveTime: 3
+  doorTime: 0.7
+  moveTime: 2
+  doorOpenSound: DoorOpen
+  doorCloseSound: DoorClose
+  doorSlamSound: DoorSlam
+  moveSound: ElevatorTravel
+  arriveSound: ElevatorDing
+  idleAmplitude: 0.4
+  idleFrequency: 0.7
+  moveAmplitude: 1.6
+  moveFrequency: 1.6
+  walkAmplitude: 0.05
+  walkFrequency: 3
+  doorAmplitude: 4
+  doorFrequency: 6
+  doorDuration: 0.3
 --- !u!1 &6195690468088666091
 GameObject:
   m_ObjectHideFlags: 0
@@ -1833,7 +1852,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 297515996973785350}
         m_TargetAssemblyTypeName: ElevatorScript, Assembly-CSharp
-        m_MethodName: Options
+        m_MethodName: OptionsButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1844,8 +1863,9 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
-  tooltipHeader: 
+  tooltipHeader: Options
   tooltipContent: 
+  showTooltip: 0
 --- !u!1 &7211193792215365309
 GameObject:
   m_ObjectHideFlags: 0
@@ -1880,7 +1900,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -17, y: 0}
+  m_AnchoredPosition: {x: -25.56, y: 5}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &520782683331802387
@@ -1913,8 +1933,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Options
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: bf3232326a37ba048b75f7c80f5fc6ce, type: 2}
-  m_sharedMaterial: {fileID: 1298699047271294162, guid: bf3232326a37ba048b75f7c80f5fc6ce, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 36decb9e658cdb942b82505b7e66849f, type: 2}
+  m_sharedMaterial: {fileID: -5685195804513400171, guid: 36decb9e658cdb942b82505b7e66849f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1946,7 +1966,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -1982,6 +2002,99 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &7213914947823742991
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8741858533063749553}
+  - component: {fileID: 8660209032545698681}
+  - component: {fileID: 5383691889705799487}
+  m_Layer: 0
+  m_Name: KeepsakeCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8741858533063749553
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7213914947823742991}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.3157872, y: -0.55, z: -2.51}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1003238327235684533}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8660209032545698681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7213914947823742991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
+  Priority:
+    Enabled: 1
+    m_Value: 0
+  OutputChannel: 1
+  StandbyUpdate: 2
+  m_StreamingVersion: 20241001
+  m_LegacyPriority: 0
+  Target:
+    TrackingTarget: {fileID: 0}
+    LookAtTarget: {fileID: 0}
+    CustomLookAtTarget: 0
+  Lens:
+    FieldOfView: 60.000004
+    OrthographicSize: 5
+    NearClipPlane: 0.3
+    FarClipPlane: 25
+    Dutch: 0
+    ModeOverride: 0
+    PhysicalProperties:
+      GateFit: 2
+      SensorSize: {x: 21.946, y: 16.002}
+      LensShift: {x: 0, y: 0}
+      FocusDistance: 10
+      Iso: 200
+      ShutterSpeed: 0.005
+      Aperture: 16
+      BladeCount: 5
+      Curvature: {x: 2, y: 11}
+      BarrelClipping: 0.25
+      Anamorphism: 0
+  BlendHint: 0
+--- !u!114 &5383691889705799487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7213914947823742991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineBasicMultiChannelPerlin
+  NoiseProfile: {fileID: 11400000, guid: 46965f9cbaf525742a6da4c2172a99cd, type: 2}
+  PivotOffset: {x: 0, y: 0, z: 0}
+  AmplitudeGain: 0.4
+  FrequencyGain: 0.7
+  m_NoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1 &7474040763245909820
 GameObject:
   m_ObjectHideFlags: 0
@@ -2049,7 +2162,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 4fb862bece0a5ca45b87f98bfe148579, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2201,7 +2314,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 297515996973785350}
         m_TargetAssemblyTypeName: ElevatorScript, Assembly-CSharp
-        m_MethodName: QuitGame
+        m_MethodName: QuitButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2212,8 +2325,9 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
-  tooltipHeader: 
+  tooltipHeader: Exit
   tooltipContent: 
+  showTooltip: 0
 --- !u!64 &6525439473461946656
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2303,7 +2417,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: d6250913fd66ce243bab56d85d560e90, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -3,7 +3,7 @@ using UnityEngine;
 public class TableKeepsakeInteractable : Clickable
 {
     private BlackjackGame blackjackGame;
-    private Keepsake keepsake;
+    public Keepsake keepsake { get; private set; }
     private bool usedThisRound = false;
 
     private void Awake()

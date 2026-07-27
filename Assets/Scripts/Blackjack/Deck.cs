@@ -197,4 +197,48 @@ public class Deck
     {
         copies = new Tuple<Card, int>(new Card { rank = card.rank, suit = card.suit }, copyNumber);
     }
+
+    public void AddPrintedCard(Card card)
+    {
+        copies = new Tuple<Card?, int>(new Card { rank = card.rank, suit = card.suit }, copies.Item2 + 1);
+        cards.Add(card);
+    }
+
+    public static Card.Rank GetRankForValue(int value)
+    {
+        if(value >= 11 || value == 1)
+        {
+            return Card.Rank.Ace;
+        }
+
+        switch(value)
+        {
+            case 10: return Card.Rank.Ten;
+            case 9: return Card.Rank.Nine;
+            case 8: return Card.Rank.Eight;
+            case 7: return Card.Rank.Seven;
+            case 6: return Card.Rank.Six;
+            case 5: return Card.Rank.Five;
+            case 4: return Card.Rank.Four;
+            case 3: return Card.Rank.Three;
+            case 2: return Card.Rank.Two;
+            default: return Card.Rank.None;
+        }
+    }
+
+    public Card? DealSecondDealingCard(Card.Rank rank, Card.Suit suit)
+    {
+        for(int i = 0; i < cards.Count; i++)
+        {
+            if(cards[i].rank == rank && cards[i].suit == suit)
+            {
+                Card dealtCard = cards[i];
+                cards.RemoveAt(i);
+
+                return dealtCard;
+            }
+        }
+
+        return null;
+    }
 }

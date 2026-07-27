@@ -42,7 +42,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3226192414058870725}
-  m_Mesh: {fileID: -7816268752676095930, guid: 51a5bd875f6884dbc8767c655f1d31e1, type: 3}
+  m_Mesh: {fileID: -920840221868071930, guid: 6be16851f820cb84fa64f27f41a14182, type: 3}
 --- !u!23 &3438098718679603741
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -68,7 +68,6 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
   - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -107,15 +106,21 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls: []
-  outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
+  outline: {fileID: 0}
   tooltipHeader: NFT
   tooltipContent: Can change its resale value.
-  basePrice: 300
+  showTooltip: 1
+  outlineBuy: {fileID: 2100000, guid: d91925fefc835b0459f833b7a203a011, type: 2}
+  outlineUse: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
+  outlineCantUse: {fileID: 2100000, guid: 36f05641255eb3e43a4474d269a6ccf1, type: 2}
+  outlineSell: {fileID: 2100000, guid: 8d473ecee8d3b76488e03a78e946413a, type: 2}
+  basePrice: 200
   percentagePrice: 0.1
   resaleLossPercentage: 0
   type: 9
   spawnWeight: 15
   isPurchased: 0
+  delayDestroy: 0
   nftRoundsLeft: 0
 --- !u!64 &8674433730413865787
 MeshCollider:

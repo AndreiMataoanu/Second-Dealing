@@ -68,7 +68,7 @@ public class Pyro : Keepsake
     
     private void OnBurnCard(CardInstance cardInstance)
     {
-        AudioManager.instance.Play("ItemBuy");
+        AudioManager.instance.Play("Pyro");
         
         cardEffect.OnCardSelected();
         game.StartCoroutine(BurnCard(cardInstance));

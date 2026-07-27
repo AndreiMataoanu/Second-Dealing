@@ -31,7 +31,7 @@ public class ScissorsItem : Item
         }
 
         AudioManager.instance.Play("Scissors(Clone)");
-        
+
         isScissorsActive = false;
         
         CardEffects.AddCutCard(cardInstance, 2);
