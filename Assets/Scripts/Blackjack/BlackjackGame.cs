@@ -46,6 +46,7 @@ public class BlackjackGame : MonoBehaviour
     private bool tutorialCompleted = false;
     private bool hasSeenSplitTutorial = false;
     private bool hasSeenDoubleDownTutorial = false;
+    private bool tieTauntPlayed = false;
     private bool isTutorialActive => roundsCompleted < tutorialRoundsLimit;
     [HideInInspector] public bool canDoubleDown = false;
     [HideInInspector] public bool isRoundActive = false;
@@ -873,6 +874,7 @@ public class BlackjackGame : MonoBehaviour
         isActionLocked = false;
         canDoubleDown = false;
         isSplitting = false;
+        tieTauntPlayed = false;
         KnifeItem.isKnifeActive = false;
         ScissorsItem.isScissorsActive = false;
         AcidItem.isAcidActive = false;
@@ -1559,9 +1561,14 @@ public class BlackjackGame : MonoBehaviour
     {
         bool shouldPlayBetLostTaunt = false;
 
-        if(message == "Its a tie")
+        if(message.Contains("tie"))
         {
-            dialogueSystem.ShowTieTaunt();
+            if(!tieTauntPlayed)
+            {
+                dialogueSystem.ShowTieTaunt();
+
+                shouldPlayBetLostTaunt = true;
+            }
 
             yield return new WaitWhile(() => dialogueSystem.IsPlaying);
         }
