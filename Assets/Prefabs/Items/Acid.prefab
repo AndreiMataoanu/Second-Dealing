@@ -209,8 +209,9 @@ MonoBehaviour:
   spawnWeight: 15
   isPurchased: 0
   delayDestroy: 0
-  dissolveTime: 1.3
+  dissolveTime: 2.5
   color: {r: 0, g: 1, b: 0, a: 1}
+  dissolveBorder: 1.1
 --- !u!64 &891812271737803166
 MeshCollider:
   m_ObjectHideFlags: 0
