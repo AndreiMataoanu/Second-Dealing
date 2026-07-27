@@ -138,6 +138,7 @@ public class BlackjackGame : MonoBehaviour
     public GameCamera GameCamera => gameCamera;
     public bool IsPlayerHandValid => currentHandIndex < playerHands.Count;
     public List<CardInstance> CurrentHand => playerHands[currentHandIndex];
+    public bool UseAfterStand => useAfterStand;
     #endregion
 
     #region Monobehaviour Methods

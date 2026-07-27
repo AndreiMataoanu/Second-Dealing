@@ -74,7 +74,7 @@ public abstract class Item : Clickable
     {
         if(!isPurchased)
         {
-            bool hasEnoughMoney = blackjackGame != null && blackjackGame.PlayerMoney >= GetPrice();
+            bool hasEnoughMoney = blackjackGame.PlayerMoney >= GetPrice();
 
             if(hasEnoughMoney)
             {
@@ -84,22 +84,22 @@ public abstract class Item : Clickable
             return outlineCantUse;
         }
 
-        if(blackjackGame != null)
+        if(!blackjackGame.isRoundActive)
         {
-            if(!blackjackGame.isRoundActive)
-            {
-                return outlineSell;
-            }
-
-            if(blackjackGame.isActionLocked)
-            {
-                return outlineCantUse;
-            }
-
-            return outlineUse;
+            return outlineSell;
         }
 
-        return outlineCantUse;
+        if(blackjackGame.isActionLocked)
+        {
+            if(blackjackGame.UseAfterStand)
+            {
+                return outlineUse;
+            }
+
+            return outlineCantUse;
+        }
+
+        return outlineUse;
     }
 
     #endregion
