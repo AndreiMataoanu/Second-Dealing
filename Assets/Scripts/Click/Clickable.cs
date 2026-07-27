@@ -61,7 +61,7 @@ public class Clickable : MonoBehaviour
     {
         if(hideTooltip) TooltipManager.instance.HideTooltip();
 
-        if(!outline || !hasOutline) return;
+        if(!hasOutline) return;
         
         var materials = new List<Material>(meshRenderer.materials);
         materials.RemoveAt(materials.Count - 1);
@@ -83,9 +83,11 @@ public class Clickable : MonoBehaviour
 
     public virtual void ApplyOutline()
     {
-        if(!outline || hasOutline || meshRenderer == null) return;
+        Material currentOutline = GetOutlineMaterial();
 
-        var materials = new List<Material>(meshRenderer.materials) { outline };
+        if(!currentOutline || hasOutline || meshRenderer == null) return;
+
+        var materials = new List<Material>(meshRenderer.materials) { currentOutline };
 
         meshRenderer.materials = materials.ToArray();
         hasOutline = true;
@@ -99,5 +101,10 @@ public class Clickable : MonoBehaviour
     protected virtual string GetTooltipContent()
     {
         return $"\n{tooltipContent}";
+    }
+
+    protected virtual Material GetOutlineMaterial()
+    {
+        return outline;
     }
 }

@@ -276,7 +276,6 @@ public class Elevator : MonoBehaviour
         currentFloor = nextFloor.name;
         transform.position = nextFloorPos;
 
-        //AudioManager.instance.Stop("ElevatorMusic");
         AudioManager.instance.Play("ElevatorDing");
 
         StartCoroutine(ShakeCamera(idleAmplitude, idleFrequency, 0.5f));

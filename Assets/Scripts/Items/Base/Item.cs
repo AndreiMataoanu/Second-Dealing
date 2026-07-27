@@ -3,6 +3,13 @@ using UnityEngine;
 
 public abstract class Item : Clickable
 {
+    [Header("Outlines")]
+    [SerializeField] private Material outlineBuy;
+    [SerializeField] private Material outlineUse;
+    [SerializeField] private Material outlineCantUse;
+    [SerializeField] private Material outlineSell;
+
+    [Header("Shop Stats")]
     [SerializeField] protected int basePrice;
     [Tooltip("Percentage cost. Example: 0.1 = 10%")]
     [SerializeField] private float percentagePrice = 0.1f;
@@ -62,11 +69,43 @@ public abstract class Item : Clickable
 
         return base.GetTooltipHeader();
     }
-    
+
+    protected override Material GetOutlineMaterial()
+    {
+        if(!isPurchased)
+        {
+            bool hasEnoughMoney = blackjackGame != null && blackjackGame.PlayerMoney >= GetPrice();
+
+            if(hasEnoughMoney)
+            {
+                return outlineBuy;
+            }
+
+            return outlineCantUse;
+        }
+
+        if(blackjackGame != null)
+        {
+            if(!blackjackGame.isRoundActive)
+            {
+                return outlineSell;
+            }
+
+            if(blackjackGame.isActionLocked)
+            {
+                return outlineCantUse;
+            }
+
+            return outlineUse;
+        }
+
+        return outlineCantUse;
+    }
+
     #endregion
 
     #region Activate
-    
+
     public abstract bool Activate();
     
     #endregion

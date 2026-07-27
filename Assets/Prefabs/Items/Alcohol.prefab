@@ -218,15 +218,19 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls: []
-  outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
+  outline: {fileID: 0}
   tooltipHeader: Alcohol
   tooltipContent: You see double
   showTooltip: 1
+  outlineBuy: {fileID: 2100000, guid: d91925fefc835b0459f833b7a203a011, type: 2}
+  outlineUse: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
+  outlineCantUse: {fileID: 2100000, guid: 36f05641255eb3e43a4474d269a6ccf1, type: 2}
+  outlineSell: {fileID: 2100000, guid: 8d473ecee8d3b76488e03a78e946413a, type: 2}
   basePrice: 50
   percentagePrice: 0.1
   resaleLossPercentage: 0.5
   type: 6
-  spawnWeight: 15000
+  spawnWeight: 15
   isPurchased: 0
   delayDestroy: 0
   drinkDuration: 1
