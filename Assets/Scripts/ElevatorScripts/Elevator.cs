@@ -38,6 +38,8 @@ public class Elevator : MonoBehaviour
     {
         noise.AmplitudeGain = idleAmplitude;
         noise.FrequencyGain = idleFrequency;
+
+        AudioManager.instance.Play("ElevatorAmbience");
     }
 
     public void BlackjackButton()
@@ -191,6 +193,7 @@ public class Elevator : MonoBehaviour
         isMoving = false;
         hands.SetActive(true);
 
+        AudioManager.instance.Stop("ElevatorAmbience");
         AudioManager.instance.Play("MainTheme");
     }
 
@@ -273,7 +276,6 @@ public class Elevator : MonoBehaviour
         currentFloor = nextFloor.name;
         transform.position = nextFloorPos;
 
-        AudioManager.instance.Stop("ElevatorMusic");
         AudioManager.instance.Play("ElevatorDing");
 
         StartCoroutine(ShakeCamera(idleAmplitude, idleFrequency, 0.5f));

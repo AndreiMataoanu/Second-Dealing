@@ -66,7 +66,7 @@ public class Pyro : Keepsake
     
     private void OnBurnCard(CardInstance cardInstance)
     {
-        AudioManager.instance.Play("ItemBuy");
+        AudioManager.instance.Play("Pyro");
         CardEffects.SetDissolvedVisual(cardInstance.displayComponent, burnTime, burnColor,burnBorder);
         cardEffect.OnCardSelected();
         SpawnBurnParticles(cardInstance.displayComponent.transform);

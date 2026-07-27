@@ -198,10 +198,14 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls: []
-  outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
+  outline: {fileID: 0}
   tooltipHeader: Acid
   tooltipContent: Destroy a card
   showTooltip: 1
+  outlineBuy: {fileID: 2100000, guid: d91925fefc835b0459f833b7a203a011, type: 2}
+  outlineUse: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
+  outlineCantUse: {fileID: 2100000, guid: 36f05641255eb3e43a4474d269a6ccf1, type: 2}
+  outlineSell: {fileID: 2100000, guid: 8d473ecee8d3b76488e03a78e946413a, type: 2}
   basePrice: 100
   percentagePrice: 0.1
   resaleLossPercentage: 0.5
@@ -209,8 +213,9 @@ MonoBehaviour:
   spawnWeight: 15
   isPurchased: 0
   delayDestroy: 0
-  dissolveTime: 1.3
+  dissolveTime: 2.5
   color: {r: 0, g: 1, b: 0, a: 1}
+  dissolveBorder: 1.1
 --- !u!64 &891812271737803166
 MeshCollider:
   m_ObjectHideFlags: 0
