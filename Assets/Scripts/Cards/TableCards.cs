@@ -62,7 +62,6 @@ public class TableCards : MonoBehaviour
     public Deck GameDeck => gameDeck;
     public List<GameObject> ActiveCardObjects => activeCardObjects;
     public Transform CurrentHandPosition => playerCardPositions[currentHandIndex];
-    public Transform DealerHandPosition => dealerCardPosition;
     public int CurrentHandIndex => currentHandIndex;
     public List<List<CardInstance>> PlayerHands => playerHands;
     public List<CardInstance> CurrentHand
@@ -177,6 +176,9 @@ public class TableCards : MonoBehaviour
         cardTransform.localScale = targetScale;
     }
 
+    public Coroutine FlipCard(CardDisplay cardDisplay, float duration) 
+        => StartCoroutine(FlipCardCoroutine(cardDisplay, duration));
+    
     private static IEnumerator FlipCardCoroutine(CardDisplay cardDisplay, float duration)
     {
         Transform cardTransform = cardDisplay.transform;
@@ -278,10 +280,11 @@ public class TableCards : MonoBehaviour
 
     public CardInstance DealCardInstance(Card newCardData, bool isHidden) 
         => DealCardInstance(newCardData, isHidden, deckPosition);
-    
+
     private CardInstance DealCardInstance(Card newCardData, bool isHidden, Transform spawnPosition)
     {
-        if(!cardPrefabLookup.TryGetValue((newCardData.rank, newCardData.suit), out GameObject cardPrefabToUse)) return null;
+        if (newCardData == null || !cardPrefabLookup.TryGetValue(
+                (newCardData.rank, newCardData.suit), out GameObject cardPrefabToUse)) return null;
 
         GameObject cardObject = Instantiate(cardPrefabToUse, spawnPosition);
         cardObject.transform.localScale = CardScaleVector;
@@ -318,6 +321,9 @@ public class TableCards : MonoBehaviour
         
         game.UpdateUI();
     }
+
+    public IEnumerator PlaceCardAtPlayerHandIndex(int cardOrderIndex, CardInstance newCardInstance)
+        => PlaceCardAtIndex(cardOrderIndex, newCardInstance, playerCardPositions[currentHandIndex], playerCardsOffset);
     
     public IEnumerator PlaceCardAtIndex(int cardOrderIndex, CardInstance newCardInstance,
         Transform position, Vector3 offset)

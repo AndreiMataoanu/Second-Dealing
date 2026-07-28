@@ -104,7 +104,7 @@ public class CigarettesItem : Item
         tableCards.ProcessCardPlacement(isPlayer, ref hand, ref position, ref offset);
         MoveCard(hand, index, position, offset, animDuration);
     }
-
+    
     private void MoveCard(List<CardInstance> hand, int i, Transform position, Vector3 offset, float animDuration)
     {
         if (i >= hand.Count) return;

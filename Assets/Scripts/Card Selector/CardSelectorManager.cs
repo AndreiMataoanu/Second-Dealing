@@ -12,10 +12,12 @@ public class CardSelectorManager : MonoBehaviour
     private Card.Suit? selectedSuit = null;
     private Card.Rank? selectedRank = null;
     private bool hasPrintedThisTurn = false;
+    private TableCards tableCards;
 
     private void Awake()
     {
         selectorButtons = cardSelector.GetComponentsInChildren<CardSelectorButton>(true);
+        tableCards = blackjackManager.TableCards;
     }
 
     private void Start()
@@ -94,61 +96,66 @@ public class CardSelectorManager : MonoBehaviour
     {
         Card newCard = new Card { rank = selectedRank.Value, suit = selectedSuit.Value };
 
-        if(activeKeepsake is SecondDealing secondDealing)
+        switch (activeKeepsake)
         {
-            Card? createdCard = blackjackManager.GameDeck.DealSecondDealingCard(newCard.rank, newCard.suit);
-
-            if(!createdCard.HasValue)
-            {
-                AudioManager.instance.Play("ItemDeny");
-
-                return;
-            }
-
-            secondDealing.UseCharge();
-
-            CardInstance instance = blackjackManager.DealCardInstanceOption(newCard, false);
-
-            if(instance != null)
-            {
-                hasPrintedThisTurn = true;
-                blackjackManager.HandleNewCardInPlayerHand(instance);
-
-                AudioManager.instance.Play("CardHit");
-
-                CloseCardSelector();
-            }
-            else
-            {
-                AudioManager.instance.Play("ItemDeny");
-            }
+            case SecondDealing secondDealing:
+                UseSecondDealing(newCard, secondDealing);
+                break;
+            case Printer printer:
+                UsePrinter(newCard);
+                break;
+            case GoFish goFish:
+                UseGoFish(newCard, goFish);
+                break;
         }
-        else if(activeKeepsake is Printer printer)
+    }
+
+    private void UseGoFish(Card newCard, GoFish goFish)
+    {
+        hasPrintedThisTurn = true;
+
+        GoFishRank(goFish, newCard.rank, (success) =>
         {
-            blackjackManager.GameDeck.AddPrintedCard(newCard);
+            AudioManager.instance.Play(success ? "CardHit" : "ItemDeny");
+        });
+
+        CloseCardSelector();
+    }
+    
+    private void GoFishRank(GoFish goFish, Card.Rank targetRank, System.Action<bool> onComplete)
+    {
+        StartCoroutine(goFish.GoFishCoroutine(targetRank, onComplete));
+    }
+
+    private void UsePrinter(Card newCard)
+    {
+        tableCards.GameDeck.AddCardCopy(newCard);
+        hasPrintedThisTurn = true;
+
+        AudioManager.instance.Play("CardHit");
+
+        CloseCardSelector();
+    }
+
+    private void UseSecondDealing(Card newCard, SecondDealing secondDealing)
+    {
+        Card dealtCard = tableCards.GameDeck.DealSecondDealingCard(newCard.rank, newCard.suit);
+        CardInstance instance = tableCards.DealCardInstance(dealtCard, false);
+
+        secondDealing.UseCharge();
+
+        if(instance != null)
+        {
             hasPrintedThisTurn = true;
+            blackjackManager.HandleNewCardInPlayerHand(instance);
 
             AudioManager.instance.Play("CardHit");
 
             CloseCardSelector();
         }
-        else if(activeKeepsake is GoFish goFish)
+        else
         {
-            hasPrintedThisTurn = true;
-
-            blackjackManager.GoFishRank(newCard.rank, (success) =>
-            {
-                if(success)
-                {
-                    AudioManager.instance.Play("CardHit");
-                }
-                else
-                {
-                    AudioManager.instance.Play("ItemDeny");
-                }
-            });
-
-            CloseCardSelector();
+            AudioManager.instance.Play("ItemDeny");
         }
     }
 

@@ -60,6 +60,8 @@ public class EventManager : MonoBehaviour
     
     private BlackjackGame blackjackGame;
     private TableCards tableCards;
+
+    private int copyCount; // temp: for add cards event
     
     #region Getters
     
@@ -140,7 +142,7 @@ public class EventManager : MonoBehaviour
 
     public void DisplayCardOptions(int minValue, int maxValue)
     {
-        var copyCount = tableCards.GameDeck.GetCopyCount(minValue, maxValue);
+        copyCount = Random.Range(minValue, maxValue + 1);
         OnAddCardsEvent?.Invoke();
         
         StopEventFlow();
@@ -150,7 +152,7 @@ public class EventManager : MonoBehaviour
 
     public void AddClickableCardOptions() => blackjackGame.CursorDetection.OnSelectCardOption(blackjackGame, CardTrigger.AddCardsEvent);
     
-    public void AddCardCopies(Card card) => tableCards.GameDeck.AddCardCopies(card);
+    public void AddCardCopies(Card card) => tableCards.GameDeck.AddCardCopies(card, copyCount);
     
     public void SelectCardCopyEnd() => StartCoroutine(SelectCardCopyEndCoroutine());
     private IEnumerator SelectCardCopyEndCoroutine()

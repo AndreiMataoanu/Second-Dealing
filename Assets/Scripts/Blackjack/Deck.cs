@@ -1,16 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class Deck
 {
-    private List<Card> cards = new List<Card>();
-    private List<Card.Rank> removedRanks = new List<Card.Rank>();
-    private List<Card.Suit> removedSuits = new List<Card.Suit>();
-    private List<Tuple<Card.Rank, Card.Suit>> removedCards = new ();
-    private Tuple<Card, int> copies = new(null, 0);
+    private List<Card> cards = new();
+    private List<Card.Rank> removedRanks = new();
+    private List<Card.Suit> removedSuits = new();
+    private List<Tuple<Card.Rank, Card.Suit>> removedCards = new();
+    private Dictionary<Card, int> copies = new();
 
     private bool jokersInDeck = false;
 
@@ -55,11 +53,12 @@ public class Deck
             }
         }
 
-        if (copies is not { Item2: > 0 } || copies.Item1 == null) return;
-
-        var copy = copies.Item1;
-        for(var i = 0; i < copies.Item2; i++)
-            cards.Add(new Card{rank = copy.rank, suit = copy.suit});
+        foreach (var card in copies.Keys)
+        {
+            var copyNumber = copies[card];
+            for(var i = 0; i < copyNumber; i++)
+                cards.Add(new Card{rank = card.rank, suit = card.suit});
+        }
     }
 
     public void Shuffle()
@@ -103,23 +102,6 @@ public class Deck
         if(index < 0 || index >= cards.Count) return null;
 
         return cards[index];
-    }
-
-    public Card DealSpecificCard(Card.Suit suit)
-    {
-        Card dealtCard = cards.Find(card => card.suit == suit);
-        if (dealtCard != null) cards.Remove(dealtCard);
-
-        dealtCard = DealCard();
-        return dealtCard;
-    }
-    
-    public Card DealSpecificCard(Card.Rank rank)
-    {
-        Card dealtCard = cards.Find(card => card.rank == rank);
-        if (dealtCard != null) cards.Remove(dealtCard);
-
-        return dealtCard;
     }
 
     public Card DealBestCard(int value)
@@ -182,51 +164,19 @@ public class Deck
         }
     }
 
-    public int GetCopyCount(int minValue, int maxValue)
-    {
-        copies = new Tuple<Card?, int>(null, Random.Range(minValue, maxValue + 1));
-        return copies.Item2;
-    }
-    
-    public void AddCardCopies(Card card)
-    {
-        copies = new Tuple<Card?, int>(new Card { rank = card.rank, suit = card.suit }, copies.Item2);
-    }
+    public void AddCardCopy(Card card) => AddCardCopies(card, 1);
     
     public void AddCardCopies(Card card, int copyNumber)
     {
-        copies = new Tuple<Card, int>(new Card { rank = card.rank, suit = card.suit }, copyNumber);
-    }
-
-    public void AddPrintedCard(Card card)
-    {
-        copies = new Tuple<Card?, int>(new Card { rank = card.rank, suit = card.suit }, copies.Item2 + 1);
+        if (copies.TryGetValue(card, out _))
+            copies[card] += copyNumber;
+        else
+            copies.Add(card, copyNumber);
+        
         cards.Add(card);
     }
 
-    public static Card.Rank GetRankForValue(int value)
-    {
-        if(value >= 11 || value == 1)
-        {
-            return Card.Rank.Ace;
-        }
-
-        switch(value)
-        {
-            case 10: return Card.Rank.Ten;
-            case 9: return Card.Rank.Nine;
-            case 8: return Card.Rank.Eight;
-            case 7: return Card.Rank.Seven;
-            case 6: return Card.Rank.Six;
-            case 5: return Card.Rank.Five;
-            case 4: return Card.Rank.Four;
-            case 3: return Card.Rank.Three;
-            case 2: return Card.Rank.Two;
-            default: return Card.Rank.None;
-        }
-    }
-
-    public Card? DealSecondDealingCard(Card.Rank rank, Card.Suit suit)
+    public Card DealSecondDealingCard(Card.Rank rank, Card.Suit suit)
     {
         for(int i = 0; i < cards.Count; i++)
         {
