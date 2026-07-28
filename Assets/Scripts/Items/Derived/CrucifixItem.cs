@@ -15,4 +15,12 @@ public class CrucifixItem : Item
     {
         return ActivateCrucifix();
     }
+
+    public static Card TryPrayForCard(Deck deck, int idealValue)
+    {
+        if (!isCrucifixActive) return deck.DealCard();
+
+        isCrucifixActive = false;
+        return deck.DealBestCard(idealValue);
+    }
 }

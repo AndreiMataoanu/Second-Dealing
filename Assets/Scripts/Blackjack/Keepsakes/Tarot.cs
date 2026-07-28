@@ -8,6 +8,7 @@ public class Tarot : Keepsake
     
     private CardEffectActions cardEffect;
     private BlackjackGame game;
+    private TableCards tableCards;
 
     #region Setup
 
@@ -30,8 +31,8 @@ public class Tarot : Keepsake
     public override void OnAdvanceHand()
     {
         game.CursorDetection.ResetTarotClickables(); //deactivate previous hand
-        if (!game.IsPlayerHandValid) return;
-        game.CurrentHand.ForEach(AddTarotCard);
+        if (!tableCards.IsPlayerTurn) return;
+        tableCards.CurrentHand.ForEach(AddTarotCard);
     }
 
     #endregion
@@ -57,7 +58,7 @@ public class Tarot : Keepsake
 
     private void SacrificeTarot(CardInstance cardInstance)
     {
-        if(!game.isRoundActive || game.isActionLocked || !game.IsPlayerHandValid) return;
+        if(!game.isRoundActive || game.isActionLocked || !tableCards.IsPlayerTurn) return;
     
         TarotCard tarotData = cardInstance.tarotData;
     
@@ -70,16 +71,7 @@ public class Tarot : Keepsake
 
         if (!game.ItemManager.SpawnInventoryItem(tarotData.rewardItemPrefab)) return;
     
-        CardEffects.RemoveCutCard(cardInstance);
-        CardEffects.RemoveAlcoholCard(cardInstance);
-    
-        game.CurrentHand.Remove(cardInstance);
-        game.activeCardObjects.Remove(cardInstance.CardObject);
-    
-        Destroy(cardInstance.CardObject);
-    
-        game.UpdateHandVisuals(game.CurrentHand, true);
-        game.UpdateUI();
+        tableCards.DestroyCard(cardInstance);
     }
 
     #endregion

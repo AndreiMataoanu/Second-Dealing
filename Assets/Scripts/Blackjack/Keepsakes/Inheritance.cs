@@ -15,7 +15,7 @@ public class Inheritance : Keepsake
 
         if(inheritance > 0)
         {
-            game.AddIneritanceMoney(inheritance);
+            game.AddInheritanceMoney(inheritance);
 
             PlayerPrefs.SetInt("PreviousRunMoney", 0);
         }

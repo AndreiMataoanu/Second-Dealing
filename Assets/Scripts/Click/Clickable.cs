@@ -14,20 +14,19 @@ public class Clickable : MonoBehaviour
 
     private MeshCollider meshCollider;
     private Renderer meshRenderer;
-    private Renderer[] meshRenderers;
+    private List<Renderer> meshRenderers = new();
     private bool hasOutline;
     protected bool IsActive;
 
     public void SetActive(bool active) => IsActive = active;
-    public void SetVisibility(bool active)
-    {
-        foreach(var renderer in meshRenderers)
-        {
-            renderer.enabled = active;
-        }
-    }
     public void SetColliderActive(bool active) => meshCollider.enabled = active;
     public bool IsVisible => meshRenderer.enabled;
+
+    public void SetVisibility(bool active)
+    {
+        meshRenderer.enabled = active;
+        meshRenderers.ForEach(r => r.enabled = active);
+    }
     
     private void Awake()
     {
@@ -36,7 +35,7 @@ public class Clickable : MonoBehaviour
             meshCollider = gameObject.AddComponent<MeshCollider>();
         
         meshRenderer = GetComponent<Renderer>();
-        meshRenderers = GetComponentsInChildren<Renderer>();
+        meshRenderers = new List<Renderer>(gameObject.GetComponentsInChildren<MeshRenderer>());
     }
 
     protected virtual void OnMouseEnter()

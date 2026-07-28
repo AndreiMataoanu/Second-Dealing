@@ -60,7 +60,7 @@ public class AlcoholItem : Item
 
         blackjackGame.bottleAnimation.gameObject.SetActive(false);
         blackjackGame.GameCamera.UseDistortedVision();
-        blackjackGame.UpdateAlcoholCards();
+        UpdateAlcoholCards();
         blackjackGame.CalculateBust();
     }
 
@@ -74,6 +74,15 @@ public class AlcoholItem : Item
     {
         blackjackGame.bottleAnimation.gameObject.SetActive(true);
         blackjackGame.bottleAnimation.SetTrigger(animationId);
+    }
+    
+    private void UpdateAlcoholCards()
+    {
+        TableCards tableCards = blackjackGame.TableCards;
+        
+        tableCards.PlayerHands.ForEach(CardEffects.AddAlcoholCardList);
+        tableCards.UpdateCardVFX();
+        blackjackGame.UpdateUI();
     }
     
     #endregion

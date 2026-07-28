@@ -13,12 +13,18 @@ public class ItemManager : MonoBehaviour
     public void SetBlackjackGame(BlackjackGame game)
     {
         blackjackGame = game;
+        shopManager = blackjackGame.ShopManager;
+        shopManager.SetBuyAction(OnBuy);
     }
 
-    public void SetShopManager(ShopManager shop)
+    public void DeactivateItems()
     {
-        shopManager = shop;
-        shopManager.SetBuyAction(OnBuy);
+        KnifeItem.isKnifeActive = false;
+        ScissorsItem.isScissorsActive = false;
+        AcidItem.isAcidActive = false;
+        CrucifixItem.isCrucifixActive = false;
+        CigarettesItem.isCigaretteActive = false;
+        AlcoholItem.isAlcoholActive = false;
     }
     
     #endregion

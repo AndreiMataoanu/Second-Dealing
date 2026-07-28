@@ -16,6 +16,7 @@ public class Pyro : Keepsake
     private CardEffectActions cardEffect;
     private BlackjackGame game;
     private int usesThisRound = 0;
+    private TableCards tableCards;
 
     #region Setup
 
@@ -32,6 +33,7 @@ public class Pyro : Keepsake
     public override void SetMembers(BlackjackGame blackjackGame)
     {
         game = blackjackGame;
+        tableCards = blackjackGame.TableCards;
         cardEffect = new CardEffectActions(
             game,
             game.CursorFollow,
@@ -67,41 +69,20 @@ public class Pyro : Keepsake
     private void OnBurnCard(CardInstance cardInstance)
     {
         AudioManager.instance.Play("Pyro");
-        CardEffects.SetDissolvedVisual(cardInstance.displayComponent, burnTime, burnColor,burnBorder);
+        
         cardEffect.OnCardSelected();
-        SpawnBurnParticles(cardInstance.displayComponent.transform);
-        game.StartCoroutine(DissolveCard(cardInstance));
+        game.StartCoroutine(BurnCard(cardInstance));
         isPyroActive = false;
     }
     
-    // TODO: revise, same as acid code
-    private IEnumerator DissolveCard(CardInstance cardInstance)
+    private IEnumerator BurnCard(CardInstance cardInstance)
     {
+        CardEffects.SetDissolvedVisual(cardInstance.displayComponent, burnTime, burnColor, burnBorder);
+        SpawnBurnParticles(cardInstance.displayComponent.transform);
+        
         yield return new WaitForSeconds(burnTime);
         
-        var cardObject = cardInstance.displayComponent.gameObject;
-        CardEffects.RemoveCutCard(cardInstance);
-        CardEffects.RemoveAlcoholCard(cardInstance);
-        game.activeCardObjects.Remove(cardObject);
-        game.GameDeck.AddRemovedCard(cardInstance.cardData.rank, cardInstance.cardData.suit); // TODO: move to card effects
-
-        if (game.dealerHand.Remove(cardInstance))
-        {
-            KeepsakeUnlockProgression.instance.AddStat(ChallengeType.AlterDealerHand);
-            game.UpdateHandVisuals(game.dealerHand, false);
-        }
-        
-        game.playerHands.ForEach(hand =>
-        {
-            hand.Remove(cardInstance);
-            game.UpdateHandVisuals(hand, true);
-        });
-
-        if (cardInstance == game.peekCardInstance)
-            game.peekCardInstance = null;
-        
-        Destroy(cardObject);
-        game.UpdateUI();
+        tableCards.DestroyCard(cardInstance);
         game.EvaluateDoubleDownCondition();
         
         yield return null;

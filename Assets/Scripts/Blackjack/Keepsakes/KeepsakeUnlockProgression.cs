@@ -174,4 +174,63 @@ public class KeepsakeUnlockProgression : MonoBehaviour
             playthroughStats[type] = PlayerPrefs.GetInt(type.ToString(), 0);
         }
     }
+
+    #region Check Progress
+
+    public void CheckSuitWinCondition(List<List<CardInstance>> allHands)
+    {
+        bool allRed = true;
+        bool allBlack = true;
+
+        foreach(var hand in allHands)
+        {
+            foreach(var card in hand)
+            {
+                if(card.cardData.suit == Card.Suit.Hearts || card.cardData.suit == Card.Suit.Diamonds)
+                {
+                    allBlack = false;
+                }
+                else if(card.cardData.suit == Card.Suit.Spades || card.cardData.suit == Card.Suit.Clubs)
+                {
+                    allRed = false;
+                }
+            }
+        }
+
+        if(allRed)
+        {
+            AddStat(ChallengeType.WinRedSuits);
+        }
+
+        if(allBlack)
+        {
+            AddStat(ChallengeType.WinBlackSuits);
+        }
+    }
+
+    public void CheckThreeOfAKind(List<List<CardInstance>> allHands)
+    {
+        foreach(var hand in allHands)
+        {
+            Dictionary<int, int> valueCounts = new Dictionary<int, int>();
+
+            foreach(var card in hand)
+            {
+                int val = card.cardData.GetValue();
+
+                if(!valueCounts.ContainsKey(val)) valueCounts[val] = 0;
+
+                valueCounts[val]++;
+
+                if(valueCounts[val] >= 3)
+                {
+                    AddStat(ChallengeType.ThreeOfAKind);
+
+                    return;
+                }
+            }
+        }
+    }
+
+    #endregion
 }

@@ -68,7 +68,7 @@ public class AntiMatter : Keepsake
 
     private void ApplyAntiMatterToCard(CardInstance cardInstance)
     {
-        if(game.dealerHand.Contains(cardInstance))
+        if(game.TableCards.DealerHand.Contains(cardInstance))
             KeepsakeUnlockProgression.instance.AddStat(ChallengeType.AlterDealerHand);
 
         if(!CardEffects.AddAntiMatterCard(cardInstance))
