@@ -42,7 +42,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5095632154569548414}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -487332895529873510, guid: e387e4ce6ba1c4bc0a6f75b603375982, type: 3}
 --- !u!23 &7269021619814664162
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -68,7 +68,9 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fd788889a42bff34b80262684f07a412, type: 2}
+  - {fileID: 2100000, guid: c6b0c295155954af9be50f82ba4eec59, type: 2}
+  - {fileID: 2100000, guid: 0f36b47206da84691aa70e075f2cd2f6, type: 2}
+  - {fileID: 2100000, guid: ae230a24fd9f1478c9f0aa45c6733cf2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -130,6 +132,7 @@ MonoBehaviour:
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
   tooltipHeader: 
   tooltipContent: 
+  showTooltip: 1
   keepsake: {fileID: 11400000, guid: 53fb29a119ee0534b9f91aca21d40057, type: 2}
   blackjackGame: {fileID: 0}
   lockedMaterial: {fileID: 2100000, guid: 0a832a2e81c13f949bb53db9acc6b339, type: 2}
