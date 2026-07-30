@@ -33,9 +33,11 @@ public class Elevator : MonoBehaviour
     private string currentFloor;
     private bool doorsOpen = false;
     private bool isMoving = false;
+    public static bool isElevatorActive = true;
 
     private void Start()
     {
+        isElevatorActive = true;
         noise.AmplitudeGain = idleAmplitude;
         noise.FrequencyGain = idleFrequency;
 
@@ -191,6 +193,7 @@ public class Elevator : MonoBehaviour
         elevatorCamera.Priority = 0;
         zoomCamera.Priority = 0;
         isMoving = false;
+        isElevatorActive = false;
         hands.SetActive(true);
 
         AudioManager.instance.Stop("ElevatorAmbience");
