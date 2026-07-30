@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 19.33, y: 10.4, z: 0.295}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 120, y: 120, z: 120}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -42,7 +42,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1988126967821828934}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -3242180251118428465, guid: 07dff2e4e16e74f6babc9f636cb49dca, type: 3}
 --- !u!23 &7136541565970498375
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -68,7 +68,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fd788889a42bff34b80262684f07a412, type: 2}
+  - {fileID: 2100000, guid: e1ea997518fe64956a73ab1d82c73bde, type: 2}
+  - {fileID: 2100000, guid: 53992b2d5a9f6471cbe171ef0cd2b263, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -130,6 +131,7 @@ MonoBehaviour:
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
   tooltipHeader: 
   tooltipContent: 
+  showTooltip: 1
   keepsake: {fileID: 11400000, guid: e69bb1533e3547545aaa021488feb84a, type: 2}
   blackjackGame: {fileID: 0}
   lockedMaterial: {fileID: 2100000, guid: 0a832a2e81c13f949bb53db9acc6b339, type: 2}
