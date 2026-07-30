@@ -84,15 +84,15 @@ public class CursorDetection : MonoBehaviour
     }
 
     #region Clickable Cards
-    public void OnSelectCardOption(BlackjackGame blackjackGame, CardTrigger cardTrigger)
+    public void OnEventSelectCard(Transform cardsPosition, BlackjackGame blackjackGame, CardTrigger cardTrigger)
     {
         cardClickables = new List<Clickable>();
-        AddClickableCards(cardOptions, blackjackGame, cardTrigger);
+        AddClickableCards(cardsPosition, blackjackGame, cardTrigger);
         SetClickables(cardClickables, true);
         SetClickables(roundActiveClickables, false);
     }
 
-    public void OnUseCardItem(BlackjackGame blackjackGame, CardTrigger cardTrigger)
+    public void OnItemSelectCard(BlackjackGame blackjackGame, CardTrigger cardTrigger)
     {
         AddAllClickableCards(blackjackGame, cardTrigger);
         SetClickables(cardClickables, true);
@@ -123,7 +123,6 @@ public class CursorDetection : MonoBehaviour
                 clickableCard.SetCardInstance(cardInstance);
                 clickableCard.SetBlackjackGame(blackjackGame);
                 clickableCard.AddCardAction(OnClickCard);
-                AddCardAction(blackjackGame, clickableCard, cardTrigger);
                 clickableCard.AddCardAction(ReactivateClickables);
 
                 cardClickables.Add(clickableCard);
@@ -143,18 +142,6 @@ public class CursorDetection : MonoBehaviour
     public void AddActionToClickableCards(Action<CardInstance> cardAction)
     {
         AddActionToClickableCards(cardAction, cardClickables);
-    }
-
-    // TODO: shouldn't need blackjack game
-    private void AddCardAction(BlackjackGame blackjackGame, ClickableCard clickableCard, CardTrigger cardTrigger)
-    {
-        switch (cardTrigger)
-        {
-            case CardTrigger.AddCardsEvent:
-                clickableCard.AddCardAction(clickableCard.OnAddCardsOption);
-                clickableCard.AddCardAction(() => blackjackGame.SelectCursorHand(false));
-                break;
-        }
     }
     
     private void OnClickCard() => ResetClickables(cardClickables);

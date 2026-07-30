@@ -98,7 +98,6 @@ public class BlackjackGame : MonoBehaviour
     #region Getters & Setters
     public int GetPlayerMoney() => playerMoney;
     
-    public Transform CardOptionPosition => cursorDetection.GetCardOptionsPosition();
     public DialogueSystem DialogueSystem => dialogueSystem;
     public EventManager EventManager => eventManager;
     public CursorDetection CursorDetection => cursorDetection;

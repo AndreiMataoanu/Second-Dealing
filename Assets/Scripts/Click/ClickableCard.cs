@@ -19,16 +19,6 @@ public class ClickableCard : Clickable
 
     public void RemoveCardEffect() => cardEffect = null;
 
-    public void OnAddCardsOption()
-    {
-        AudioManager.instance.Play("CardHit");
-        blackjackGame.EventManager.AddCardCopies(cardInstance.cardData);
-
-        Destroy(gameObject);
-        
-        blackjackGame.EventManager.SelectCardCopyEnd();
-    }
-
     public override void OnClick(int mouseButton = 0)
     {
         if(!IsActive) return;

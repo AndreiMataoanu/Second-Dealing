@@ -7,15 +7,6 @@ using UnityEngine.SceneManagement;
 using Utils;
 using Random = UnityEngine.Random;
 
-[System.Serializable]
-public class Threshold
-{
-    public List<BlackjackEvent> events;
-
-    public int moneyAmount;
-
-    public int maxTurns;
-}
 public enum AceValueRule { Flexible, Always1, Always11 }
 
 public class EventManager : MonoBehaviour
@@ -25,6 +16,9 @@ public class EventManager : MonoBehaviour
     [SerializeField] private List<BlackjackEvent> lowSeverityEvents;
     [SerializeField] private List<BlackjackEvent> mediumSeverityEvents;
     [SerializeField] private List<BlackjackEvent> highSeverityEvents;
+    
+    [Header("Cards Event Actions")]
+    [SerializeField] private AddCardChoiceEvent addCardChoiceEvent;
     
     [Header("Update progress display")]
     public UnityEvent ChangeProgressText;
@@ -43,15 +37,12 @@ public class EventManager : MonoBehaviour
     private List<BlackjackEvent> availableHighEvents;
     private List<EventThreshold> triggeredThresholds = new List<EventThreshold>();
     private List<int> powerballNumbers = new List<int>();
-
     
     private int targetMoneyBalance;
     
     public static AceValueRule currentAceRule = AceValueRule.Flexible;
     public static bool isDoubleLowActive = false;
     public static bool isHalfHighActive = false;
-    // public bool isDoubleLowActive = false;
-    // public bool isHalfHighActive = false;
     private bool isRouletteBlackjackActive = false;
     private bool isPowerballTriggered = false;
     private bool isNewPowerball = false;
@@ -89,6 +80,9 @@ public class EventManager : MonoBehaviour
     {
         currentMaxTurns = eventThresholds.First().maxTurns;
         currentTurns = 0;
+        currentAceRule = AceValueRule.Flexible;
+        isDoubleLowActive = false;
+        isHalfHighActive = false;
     }
 
     private void Start()
@@ -149,8 +143,6 @@ public class EventManager : MonoBehaviour
         
         blackjackGame.DialogueSystem.ShowAddCardsText(copyCount);
     }
-
-    public void AddClickableCardOptions() => blackjackGame.CursorDetection.OnSelectCardOption(blackjackGame, CardTrigger.AddCardsEvent);
     
     public void AddCardCopies(Card card) => tableCards.GameDeck.AddCardCopies(card, copyCount);
     
@@ -240,7 +232,7 @@ public class EventManager : MonoBehaviour
 
         yield return new WaitWhile(() => blackjackGame.DialogueSystem.IsPlaying);
         
-        SceneManager.LoadSceneAsync(3);
+        SceneManager.LoadSceneAsync(2);
     }
 
     public IEnumerator CheckForEventTrigger()
@@ -345,5 +337,17 @@ public class EventManager : MonoBehaviour
         blackjackGame.ResetTexts();
     }
     
+    #endregion
+
+    #region Card Choice Events
+
+    public CardChoiceEvent GetCardChoiceEvent(BlackjackEvent blackjackEvent)
+    {
+        var addCards = blackjackEvent as AddCardsEvent;
+        if (addCards) return addCardChoiceEvent;
+
+        return null;
+    }
+
     #endregion
 }
