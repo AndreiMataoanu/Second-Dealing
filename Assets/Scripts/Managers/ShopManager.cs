@@ -300,14 +300,18 @@ public class ShopManager : MonoBehaviour
     
     public void PlaySuitcaseOpen()
     {
-        if (state != ShopState.Closed || inventoryItemCount == buySpawnPoints.Count)
-            return;
+        if(state != ShopState.Closed || inventoryItemCount == buySpawnPoints.Count) return;
 
         StartCoroutine(SuitcaseOpenCoroutine());
     }
     
     private IEnumerator SuitcaseOpenCoroutine()
     {
+        while(Elevator.isElevatorActive)
+        {
+            yield return null;
+        }
+
         SpawnPowerUps();
         state = ShopState.Opening;
         suitcaseAnimator.Play("Suitcase_Opening");

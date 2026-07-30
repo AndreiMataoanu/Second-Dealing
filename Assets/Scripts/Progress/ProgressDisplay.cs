@@ -21,8 +21,15 @@ public class ProgressDisplay : MonoBehaviour
 
     private int GetNextThreshold()
     {
-        int i = eventManager.TriggeredThresholdsCount;
-        return i < eventThreshHolds.Count ? eventThreshHolds[i] : -1;
+        foreach(int threshold in eventThreshHolds)
+        {
+            if(threshold > blackjackGame.PlayerMoney)
+            {
+                return threshold;
+            }
+        }
+
+        return -1;
     }
 
     public void DisplayNextMilestone()
