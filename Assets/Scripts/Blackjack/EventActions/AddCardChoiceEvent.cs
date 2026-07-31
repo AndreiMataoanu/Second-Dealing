@@ -14,12 +14,13 @@ public class AddCardChoiceEvent : CardChoiceEvent
 
     #region Select Option
 
-    protected override void OnDisplayCardOptions(CardInstance cardInstance)
+    protected override void OnSelectCardOption(CardInstance cardInstance)
     {
         AudioManager.instance.Play("CardHit");
         TableCards.GameDeck.AddCardCopies(cardInstance.cardData, addCardsEvent.CopyCount);
 
-        Destroy(gameObject);
+        Destroy(cardInstance.CardObject);
+        CardEffects.OnCardSelected();
         
         StartCoroutine(SelectCardCopyEndCoroutine());
     }
@@ -32,7 +33,7 @@ public class AddCardChoiceEvent : CardChoiceEvent
         yield return new WaitForSeconds(1.5f);
         
         DestroyCards();
-        blackjackGame.ResetGame();
+        isChoosing = false;
     }
 
     #endregion

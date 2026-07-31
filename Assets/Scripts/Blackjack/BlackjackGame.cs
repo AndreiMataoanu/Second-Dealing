@@ -2,20 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Managers;
+using Progress;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Utils;
-
-[System.Serializable]
-public class EventThreshold
-{
-    public BlackjackEvent.EventSeverity severityToTrigger;
-
-    public int moneyAmount;
-
-    public int maxTurns;
-}
 
 public class BlackjackGame : MonoBehaviour
 {
@@ -28,6 +19,7 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private CursorFollow cursorFollow;
     [SerializeField] private DialogueSystem dialogueSystem;
     [SerializeField] private EventManager eventManager;
+    [SerializeField] private MilestoneProgress milestoneProgress;
     [SerializeField] private GameCamera gameCamera;
     [SerializeField] private Collider betUpCollider;
     [SerializeField] private Collider betDownCollider;
@@ -99,12 +91,10 @@ public class BlackjackGame : MonoBehaviour
     public int GetPlayerMoney() => playerMoney;
     
     public DialogueSystem DialogueSystem => dialogueSystem;
-    public EventManager EventManager => eventManager;
     public CursorDetection CursorDetection => cursorDetection;
     public CursorFollow CursorFollow => cursorFollow;
     public ShopManager ShopManager => shopManager;
     public ItemManager ItemManager => itemManager;
-    public void SetStatusText(string text) => statusText.text = text;
     public void SetBlackjackGoal(int gameGoal)
     {
         blackjackGoal = gameGoal;
@@ -330,6 +320,7 @@ public class BlackjackGame : MonoBehaviour
     {
         itemManager.SetBlackjackGame(this);
         shopManager.SetBlackjackGame(this);
+        milestoneProgress.SetBlackjackGame(this);
         eventManager.SetBlackjackGame(this);
         tableCards.SetBlackjackGame(this);
     }
@@ -1197,9 +1188,8 @@ public class BlackjackGame : MonoBehaviour
         }
 
         roundsCompleted++;
-        eventManager.UpdateTurnsLeft();
 
-        yield return eventManager.CheckForEventTrigger();
+        yield return milestoneProgress.UpdateMilestoneProgress();
 
         if(!priceChanged)
         {
@@ -1228,7 +1218,7 @@ public class BlackjackGame : MonoBehaviour
             yield break;
         }
 
-        yield return eventManager.CheckTurnLimit();
+        yield return milestoneProgress.ShowTurnLimitDialogue();
 
         if(PlayerMoney >= 100000 && stayed == false)
             StartCoroutine(LeaveOrStay());

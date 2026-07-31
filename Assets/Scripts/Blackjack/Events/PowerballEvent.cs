@@ -23,4 +23,9 @@ public class PowerballEvent : BlackjackEvent
 
         return numbers;
     }
+
+    public override void ExplainEventDialogue(DialogueSystem dialogue)
+    {
+        dialogue.PlayPowerballTutorial();
+    }
 }

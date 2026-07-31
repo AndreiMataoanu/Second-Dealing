@@ -7,13 +7,14 @@ public abstract class CardChoiceEvent : MonoBehaviour
     [SerializeField] protected BlackjackGame blackjackGame;
     [SerializeField] protected Transform cardsPosition;
     [SerializeField] protected Vector3 cardsOffset = new(0.2f, 0.0f, 0.0f);
-    
+
+    [HideInInspector] public bool isChoosing = false;
     protected int OptionCount;
     
     protected TableCards TableCards;
     protected CardEffectActions CardEffects;
     
-    private void Awake()
+    private void Start()
     {
         TableCards = blackjackGame.TableCards;
         CardEffects = new CardEffectActions(
@@ -34,6 +35,7 @@ public abstract class CardChoiceEvent : MonoBehaviour
 
     private IEnumerator DealAllOptionsCoroutine()
     {
+        isChoosing = true;
         yield return new WaitForSeconds(1.5f);
 
         for (int i = 0; i < OptionCount; i++)
@@ -43,7 +45,7 @@ public abstract class CardChoiceEvent : MonoBehaviour
         }
 
         CardEffects.SelectCard();
-        CardEffects.AddEventCardEffectAction(OnDisplayCardOptions, cardsPosition);
+        CardEffects.AddEventCardEffectAction(OnSelectCardOption, cardsPosition);
     }
     
     private IEnumerator DealCardOption(int optionIndex)
@@ -57,7 +59,8 @@ public abstract class CardChoiceEvent : MonoBehaviour
 
     #region Select Option
 
-    protected abstract void OnDisplayCardOptions(CardInstance cardInstance);
+    // has to set isChoosing to false at the end (used in event manager)
+    protected abstract void OnSelectCardOption(CardInstance cardInstance);
 
     #endregion
     
@@ -65,6 +68,7 @@ public abstract class CardChoiceEvent : MonoBehaviour
 
     public void DestroyCards()
     {
+        Debug.Log("destroy cards");
         foreach(Transform card in cardsPosition.transform)
             Destroy(card.gameObject);
     }

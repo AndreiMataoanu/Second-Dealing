@@ -1053,6 +1053,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 595901487}
     - target: {fileID: 7103518503603601718, guid: 465fe9353c5738b4e93c3cfa5a00447a, type: 3}
+      propertyPath: peekCardTransform
+      value: 
+      objectReference: {fileID: 1934868213}
+    - target: {fileID: 7103518503603601718, guid: 465fe9353c5738b4e93c3cfa5a00447a, type: 3}
       propertyPath: dealerCardPosition
       value: 
       objectReference: {fileID: 743592358}
@@ -3450,6 +3454,11 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &431888119 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2055499912540668084, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
+  m_PrefabInstance: {fileID: 431888115}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &432340906
 GameObject:
   m_ObjectHideFlags: 0
@@ -5293,6 +5302,64 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 787258591}
   m_CullTransparentMesh: 1
+--- !u!1 &787337579
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 787337580}
+  - component: {fileID: 787337581}
+  m_Layer: 0
+  m_Name: MilestoneProgress
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &787337580
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 787337579}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2097837783}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &787337581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 787337579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00d11dc68c1c1234f946b5daa0db79a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Progress.MilestoneProgress
+  eventManager: {fileID: 2146566778}
+  useTurnLimit: 1
+  milestones:
+  - milestoneType: 0
+    gameEvent: {fileID: 11400000, guid: 40dd43a7e1baf33479325c4c8079abca, type: 2}
+    moneyAmount: 600
+    maxTurns: 5
+    keepsakes: []
+  randomEvents:
+  - {fileID: 11400000, guid: 40dd43a7e1baf33479325c4c8079abca, type: 2}
+  gameCamera: {fileID: 1240162380}
+  statusText: {fileID: 1545470627}
+  progressDisplay: {fileID: 571720867}
+  dialogueSystem: {fileID: 537238136}
 --- !u!1 &816142925
 GameObject:
   m_ObjectHideFlags: 0
@@ -8287,6 +8354,10 @@ PrefabInstance:
       propertyPath: cinemachineBrain
       value: 
       objectReference: {fileID: 1365003149}
+    - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
+      propertyPath: milestoneProgress
+      value: 
+      objectReference: {fileID: 787337581}
     - target: {fileID: 4234581667304054485, guid: b5f91f3a40d022d478e486e8004f5832, type: 3}
       propertyPath: standHandAnimator
       value: 
@@ -12137,6 +12208,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 787337580}
   - {fileID: 179709788}
   - {fileID: 1632085900}
   - {fileID: 2039734345}
@@ -13399,6 +13471,10 @@ PrefabInstance:
       value: CursorFollowManager
       objectReference: {fileID: 0}
     - target: {fileID: 3182025170784302372, guid: 3bee230e62c5ae24cb5fe4da629984e8, type: 3}
+      propertyPath: rightHand
+      value: 
+      objectReference: {fileID: 431888119}
+    - target: {fileID: 3182025170784302372, guid: 3bee230e62c5ae24cb5fe4da629984e8, type: 3}
       propertyPath: acidFollow
       value: 
       objectReference: {fileID: 8450182640227530845}
@@ -13627,6 +13703,26 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
+      propertyPath: gameCamera
+      value: 
+      objectReference: {fileID: 1240162380}
+    - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
+      propertyPath: statusText
+      value: 
+      objectReference: {fileID: 1545470627}
+    - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
+      propertyPath: dialogueSystem
+      value: 
+      objectReference: {fileID: 537238136}
+    - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
+      propertyPath: progressDisplay
+      value: 
+      objectReference: {fileID: 571720867}
+    - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
+      propertyPath: addCardChoiceEvent
+      value: 
+      objectReference: {fileID: 4109581827045791216}
+    - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
       propertyPath: mediumSeverityEvents.Array.size
       value: 6
       objectReference: {fileID: 0}
@@ -13654,6 +13750,22 @@ PrefabInstance:
       propertyPath: 'mediumSeverityEvents.Array.data[5]'
       value: 
       objectReference: {fileID: 11400000, guid: 6d1cb0823b67dd541a8a8e684dbf6102, type: 2}
+    - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
+      propertyPath: OnAddCardsEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
+      propertyPath: DeleteCopyOptions.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
+      propertyPath: ChangeProgressText.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
+      propertyPath: UpdatePowerballGoal.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
       propertyPath: OnAddCardsEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

@@ -1,24 +1,23 @@
 using System;
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public enum EventType { Canon, Random }
+public enum MilestoneType { CanonEvent, RandomEvent, FinalGoal }
     
 [Serializable]
 public class Milestone
 {
-    [HideInInspector] public EventType eventType;
+    [HideInInspector] public MilestoneType milestoneType;
     [HideInInspector] public BlackjackEvent gameEvent;
     [HideInInspector] public int moneyAmount;
-    [HideInInspector] public int maxTurns;
+    [HideInInspector] public int maxTurns = 5;
     [HideInInspector] public List<GameObject> keepsakes;
-    [HideInInspector] public CardChoiceEvent cardChoiceEvent;
 }
 
-[CustomEditor(typeof(Milestone))]
-public class MilestoneEventEditor : Editor
+[CustomPropertyDrawer(typeof(Milestone))]
+public class MilestonePropertyDrawer : PropertyDrawer
 {
     private SerializedProperty eventTypeProperty;
     private SerializedProperty gameEventProperty;
@@ -26,29 +25,30 @@ public class MilestoneEventEditor : Editor
     private SerializedProperty maxTurnsProperty;
     private SerializedProperty keepsakesProperty;
 
-    private void OnEnable()
+    public override void OnGUI(Rect rect, SerializedProperty property, GUIContent label)
     {
-        eventTypeProperty = serializedObject.FindProperty("eventType");
-        gameEventProperty = serializedObject.FindProperty("gameEvent");
-        moneyAmountProperty = serializedObject.FindProperty("moneyAmount");
-        maxTurnsProperty = serializedObject.FindProperty("maxTurns");
-        keepsakesProperty = serializedObject.FindProperty("keepsakes");
+        eventTypeProperty = property.FindPropertyRelative("milestoneType");
+        gameEventProperty = property.FindPropertyRelative("gameEvent");
+        moneyAmountProperty = property.FindPropertyRelative("moneyAmount");
+        maxTurnsProperty = property.FindPropertyRelative("maxTurns");
+        keepsakesProperty = property.FindPropertyRelative("keepsakes");
+        
+        EditorGUI.LabelField(rect, $"Milestone");
+
+        OnInspectorGUI();
     }
 
-    public override void OnInspectorGUI()
+    private void OnInspectorGUI()
     {
-        serializedObject.Update();
-        
         EditorGUILayout.PropertyField(eventTypeProperty);
 
-        EventType eventType = eventTypeProperty.GetEnumValue<EventType>();
-        if (eventType == EventType.Canon)
+        if ((MilestoneType)eventTypeProperty.enumValueIndex == MilestoneType.CanonEvent)
             EditorGUILayout.PropertyField(gameEventProperty);
 
         EditorGUILayout.PropertyField(moneyAmountProperty);
         EditorGUILayout.PropertyField(maxTurnsProperty);
-        EditorGUILayout.PropertyField(keepsakesProperty);
-
-        serializedObject.ApplyModifiedProperties();
+        
+        if ((MilestoneType)eventTypeProperty.enumValueIndex != MilestoneType.FinalGoal)
+            EditorGUILayout.PropertyField(keepsakesProperty);
     }
 }

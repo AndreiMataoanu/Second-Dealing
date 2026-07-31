@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class Deck
@@ -168,6 +169,7 @@ public class Deck
     
     public void AddCardCopies(Card card, int copyNumber)
     {
+        Debug.Log("add card copies");
         if (copies.TryGetValue(card, out _))
             copies[card] += copyNumber;
         else

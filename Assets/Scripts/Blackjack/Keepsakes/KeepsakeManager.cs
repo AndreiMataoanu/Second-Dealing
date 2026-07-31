@@ -207,4 +207,13 @@ public class KeepsakeManager : MonoBehaviour
             keepsake.ApplyInheritance(game);
         }
     }
+
+    public void RechargeSecondDealing()
+    {
+        foreach (var keepsake in equippedKeepsakes)
+        {
+            if (keepsake is SecondDealing secondDealing)
+                secondDealing.Recharge();
+        }
+    }
 }
