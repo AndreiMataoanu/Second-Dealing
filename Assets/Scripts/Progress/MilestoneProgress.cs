@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 namespace Progress
 {
@@ -19,8 +20,9 @@ namespace Progress
         [SerializeField] private TMPro.TextMeshProUGUI statusText;
         [SerializeField] private ProgressDisplay progressDisplay;
 
-        [Header("Dialogue")] 
+        [Header("Systems")] 
         [SerializeField] private DialogueSystem dialogueSystem;
+        [SerializeField] private CashOutSystem cashOutSystem;
         
         private IEnumerator milestoneTriggerCoroutine;
         
@@ -36,7 +38,7 @@ namespace Progress
         
         private void Start()
         {
-            InitRandomMilestones();
+            InitMilestones();
 
             nextMilestone = milestones.First();
             currentMaxTurns = nextMilestone.maxTurns;
@@ -49,24 +51,30 @@ namespace Progress
         
         #region Setup
 
-        public void SetBlackjackGame(BlackjackGame game) => blackjackGame = game;
-        
-        private void InitRandomMilestones()
+        public void SetBlackjackGame(BlackjackGame game)
+        {
+            blackjackGame = game;
+            cashOutSystem.SetBlackjackGame(game);
+        }
+
+        private void InitMilestones()
         {
             randomEvents.Shuffle();
             
             foreach (var milestone in milestones)
             {
-                if (milestone.milestoneType == MilestoneType.RandomEvent)
+                switch (milestone.milestoneType)
                 {
-                    if (randomEvents.Count == 0)
-                    {
+                    case MilestoneType.RandomEvent when randomEvents.Count == 0:
                         Debug.Log("Not enough random events");
                         return;
-                    }
-                    
-                    milestone.gameEvent = randomEvents.First();
-                    randomEvents.RemoveAt(0);
+                    case MilestoneType.RandomEvent:
+                        milestone.gameEvent = randomEvents.First();
+                        randomEvents.RemoveAt(0);
+                        break;
+                    case MilestoneType.FinalGoal:
+                        milestone.gameEvent = null;
+                        break;
                 }
             }
         }
@@ -74,6 +82,14 @@ namespace Progress
         #endregion
 
         #region Update Display
+        
+        private void UpdateTurnsLeft()
+        {
+            if (!useTurnLimit) return;
+            
+            currentTurns++;
+            UpdateProgressDisplay();
+        }
         
         private void UpdateProgressDisplay()
         {
@@ -95,17 +111,6 @@ namespace Progress
 
         #region Check Milestone Progress
 
-        public IEnumerator ShowTurnLimitDialogue()
-        {
-            if (!useTurnLimit || currentTurns < currentMaxTurns) yield break;
-            
-            dialogueSystem.ShowTurnLimitTaunt();
-
-            yield return new WaitWhile(() => dialogueSystem.IsPlaying);
-            
-            SceneManager.LoadSceneAsync(2);
-        }
-
         public IEnumerator UpdateMilestoneProgress()
         {
             yield return StartCoroutine(UpdateProgressCoroutine());
@@ -117,26 +122,36 @@ namespace Progress
             
             var passedMilestone = GoToNextMilestone();
             if(passedMilestone == null) yield break;
+            if (passedMilestone.milestoneType == MilestoneType.FinalGoal) useTurnLimit = false;
 
-            UpdateKeepsakes();
+            UpdateEventKeepsakes();
             
             UpdateProgressDisplay();
 
             yield return eventManager.TriggerEvent(passedMilestone.gameEvent);
         }
 
+        public IEnumerator OnEndProgressUpdate()
+        {
+            yield return ShowTurnLimitDialogue();
+
+            cashOutSystem.CheckCashOut();
+        }
+
+        private IEnumerator ShowTurnLimitDialogue()
+        {
+            if (!useTurnLimit || currentTurns < currentMaxTurns) yield break;
+            
+            dialogueSystem.ShowTurnLimitTaunt();
+
+            yield return new WaitWhile(() => dialogueSystem.IsPlaying);
+            
+            SceneManager.LoadSceneAsync(2);
+        }
+        
         #endregion
 
-        #region Helpers
-
-        private void UpdateTurnsLeft()
-        {
-            if (!useTurnLimit) return;
-            
-            currentTurns++;
-            // Debug.Log("update turns");
-            UpdateProgressDisplay();
-        }
+        #region Next Milestone
         
         private Milestone GoToNextMilestone()
         {
@@ -164,7 +179,7 @@ namespace Progress
             currentTurns = 0;
         }
         
-        private void UpdateKeepsakes()
+        private void UpdateEventKeepsakes()
         {
             KeepsakeManager.instance.RechargeSecondDealing();
         }

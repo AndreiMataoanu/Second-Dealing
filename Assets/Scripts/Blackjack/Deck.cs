@@ -169,7 +169,6 @@ public class Deck
     
     public void AddCardCopies(Card card, int copyNumber)
     {
-        Debug.Log("add card copies");
         if (copies.TryGetValue(card, out _))
             copies[card] += copyNumber;
         else

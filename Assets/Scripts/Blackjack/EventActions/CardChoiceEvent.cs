@@ -68,7 +68,6 @@ public abstract class CardChoiceEvent : MonoBehaviour
 
     public void DestroyCards()
     {
-        Debug.Log("destroy cards");
         foreach(Transform card in cardsPosition.transform)
             Destroy(card.gameObject);
     }

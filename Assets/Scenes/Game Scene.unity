@@ -1479,8 +1479,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1343293108}
-        m_TargetAssemblyTypeName: BlackjackGame, Assembly-CSharp
+      - m_Target: {fileID: 1952328287}
+        m_TargetAssemblyTypeName: CashOutSystem, Assembly-CSharp
         m_MethodName: Stay
         m_Mode: 1
         m_Arguments:
@@ -5302,64 +5302,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 787258591}
   m_CullTransparentMesh: 1
---- !u!1 &787337579
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 787337580}
-  - component: {fileID: 787337581}
-  m_Layer: 0
-  m_Name: MilestoneProgress
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &787337580
+--- !u!4 &787337580 stripped
 Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 7964189676484552107, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
+  m_PrefabInstance: {fileID: 5831389520709026664}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 787337579}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2097837783}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &787337581
+--- !u!114 &787337581 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 2531318046483965639, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
+  m_PrefabInstance: {fileID: 5831389520709026664}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 787337579}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00d11dc68c1c1234f946b5daa0db79a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Progress.MilestoneProgress
-  eventManager: {fileID: 2146566778}
-  useTurnLimit: 1
-  milestones:
-  - milestoneType: 0
-    gameEvent: {fileID: 11400000, guid: 40dd43a7e1baf33479325c4c8079abca, type: 2}
-    moneyAmount: 600
-    maxTurns: 5
-    keepsakes: []
-  randomEvents:
-  - {fileID: 11400000, guid: 40dd43a7e1baf33479325c4c8079abca, type: 2}
-  gameCamera: {fileID: 1240162380}
-  statusText: {fileID: 1545470627}
-  progressDisplay: {fileID: 571720867}
-  dialogueSystem: {fileID: 537238136}
 --- !u!1 &816142925
 GameObject:
   m_ObjectHideFlags: 0
@@ -9855,8 +9813,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1343293108}
-        m_TargetAssemblyTypeName: BlackjackGame, Assembly-CSharp
+      - m_Target: {fileID: 1952328287}
+        m_TargetAssemblyTypeName: CashOutSystem, Assembly-CSharp
         m_MethodName: Leave
         m_Mode: 1
         m_Arguments:
@@ -10901,6 +10859,8 @@ Transform:
   - {fileID: 1135337103}
   - {fileID: 708047836}
   - {fileID: 3717772241830269377}
+  - {fileID: 1952328288}
+  - {fileID: 787337580}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1836844511
@@ -11515,6 +11475,22 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 8544534578533599230, guid: bec8e1691fbc02c48b6984d498794c9c, type: 3}
   m_PrefabInstance: {fileID: 1934868212}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1952328287 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 518061727561942139, guid: fd1ad81c39e6c3b4896c1d48e70af64b, type: 3}
+  m_PrefabInstance: {fileID: 5985283549678458074}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a79aaffecce5e248addf131579d8e3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CashOutSystem
+--- !u!4 &1952328288 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7537175410562908375, guid: fd1ad81c39e6c3b4896c1d48e70af64b, type: 3}
+  m_PrefabInstance: {fileID: 5985283549678458074}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1953122270
 GameObject:
@@ -12208,7 +12184,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 787337580}
   - {fileID: 179709788}
   - {fileID: 1632085900}
   - {fileID: 2039734345}
@@ -14531,6 +14506,196 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6152373402817211667}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &5831389520709026664
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1823405866}
+    m_Modifications:
+    - target: {fileID: 2531318046483965639, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
+      propertyPath: gameCamera
+      value: 
+      objectReference: {fileID: 1240162380}
+    - target: {fileID: 2531318046483965639, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
+      propertyPath: statusText
+      value: 
+      objectReference: {fileID: 1545470627}
+    - target: {fileID: 2531318046483965639, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
+      propertyPath: eventManager
+      value: 
+      objectReference: {fileID: 2146566778}
+    - target: {fileID: 2531318046483965639, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
+      propertyPath: cashOutSystem
+      value: 
+      objectReference: {fileID: 1952328287}
+    - target: {fileID: 2531318046483965639, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
+      propertyPath: dialogueSystem
+      value: 
+      objectReference: {fileID: 537238136}
+    - target: {fileID: 2531318046483965639, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
+      propertyPath: progressDisplay
+      value: 
+      objectReference: {fileID: 571720867}
+    - target: {fileID: 2531318046483965639, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
+      propertyPath: milestones.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2531318046483965639, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
+      propertyPath: 'randomEvents.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: f9969251b08054a4b9f872af95840548, type: 2}
+    - target: {fileID: 2531318046483965639, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
+      propertyPath: milestones.Array.data[1].maxTurns
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2531318046483965639, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
+      propertyPath: milestones.Array.data[2].maxTurns
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2531318046483965639, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
+      propertyPath: milestones.Array.data[1].gameEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 40dd43a7e1baf33479325c4c8079abca, type: 2}
+    - target: {fileID: 2531318046483965639, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
+      propertyPath: milestones.Array.data[2].gameEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 40dd43a7e1baf33479325c4c8079abca, type: 2}
+    - target: {fileID: 2531318046483965639, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
+      propertyPath: milestones.Array.data[1].moneyAmount
+      value: 700
+      objectReference: {fileID: 0}
+    - target: {fileID: 2531318046483965639, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
+      propertyPath: milestones.Array.data[2].moneyAmount
+      value: 1100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2531318046483965639, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
+      propertyPath: milestones.Array.data[1].milestoneType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2531318046483965639, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
+      propertyPath: milestones.Array.data[2].milestoneType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4292728565048229037, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
+      propertyPath: m_Name
+      value: MilestoneProgress
+      objectReference: {fileID: 0}
+    - target: {fileID: 7964189676484552107, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7964189676484552107, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7964189676484552107, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7964189676484552107, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7964189676484552107, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7964189676484552107, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7964189676484552107, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7964189676484552107, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7964189676484552107, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7964189676484552107, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
+--- !u!1001 &5985283549678458074
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1823405866}
+    m_Modifications:
+    - target: {fileID: 518061727561942139, guid: fd1ad81c39e6c3b4896c1d48e70af64b, type: 3}
+      propertyPath: stayButton
+      value: 
+      objectReference: {fileID: 262962897}
+    - target: {fileID: 518061727561942139, guid: fd1ad81c39e6c3b4896c1d48e70af64b, type: 3}
+      propertyPath: leaveButton
+      value: 
+      objectReference: {fileID: 1580121215}
+    - target: {fileID: 518061727561942139, guid: fd1ad81c39e6c3b4896c1d48e70af64b, type: 3}
+      propertyPath: fadeInAnimator
+      value: 
+      objectReference: {fileID: 995581027}
+    - target: {fileID: 7537175410562908375, guid: fd1ad81c39e6c3b4896c1d48e70af64b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7537175410562908375, guid: fd1ad81c39e6c3b4896c1d48e70af64b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7537175410562908375, guid: fd1ad81c39e6c3b4896c1d48e70af64b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7537175410562908375, guid: fd1ad81c39e6c3b4896c1d48e70af64b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7537175410562908375, guid: fd1ad81c39e6c3b4896c1d48e70af64b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7537175410562908375, guid: fd1ad81c39e6c3b4896c1d48e70af64b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7537175410562908375, guid: fd1ad81c39e6c3b4896c1d48e70af64b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7537175410562908375, guid: fd1ad81c39e6c3b4896c1d48e70af64b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7537175410562908375, guid: fd1ad81c39e6c3b4896c1d48e70af64b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7537175410562908375, guid: fd1ad81c39e6c3b4896c1d48e70af64b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8789409154445283496, guid: fd1ad81c39e6c3b4896c1d48e70af64b, type: 3}
+      propertyPath: m_Name
+      value: CashOutSystem
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fd1ad81c39e6c3b4896c1d48e70af64b, type: 3}
 --- !u!114 &6060484365705329216 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8537322552623281800, guid: 3846655c0c557184bb252d83c84f1cea, type: 3}

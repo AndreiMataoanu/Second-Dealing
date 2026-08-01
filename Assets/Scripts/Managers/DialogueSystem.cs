@@ -96,7 +96,7 @@ public class DialogueSystem : MonoBehaviour
         sequenceCoroutine = StartCoroutine(SequenceCoroutine(powerballTutorialLines));
     }
 
-    public void playCashOutText()
+    public void PlayCashOutText()
     {
         StopCurrentDialogue();
 

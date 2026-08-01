@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class CardEffects
 {
-    public static Dictionary<CardInstance, int> cutCards = new();
+    private static Dictionary<CardInstance, int> cutCards = new();
     private static List<Card.Suit> negativeSuits = new();
     private static HashSet<(Card.Rank, Card.Suit)> antiMatterCards = new();
     private static HashSet<CardInstance> alcoholCards = new();
