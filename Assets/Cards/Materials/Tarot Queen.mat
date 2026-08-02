@@ -43,25 +43,30 @@ Material:
     m_Ints: []
     m_Floats:
     - _CutInHalf: 0
-    - _CutoffHeight: 0.3
+    - _CutOnce: 0
+    - _CutoffHeight: -0.4
     - _Direction: -1
+    - _Dissolve: 0.000001
+    - _DissolveEdge: 1.15
     - _Doubled: 0
     - _DoubledEffectSpeed: 0.03
     - _FoilSaturation: -0.1
-    - _GlowThickness: -0.1
+    - _GlowThickness: -1.6
     - _Negative: 0
-    - _NegativeEffectSpeed: 0.01
-    - _NoiseScale: 3.5
-    - _NoiseStrength: 0.5
+    - _NegativeEffectSpeed: 0.05
+    - _NegativeShimmer: 1.2
+    - _NoiseScale: 10
+    - _NoiseStrength: 0.15
     - _Opacity: 1
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _VoronoiCellDensity: 25
-    - _dHeight: 50
-    - _dWidth: 125
+    - _VoronoiCellDensity: 2.5
+    - _dHeight: 100
+    - _dWidth: 45
     m_Colors:
-    - _BottomColor: {r: 1, g: 0, b: 0, a: 1}
-    - _TopColor: {r: 1, g: 0.8862745, b: 0, a: 1}
+    - _BottomColor: {r: 1, g: 0.7452829, b: 0.7452829, a: 1}
+    - _DissolveColor: {r: 3.295597, g: 0.4707996, b: 0, a: 1}
+    - _TopColor: {r: 1, g: 0.9738932, b: 0.7704402, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &2707275050328179316
