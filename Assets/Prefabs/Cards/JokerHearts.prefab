@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 2742245556407750158}
   - component: {fileID: 1879898644761991746}
   - component: {fileID: 2545542414380752012}
-  - component: {fileID: 4361013602246858878}
-  - component: {fileID: 5536369907100686127}
+  - component: {fileID: 5769639229613068177}
+  - component: {fileID: 7164119587504250311}
   m_Layer: 0
   m_Name: Face
   m_TagString: Untagged
@@ -68,7 +68,7 @@ MeshRenderer:
   m_RenderingLayerMask: 32
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9eb13f1ab455eba4d8ef532a7f95370c, type: 2}
+  - {fileID: 2100000, guid: 2bf577585b3227b4699149b55f5dc495, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -91,7 +91,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &4361013602246858878
+--- !u!64 &5769639229613068177
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -113,7 +113,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &5536369907100686127
+--- !u!114 &7164119587504250311
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -232,7 +232,7 @@ GameObject:
   - component: {fileID: 8921347802918587518}
   - component: {fileID: 2203439049466056650}
   m_Layer: 0
-  m_Name: JokerBlack
+  m_Name: JokerHearts
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
