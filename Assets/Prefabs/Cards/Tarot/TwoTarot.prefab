@@ -65,7 +65,7 @@ MeshRenderer:
   m_SmallMeshCulling: 1
   m_ForceMeshLod: -1
   m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 32
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 4fbc9088f0029a84c9d48b7778d07a71, type: 2}
@@ -195,7 +195,7 @@ MeshRenderer:
   m_SmallMeshCulling: 1
   m_ForceMeshLod: -1
   m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 32
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 3fa98cde44111ab4fbb206b5d55ac01c, type: 2}
@@ -282,4 +282,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 951e615659bc4ed4fbe192410e90f54b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TarotCard
-  rewardItemPrefab: {fileID: 3247029996075764086, guid: 0e1526c2b64e7f04aa27b1188867eddd, type: 3}
+  rewardItemPrefab: {fileID: 8494693382871204226, guid: 61423405580a5a64d930ccf474fe397d, type: 3}
