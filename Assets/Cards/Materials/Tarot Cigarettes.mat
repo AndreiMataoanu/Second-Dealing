@@ -57,6 +57,7 @@ Material:
     m_Floats:
     - _CutInHalf: 0
     - _CutOnce: 0
+    - _CutTwice: 0
     - _CutoffHeight: -0.4
     - _Direction: -1
     - _Dissolve: 0.000001
@@ -73,6 +74,8 @@ Material:
     - _Opacity: 1
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _SecondCutoffHeight: 0
+    - _SecondGlowThickness: -0.9
     - _VoronoiCellDensity: 2.5
     - _dHeight: 100
     - _dWidth: 45
