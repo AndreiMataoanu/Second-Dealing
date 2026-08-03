@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "OnyxRing", menuName = "Keepsakes/Onyx Ring")]
-public class OnyxRing : Keepsake
+[CreateAssetMenu(fileName = "BloodRose", menuName = "Keepsakes/Blood Rose")]
+public class BloodRose : Keepsake
 {
     [Tooltip("The multiplier applied to your original payout.")]
     public int payoutMultiplier = 2;
@@ -18,7 +18,7 @@ public class OnyxRing : Keepsake
     {
         if(allHands == null || allHands.Count == 0) return originalPayout;
 
-        if(CountBlackHands(allHands) - timesTriggered > 0)
+        if(CountRedHands(allHands) - timesTriggered > 0)
         {
             timesTriggered++;
 
@@ -32,10 +32,10 @@ public class OnyxRing : Keepsake
     {
         if(allHands == null || allHands.Count == 0) return false;
 
-        return CountBlackHands(allHands) > 0;
+        return CountRedHands(allHands) > 0;
     }
 
-    private int CountBlackHands(List<List<CardInstance>> allHands)
+    private int CountRedHands(List<List<CardInstance>> allHands)
     {
         int count = 0;
 
@@ -43,21 +43,21 @@ public class OnyxRing : Keepsake
         {
             if(hand.Count == 0) continue;
 
-            bool isPureBlack = true;
+            bool isPureRed = true;
 
             foreach(var cardInstance in hand)
             {
                 var suit = cardInstance.cardData.suit;
 
-                if(suit != Card.Suit.Spades && suit != Card.Suit.Clubs)
+                if(suit != Card.Suit.Diamonds && suit != Card.Suit.Hearts)
                 {
-                    isPureBlack = false;
+                    isPureRed = false;
 
                     break;
                 }
             }
 
-            if(isPureBlack)
+            if(isPureRed)
             {
                 count++;
             }
