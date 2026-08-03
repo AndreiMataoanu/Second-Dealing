@@ -39,6 +39,7 @@ public class MenusController : MonoBehaviour
     {
         //masterBus = FMODUnity.RuntimeManager.GetBus("bus:/");
         //sfxBus = FMODUnity.RuntimeManager.GetBus("bus:/SFX");
+        //musicBus = FMODUnity.RuntimeManager.GetBus("bus:/Music");
 
         if(darkImage == null || pausePanel == null || mainMenuPanel == null) return;
     }

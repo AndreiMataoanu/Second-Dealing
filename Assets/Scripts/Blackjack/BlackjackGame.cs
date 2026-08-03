@@ -121,7 +121,7 @@ public class BlackjackGame : MonoBehaviour
 
     private void Update()
     {
-        if(currentBustCoroutine != null || isActionLocked || isRoundActive) return;
+        if(currentBustCoroutine != null || isActionLocked || isRoundActive || Elevator.isElevatorActive) return;
 
         if(Input.mouseScrollDelta.y > 0f && Time.timeScale != 0f)
         {
@@ -502,7 +502,6 @@ public class BlackjackGame : MonoBehaviour
         CardEffects.Reset();
         gameCamera.ChangeToCamera(CameraType.Sitting);
         eventManager.ShowNewPowerballTaunt();
-
         tableCards.ShuffleCards();
         cursorDetection.OnRoundInactive();
 
@@ -1055,6 +1054,11 @@ public class BlackjackGame : MonoBehaviour
 
     private IEnumerator ButtonCoroutine()
     {
+        while(Elevator.isElevatorActive)
+        {
+            yield return null;
+        }
+
         buttonAnimator.SetBool("StartActive", true);
 
         yield return new WaitForSeconds(1f);

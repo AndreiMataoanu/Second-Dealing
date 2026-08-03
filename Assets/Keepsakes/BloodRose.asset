@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03162b3001935fc44ac8560b3b3bea34, type: 3}
+  m_Name: BloodRose
+  m_EditorClassIdentifier: Assembly-CSharp::BloodDiamond
+  keepsakeName: Blood Rose
+  description: Get 2x payout when your hand is all red
+  unlockDescription: Win a turn with only red suits
+  requiredChallenge: 7
+  requiredTarget: 21
+  tablePrefab: {fileID: 1797814010823305179, guid: a246ca5656b043746a5036c79f8c1025, type: 3}
+  isActive: 0
+  payoutMultiplier: 2

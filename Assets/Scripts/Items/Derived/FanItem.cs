@@ -26,7 +26,9 @@ public class FanItem : Item
     private bool ActivateFan()
     {
         if(!blackjackGame.isRoundActive || blackjackGame.CheckItemAfterStand()) return false;
-        
+
+        AudioManager.instance.Play("Fan(Clone)");
+
         blackjackGame.StartCoroutine(FanCoroutine());
 
         return true;

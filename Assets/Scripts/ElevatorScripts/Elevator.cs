@@ -11,7 +11,7 @@ public class Elevator : MonoBehaviour
     [SerializeField] private GameObject optionsFloor;
     [SerializeField] private GameObject hands;
     [SerializeField] private CinemachineCamera elevatorCamera;
-    [SerializeField] private CinemachineCamera keepsakeCamera;
+    [SerializeField] private CinemachineCamera zoomCamera;
     [SerializeField] private CinemachineBasicMultiChannelPerlin noise;
     [SerializeField] private CinemachineCamera blackjackCamera;
     [SerializeField] private float doorTime = 3f;
@@ -33,9 +33,11 @@ public class Elevator : MonoBehaviour
     private string currentFloor;
     private bool doorsOpen = false;
     private bool isMoving = false;
+    public static bool isElevatorActive = true;
 
     private void Start()
     {
+        isElevatorActive = true;
         noise.AmplitudeGain = idleAmplitude;
         noise.FrequencyGain = idleFrequency;
 
@@ -189,8 +191,9 @@ public class Elevator : MonoBehaviour
 
         blackjackCamera.Priority = 10;
         elevatorCamera.Priority = 0;
-        keepsakeCamera.Priority = 0;
+        zoomCamera.Priority = 0;
         isMoving = false;
+        isElevatorActive = false;
         hands.SetActive(true);
 
         AudioManager.instance.Stop("ElevatorAmbience");
@@ -219,6 +222,9 @@ public class Elevator : MonoBehaviour
         yield return StartCoroutine(OpenDoors());
 
         isMoving = false;
+
+        elevatorCamera.Priority = 0;
+        zoomCamera.Priority = 10;
     }
 
     private IEnumerator KeepsakesCoroutine()
@@ -246,7 +252,7 @@ public class Elevator : MonoBehaviour
         isMoving = false;
 
         elevatorCamera.Priority = 0;
-        keepsakeCamera.Priority = 10;
+        zoomCamera.Priority = 10;
     }
 
     private IEnumerator MoveFloor(GameObject nextFloor, float waitTime)
@@ -303,7 +309,7 @@ public class Elevator : MonoBehaviour
 
     private void ResetCameras()
     {
-        keepsakeCamera.Priority = 0;
+        zoomCamera.Priority = 0;
         elevatorCamera.Priority = 10;
     }
 }

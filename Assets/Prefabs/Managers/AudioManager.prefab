@@ -364,6 +364,30 @@ MonoBehaviour:
     pitchVariance: 0
     loop: 1
     source: {fileID: 0}
+  - clips:
+    - {fileID: 8300000, guid: dd0d6cdec805c674ab99ee5dfa5630f6, type: 3}
+    name: Coin(Clone)
+    volume: 2
+    pitch: 1
+    pitchVariance: 0.2
+    loop: 0
+    source: {fileID: 0}
+  - clips:
+    - {fileID: 8300000, guid: 4fdec7ba4f968f949895214e753fca98, type: 3}
+    name: Acid(Clone)
+    volume: 2
+    pitch: 1
+    pitchVariance: 0.2
+    loop: 0
+    source: {fileID: 0}
+  - clips:
+    - {fileID: 8300000, guid: 9ce2de253f0968948b8854bd279c190f, type: 3}
+    name: Pyro
+    volume: 2
+    pitch: 1
+    pitchVariance: 0.2
+    loop: 0
+    source: {fileID: 0}
   isMuffled: 0
   transitionSpeed: 5
   muffledCutoffFreq: 3000

@@ -135,7 +135,7 @@ public class TableCards : MonoBehaviour
     
     public void ShuffleCards()
     {
-        AudioManager.instance.Play("Shuffle");
+        StartCoroutine(PlayShuffleSoundCoroutine());
 
         gameDeck.InitializeDeck();
         gameDeck.Shuffle();
@@ -634,6 +634,17 @@ public class TableCards : MonoBehaviour
     public void ResetLastActiveHand()
     {
         currentHandIndex = Mathf.Min(currentHandIndex, playerHands.Count - 1);
+    }
+
+
+    private IEnumerator PlayShuffleSoundCoroutine()
+    {
+        while(Elevator.isElevatorActive)
+        {
+            yield return null;
+        }
+
+        AudioManager.instance.Play("Shuffle");
     }
 
     #endregion

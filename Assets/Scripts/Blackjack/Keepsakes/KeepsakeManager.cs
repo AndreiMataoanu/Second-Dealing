@@ -74,9 +74,7 @@ public class KeepsakeManager : MonoBehaviour
 
             if(keepsake.tablePrefab != null && tableSpawnPoints != null && i < tableSpawnPoints.Count && tableSpawnPoints[i] != null)
             {
-                GameObject tableObj = Instantiate(keepsake.tablePrefab, tableSpawnPoints[i]);
-                tableObj.transform.localPosition = Vector3.zero;
-                tableObj.transform.localRotation = Quaternion.identity;
+                GameObject tableObj = Instantiate(keepsake.tablePrefab, tableSpawnPoints[i], false);
 
                 currentTableObjects.Add(tableObj);
 

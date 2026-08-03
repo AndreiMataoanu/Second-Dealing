@@ -306,7 +306,7 @@ public class ShopManager : MonoBehaviour
     #endregion
     
     #region Suitcase Animation
-
+    
     public void PlaySuitcaseOpen()
     {
         StartCoroutine(PlaySuitcaseOpenCoroutine());
@@ -314,7 +314,7 @@ public class ShopManager : MonoBehaviour
     
     private IEnumerator PlaySuitcaseOpenCoroutine()
     {
-        yield return new WaitUntil(() => delayOpen == false);
+        yield return new WaitUntil(() => delayOpen == false && Elevator.isElevatorActive == false);
         
         if (state != ShopState.Closed || inventoryItemCount == buySpawnPoints.Count)
             yield break;
