@@ -77,6 +77,7 @@ public class KeepsakeInteractable : Clickable
 
                 keepsake.ApplyInheritance(blackjackGame);
                 gameObject.SetActive(false);
+                blackjackGame.ShopManager.SetDelayOpen(false);
             }
             else
             {

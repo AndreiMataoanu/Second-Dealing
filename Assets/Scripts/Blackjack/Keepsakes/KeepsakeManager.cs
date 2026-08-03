@@ -24,15 +24,28 @@ public class KeepsakeManager : MonoBehaviour
 
     public bool EquipKeepsake(Keepsake keepsake)
     {
-        if(equippedKeepsakes.Count >= maxKeepsakes) return false;
+        if (equippedKeepsakes.Count >= maxKeepsakes) return false;
 
-        if(equippedKeepsakes.Contains(keepsake)) return false;
+        if (equippedKeepsakes.Contains(keepsake)) return false;
+
+        if (IsKeepsakeTypeEquipped(keepsake)) return false;
 
         equippedKeepsakes.Add(keepsake);
 
         UpdateTableVisuals();
 
         return true;
+    }
+
+    private bool IsKeepsakeTypeEquipped(Keepsake keepsake)
+    {
+        foreach (var k in equippedKeepsakes)
+        {
+            if (k.GetType() == keepsake.GetType())
+                return true;
+        }
+
+        return false;
     }
 
     public void UnequipKeepsake(Keepsake keepsake)

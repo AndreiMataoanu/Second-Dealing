@@ -24,6 +24,7 @@ public class ShopManager : MonoBehaviour
     private int inventoryItemCount = 0;
     private float nextDenyTime = 0;
     private float coinMultiplier = 1.0f;
+    private bool delayOpen;
     
     private List<Item> inventoryItems = new();
     private List<Item> allItems = new();
@@ -43,6 +44,8 @@ public class ShopManager : MonoBehaviour
     public void SetBlackjackGame(BlackjackGame game) => blackjackGame = game;
 
     public void SetBuyAction(Action<Item> buyAction) => BuyAction = buyAction;
+
+    public void SetDelayOpen(bool delay) => delayOpen = delay;
     
     #endregion
 
@@ -297,13 +300,20 @@ public class ShopManager : MonoBehaviour
     #endregion
     
     #region Suitcase Animation
-    
+
     public void PlaySuitcaseOpen()
     {
+        StartCoroutine(PlaySuitcaseOpenCoroutine());
+    }
+    
+    private IEnumerator PlaySuitcaseOpenCoroutine()
+    {
+        yield return new WaitUntil(() => delayOpen == false);
+        
         if (state != ShopState.Closed || inventoryItemCount == buySpawnPoints.Count)
-            return;
+            yield break;
 
-        StartCoroutine(SuitcaseOpenCoroutine());
+        yield return SuitcaseOpenCoroutine();
     }
     
     private IEnumerator SuitcaseOpenCoroutine()

@@ -23,6 +23,7 @@ namespace Progress
         [Header("Systems")] 
         [SerializeField] private DialogueSystem dialogueSystem;
         [SerializeField] private CashOutSystem cashOutSystem;
+        [SerializeField] private SelectMilestoneKeepsake selectKeepsake;
         
         private IEnumerator milestoneTriggerCoroutine;
         
@@ -55,6 +56,7 @@ namespace Progress
         {
             blackjackGame = game;
             cashOutSystem.SetBlackjackGame(game);
+            selectKeepsake.SetShopManager(game.ShopManager);
         }
 
         private void InitMilestones()
@@ -121,7 +123,7 @@ namespace Progress
             UpdateTurnsLeft();
             
             var passedMilestone = GoToNextMilestone();
-            if(passedMilestone == null) yield break;
+            if (passedMilestone == null) yield break;
             if (passedMilestone.milestoneType == MilestoneType.FinalGoal) useTurnLimit = false;
 
             UpdateEventKeepsakes();
@@ -129,6 +131,10 @@ namespace Progress
             UpdateProgressDisplay();
 
             yield return eventManager.TriggerEvent(passedMilestone.gameEvent);
+
+            yield return PresentKeepsakeChoice(passedMilestone);
+            
+            gameCamera.ChangeToCamera(CameraType.Sitting);
         }
 
         public IEnumerator OnEndProgressUpdate()
@@ -189,6 +195,22 @@ namespace Progress
             if (milestone == null) yield break;
             
             StartCoroutine(milestone.gameEvent.StartDisplay(gameCamera, statusText));
+        }
+
+        #endregion
+
+        #region Keepsakes
+
+        private IEnumerator PresentKeepsakeChoice(Milestone milestone)
+        {
+            if (milestone?.keepsakes == null || milestone.keepsakes.Count == 0) yield break;
+
+            yield return new WaitForSeconds(0.5f);
+            
+            gameCamera.ChangeToCamera(CameraType.Playing);
+            
+            yield return selectKeepsake.PresentKeepsakeChoice(milestone.keepsakes);
+
         }
 
         #endregion

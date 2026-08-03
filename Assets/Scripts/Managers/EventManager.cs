@@ -161,7 +161,7 @@ public class EventManager : MonoBehaviour
         
         gameEvent.Apply(this);
         
-        yield return gameEvent.EndDisplay(gameCamera);
+        // yield return gameEvent.EndDisplay(gameCamera);
         
         gameEvent.ExplainEventDialogue(dialogueSystem);
     }
