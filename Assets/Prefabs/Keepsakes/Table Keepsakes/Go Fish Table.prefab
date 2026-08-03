@@ -111,6 +111,8 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipContent: '[Use] Ask the dealer of a card'
   showTooltip: 1
+  outlineUse: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
+  outlineCantUse: {fileID: 2100000, guid: 36f05641255eb3e43a4474d269a6ccf1, type: 2}
 --- !u!64 &7127930964463045617
 MeshCollider:
   m_ObjectHideFlags: 0

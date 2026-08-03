@@ -114,6 +114,8 @@ MonoBehaviour:
     Dying consumes the keepsake and
     revivies you'
   showTooltip: 1
+  outlineUse: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
+  outlineCantUse: {fileID: 2100000, guid: 36f05641255eb3e43a4474d269a6ccf1, type: 2}
 --- !u!64 &3884029672907616611
 MeshCollider:
   m_ObjectHideFlags: 0

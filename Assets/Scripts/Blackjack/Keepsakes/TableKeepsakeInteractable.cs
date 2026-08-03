@@ -2,12 +2,16 @@ using UnityEngine;
 
 public class TableKeepsakeInteractable : Clickable
 {
+    [SerializeField] private Material outlineUse;
+    [SerializeField] private Material outlineCantUse;
     private BlackjackGame blackjackGame;
     public Keepsake keepsake { get; private set; }
     private bool usedThisRound = false;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         blackjackGame = FindFirstObjectByType<BlackjackGame>();
 
         var cursorDetection = FindFirstObjectByType<CursorDetection>();
@@ -58,11 +62,24 @@ public class TableKeepsakeInteractable : Clickable
         }
     }
 
-    public override void ApplyOutline()
+    protected override Material GetOutlineMaterial()
     {
-        if(!keepsake.isActive || usedThisRound) return;
+        if(!keepsake.isActive || usedThisRound)
+        {
+            return outlineCantUse;
+        }
 
-        base.ApplyOutline();
+        if(blackjackGame.isActionLocked)
+        {
+            if(blackjackGame.UseAfterStand)
+            {
+                return outlineUse;
+            }
+
+            return outlineCantUse;
+        }
+
+        return outlineUse;
     }
 
     private void CancelKeepsake()
