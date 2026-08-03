@@ -28,7 +28,9 @@ public class AntiMatter : Keepsake
         game = blackjackGame;
         cardEffect = new CardEffectActions(
             game,
-            CursorType.None,
+            game.CursorFollow,
+            game.CursorDetection,
+            CursorType.AntiMatter,
             CardTrigger.AntiMatter
         );
     }

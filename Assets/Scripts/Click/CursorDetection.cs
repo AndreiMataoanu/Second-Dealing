@@ -10,6 +10,7 @@ public enum CardTrigger
     AntiMatter,
     Pyro,
     HatTrick,
+    HiddenAce
 }
 
 public class CursorDetection : MonoBehaviour

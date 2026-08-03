@@ -118,7 +118,8 @@ public class TableCards : MonoBehaviour
     {
         CardEffects.ClearAlcoholCards();
         CardEffects.ClearCutCards();
-        
+        CardEffects.ClearHiddenAces();
+
         DestroyActiveCards();
         DestroyPeekCard();
         
@@ -243,7 +244,12 @@ public class TableCards : MonoBehaviour
     {
         List<CardInstance> hand = null; Transform handTransform = null; Vector3 cardsOffset = new();
         ProcessCardPlacement(isForPlayer, ref hand, ref handTransform, ref cardsOffset);
-        
+
+        if(!isForPlayer && KeepsakeManager.instance.ForceRevealDealerCard())
+        {
+            isHidden = false;
+        }
+
         int handValue = CalculateHandValue(hand, true);
         int idealValue = game.CalculateIdealNextValue(isForPlayer, handValue);
         

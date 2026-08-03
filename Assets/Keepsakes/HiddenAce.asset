@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16323132a5734cd4fa62b60f670ce592, type: 3}
+  m_Name: HiddenAce
+  m_EditorClassIdentifier: Assembly-CSharp::HiddenAce
+  keepsakeName: Hidden Ace
+  description: Temporarily add +1 to a card
+  unlockDescription: 
+  requiredChallenge: 0
+  requiredTarget: 0
+  tablePrefab: {fileID: 2708514875635923006, guid: 37ad866454ea0004185a7d60c01c71ae, type: 3}
+  isActive: 1
+  tokenPrefab: {fileID: 5105103902942336520, guid: 3b15f00a7b42a314895647fa4c9a5326, type: 3}

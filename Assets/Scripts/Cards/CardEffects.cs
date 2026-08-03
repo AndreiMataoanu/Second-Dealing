@@ -8,6 +8,7 @@ public static class CardEffects
     private static List<Card.Suit> negativeSuits = new();
     private static HashSet<(Card.Rank, Card.Suit)> antiMatterCards = new();
     private static HashSet<CardInstance> alcoholCards = new();
+    public static Dictionary<CardInstance, int> hiddenAceCards = new();
 
     #region Card Collection
 
@@ -49,7 +50,15 @@ public static class CardEffects
     {
         return antiMatterCards.Remove((cardInstance.cardData.rank, cardInstance.cardData.suit));
     }
-    
+
+    public static void AddHiddenAce(CardInstance cardInstance, int bonus)
+    {
+        if(!hiddenAceCards.TryAdd(cardInstance, bonus))
+            hiddenAceCards[cardInstance] += bonus;
+    }
+
+    public static void ClearHiddenAces() => hiddenAceCards.Clear();
+
     #endregion
 
     #region Set Visuals
@@ -121,6 +130,9 @@ public static class CardEffects
         if (IsCardDrunk(cardInstance))
             values = values.ConvertAll(cardValue => cardValue * 2);
 
+        if (hiddenAceCards.TryGetValue(cardInstance, out int bonus))
+            values = values.ConvertAll(cardValue => cardValue + bonus);
+
         return values;
     }
     
@@ -145,5 +157,6 @@ public static class CardEffects
         negativeSuits.Clear();
         antiMatterCards.Clear();
         alcoholCards.Clear();
+        hiddenAceCards.Clear();
     }
 }
