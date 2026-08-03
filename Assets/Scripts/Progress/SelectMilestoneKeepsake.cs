@@ -78,8 +78,10 @@ public class SelectMilestoneKeepsake : MonoBehaviour
                 !KeepsakeManager.instance.IsKeepsakeTypeEquipped(interactable.GetKeepsake()))
             {
                 keepsake.transform.localPosition = Vector3.zero;
-                keepsake.transform.localScale = Vector3.one;
-                keepsake.transform.localRotation = Quaternion.identity;
+                keepsake.transform.localScale = interactable.scaleInHand;
+                keepsake.transform.localRotation = Quaternion.Euler(interactable.rotationInHand);
+
+                RemoveKeepsakeSpotlight(keepsake);
                 
                 interactable.SetActive(true);
                 interactable.SetBlackjackGame(game);
@@ -92,6 +94,14 @@ public class SelectMilestoneKeepsake : MonoBehaviour
         }
 
         return interactables.Count > 0;
+    }
+
+    private static void RemoveKeepsakeSpotlight(GameObject keepsake)
+    {
+        if (keepsake.transform.childCount <= 0) return;
+        
+        var light = keepsake.transform.GetChild(0);
+        light?.gameObject.SetActive(false);
     }
 
     private IEnumerator MoveHand(float duration, Vector3 start, Vector3 end)

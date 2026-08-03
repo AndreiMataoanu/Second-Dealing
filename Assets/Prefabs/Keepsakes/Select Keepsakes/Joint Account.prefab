@@ -241,6 +241,8 @@ MonoBehaviour:
   keepsake: {fileID: 11400000, guid: b80891967d8615749b7bc6497ccb9688, type: 2}
   blackjackGame: {fileID: 0}
   lockedMaterial: {fileID: 2100000, guid: 0a832a2e81c13f949bb53db9acc6b339, type: 2}
+  rotationInHand: {x: 0, y: 4, z: 0}
+  scaleInHand: {x: 18.4, y: 18.4, z: 18.4}
 --- !u!64 &8893941040290262318
 MeshCollider:
   m_ObjectHideFlags: 0
