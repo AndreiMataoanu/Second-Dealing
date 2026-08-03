@@ -65,7 +65,7 @@ public class CursorDetection : MonoBehaviour
         SetClickables(tarotClickables, false);
     }
 
-    public void OnDealerTurn()
+    public void SetAllInactive()
     {
         SetClickables(roundActiveClickables, false);
         SetClickables(roundInactiveClickables, false);

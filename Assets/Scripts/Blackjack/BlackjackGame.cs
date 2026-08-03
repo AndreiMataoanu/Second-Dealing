@@ -774,7 +774,7 @@ public class BlackjackGame : MonoBehaviour
     // TODO: change stuff here too
     private IEnumerator DealerTurnCoroutine(bool playerHasBlackjack = false)
     {
-        cursorDetection.OnDealerTurn();
+        cursorDetection.SetAllInactive();
 
         // TODO: maybe move to cursor
         foreach(var hand in tableCards.PlayerHands)
@@ -1042,7 +1042,7 @@ public class BlackjackGame : MonoBehaviour
 
     private IEnumerator EndGameCoroutine(string message)
     {
-        cursorDetection.OnDealerTurn();
+        cursorDetection.SetAllInactive();
 
         int activeBetAmount = (handBets != null && handBets.Count > 0) ? handBets[0] : currentBet;
 

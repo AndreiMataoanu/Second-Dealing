@@ -56,7 +56,7 @@ namespace Progress
         {
             blackjackGame = game;
             cashOutSystem.SetBlackjackGame(game);
-            selectKeepsake.SetShopManager(game.ShopManager);
+            selectKeepsake.SetBlackjackGame(game);
         }
 
         private void InitMilestones()
@@ -125,6 +125,11 @@ namespace Progress
             var passedMilestone = GoToNextMilestone();
             if (passedMilestone == null) yield break;
             if (passedMilestone.milestoneType == MilestoneType.FinalGoal) useTurnLimit = false;
+            else
+            {
+                blackjackGame.CursorDetection.SetAllInactive();
+                blackjackGame.ShopManager.SetInventoryActive(false);
+            }
 
             UpdateEventKeepsakes();
             
@@ -135,6 +140,9 @@ namespace Progress
             yield return PresentKeepsakeChoice(passedMilestone);
             
             gameCamera.ChangeToCamera(CameraType.Sitting);
+            
+            blackjackGame.CursorDetection.OnRoundInactive();
+            blackjackGame.ShopManager.SetInventoryActive(true);
         }
 
         public IEnumerator OnEndProgressUpdate()

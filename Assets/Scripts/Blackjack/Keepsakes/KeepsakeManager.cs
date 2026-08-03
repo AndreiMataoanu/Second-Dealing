@@ -10,6 +10,8 @@ public class KeepsakeManager : MonoBehaviour
     private List<GameObject> currentTableObjects = new List<GameObject>();
     public List<Keepsake> equippedKeepsakes = new List<Keepsake>();
 
+    public bool IsKeepsakeEquipFull => equippedKeepsakes.Count >= maxKeepsakes;
+    
     private void Awake()
     {
         if(instance == null)
@@ -24,7 +26,7 @@ public class KeepsakeManager : MonoBehaviour
 
     public bool EquipKeepsake(Keepsake keepsake)
     {
-        if (equippedKeepsakes.Count >= maxKeepsakes) return false;
+        if (IsKeepsakeEquipFull) return false;
 
         if (equippedKeepsakes.Contains(keepsake)) return false;
 
@@ -37,7 +39,7 @@ public class KeepsakeManager : MonoBehaviour
         return true;
     }
 
-    private bool IsKeepsakeTypeEquipped(Keepsake keepsake)
+    public bool IsKeepsakeTypeEquipped(Keepsake keepsake)
     {
         foreach (var k in equippedKeepsakes)
         {

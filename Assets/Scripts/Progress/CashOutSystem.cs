@@ -37,7 +37,7 @@ public class CashOutSystem : MonoBehaviour
         
         yield return new WaitWhile(() => dialogueSystem.IsPlaying);
         
-        cursorDetection.OnDealerTurn();
+        cursorDetection.SetAllInactive();
         leaveButton.gameObject.SetActive(true);
         stayButton.gameObject.SetActive(true);
     }

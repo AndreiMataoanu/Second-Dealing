@@ -8,10 +8,14 @@ public class SelectMilestoneKeepsake : MonoBehaviour
     [SerializeField] private GameObject dealerHand;
     [SerializeField] private Transform selectHandPosition;
     
-    [HideInInspector] public bool isChoosing; 
-    
+    [HideInInspector] public bool isChoosing;
+
+    private BlackjackGame game;
     private ShopManager shop;
+    private DialogueSystem dialogue;
+    
     private Vector3 startHandPosition;
+    private List<KeepsakeInteractable> interactables = new();
 
     private void Start()
     {
@@ -19,8 +23,13 @@ public class SelectMilestoneKeepsake : MonoBehaviour
         startHandPosition = dealerHand.transform.position;
     }
 
-    public void SetShopManager(ShopManager shopManager) => shop = shopManager;
-    
+    public void SetBlackjackGame(BlackjackGame blackjackGame)
+    {
+        game = blackjackGame;
+        shop = blackjackGame.ShopManager;
+        dialogue = blackjackGame.DialogueSystem;
+    }
+
     public IEnumerator PresentKeepsakeChoice(List<GameObject> keepsakes)
     {
         if (!SpawnKeepsakes(keepsakes)) yield break;
@@ -34,28 +43,55 @@ public class SelectMilestoneKeepsake : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
 
+        shop.SetDelayOpen(true);
+        dialogue.ShowKeepsakeTaunts();
+        
         yield return MoveHand(1.3f, startHandPosition, selectHandPosition.position);
 
+        isChoosing = true;
         yield return new WaitUntil(() => isChoosing == false);
-
+        
+        interactables.ForEach(i => i.SetActive(false));
+        
         yield return MoveHand(0.7f, selectHandPosition.position, startHandPosition);
         
         DestroyKeepsakes();
+        shop.SetDelayOpen(false);
     }
 
     private bool SpawnKeepsakes(List<GameObject> keepsakes)
     {
         if (keepsakes == null || keepsakes.Count == 0) return false;
         if (keepsakePositions == null || keepsakePositions.Count == 0) return false;
+        if (KeepsakeManager.instance.IsKeepsakeEquipFull) return false;
 
-        isChoosing = true;
-        shop.SetDelayOpen(true);
+        int i = 0;
         
-        for (int i = 0; i < keepsakePositions.Count; i++)
-            if (i < keepsakes.Count)
-                Instantiate(keepsakes[i], keepsakePositions[i]);
+        foreach (var keepsakePrefab in keepsakes)
+        {
+            if (i >= keepsakePositions.Count) break;
+            
+            var keepsake = Instantiate(keepsakePrefab, keepsakePositions[i]);
+            var interactable = keepsake.GetComponent<KeepsakeInteractable>();
 
-        return true;
+            if (KeepsakeUnlockProgression.instance.HasMetRequirement(interactable.GetKeepsake()) &&
+                !KeepsakeManager.instance.IsKeepsakeTypeEquipped(interactable.GetKeepsake()))
+            {
+                keepsake.transform.localPosition = Vector3.zero;
+                keepsake.transform.localScale = Vector3.one;
+                keepsake.transform.localRotation = Quaternion.identity;
+                
+                interactable.SetActive(true);
+                interactable.SetBlackjackGame(game);
+                interactables.Add(interactable);
+
+                i++;
+            }
+            else Destroy(keepsake);
+
+        }
+
+        return interactables.Count > 0;
     }
 
     private IEnumerator MoveHand(float duration, Vector3 start, Vector3 end)
@@ -75,10 +111,8 @@ public class SelectMilestoneKeepsake : MonoBehaviour
 
     private void Update()
     {
-        if (isChoosing && Input.GetMouseButtonDown(0))
-        {
-            isChoosing = false;
-        }
+        if (!isChoosing || !Input.GetMouseButtonDown(0)) return;
+        isChoosing = false;
     }
 
     private void DestroyKeepsakes()

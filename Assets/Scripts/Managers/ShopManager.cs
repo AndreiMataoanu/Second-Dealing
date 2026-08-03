@@ -140,6 +140,12 @@ public class ShopManager : MonoBehaviour
     #endregion
 
     #region Inventory
+    
+    public void SetInventoryActive(bool isActive)
+    {
+        foreach (var item in inventoryItems)
+            item.SetActive(isActive);
+    }
 
     public void AddToInventory(Item item, bool isFree = false)
     {

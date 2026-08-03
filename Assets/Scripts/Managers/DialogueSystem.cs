@@ -49,6 +49,8 @@ public class DialogueSystem : MonoBehaviour
     [SerializeField] private List<string> luckyCoinFlip;
     [Tooltip("Taunts shown when player gets unlucky after coin flip.")] 
     [SerializeField] private List<string> unluckyCoinFlip;
+    [Tooltip("Taunts shown when player chooses keepsake.")] 
+    [SerializeField] private List<string> chooseKeepsakeTaunts;
 
     [Header("Cash out")]
     [Tooltip("Shown when the player gets more than 100000 dollars")]
@@ -133,7 +135,7 @@ public class DialogueSystem : MonoBehaviour
         EndDialogue();
     }
 
-    public void ShowMessage(string message)
+    private void ShowMessage(string message)
     {
         StopCurrentDialogue();
 
@@ -209,6 +211,8 @@ public class DialogueSystem : MonoBehaviour
     public void ShowTrustFundTaunt() => ShowMessage(GetRandomTaunt(trustFundTaunts));
     public void ShowLuckyCoinFlip() => ShowMessage(GetRandomTaunt(luckyCoinFlip));
     public void ShowUnluckyCoinFlip() => ShowMessage(GetRandomTaunt(unluckyCoinFlip));
+    public void ShowKeepsakeTaunts() => ShowMessage(GetRandomTaunt(chooseKeepsakeTaunts));
+    
     private string GetRandomTaunt(List<string> taunts)
     {
         if(taunts == null || taunts.Count == 0) return "";

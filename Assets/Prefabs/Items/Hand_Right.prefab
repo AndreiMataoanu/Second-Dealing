@@ -141,8 +141,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4510940994795199464}
   - component: {fileID: 3063345535417769683}
-  - component: {fileID: 5416267833011534128}
-  - component: {fileID: 3655025010271606912}
   m_Layer: 0
   m_Name: Hand.Detail
   m_TagString: Untagged
@@ -245,89 +243,6 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.000118343814, y: 0.0006218801, z: -0.000009863696}
     m_Extent: {x: 0.0005985862, y: 0.00087295653, z: 0.00025742076}
   m_DirtyAABB: 0
---- !u!114 &5416267833011534128
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3065172155344379581}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6ce4e54709ae3740a925304c017508d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::StandHandClickable
-  clickEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: BlackjackGame, Assembly-CSharp
-        m_MethodName: OnStand
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CursorDetection, Assembly-CSharp
-        m_MethodName: OnDealerTurn
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: BlackjackGame, Assembly-CSharp
-        m_MethodName: OnSplit
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  outline: {fileID: 2100000, guid: 845ab195a79e98442a99a906b739c853, type: 2}
-  tooltipHeader: 
-  tooltipContent: 
-  showTooltip: 1
-  blackjackManager: {fileID: 0}
-  standardStandTooltip: 'Stand [Left-click]'
-  splitTooltip: 'Stand [Left-click]
-
-
-    Split [Right-click]'
---- !u!64 &3655025010271606912
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3065172155344379581}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4408329027317500268, guid: f6331d9e0b3944360815972f37c04249, type: 3}
 --- !u!1 &3704816175706212887
 GameObject:
   m_ObjectHideFlags: 0

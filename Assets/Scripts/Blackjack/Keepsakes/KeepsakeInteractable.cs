@@ -9,6 +9,9 @@ public class KeepsakeInteractable : Clickable
     private Renderer objectRenderer;
     private Material[] originalMaterials;
 
+    public void SetBlackjackGame(BlackjackGame game) => blackjackGame = game;
+    public Keepsake GetKeepsake() => keepsake;
+    
     private void Start()
     {
         objectRenderer = GetComponent<Renderer>();
@@ -77,7 +80,6 @@ public class KeepsakeInteractable : Clickable
 
                 keepsake.ApplyInheritance(blackjackGame);
                 gameObject.SetActive(false);
-                blackjackGame.ShopManager.SetDelayOpen(false);
             }
             else
             {
