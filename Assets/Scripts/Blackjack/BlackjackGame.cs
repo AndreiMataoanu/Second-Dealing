@@ -708,8 +708,8 @@ public class BlackjackGame : MonoBehaviour
 
         if(!endlessDouble)
         {
-            yield return StartCoroutine(AdvanceHandCoroutine());
             yield return StartCoroutine(eventManager.CheckPowerballCompletion());
+            yield return StartCoroutine(AdvanceHandCoroutine());
         }
         else
         {

@@ -32,6 +32,9 @@ public abstract class BlackjackEvent : ScriptableObject
     }
 
     public abstract void Apply(EventManager events);
-    
-    public virtual void ExplainEventDialogue(DialogueSystem dialogue) {}
+
+    public virtual IEnumerator ExplainEventDialogue(DialogueSystem dialogue)
+    {
+        yield return null;
+    }
 }

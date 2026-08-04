@@ -88,6 +88,7 @@ public class EventManager : MonoBehaviour
     public void SetPowerballEventActive(List<int> goal)
     {
         powerballNumbers = goal;
+        progressDisplay.UpdatePowerballGoal(goal);
     }
     
     #endregion
@@ -115,6 +116,7 @@ public class EventManager : MonoBehaviour
     private void OnPowerballComplete()
     {
         powerballNumbers = PowerballEvent.GenerateNumbers();
+        progressDisplay.UpdatePowerballGoal(powerballNumbers);
         isNewPowerball = true;
     }
 
@@ -161,7 +163,7 @@ public class EventManager : MonoBehaviour
         
         gameEvent.Apply(this);
         
-        gameEvent.ExplainEventDialogue(dialogueSystem);
+        yield return gameEvent.ExplainEventDialogue(dialogueSystem);
     }
     
     #endregion
