@@ -129,8 +129,11 @@ public class SelectMilestoneKeepsake : MonoBehaviour
     {
         foreach (var position in keepsakePositions)
         {
-            var keepsake = position.transform.GetChild(0).gameObject;
-            Destroy(keepsake);
+            if (position.transform.childCount != 0)
+            {
+                var keepsake = position.transform.GetChild(0).gameObject;
+                Destroy(keepsake);
+            }
         }
     }
 }

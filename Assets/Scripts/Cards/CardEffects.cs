@@ -102,12 +102,13 @@ public static class CardEffects
     {
         var card = cardInstance.cardData;
         var values = new List<float> { card.GetValue(countJoker) };
+        var original = values.First();
         if (card.rank == Card.Rank.Ace) values.Add(1); // ace can have value GetValue() - 11 or 1
-
-        if (EventManager.isDoubleLowActive && values.First() < 6)
+        
+        if (EventManager.isDoubleLowActive && original < 6)
             values = values.ConvertAll(cardValue => cardValue * 2);
 
-        if (EventManager.isHalfHighActive && values.First() > 5)
+        if (EventManager.isHalfHighActive && original > 5)
             values = values.ConvertAll(cardValue => (float)Mathf.CeilToInt(cardValue / 2f));
 
         if (IsCardNegative(card))
