@@ -54,7 +54,7 @@ public class HatTrick : Keepsake
 
         isHatTrickActive = true;
         cardEffect.SelectCard();
-        cardEffect.AddCardEffectAction(TryHatTrickCard);
+        cardEffect.AddItemCardEffectAction(TryHatTrickCard);
         usesThisRound++;
         
         return true;

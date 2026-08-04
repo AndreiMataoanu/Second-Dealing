@@ -15,10 +15,14 @@ namespace Managers
 
     public class CursorFollow : MonoBehaviour
     {
+        [Header("Cursor types")]
         [SerializeField] private GameObject scissorsFollow;
         [SerializeField] private GameObject acidFollow;
         [SerializeField] private GameObject handFollow;
 
+        [Header("Deactivate")] 
+        [SerializeField] private GameObject rightHand;
+        
         public void SetCursorTypeActive(bool isActive, CursorType cursorType)
         {
             if (cursorType == CursorType.None) return;
@@ -34,6 +38,7 @@ namespace Managers
                     break;
                 case CursorType.Flip:
                     handFollow?.SetActive(isActive);
+                    rightHand?.SetActive(!isActive);
                     break;
             }
         }

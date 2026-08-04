@@ -44,12 +44,15 @@ Material:
     m_Floats:
     - _CutInHalf: 0
     - _CutOnce: 0
+    - _CutTwice: 0
     - _CutoffHeight: -0.4
     - _Direction: -1
     - _Dissolve: 0.000001
     - _DissolveEdge: 1.15
     - _Doubled: 0
     - _DoubledEffectSpeed: 0.03
+    - _DoubledOnce: 0
+    - _DoubledTwice: 0
     - _EffectSpeed: 0.05
     - _FoilSaturation: -0.1
     - _GlowThickness: -1.6
@@ -61,6 +64,8 @@ Material:
     - _Opacity: 0.85
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _SecondCutoffHeight: 0
+    - _SecondGlowThickness: -0.9
     - _VoronoiCellDensity: 2.5
     - _dHeight: 100
     - _dWidth: 45

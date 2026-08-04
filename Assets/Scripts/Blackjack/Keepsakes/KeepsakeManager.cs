@@ -10,6 +10,8 @@ public class KeepsakeManager : MonoBehaviour
     private List<GameObject> currentTableObjects = new List<GameObject>();
     public List<Keepsake> equippedKeepsakes = new List<Keepsake>();
 
+    public bool IsKeepsakeEquipFull => equippedKeepsakes.Count >= maxKeepsakes;
+    
     private void Awake()
     {
         if(instance == null)
@@ -24,15 +26,28 @@ public class KeepsakeManager : MonoBehaviour
 
     public bool EquipKeepsake(Keepsake keepsake)
     {
-        if(equippedKeepsakes.Count >= maxKeepsakes) return false;
+        if (IsKeepsakeEquipFull) return false;
 
-        if(equippedKeepsakes.Contains(keepsake)) return false;
+        if (equippedKeepsakes.Contains(keepsake)) return false;
+
+        if (IsKeepsakeTypeEquipped(keepsake)) return false;
 
         equippedKeepsakes.Add(keepsake);
 
         UpdateTableVisuals();
 
         return true;
+    }
+
+    public bool IsKeepsakeTypeEquipped(Keepsake keepsake)
+    {
+        foreach (var k in equippedKeepsakes)
+        {
+            if (k.GetType() == keepsake.GetType())
+                return true;
+        }
+
+        return false;
     }
 
     public void UnequipKeepsake(Keepsake keepsake)
@@ -203,6 +218,15 @@ public class KeepsakeManager : MonoBehaviour
         foreach(var keepsake in equippedKeepsakes)
         {
             keepsake.ApplyInheritance(game);
+        }
+    }
+
+    public void RechargeSecondDealing()
+    {
+        foreach (var keepsake in equippedKeepsakes)
+        {
+            if (keepsake is SecondDealing secondDealing)
+                secondDealing.Recharge();
         }
     }
 }

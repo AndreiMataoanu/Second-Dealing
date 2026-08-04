@@ -1,0 +1,163 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1059802294010071310
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2530597144003545488}
+  m_Layer: 0
+  m_Name: SelectDealerHandPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2530597144003545488
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1059802294010071310}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.15917093, y: 0.05209692, z: 0.98583966, w: 0.0084114}
+  m_LocalPosition: {x: -0.09953499, y: 0.17168045, z: 0.017461427}
+  m_LocalScale: {x: 1.6, y: 1.6, z: 1.6}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4853948541181870176}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5766516553682110187
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4853948541181870176}
+  - component: {fileID: 9045848794209736777}
+  m_Layer: 0
+  m_Name: SelectMilestoneKeepsake
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4853948541181870176
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5766516553682110187}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 20.462, y: 9.775, z: -0.084}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3494384501707754089}
+  - {fileID: 2530597144003545488}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9045848794209736777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5766516553682110187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98f907f59b9f0ae479e0f0c860cb4dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SelectMilestoneKeepsakes
+  keepsakePositions:
+  - {fileID: 8219871026969891134}
+  - {fileID: 4083926960215206628}
+  - {fileID: 4482561006354812884}
+  dealerHand: {fileID: 0}
+  selectHandPosition: {fileID: 0}
+  isChoosing: 0
+--- !u!1001 &6721778777033940034
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4853948541181870176}
+    m_Modifications:
+    - target: {fileID: 7869479733513541163, guid: 5ab2dad5e535d694c941f3cdb46a5083, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.1930008
+      objectReference: {fileID: 0}
+    - target: {fileID: 7869479733513541163, guid: 5ab2dad5e535d694c941f3cdb46a5083, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.17168045
+      objectReference: {fileID: 0}
+    - target: {fileID: 7869479733513541163, guid: 5ab2dad5e535d694c941f3cdb46a5083, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.841
+      objectReference: {fileID: 0}
+    - target: {fileID: 7869479733513541163, guid: 5ab2dad5e535d694c941f3cdb46a5083, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.008411398
+      objectReference: {fileID: 0}
+    - target: {fileID: 7869479733513541163, guid: 5ab2dad5e535d694c941f3cdb46a5083, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.15917093
+      objectReference: {fileID: 0}
+    - target: {fileID: 7869479733513541163, guid: 5ab2dad5e535d694c941f3cdb46a5083, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.052096922
+      objectReference: {fileID: 0}
+    - target: {fileID: 7869479733513541163, guid: 5ab2dad5e535d694c941f3cdb46a5083, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.98583966
+      objectReference: {fileID: 0}
+    - target: {fileID: 7869479733513541163, guid: 5ab2dad5e535d694c941f3cdb46a5083, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7869479733513541163, guid: 5ab2dad5e535d694c941f3cdb46a5083, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -195.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 7869479733513541163, guid: 5ab2dad5e535d694c941f3cdb46a5083, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8676234629074476068, guid: 5ab2dad5e535d694c941f3cdb46a5083, type: 3}
+      propertyPath: m_Name
+      value: Dealer_Hand
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5ab2dad5e535d694c941f3cdb46a5083, type: 3}
+--- !u!4 &3494384501707754089 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7869479733513541163, guid: 5ab2dad5e535d694c941f3cdb46a5083, type: 3}
+  m_PrefabInstance: {fileID: 6721778777033940034}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4083926960215206628 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7342428432562304678, guid: 5ab2dad5e535d694c941f3cdb46a5083, type: 3}
+  m_PrefabInstance: {fileID: 6721778777033940034}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4482561006354812884 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7169114139180520342, guid: 5ab2dad5e535d694c941f3cdb46a5083, type: 3}
+  m_PrefabInstance: {fileID: 6721778777033940034}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8219871026969891134 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3412135371667852668, guid: 5ab2dad5e535d694c941f3cdb46a5083, type: 3}
+  m_PrefabInstance: {fileID: 6721778777033940034}
+  m_PrefabAsset: {fileID: 0}

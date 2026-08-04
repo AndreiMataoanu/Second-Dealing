@@ -106,6 +106,7 @@ Material:
     - _Cull: 2
     - _CutInHalf: 0
     - _CutOnce: 0
+    - _CutTwice: 0
     - _Cutoff: 0.5
     - _CutoffHeight: -0.4
     - _DetailAlbedoMapScale: 1
@@ -113,8 +114,10 @@ Material:
     - _Direction: -1
     - _Dissolve: 0.000001
     - _DissolveEdge: 1.15
-    - _Doubled: 0
+    - _Doubled: 1
     - _DoubledEffectSpeed: 0.03
+    - _DoubledOnce: 0
+    - _DoubledTwice: 0
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EffectSpeed: 0.05
@@ -136,6 +139,8 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
+    - _SecondCutoffHeight: 0
+    - _SecondGlowThickness: -0.9
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1

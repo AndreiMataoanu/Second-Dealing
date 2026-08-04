@@ -35,7 +35,7 @@ public class AcidItem : Item
 
         isAcidActive = true;
         cardEffect.SelectCard();
-        cardEffect.AddCardEffectAction(OnDissolveCard);
+        cardEffect.AddItemCardEffectAction(OnDissolveCard);
 
         return true;
     }
