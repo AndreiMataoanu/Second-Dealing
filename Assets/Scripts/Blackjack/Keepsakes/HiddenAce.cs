@@ -25,7 +25,7 @@ public class HiddenAce : Keepsake
         if(!blackjackGame.isRoundActive || blackjackGame.isActionLocked) return false;
 
         cardEffect.SelectCard();
-        cardEffect.AddCardEffectAction(OnApplyEffect);
+        cardEffect.AddItemCardEffectAction(OnApplyEffect);
 
         return true;
     }

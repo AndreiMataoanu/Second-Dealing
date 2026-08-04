@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 325329944163465082}
   - component: {fileID: 3600536371997650914}
   - component: {fileID: 7977626433283862258}
-  - component: {fileID: 3835054117519006840}
+  - component: {fileID: 3378303202729147698}
   m_Layer: 0
   m_Name: Second Dealing Table
   m_TagString: Untagged
@@ -113,8 +113,8 @@ MonoBehaviour:
   showTooltip: 1
   outlineUse: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
   outlineCantUse: {fileID: 2100000, guid: 36f05641255eb3e43a4474d269a6ccf1, type: 2}
---- !u!64 &3835054117519006840
-MeshCollider:
+--- !u!135 &3378303202729147698
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -131,10 +131,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 8383900782225779241, guid: 07dff2e4e16e74f6babc9f636cb49dca, type: 3}
+  serializedVersion: 3
+  m_Radius: 0.0009155935
+  m_Center: {x: -0.0000071603076, y: 0.00003532709, z: 0.000052963063}
 --- !u!1 &3785178423364270380
 GameObject:
   m_ObjectHideFlags: 0

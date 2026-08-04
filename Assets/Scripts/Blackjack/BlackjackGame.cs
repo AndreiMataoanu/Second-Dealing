@@ -910,7 +910,7 @@ public class BlackjackGame : MonoBehaviour
             if(!tieTauntPlayed)
             {
                 dialogueSystem.ShowTieTaunt();
-                shouldPlayBetLostTaunt = true;
+                tieTauntPlayed = true;
             }
 
             yield return new WaitWhile(() => dialogueSystem.IsPlaying);
@@ -921,7 +921,10 @@ public class BlackjackGame : MonoBehaviour
 
             if((message.Contains("Dealer wins") || message.Contains("Bust")) && betAmount >= (playerMoney * 0.5f))
             {
-                shouldPlayBetLostTaunt = true;
+                if(playerMoney - betAmount > 100 || playerMoney - betAmount <= 0)
+                {
+                    shouldPlayBetLostTaunt = true;
+                }
             }
         }
 
@@ -934,6 +937,7 @@ public class BlackjackGame : MonoBehaviour
         if(message.Contains("You win"))
         {
             TimesWon++;
+
             KeepsakeUnlockProgression.instance.CheckSuitWinCondition(allHands);
             KeepsakeUnlockProgression.instance.CheckThreeOfAKind(allHands);
 
@@ -948,6 +952,7 @@ public class BlackjackGame : MonoBehaviour
         else if(message.Contains("Dealer wins") || message.Contains("Bust"))
         {
             TimesLost ++;
+
             if(!OrganBagItem.isOrganActive)
             {
                 targetMoneyBalance = playerMoney - betAmount;

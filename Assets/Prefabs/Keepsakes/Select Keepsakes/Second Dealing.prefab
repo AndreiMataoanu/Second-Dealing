@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 7167250503033068735}
   - component: {fileID: 5614091067058454285}
   - component: {fileID: 2083326820311645235}
-  - component: {fileID: 3244296795419449092}
+  - component: {fileID: 3102365155804402103}
   m_Layer: 0
   m_Name: Second Dealing
   m_TagString: Untagged
@@ -243,8 +243,8 @@ MonoBehaviour:
   lockedMaterial: {fileID: 2100000, guid: 0a832a2e81c13f949bb53db9acc6b339, type: 2}
   rotationInHand: {x: 23.03, y: -77.49, z: 11.63}
   scaleInHand: {x: 20.28, y: 20.28, z: 20.28}
---- !u!64 &3244296795419449092
-MeshCollider:
+--- !u!135 &3102365155804402103
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -261,7 +261,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 8383900782225779241, guid: 07dff2e4e16e74f6babc9f636cb49dca, type: 3}
+  serializedVersion: 3
+  m_Radius: 0.00091559347
+  m_Center: {x: -0.0000071602844, y: 0.000035327088, z: 0.000052963063}
