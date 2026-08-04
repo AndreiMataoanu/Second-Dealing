@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using Utils;
 using Random = UnityEngine.Random;
-
+using TMPro;
 [System.Serializable]
 public class Threshold
 {
@@ -43,10 +44,12 @@ public class EventManager : MonoBehaviour
     private List<BlackjackEvent> availableHighEvents;
     private List<EventThreshold> triggeredThresholds = new List<EventThreshold>();
     private List<int> powerballNumbers = new List<int>();
-
-    
     private int targetMoneyBalance;
-    
+    //dealer rage variables
+    public Image dealerRagebar;
+    private int dealerRageNumber;
+    private float currentValue = 0;
+    public float maxValue = 4f;
     public static AceValueRule currentAceRule = AceValueRule.Flexible;
     public static bool isDoubleLowActive = false;
     public static bool isHalfHighActive = false;
@@ -56,6 +59,8 @@ public class EventManager : MonoBehaviour
     private bool isPowerballTriggered = false;
     private bool isNewPowerball = false;
 
+    private bool isDealerRageTriggered = false;
+    private bool isDealerRageActive = false;
     private IEnumerator eventTriggerCoroutine;
     
     private BlackjackGame blackjackGame;
@@ -70,6 +75,9 @@ public class EventManager : MonoBehaviour
     public int TurnsLeft => currentMaxTurns - currentTurns;
     public List<int> PowerballGoal => powerballNumbers;
     public List<EventThreshold> EventThresholds => eventThresholds;
+
+    public bool IsDealerRageActive => isDealerRageActive;
+    public int GetDealerRageNumber => dealerRageNumber;
     
     #endregion
 
@@ -96,6 +104,7 @@ public class EventManager : MonoBehaviour
         availableLowEvents = new List<BlackjackEvent>(lowSeverityEvents);
         availableMediumEvents = new List<BlackjackEvent>(mediumSeverityEvents);
         availableHighEvents = new List<BlackjackEvent>(highSeverityEvents);
+        UpdateBar();
     }
 
     #endregion
@@ -135,7 +144,11 @@ public class EventManager : MonoBehaviour
         powerballNumbers = goal;
         isPowerballTriggered = true;
     }
-    
+    public void SetDealerRageActive(bool active)
+    {
+        isDealerRageActive = active;
+        isDealerRageTriggered = true;   
+    }
     #endregion
 
     #region Add Cards Event
@@ -330,6 +343,13 @@ public class EventManager : MonoBehaviour
                 blackjackGame.DialogueSystem.PlayPowerballTutorial();
                 isPowerballTriggered = false;
             }
+            if (isDealerRageTriggered)
+            {
+                dealerRagebar.gameObject.SetActive(true);
+                dealerRageNumber = 0;
+                UpdateBar();
+                isDealerRageTriggered = false;
+            }
         }
     }
 
@@ -346,4 +366,19 @@ public class EventManager : MonoBehaviour
     }
     
     #endregion
+
+    public void ChangeRageNumber(int value)
+    {
+        dealerRageNumber += value;
+        if(dealerRageNumber <0)
+        {
+            dealerRageNumber = 0;
+        }
+        currentValue = Mathf.Clamp(currentValue+value, 0, maxValue);
+        UpdateBar();
+    }
+    void UpdateBar()
+    {
+        dealerRagebar.fillAmount = currentValue / maxValue;
+    }
 }

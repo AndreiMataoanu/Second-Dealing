@@ -46,6 +46,8 @@ public class TableCards : MonoBehaviour
     // Dealer
     private List<CardInstance> dealerHand = new();
     
+    //Dealer rage event
+    public bool halvePlayerCards = false;
     #region Monobehaviour Methods
 
     private void Awake()
@@ -263,6 +265,10 @@ public class TableCards : MonoBehaviour
         
         if (isForPlayer)
         {
+            if(halvePlayerCards)
+            {
+                CardEffects.AddCutCard(newCardInstance,2);  
+            }
             KeepsakeManager.instance.OnDealPlayerCard(newCardInstance);
             UpdateSplitOutlines();
         }
@@ -646,6 +652,17 @@ public class TableCards : MonoBehaviour
 
         AudioManager.instance.Play("Shuffle");
     }
+    public void destroyPlayerCards()
+        {
+            foreach(List<CardInstance>hand in playerHands)
+            {
+                foreach(CardInstance cardInstace in hand)
+                {
+                    Destroy(cardInstace.CardObject);           
+                }
+                hand.Clear();
+            }
+        }
 
     #endregion
 
@@ -688,7 +705,6 @@ public class TableCards : MonoBehaviour
 
         return true;
     }
-
     #endregion
     
     #region TODO Region
