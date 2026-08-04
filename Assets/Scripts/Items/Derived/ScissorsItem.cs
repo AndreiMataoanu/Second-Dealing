@@ -18,7 +18,7 @@ public class ScissorsItem : Item
 
         isScissorsActive = true;
         cardEffect.SelectCard();
-        cardEffect.AddCardEffectAction(OnCutCard);
+        cardEffect.AddItemCardEffectAction(OnCutCard);
         
         return true;
     }

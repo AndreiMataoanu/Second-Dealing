@@ -1,5 +1,6 @@
 using System;
 using Managers;
+using UnityEngine;
 
 public class CardEffectActions
 {
@@ -31,9 +32,15 @@ public class CardEffectActions
         blackjackGame.UpdateUI();
     }
 
-    public void AddCardEffectAction(Action<CardInstance> cardEffect)
+    public void AddItemCardEffectAction(Action<CardInstance> cardEffect)
     {
-        cursorDetection.OnUseCardItem(blackjackGame, cardTrigger);
+        cursorDetection.OnItemSelectCard(blackjackGame, cardTrigger);
+        cursorDetection.AddActionToClickableCards(cardEffect);
+    }
+
+    public void AddEventCardEffectAction(Action<CardInstance> cardEffect, Transform cardsPosition)
+    {
+        cursorDetection.OnEventSelectCard(cardsPosition, blackjackGame, cardTrigger);
         cursorDetection.AddActionToClickableCards(cardEffect);
     }
 }

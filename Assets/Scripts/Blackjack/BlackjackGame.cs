@@ -2,20 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Managers;
+using Progress;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Utils;
-
-[System.Serializable]
-public class EventThreshold
-{
-    public BlackjackEvent.EventSeverity severityToTrigger;
-
-    public int moneyAmount;
-
-    public int maxTurns;
-}
 
 public class BlackjackGame : MonoBehaviour
 {
@@ -28,6 +19,7 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private CursorFollow cursorFollow;
     [SerializeField] private DialogueSystem dialogueSystem;
     [SerializeField] private EventManager eventManager;
+    [SerializeField] private MilestoneProgress milestoneProgress;
     [SerializeField] private GameCamera gameCamera;
     [SerializeField] private Collider betUpCollider;
     [SerializeField] private Collider betDownCollider;
@@ -48,7 +40,6 @@ public class BlackjackGame : MonoBehaviour
     private bool isTutorialActive => roundsCompleted < tutorialRoundsLimit;
     [HideInInspector] public bool canDoubleDown = false;
     [HideInInspector] public bool isRoundActive = false;
-    private bool stayed = false;
 
     [Header("Money")]
     [SerializeField] private int tutorialRoundsLimit = 3;
@@ -64,8 +55,8 @@ public class BlackjackGame : MonoBehaviour
     private bool priceChanged = false;
     private int targetMoneyBalance;
 
-    private int TimesWon;
-    private int TimesLost;
+    [HideInInspector] public int TimesWon;
+    [HideInInspector] public int TimesLost;
 
     [Header("UI")]
     [SerializeField] private TMPro.TextMeshProUGUI moneyText;
@@ -98,14 +89,11 @@ public class BlackjackGame : MonoBehaviour
     #region Getters & Setters
     public int GetPlayerMoney() => playerMoney;
     
-    public Transform CardOptionPosition => cursorDetection.GetCardOptionsPosition();
     public DialogueSystem DialogueSystem => dialogueSystem;
-    public EventManager EventManager => eventManager;
     public CursorDetection CursorDetection => cursorDetection;
     public CursorFollow CursorFollow => cursorFollow;
     public ShopManager ShopManager => shopManager;
     public ItemManager ItemManager => itemManager;
-    public void SetStatusText(string text) => statusText.text = text;
     public void SetBlackjackGoal(int gameGoal)
     {
         blackjackGoal = gameGoal;
@@ -113,6 +101,7 @@ public class BlackjackGame : MonoBehaviour
     }
     public int CurrentBet => currentBet;
     public int TargetMoneyBalance => targetMoneyBalance;
+    public int PlayerMaxMoney => maxMoneyThisRun;
     public GameCamera GameCamera => gameCamera;
     public bool UseAfterStand => useAfterStand;
     public TableCards TableCards => tableCards;
@@ -331,6 +320,7 @@ public class BlackjackGame : MonoBehaviour
     {
         itemManager.SetBlackjackGame(this);
         shopManager.SetBlackjackGame(this);
+        milestoneProgress.SetBlackjackGame(this);
         eventManager.SetBlackjackGame(this);
         tableCards.SetBlackjackGame(this);
     }
@@ -464,12 +454,6 @@ public class BlackjackGame : MonoBehaviour
 
         return revealMessage;
     }
-    
-    public void SelectCursorHand(bool isActive)
-    {
-        cursorFollow.SetCursorTypeActive(isActive, CursorType.Flip);
-        standHandAnimator.gameObject.SetActive(!isActive);
-    }
 
     private IEnumerator ChangePriceCoroutine()
     {
@@ -507,7 +491,7 @@ public class BlackjackGame : MonoBehaviour
         handBets.Add(currentBet);
     }
 
-    public void ResetGame()
+    private void ResetGame()
     {
         KeepsakeManager.instance.ResetKeepsake();
 
@@ -515,6 +499,7 @@ public class BlackjackGame : MonoBehaviour
 
         handBets.Clear();
         tableCards.ClearTable();
+        CardEffects.Reset();
         gameCamera.ChangeToCamera(CameraType.Sitting);
         eventManager.ShowNewPowerballTaunt();
         tableCards.ShuffleCards();
@@ -723,8 +708,8 @@ public class BlackjackGame : MonoBehaviour
 
         if(!endlessDouble)
         {
-            yield return StartCoroutine(AdvanceHandCoroutine());
             yield return StartCoroutine(eventManager.CheckPowerballCompletion());
+            yield return StartCoroutine(AdvanceHandCoroutine());
         }
         else
         {
@@ -775,7 +760,7 @@ public class BlackjackGame : MonoBehaviour
             yield return GameUtils.WaitForSecondsScaled(1f);
 
             isActionLocked = false;
-            isPlayerStand = false; // maybe here
+            isPlayerStand = false;
 
             EvaluateDoubleDownCondition();
             UpdateUI();
@@ -788,7 +773,7 @@ public class BlackjackGame : MonoBehaviour
     // TODO: change stuff here too
     private IEnumerator DealerTurnCoroutine(bool playerHasBlackjack = false)
     {
-        cursorDetection.OnDealerTurn();
+        cursorDetection.SetAllInactive();
 
         // TODO: maybe move to cursor
         foreach(var hand in tableCards.PlayerHands)
@@ -1056,7 +1041,7 @@ public class BlackjackGame : MonoBehaviour
 
     private IEnumerator EndGameCoroutine(string message)
     {
-        cursorDetection.OnDealerTurn();
+        cursorDetection.SetAllInactive();
 
         int activeBetAmount = (handBets != null && handBets.Count > 0) ? handBets[0] : currentBet;
 
@@ -1202,9 +1187,8 @@ public class BlackjackGame : MonoBehaviour
         }
 
         roundsCompleted++;
-        eventManager.UpdateTurnsLeft();
 
-        yield return eventManager.CheckForEventTrigger();
+        yield return milestoneProgress.UpdateMilestoneProgress();
 
         if(!priceChanged)
         {
@@ -1220,7 +1204,6 @@ public class BlackjackGame : MonoBehaviour
 
         if(!isTutorialActive && PlayerMoney <= 0)
         {
-            CardEffects.Reset();
             PlayerPrefs.SetInt("PreviousRunMoney", maxMoneyThisRun);
             PlayerPrefs.SetInt("PreviousRunWins", TimesWon);
             PlayerPrefs.SetInt("PreviousRunLoss", TimesLost);
@@ -1233,10 +1216,7 @@ public class BlackjackGame : MonoBehaviour
             yield break;
         }
 
-        yield return eventManager.CheckTurnLimit();
-
-        if(PlayerMoney >= 100000 && stayed == false)
-            StartCoroutine(LeaveOrStay());
+        yield return milestoneProgress.OnEndProgressUpdate();
 
         ResetGame();
     }
@@ -1301,39 +1281,5 @@ public class BlackjackGame : MonoBehaviour
     private int GetDealerBustThreshold()
     {
         return blackjackGoal - KeepsakeManager.instance.GetDealerBustModifier();
-    }
-
-    private IEnumerator LeaveOrStay()
-    {
-        dialogueSystem.playCashOutText();
-        yield return new WaitWhile(() => dialogueSystem.IsPlaying);
-        cursorDetection.OnDealerTurn();
-        leavebutton.gameObject.SetActive(true);
-        staybutton.gameObject.SetActive(true);
-    }
-    
-    public void Leave()
-    {
-        PlayerPrefs.SetInt("PreviousRunMoney", maxMoneyThisRun);
-        PlayerPrefs.SetInt("PreviousRunWins",TimesWon);
-        PlayerPrefs.SetInt("PreviousRunLoss",TimesLost);
-        PlayerPrefs.Save();
-        KeepsakeUnlockProgression.instance.AddStat(ChallengeType.CashOut);
-        KeepsakeUnlockProgression.instance.EndRun();
-        FadeInAnimator.SetTrigger("fadeInTrig");
-        
-        if(playerMoney >= 1000000)
-            KeepsakeUnlockProgression.instance.AddStat(ChallengeType.Millionaire);
-
-        CardEffects.Reset();
-        SceneManager.LoadSceneAsync(4);
-    }
-    
-    public void Stay()
-    {
-        leavebutton.gameObject.SetActive(false);
-        staybutton.gameObject.SetActive(false);
-        cursorDetection.OnRoundInactive();
-        stayed = true;
     }
 }

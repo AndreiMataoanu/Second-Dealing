@@ -5,10 +5,15 @@ public class KeepsakeInteractable : Clickable
     [SerializeField] private Keepsake keepsake;
     [SerializeField] private BlackjackGame blackjackGame;
     [SerializeField] private Material lockedMaterial;
+    [SerializeField] public Vector3 rotationInHand;
+    [SerializeField] public Vector3 scaleInHand;
 
     private Renderer objectRenderer;
     private Material[] originalMaterials;
 
+    public void SetBlackjackGame(BlackjackGame game) => blackjackGame = game;
+    public Keepsake GetKeepsake() => keepsake;
+    
     private void Start()
     {
         objectRenderer = GetComponent<Renderer>();

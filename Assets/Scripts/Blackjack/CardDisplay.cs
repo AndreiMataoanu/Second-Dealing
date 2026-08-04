@@ -34,14 +34,14 @@ public class CardDisplay : MonoBehaviour
     {
         float boolValue = isDoubled ? 1f : 0f;
 
-        render.material.SetFloat("_Doubled", boolValue);
+        render.material.SetFloat("_DoubledOnce", boolValue);
     }
 
     public void SetCutVisual(bool isCut)
     {
         float boolValue = isCut ? 1f : 0f;
 
-        render.material.SetFloat("_CutInHalf", boolValue);
+        render.material.SetFloat("_CutOnce", boolValue);
     }
 
     public IEnumerator SetDissolvedVisual(float dissolveTime,Color color, float dissolveBorder)

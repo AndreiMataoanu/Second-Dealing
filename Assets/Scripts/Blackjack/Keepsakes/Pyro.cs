@@ -60,7 +60,7 @@ public class Pyro : Keepsake
 
         isPyroActive = true;
         cardEffect.SelectCard();
-        cardEffect.AddCardEffectAction(OnBurnCard);
+        cardEffect.AddItemCardEffectAction(OnBurnCard);
         usesThisRound++;
 
         return true;

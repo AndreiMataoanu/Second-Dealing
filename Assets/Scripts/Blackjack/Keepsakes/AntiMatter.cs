@@ -51,7 +51,7 @@ public class AntiMatter : Keepsake
 
         isAntiMatterActive = true;
         cardEffect.SelectCard();
-        cardEffect.AddCardEffectAction(OnAntiMatterCard);
+        cardEffect.AddItemCardEffectAction(OnAntiMatterCard);
         usesThisRound++;
 
         return true;

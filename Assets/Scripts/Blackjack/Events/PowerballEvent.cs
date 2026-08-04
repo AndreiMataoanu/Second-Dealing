@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,5 +23,12 @@ public class PowerballEvent : BlackjackEvent
         //numbers.Add(10);
 
         return numbers;
+    }
+
+    public override IEnumerator ExplainEventDialogue(DialogueSystem dialogue)
+    {
+        dialogue.PlayPowerballTutorial();
+
+        yield return new WaitWhile(() => dialogue.IsPlaying);
     }
 }

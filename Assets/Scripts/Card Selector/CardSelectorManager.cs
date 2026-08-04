@@ -29,7 +29,7 @@ public class CardSelectorManager : MonoBehaviour
     {
         hasPrintedThisTurn = false;
         activeKeepsake = keepsake;
-        blackjackManager.CursorDetection.OnDealerTurn();
+        blackjackManager.CursorDetection.SetAllInactive();
         cardSelector.SetActive(true);
 
         foreach(var button in selectorButtons)

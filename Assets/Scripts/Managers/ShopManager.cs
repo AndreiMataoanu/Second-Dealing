@@ -24,6 +24,7 @@ public class ShopManager : MonoBehaviour
     private int inventoryItemCount = 0;
     private float nextDenyTime = 0;
     private float coinMultiplier = 1.0f;
+    private bool delayOpen;
     
     private List<Item> inventoryItems = new();
     private List<Item> allItems = new();
@@ -43,6 +44,8 @@ public class ShopManager : MonoBehaviour
     public void SetBlackjackGame(BlackjackGame game) => blackjackGame = game;
 
     public void SetBuyAction(Action<Item> buyAction) => BuyAction = buyAction;
+
+    public void SetDelayOpen(bool delay) => delayOpen = delay;
     
     #endregion
 
@@ -137,6 +140,12 @@ public class ShopManager : MonoBehaviour
     #endregion
 
     #region Inventory
+    
+    public void SetInventoryActive(bool isActive)
+    {
+        foreach (var item in inventoryItems)
+            item.SetActive(isActive);
+    }
 
     public void AddToInventory(Item item, bool isFree = false)
     {
@@ -300,18 +309,21 @@ public class ShopManager : MonoBehaviour
     
     public void PlaySuitcaseOpen()
     {
-        if(state != ShopState.Closed || inventoryItemCount == buySpawnPoints.Count) return;
+        StartCoroutine(PlaySuitcaseOpenCoroutine());
+    }
+    
+    private IEnumerator PlaySuitcaseOpenCoroutine()
+    {
+        yield return new WaitUntil(() => delayOpen == false && Elevator.isElevatorActive == false);
+        
+        if (state != ShopState.Closed || inventoryItemCount == buySpawnPoints.Count)
+            yield break;
 
-        StartCoroutine(SuitcaseOpenCoroutine());
+        yield return SuitcaseOpenCoroutine();
     }
     
     private IEnumerator SuitcaseOpenCoroutine()
     {
-        while(Elevator.isElevatorActive)
-        {
-            yield return null;
-        }
-
         SpawnPowerUps();
         state = ShopState.Opening;
         suitcaseAnimator.Play("Suitcase_Opening");
