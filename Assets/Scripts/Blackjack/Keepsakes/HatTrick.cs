@@ -30,8 +30,6 @@ public class HatTrick : Keepsake
         tableCards = blackjackGame.TableCards;
         cardEffect = new CardEffectActions(
             game,
-            game.CursorFollow,
-            game.CursorDetection,
             CursorType.None,
             CardTrigger.HatTrick
         );
@@ -89,6 +87,7 @@ public class HatTrick : Keepsake
         
         tableCards.GameDeck.AddCardCopies(cardInstance.cardData, 1);
         game.HandleNewCardInPlayerHand(cardInstance);
+        cardEffect.OnCardSelected();
     }
 
     #endregion

@@ -8,7 +8,6 @@ public class ScissorsItem : Item
 
     public override bool Activate()
     {
-        SetMembers();
         return ActivateScissors();
     }
 
@@ -43,8 +42,6 @@ public class ScissorsItem : Item
         tableCards = blackjackGame.TableCards;
         cardEffect = new CardEffectActions(
             blackjackGame,
-            blackjackGame.CursorFollow,
-            blackjackGame.CursorDetection,
             CursorType.Scissors,
             CardTrigger.Scissors
         );

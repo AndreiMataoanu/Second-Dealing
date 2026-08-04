@@ -17,8 +17,6 @@ public class AcidItem : Item
         tableCards = blackjackGame.TableCards;
         cardEffect = new CardEffectActions(
             blackjackGame,
-            blackjackGame.CursorFollow,
-            blackjackGame.CursorDetection,
             CursorType.Acid,
             CardTrigger.Acid
         );

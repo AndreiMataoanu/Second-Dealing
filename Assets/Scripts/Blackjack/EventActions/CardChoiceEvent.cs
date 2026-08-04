@@ -19,8 +19,6 @@ public abstract class CardChoiceEvent : MonoBehaviour
         TableCards = blackjackGame.TableCards;
         CardEffects = new CardEffectActions(
             blackjackGame,
-            blackjackGame.CursorFollow,
-            blackjackGame.CursorDetection,
             CursorType.Flip,
             CardTrigger.AddCardsEvent
         );
