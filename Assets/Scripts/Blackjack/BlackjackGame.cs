@@ -1332,12 +1332,14 @@ public class BlackjackGame : MonoBehaviour
 //dealer rage functions
     private void ForcePlayerAllInn()
     {
+        dialogueSystem.ShowForcedAllInnTaunts();
         currentBet = playerMoney;
         betDownCollider.gameObject.SetActive(false);
         betUpCollider.gameObject.SetActive(false);
     }
     private void ThrowAwayOneItem()
     {
+        dialogueSystem.ShowDealerRemovesItemTaunts();
         int item = Random.Range(0,1);
         if(shopManager.InventoryItems.Count() == 1)
         {
@@ -1351,6 +1353,7 @@ public class BlackjackGame : MonoBehaviour
     }
     private void HalvePlayerCards()
     {
+        dialogueSystem.ShowDealerHalvesCardsTaunts();
         tableCards.halvePlayerCards = true;
     }
 
@@ -1362,6 +1365,7 @@ public class BlackjackGame : MonoBehaviour
     }
     private void ShufflePlayerHand()
     {
+        dialogueSystem.ShowDealerShuffleTaunts();
         tableCards.destroyPlayerCards();
     }
 
