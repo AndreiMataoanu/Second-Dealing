@@ -43,6 +43,7 @@ public class BlackjackGame : MonoBehaviour
     [HideInInspector] public bool isRoundActive = false;
     private bool stayed = false;
     private bool bossRound = false;
+    private bool LetItRide = false;
 
     [Header("Money")]
     [SerializeField] private int tutorialRoundsLimit = 3;
@@ -125,7 +126,7 @@ public class BlackjackGame : MonoBehaviour
 
     private void Update()
     {
-        if(currentBustCoroutine != null || isActionLocked || isRoundActive || Elevator.isElevatorActive) return;
+        if(currentBustCoroutine != null || isActionLocked || isRoundActive || Elevator.isElevatorActive || LetItRide == true) return;
 
         if(Input.mouseScrollDelta.y > 0f && Time.timeScale != 0f)
         {
@@ -1332,6 +1333,7 @@ public class BlackjackGame : MonoBehaviour
 //dealer rage functions
     private void ForcePlayerAllInn()
     {
+        LetItRide = true;
         dialogueSystem.ShowForcedAllInnTaunts();
         currentBet = playerMoney;
         betDownCollider.gameObject.SetActive(false);
@@ -1360,6 +1362,7 @@ public class BlackjackGame : MonoBehaviour
     private void NoBossRound()
     {
         tableCards.halvePlayerCards = false;
+        LetItRide = false;
         betDownCollider.gameObject.SetActive(true);
         betUpCollider.gameObject.SetActive(true);
     }
