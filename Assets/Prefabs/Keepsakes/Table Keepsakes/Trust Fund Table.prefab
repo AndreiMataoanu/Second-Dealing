@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 623789089831333393}
   - component: {fileID: 3884029672907616611}
   - component: {fileID: 1578471865727419903}
-  - component: {fileID: 1040229151435444413}
+  - component: {fileID: 7424491330083393291}
   m_Layer: 0
   m_Name: Trust Fund Table
   m_TagString: Untagged
@@ -139,8 +139,8 @@ MonoBehaviour:
   showTooltip: 1
   outlineUse: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
   outlineCantUse: {fileID: 2100000, guid: 36f05641255eb3e43a4474d269a6ccf1, type: 2}
---- !u!135 &1040229151435444413
-SphereCollider:
+--- !u!136 &7424491330083393291
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -157,9 +157,11 @@ SphereCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.0011240181
-  m_Center: {x: 0.000022968528, y: -3.9918277e-12, z: -0.00019081296}
+  serializedVersion: 2
+  m_Radius: 0.00033541204
+  m_Height: 0.0023255658
+  m_Direction: 2
+  m_Center: {x: 0.000022968503, y: -5.4703885e-12, z: -0.0001797654}
 --- !u!1 &1209722282967272296
 GameObject:
   m_ObjectHideFlags: 0

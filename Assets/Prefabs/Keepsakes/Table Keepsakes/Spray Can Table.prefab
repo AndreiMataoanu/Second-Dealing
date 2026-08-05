@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7475114096118663616}
   - component: {fileID: 7977626433283862258}
   m_Layer: 0
-  m_Name: Hat Trick
+  m_Name: Spray Can Table
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -42,7 +42,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2708514875635923006}
-  m_Mesh: {fileID: 241944194381349570, guid: 6cfa12bd6b15a464dad09aad11f20956, type: 3}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &3600536371997650914
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -68,8 +68,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9e927fcd69a264526b15162961057229, type: 2}
-  - {fileID: 2100000, guid: a60ad19937d274a0d83ad840e3d0db65, type: 2}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -130,7 +129,7 @@ MonoBehaviour:
       m_Calls: []
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
   tooltipHeader: 
-  tooltipContent: '[Use] Duplicate 1 card'
+  tooltipContent: '[Use] Swap suit color'
   showTooltip: 1
   outlineUse: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
   outlineCantUse: {fileID: 2100000, guid: 36f05641255eb3e43a4474d269a6ccf1, type: 2}

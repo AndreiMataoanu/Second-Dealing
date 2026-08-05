@@ -62,4 +62,11 @@ public class CardDisplay : MonoBehaviour
         
         render.material.SetFloat("_Dissolve", 1f);
     }
+
+    public void SetColorSwapVisual(bool isSwapped)
+    {
+        float floatValue = isSwapped ? 1f : 0f;
+
+        render.material.SetFloat("_ColorSwapped", floatValue);
+    }
 }

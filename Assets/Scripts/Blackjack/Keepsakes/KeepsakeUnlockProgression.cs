@@ -186,11 +186,11 @@ public class KeepsakeUnlockProgression : MonoBehaviour
         {
             foreach(var card in hand)
             {
-                if(card.cardData.suit == Card.Suit.Hearts || card.cardData.suit == Card.Suit.Diamonds)
+                if(card.cardData.IsRedSuit())
                 {
                     allBlack = false;
                 }
-                else if(card.cardData.suit == Card.Suit.Spades || card.cardData.suit == Card.Suit.Clubs)
+                else if(card.cardData.IsBlackSuit())
                 {
                     allRed = false;
                 }

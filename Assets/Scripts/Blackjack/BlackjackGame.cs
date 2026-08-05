@@ -1216,8 +1216,12 @@ public class BlackjackGame : MonoBehaviour
             KeepsakeUnlockProgression.instance.EndRun();
             
             FadeInAnimator.SetTrigger("fadeInTrig");
+
             yield return StartCoroutine(GameUtils.WaitDelayOrInput(3.0f));
+
+            CardEffects.ClearColorSwappedCards();
             SceneManager.LoadSceneAsync(2);
+
             yield break;
         }
 

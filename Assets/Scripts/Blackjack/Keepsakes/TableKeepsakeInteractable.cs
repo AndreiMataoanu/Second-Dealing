@@ -28,6 +28,7 @@ public class TableKeepsakeInteractable : Clickable
     {
         keepsake = k;
         tooltipHeader = k.keepsakeName;
+
         k.SetMembers(blackjackGame);
     }
 
@@ -45,7 +46,23 @@ public class TableKeepsakeInteractable : Clickable
     {
         if(!IsActive) return;
 
-        if(!keepsake.isActive || usedThisRound) return;
+        bool isUsable = true;
+
+        if(!keepsake.isActive || usedThisRound)
+        {
+            isUsable = false;
+        }
+        else if(blackjackGame.isActionLocked && !blackjackGame.UseAfterStand)
+        {
+            isUsable = false;
+        }
+
+        if(!isUsable)
+        {
+            AudioManager.instance.Play("ItemDeny");
+
+            return;
+        }
 
         base.OnClick(mouseButton);
         bool activated = keepsake.ActivateTableEffect();
@@ -80,6 +97,11 @@ public class TableKeepsakeInteractable : Clickable
         }
 
         return outlineUse;
+    }
+
+    protected override string GetTooltipContent()
+    {
+        return $"\n{keepsake.GetDescription()}";
     }
 
     private void CancelKeepsake()

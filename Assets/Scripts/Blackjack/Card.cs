@@ -103,4 +103,18 @@ public class Card
             default: return " ";
         }
     }
+
+    public bool IsRedSuit()
+    {
+        bool naturalRed = suit == Suit.Hearts || suit == Suit.Diamonds;
+
+        return CardEffects.IsColorSwapped(this) ? !naturalRed : naturalRed;
+    }
+
+    public bool IsBlackSuit()
+    {
+        bool naturalBlack = suit == Suit.Spades || suit == Suit.Clubs;
+
+        return CardEffects.IsColorSwapped(this) ? !naturalBlack : naturalBlack;
+    }
 }
