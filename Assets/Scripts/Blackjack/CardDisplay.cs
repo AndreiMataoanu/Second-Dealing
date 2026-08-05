@@ -8,12 +8,15 @@ public class CardDisplay : MonoBehaviour
     [SerializeField] private GameObject cardFace;
     private Renderer render;
     private CardInstance cardInstance;
+    private MeshCollider faceCollider;
 
     private void Awake()
     {
+        faceCollider = cardFace.GetComponent<MeshCollider>();
         render = GetComponentInChildren<Renderer>();
     }
 
+    public void SetFaceColliderActive(bool isActive) => faceCollider.enabled = isActive;
     public void SetCardInstance(CardInstance instance) => cardInstance = instance;
     public CardInstance GetCardInstance() => cardInstance;
     

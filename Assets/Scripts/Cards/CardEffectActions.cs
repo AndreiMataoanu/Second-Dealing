@@ -32,6 +32,13 @@ public class CardEffectActions
         cursorFollow.SetCursorTypeActive(false, cursorType);
         blackjackGame.UpdateUI();
     }
+    
+    public void OnCancelSelect()
+    {
+        blackjackGame.ShopManager.SetInventoryActive(true);
+        cursorFollow.SetCursorTypeActive(false, cursorType);
+        cursorDetection.EndSelectCard();
+    }
 
     public void AddItemCardEffectAction(Action<CardInstance> cardEffect)
     {

@@ -124,6 +124,14 @@ public class ItemManager : MonoBehaviour
         itemsToRemove.Add(item);
     }
 
+    public void UndoItemToRemove(Item item)
+    {
+        item.SetVisibility(true);
+        item.SetColliderActive(true);
+        shopManager.UndoDelayRemoveFromInventory(item);
+        itemsToRemove.Remove(item);
+    }
+
     #endregion
     
     #region Spawn Item

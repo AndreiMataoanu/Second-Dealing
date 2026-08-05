@@ -265,6 +265,13 @@ public class ShopManager : MonoBehaviour
         inventoryItems.Remove(item);
     }
 
+    public void UndoDelayRemoveFromInventory(Item item)
+    {
+        if (item.delayDestroy) return;
+        inventoryItemCount++;
+        inventoryItems.Add(item);
+    }
+
     private Transform FindEmptyInventorySlot()
     {
         if(inventoryItemCount >= useSpawnPoints.Count) return null;

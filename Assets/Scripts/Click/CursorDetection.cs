@@ -20,6 +20,7 @@ public class CursorDetection : MonoBehaviour
     [SerializeField] private List<Transform> cardTransforms;
     [SerializeField] private Transform cardOptions;
 
+    private bool isSelectingCard;
     private List<Clickable> cardClickables;
     public List<Clickable> tarotClickables = new();
 
@@ -94,6 +95,7 @@ public class CursorDetection : MonoBehaviour
 
     public void OnItemSelectCard(BlackjackGame blackjackGame, CardTrigger cardTrigger)
     {
+        isSelectingCard = true;
         AddAllClickableCards(blackjackGame, cardTrigger);
         SetClickables(cardClickables, true);
         SetClickables(roundActiveClickables, false);
@@ -122,8 +124,7 @@ public class CursorDetection : MonoBehaviour
                 
                 clickableCard.SetCardInstance(cardInstance);
                 clickableCard.SetBlackjackGame(blackjackGame);
-                clickableCard.AddCardAction(OnClickCard);
-                clickableCard.AddCardAction(ReactivateClickables);
+                clickableCard.AddCardAction(EndSelectCard);
 
                 cardClickables.Add(clickableCard);
             }
@@ -143,8 +144,17 @@ public class CursorDetection : MonoBehaviour
     {
         AddActionToClickableCards(cardAction, cardClickables);
     }
-    
-    private void OnClickCard() => ResetClickables(cardClickables);
+
+    public void EndSelectCard()
+    {
+        if (!isSelectingCard) return;
+        
+        ResetClickables(cardClickables);
+        SetClickables(roundActiveClickables, true);
+        SetClickables(tarotClickables, true);
+        
+        isSelectingCard = false;
+    }
 
     private void ResetClickables(List<Clickable> clickables)
     {
@@ -193,12 +203,6 @@ public class CursorDetection : MonoBehaviour
 
         return clickableCard;
     }
-    
-    private void ReactivateClickables()
-    {
-        SetClickables(roundActiveClickables, true);
-        SetClickables(tarotClickables, true);
-    }
 
     public void SetCardActive(CardInstance cardInstance, bool isActive)
     {
@@ -206,9 +210,5 @@ public class CursorDetection : MonoBehaviour
         SetClickable(clickableCard, isActive);
     }
     
-    #endregion
-    
-    #region Getters
-    public Transform GetCardOptionsPosition() => cardOptions;
     #endregion
 }

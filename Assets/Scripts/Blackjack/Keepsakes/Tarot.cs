@@ -14,6 +14,7 @@ public class Tarot : Keepsake
 
     public override void SetMembers(BlackjackGame blackjackGame)
     {
+        tableCards = blackjackGame.TableCards;
         isTarotActive = true;
         game = blackjackGame;
     }

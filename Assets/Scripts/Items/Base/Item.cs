@@ -20,7 +20,9 @@ public abstract class Item : Clickable
     [SerializeField] public int spawnWeight = 10;
     
     [HideInInspector] public bool isPurchased;
-    [HideInInspector] public bool delayDestroy = false;
+    [HideInInspector] public bool delayDestroy;
+    protected bool isCardSelecting;
+
     private float multiplier = 1.0f;
 
     internal CardEffectActions cardEffect;
@@ -107,6 +109,17 @@ public abstract class Item : Clickable
     #region Activate
 
     public abstract bool Activate();
+
+    protected virtual void OnCancelCardEffect()
+    {
+        if (cardEffect == null || !isCardSelecting) return;
+
+        IsActive = true;
+        cardEffect.OnCancelSelect();
+        SetVisibility(true);
+        blackjackGame.ItemManager.UndoItemToRemove(this);
+        isCardSelecting = false;
+    }
     
     #endregion
 
