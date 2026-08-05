@@ -30,8 +30,6 @@ public class EventManager : MonoBehaviour
     private int dealerRageNumber;
     private float currentValue = 0;
     public float maxValue = 4f;
-
-    private bool isDealerRageTriggered = false;
     private bool isDealerRageActive = false;
     
     private BlackjackGame blackjackGame;
@@ -105,7 +103,10 @@ public class EventManager : MonoBehaviour
     public void SetDealerRageActive(bool active)
     {
         isDealerRageActive = active;
-        isDealerRageTriggered = true;   
+        dealerRagebar.gameObject.SetActive(true);
+        dealerRageNumber = 0;
+        UpdateBar();
+         
     }
     #endregion
 
@@ -178,7 +179,7 @@ public class EventManager : MonoBehaviour
         yield return PresentPlayerChoice(gameEvent);
         
         gameEvent.Apply(this);
-        
+
         yield return gameEvent.ExplainEventDialogue(dialogueSystem);
     }
     
