@@ -105,6 +105,13 @@ public class Deck
         return cards[index];
     }
 
+    public Card DealSuit(Card.Suit suit)
+    {
+        var card = cards.Find(card => card.suit == suit);
+        cards.Remove(card);
+        return card ?? DealCard();
+    }
+    
     public Card DealBestCard(int value)
     {
         while (value > 0)

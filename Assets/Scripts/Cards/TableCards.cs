@@ -248,7 +248,8 @@ public class TableCards : MonoBehaviour
         int idealValue = game.CalculateIdealNextValue(isForPlayer, handValue);
         
         var card = CrucifixItem.TryPrayForCard(gameDeck, idealValue);
-
+        // var card = isForPlayer ? gameDeck.DealBestCard(5) : DealCard(); // test split
+        
         CardInstance newCardInstance;
         if (PeekCardInstance == null)
             newCardInstance = DealCardInstance(card, hand, isHidden);
@@ -698,7 +699,7 @@ public class TableCards : MonoBehaviour
     #region TODO Region
 
     // TODO: maybe move to cursor
-    public void UpdateSplitOutlines()
+    public void UpdateSplitOutlines(bool updateDealer=false)
     {
         if(playerHands.Count <= 1) return;
 
@@ -714,6 +715,14 @@ public class TableCards : MonoBehaviour
                     else clickable.OnRemoveOutline(false);
                 }
             }
+        }
+
+        if (!updateDealer) return;
+        
+        foreach (var card in dealerHand)
+        {
+            ClickableCard clickable = card.displayComponent.GetComponentInChildren<ClickableCard>();
+            clickable?.OnRemoveOutline(false);
         }
     }
     
