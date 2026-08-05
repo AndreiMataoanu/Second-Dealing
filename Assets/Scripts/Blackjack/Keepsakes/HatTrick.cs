@@ -6,7 +6,8 @@ using UnityEngine;
 public class HatTrick : Keepsake
 {
     public static bool isHatTrickActive = false;
-    
+    private bool isCardSelecting;
+
     private CardEffectActions cardEffect;
     private BlackjackGame game;
     private TableCards tableCards;
@@ -51,6 +52,8 @@ public class HatTrick : Keepsake
         if(!game.isRoundActive || game.isActionLocked || isHatTrickActive) return false;
 
         isHatTrickActive = true;
+        isCardSelecting = true;
+        
         cardEffect.SelectCard();
         cardEffect.AddItemCardEffectAction(TryHatTrickCard);
         usesThisRound++;
@@ -62,6 +65,7 @@ public class HatTrick : Keepsake
     {
         if (!CheckHatTrickValid(cardInstance)) return;
 
+        isCardSelecting = false;
         AddHatTrickCard(cardInstance);        
     }
 
@@ -88,6 +92,22 @@ public class HatTrick : Keepsake
         tableCards.GameDeck.AddCardCopies(cardInstance.cardData, 1);
         game.HandleNewCardInPlayerHand(cardInstance);
         cardEffect.OnCardSelected();
+    }
+
+    #endregion
+    
+    #region Cancel Hat Trick
+    
+    public override bool OnCancel()
+    {
+        if (cardEffect == null || !isCardSelecting) return false;
+
+        usesThisRound--;
+        cardEffect.OnCancelSelect();
+        isCardSelecting = false;
+        isHatTrickActive = false;
+
+        return true;
     }
 
     #endregion

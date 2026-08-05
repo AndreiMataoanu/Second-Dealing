@@ -116,4 +116,9 @@ public abstract class Keepsake : ScriptableObject
     {
         return description;
     }
+
+    public virtual bool OnCancel()
+    {
+        return false;
+    }
 }
