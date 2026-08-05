@@ -858,7 +858,7 @@ public class BlackjackGame : MonoBehaviour
             }
         }
 
-        UpdateUI(false);
+        UpdateUI(!tableCards.isDealerCardFlipped);
 
         yield return StartCoroutine(RevealJokers());
 

@@ -37,7 +37,7 @@ public class TableCards : MonoBehaviour
     private int maxSplits = 3;
 
     // Peek
-    public CardInstance PeekCardInstance = null;
+    [HideInInspector] public CardInstance PeekCardInstance = null;
     
     // Player
     private List<List<CardInstance>> playerHands = new();
@@ -45,6 +45,7 @@ public class TableCards : MonoBehaviour
     
     // Dealer
     private List<CardInstance> dealerHand = new();
+    [HideInInspector] public bool isDealerCardFlipped = false;
     
     #region Monobehaviour Methods
 
@@ -124,6 +125,8 @@ public class TableCards : MonoBehaviour
         playerHands.ForEach(hand => hand.Clear());
         playerHands.Clear();
         dealerHand.Clear();
+
+        isDealerCardFlipped = false;
     }
 
     public void ResetCards()
@@ -660,6 +663,7 @@ public class TableCards : MonoBehaviour
             yield return StartCoroutine(FlipCardCoroutine(hiddenCard.displayComponent, 0.4f));
 
             hiddenCard.isHidden = false;
+            isDealerCardFlipped = true;
 
             game.UpdateUI(true);
 
