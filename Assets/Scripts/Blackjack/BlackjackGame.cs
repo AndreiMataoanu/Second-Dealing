@@ -46,14 +46,11 @@ public class BlackjackGame : MonoBehaviour
     [SerializeField] private int tutorialRoundsLimit = 3;
     [Tooltip("Money the player starts with.")]
     [SerializeField] private int playerMoney = 500;
-    [Tooltip("Threshold for percentage pricing.")]
-    [SerializeField] public int percentagePriceThreshold;
     [Tooltip("The minimum amount a bet can be.")]
     [SerializeField] private int minBet = 100;
     [Tooltip("Amount the bet increases / decreases.")]
     [SerializeField] private int betStep = 100;
     private int currentBet = 100;
-    private bool priceChanged = false;
     private int targetMoneyBalance;
 
     [HideInInspector] public int TimesWon;
@@ -454,32 +451,6 @@ public class BlackjackGame : MonoBehaviour
         revealMessage += ". ";
 
         return revealMessage;
-    }
-
-    private IEnumerator ChangePriceCoroutine()
-    {
-        if(!priceChanged && playerMoney >= percentagePriceThreshold)
-        {
-            priceChanged = true;
-
-            gameCamera.ChangeToCamera(CameraType.Event);
-
-            AudioManager.instance.Play("Laugh");
-
-            statusText.text = "Let's make it more interesting";
-
-            yield return StartCoroutine(GameUtils.WaitDelayOrInput(5.0f));
-
-            AudioManager.instance.Play("NewEvent");
-
-            statusText.text = "Item prices are scaling";
-
-            yield return StartCoroutine(GameUtils.WaitDelayOrInput(4.0f));
-
-            gameCamera.ChangeToCamera(CameraType.Sitting);
-
-            statusText.text = "";
-        }
     }
     #endregion
 
@@ -1219,11 +1190,6 @@ public class BlackjackGame : MonoBehaviour
         roundsCompleted++;
 
         yield return milestoneProgress.UpdateMilestoneProgress();
-
-        if(!priceChanged)
-        {
-            yield return StartCoroutine(ChangePriceCoroutine());
-        }
 
         if(playerMoney <= 100 && playerMoney > 0)
         {

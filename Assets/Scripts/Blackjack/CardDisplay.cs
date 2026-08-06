@@ -6,14 +6,14 @@ public class CardDisplay : MonoBehaviour
     [Header("Visual References")]
     [SerializeField] private GameObject cardBack;
     [SerializeField] private GameObject cardFace;
-    private Renderer render;
+    private Renderer[] renderers;
     private CardInstance cardInstance;
     private MeshCollider faceCollider;
 
     private void Awake()
     {
         faceCollider = cardFace.GetComponent<MeshCollider>();
-        render = GetComponentInChildren<Renderer>();
+        renderers = GetComponentsInChildren<Renderer>();
     }
 
     public void SetFaceColliderActive(bool isActive) => faceCollider.enabled = isActive;
@@ -28,45 +28,71 @@ public class CardDisplay : MonoBehaviour
 
     public void SetNegativeVisual(bool isNegative)
     {
-        float boolValue = isNegative ? 1f : 0f;
+        float floatValue = isNegative ? 1f : 0f;
 
-        render.material.SetFloat("_Negative", boolValue);
+        foreach(var render in renderers)
+        {
+            render.material.SetFloat("_Negative", floatValue);
+        }
     }
 
     public void SetDoubledVisual(bool isDoubled)
     {
-        float boolValue = isDoubled ? 1f : 0f;
+        float floatValue = isDoubled ? 1f : 0f;
 
-        render.material.SetFloat("_DoubledOnce", boolValue);
+        foreach(var render in renderers)
+        {
+            render.material.SetFloat("_DoubledOnce", floatValue);
+        }
     }
 
     public void SetCutVisual(bool isCut)
     {
-        float boolValue = isCut ? 1f : 0f;
+        float floatValue = isCut ? 1f : 0f;
 
-        render.material.SetFloat("_CutOnce", boolValue);
+        foreach(var render in renderers)
+        {
+            render.material.SetFloat("_CutOnce", floatValue);
+        }
     }
 
     public IEnumerator SetDissolvedVisual(float dissolveTime,Color color, float dissolveBorder)
     {
-        render.material.SetFloat("_DissolveEdge", dissolveBorder);
-        render.material.SetColor("_DissolveColor",color);
-        
-        float elapsedTime = 0f;
-        while (elapsedTime < dissolveTime)
+        foreach(var render in renderers)
         {
-            render.material.SetFloat("_Dissolve",Mathf.Lerp(0,1,elapsedTime/dissolveTime));   
+            render.material.SetFloat("_DissolveEdge", dissolveBorder);
+            render.material.SetColor("_DissolveColor", color);
+        }
+
+        float elapsedTime = 0f;
+
+        while(elapsedTime < dissolveTime)
+        {
+            float lerpValue = Mathf.Lerp(0, 1, elapsedTime / dissolveTime);
+
+            foreach(var render in renderers)
+            {
+                render.material.SetFloat("_Dissolve", lerpValue);
+            }
+
             elapsedTime += Time.deltaTime;
+
             yield return null;
         }
-        
-        render.material.SetFloat("_Dissolve", 1f);
+
+        foreach(var render in renderers)
+        {
+            render.material.SetFloat("_Dissolve", 1f);
+        }
     }
 
     public void SetColorSwapVisual(bool isSwapped)
     {
         float floatValue = isSwapped ? 1f : 0f;
 
-        render.material.SetFloat("_ColorSwapped", floatValue);
+        foreach(var render in renderers)
+        {
+            render.material.SetFloat("_ColorSwapped", floatValue);
+        }
     }
 }

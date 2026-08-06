@@ -20,8 +20,10 @@ public class ShopManager : MonoBehaviour
 
     [Header("Suitcase")] 
     [SerializeField] private Animator suitcaseAnimator;
-    
+
+    [HideInInspector] public int priceMultiplier = 1;
     private int inventoryItemCount = 0;
+    private int restockLimit = -1;
     private float nextDenyTime = 0;
     private float coinMultiplier = 1.0f;
     private bool delayOpen;
@@ -51,17 +53,26 @@ public class ShopManager : MonoBehaviour
 
     #region Open Shop
 
-    private void SpawnPowerUps()
+    private void SpawnItems()
     {
+        int spawnedCount = 0;
+
         foreach (var buySpawnPoint in buySpawnPoints.ToList())
         {
+            if(buySpawnPoint.transform.childCount > 0) continue;
+
+            if(restockLimit != -1 && spawnedCount >= restockLimit) break;
+
             var prefab = GetWeightedRandomPrefab();
             var item = SpawnItem(prefab, buySpawnPoint.transform);
 
             item.SetMultiplier(coinMultiplier);
             item.SetActive(true);
             item.AddAction(BuyAction);
+            spawnedCount++;
         }
+
+        restockLimit = -1;
     }
     
     private GameObject GetWeightedRandomPrefab()
@@ -103,38 +114,36 @@ public class ShopManager : MonoBehaviour
     public void OnCloseShop()
     {
         OrganBagItem.isInShop = false;
-        if (state != ShopState.Open || ItemsInShop() && inventoryItemCount != buySpawnPoints.Count) return;
+        if (state != ShopState.Open || (ItemsInShop() && inventoryItemCount != useSpawnPoints.Count)) return;
 
         StartCoroutine(DespawnCoroutine());
     }
 
-    public void DespawnShopItems()
+    public void DespawnShopItems(int restockAmount = -1)
     {
-        StartCoroutine(DespawnCoroutine());
+        StartCoroutine(DespawnCoroutine(restockAmount));
     }
     
-    private IEnumerator DespawnCoroutine()
+    private IEnumerator DespawnCoroutine(int restockAmount = -1)
     {
         state = ShopState.Closing;
 
         AudioManager.instance.Play("SuitcaseClose");
+
         yield return new WaitForSeconds(0.6f);
+
         suitcaseAnimator.Play("Suitcase_Closing");
 
         yield return new WaitForSeconds(suitcaseAnimator.GetCurrentAnimatorStateInfo(0).length);
-        if(ItemsInShop())
-        {
-            foreach(var spawnPoint in buySpawnPoints)
-            {
-                if(spawnPoint.transform.childCount > 0)
-                {
-                    Destroy(spawnPoint.transform.GetChild(0).gameObject);
-                }
-            }
-        }
+
         ResetShopPrices();
 
         state = ShopState.Closed;
+
+        if(!blackjackGame.isRoundActive && inventoryItemCount < useSpawnPoints.Count)
+        {
+            PlaySuitcaseOpen(restockAmount);
+        }
     }
 
     #endregion
@@ -318,8 +327,10 @@ public class ShopManager : MonoBehaviour
     
     #region Suitcase Animation
     
-    public void PlaySuitcaseOpen()
+    public void PlaySuitcaseOpen(int restockAmount = -1)
     {
+        if(restockAmount != -1) restockLimit = restockAmount;
+
         StartCoroutine(PlaySuitcaseOpenCoroutine());
     }
     
@@ -327,15 +338,14 @@ public class ShopManager : MonoBehaviour
     {
         yield return new WaitUntil(() => delayOpen == false && Elevator.isElevatorActive == false);
         
-        if (state != ShopState.Closed || inventoryItemCount == buySpawnPoints.Count)
-            yield break;
+        if(state != ShopState.Closed || inventoryItemCount == useSpawnPoints.Count) yield break;
 
         yield return SuitcaseOpenCoroutine();
     }
     
     private IEnumerator SuitcaseOpenCoroutine()
     {
-        SpawnPowerUps();
+        SpawnItems();
         state = ShopState.Opening;
         suitcaseAnimator.Play("Suitcase_Opening");
 
@@ -360,4 +370,8 @@ public class ShopManager : MonoBehaviour
         return true;
     }
 
+    public void DoublePrices()
+    {
+        priceMultiplier *= 2;
+    }
 }

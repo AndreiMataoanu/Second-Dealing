@@ -142,6 +142,11 @@ namespace Progress
                 }
             }
 
+            if(passedMilestone.milestoneType == MilestoneType.CanonEvent)
+            {
+                blackjackGame.ShopManager.DoublePrices();
+            }
+
             UpdateEventKeepsakes();
             
             UpdateProgressDisplay();
