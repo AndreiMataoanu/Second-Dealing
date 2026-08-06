@@ -11,6 +11,7 @@ namespace Managers
         HatTrick,
         AntiMatter,
         HiddenAce,
+        SprayCan,
         None
     }
 
@@ -23,7 +24,7 @@ namespace Managers
         [SerializeField] private GameObject tokenFollow;
         [SerializeField] private GameObject antiMatterFollow;
         [SerializeField] private GameObject pyroFollow;
-        //[SerializeField] private GameObject hatTrickFollow;
+        [SerializeField] private GameObject sprayCanFollow;
 
         [Header("Deactivate")] 
         [SerializeField] private GameObject rightHand;
@@ -54,9 +55,9 @@ namespace Managers
                 case CursorType.Pyro:
                     pyroFollow?.SetActive(isActive);
                     break;
-                //case CursorType.HatTrick:
-                //    hatTrickFollow?.SetActive(isActive);
-                //    break;
+                case CursorType.SprayCan:
+                    sprayCanFollow?.SetActive(isActive);
+                    break;
             }
         }
     }

@@ -14,7 +14,7 @@ public class SprayCan : Keepsake
             game,
             game.CursorFollow,
             game.CursorDetection,
-            CursorType.None,
+            CursorType.SprayCan,
             CardTrigger.SprayCan
         );
     }
