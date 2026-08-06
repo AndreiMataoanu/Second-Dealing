@@ -271,7 +271,7 @@ public class ShopManager : MonoBehaviour
 
     public void UndoDelayRemoveFromInventory(Item item)
     {
-        if (item.delayDestroy) return;
+        if (!item.delayDestroy) return;
         inventoryItemCount++;
         inventoryItems.Add(item);
     }
