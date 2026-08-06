@@ -2,12 +2,16 @@ using UnityEngine;
 
 public class TableKeepsakeInteractable : Clickable
 {
+    [SerializeField] private Material outlineUse;
+    [SerializeField] private Material outlineCantUse;
     private BlackjackGame blackjackGame;
     public Keepsake keepsake { get; private set; }
     private bool usedThisRound = false;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         blackjackGame = FindFirstObjectByType<BlackjackGame>();
 
         var cursorDetection = FindFirstObjectByType<CursorDetection>();
@@ -24,6 +28,7 @@ public class TableKeepsakeInteractable : Clickable
     {
         keepsake = k;
         tooltipHeader = k.keepsakeName;
+
         k.SetMembers(blackjackGame);
     }
 
@@ -41,7 +46,23 @@ public class TableKeepsakeInteractable : Clickable
     {
         if(!IsActive) return;
 
-        if(!keepsake.isActive || usedThisRound) return;
+        bool isUsable = true;
+
+        if(!keepsake.isActive || usedThisRound)
+        {
+            isUsable = false;
+        }
+        else if(blackjackGame.isActionLocked && !blackjackGame.UseAfterStand)
+        {
+            isUsable = false;
+        }
+
+        if(!isUsable)
+        {
+            AudioManager.instance.Play("ItemDeny");
+
+            return;
+        }
 
         base.OnClick(mouseButton);
         bool activated = keepsake.ActivateTableEffect();
@@ -58,11 +79,29 @@ public class TableKeepsakeInteractable : Clickable
         }
     }
 
-    public override void ApplyOutline()
+    protected override Material GetOutlineMaterial()
     {
-        if(!keepsake.isActive || usedThisRound) return;
+        if(!keepsake.isActive || usedThisRound)
+        {
+            return outlineCantUse;
+        }
 
-        base.ApplyOutline();
+        if(blackjackGame.isActionLocked)
+        {
+            if(blackjackGame.UseAfterStand)
+            {
+                return outlineUse;
+            }
+
+            return outlineCantUse;
+        }
+
+        return outlineUse;
+    }
+
+    protected override string GetTooltipContent()
+    {
+        return $"\n{keepsake.GetDescription()}";
     }
 
     private void CancelKeepsake()

@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 144165417330772817}
   - component: {fileID: 3486512804282575127}
   - component: {fileID: 6337430434070705611}
-  - component: {fileID: 3992870577307206857}
+  - component: {fileID: 871962969266365014}
   m_Layer: 0
   m_Name: Trust Fund
   m_TagString: Untagged
@@ -243,8 +243,8 @@ MonoBehaviour:
   lockedMaterial: {fileID: 2100000, guid: 0a832a2e81c13f949bb53db9acc6b339, type: 2}
   rotationInHand: {x: -98.47, y: 8.54, z: 84.43}
   scaleInHand: {x: 32.6, y: 32.6, z: 32.6}
---- !u!64 &3992870577307206857
-MeshCollider:
+--- !u!135 &871962969266365014
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -261,7 +261,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 3082624435523515206, guid: 71c2b1ee983ed4c66ae12ace8f72af48, type: 3}
+  serializedVersion: 3
+  m_Radius: 0.001124018
+  m_Center: {x: 0.00002296947, y: -5.686668e-12, z: -0.00019081295}

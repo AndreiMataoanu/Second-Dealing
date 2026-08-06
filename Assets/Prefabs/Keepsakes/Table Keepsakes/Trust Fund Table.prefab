@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 6577444871245086851}
   - component: {fileID: 3008059261175501820}
   - component: {fileID: 623789089831333393}
-  - component: {fileID: 1578471865727419903}
   - component: {fileID: 3884029672907616611}
+  - component: {fileID: 1578471865727419903}
+  - component: {fileID: 7424491330083393291}
   m_Layer: 0
   m_Name: Trust Fund Table
   m_TagString: Untagged
@@ -92,28 +93,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1578471865727419903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 232588818639991095}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11c895cdaf9ad2042bb6d9f300a502f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TableKeepsakeInteractable
-  clickEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  outline: {fileID: 0}
-  tooltipHeader: 
-  tooltipContent: 'Receive money every turn
-
-    Dying consumes the keepsake and
-    revivies you'
-  showTooltip: 1
 --- !u!64 &3884029672907616611
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -136,6 +115,53 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3082624435523515206, guid: 71c2b1ee983ed4c66ae12ace8f72af48, type: 3}
+--- !u!114 &1578471865727419903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 232588818639991095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11c895cdaf9ad2042bb6d9f300a502f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TableKeepsakeInteractable
+  clickEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  outline: {fileID: 0}
+  tooltipHeader: 
+  tooltipContent: 'Receive money every turn
+
+    Dying consumes the keepsake and
+    revivies you'
+  showTooltip: 1
+  outlineUse: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
+  outlineCantUse: {fileID: 2100000, guid: 36f05641255eb3e43a4474d269a6ccf1, type: 2}
+--- !u!136 &7424491330083393291
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 232588818639991095}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.00033541204
+  m_Height: 0.0023255658
+  m_Direction: 2
+  m_Center: {x: 0.000022968503, y: -5.4703885e-12, z: -0.0001797654}
 --- !u!1 &1209722282967272296
 GameObject:
   m_ObjectHideFlags: 0

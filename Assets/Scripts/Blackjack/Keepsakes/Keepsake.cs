@@ -110,6 +110,17 @@ public abstract class Keepsake : ScriptableObject
 
     public virtual void ApplyInheritance(BlackjackGame game)
     {
+
+    }
+
+    public virtual bool ForceRevealDealerCard()
+    {
+        return false;
+    }
+
+    public virtual float GetShopDiscount()
+    {
+        return 0f;
     }
 
     public virtual string GetDescription()

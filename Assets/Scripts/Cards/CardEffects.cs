@@ -8,6 +8,8 @@ public static class CardEffects
     private static List<Card.Suit> negativeSuits = new();
     private static HashSet<(Card.Rank, Card.Suit)> antiMatterCards = new();
     private static HashSet<CardInstance> alcoholCards = new();
+    private static HashSet<(Card.Rank, Card.Suit)> colorSwappedCards = new();
+    public static Dictionary<CardInstance, int> hiddenAceCards = new();
 
     #region Card Collection
 
@@ -49,7 +51,27 @@ public static class CardEffects
     {
         return antiMatterCards.Remove((cardInstance.cardData.rank, cardInstance.cardData.suit));
     }
-    
+
+    public static void AddHiddenAce(CardInstance cardInstance, int bonus)
+    {
+        if(!hiddenAceCards.TryAdd(cardInstance, bonus))
+            hiddenAceCards[cardInstance] += bonus;
+    }
+
+    public static void ClearHiddenAces() => hiddenAceCards.Clear();
+
+    public static void ToggleColorSwap(Card card)
+    {
+        var key = (card.rank, card.suit);
+
+        if(!colorSwappedCards.Add(key))
+        {
+            colorSwappedCards.Remove(key);
+        }
+    }
+
+    public static void ClearColorSwappedCards() => colorSwappedCards.Clear();
+
     #endregion
 
     #region Set Visuals
@@ -92,11 +114,13 @@ public static class CardEffects
 
         return card.GetValueNoJokers() > 5f;
     }
-    
+
+    public static bool IsColorSwapped(Card card) => colorSwappedCards.Contains((card.rank, card.suit));
+
     #endregion
-    
+
     #region Add effects to cards
-    
+
     // returns 2 possible values for ace, 1 possible value for the rest
     public static List<float> GetCardValuesFromEffects(CardInstance cardInstance, bool countJoker)
     {
@@ -121,6 +145,9 @@ public static class CardEffects
         if (IsCardDrunk(cardInstance))
             values = values.ConvertAll(cardValue => cardValue * 2);
 
+        if (hiddenAceCards.TryGetValue(cardInstance, out int bonus))
+            values = values.ConvertAll(cardValue => cardValue + bonus);
+
         return values;
     }
     
@@ -129,11 +156,13 @@ public static class CardEffects
         bool isNegative = IsCardNegative(cardInstance.cardData);
         bool isDoubled = IsCardDoubled(cardInstance.cardData) || (countAlcohol && AlcoholItem.isAlcoholActive);
         bool isHalved = IsCardHalved(cardInstance.cardData) || (countScissors && IsCardCut(cardInstance));
+        bool isColorSwapped = IsColorSwapped(cardInstance.cardData);
 
         var display = cardInstance.displayComponent;
         display?.SetNegativeVisual(isNegative);
         display?.SetDoubledVisual(isDoubled);
         display?.SetCutVisual(isHalved);
+        display?.SetColorSwapVisual(isColorSwapped);
         display?.SetHidden(isHidden);
     }
     
@@ -145,5 +174,6 @@ public static class CardEffects
         negativeSuits.Clear();
         antiMatterCards.Clear();
         alcoholCards.Clear();
+        hiddenAceCards.Clear();
     }
 }

@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "BloodDiamond", menuName = "Keepsakes/Blood Diamond")]
-public class BloodDiamond : Keepsake
+[CreateAssetMenu(fileName = "BloodRose", menuName = "Keepsakes/Blood Rose")]
+public class BloodRose : Keepsake
 {
     [Tooltip("The multiplier applied to your original payout.")]
     public int payoutMultiplier = 2;
-
     private int timesTriggered = 0;
 
     public override void OnRoundStart()
@@ -47,9 +46,7 @@ public class BloodDiamond : Keepsake
 
             foreach(var cardInstance in hand)
             {
-                var suit = cardInstance.cardData.suit;
-
-                if(suit != Card.Suit.Diamonds && suit != Card.Suit.Hearts)
+                if(!cardInstance.cardData.IsRedSuit())
                 {
                     isPureRed = false;
 
