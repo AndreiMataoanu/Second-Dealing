@@ -42,9 +42,6 @@ public class BlackjackGame : MonoBehaviour
     [HideInInspector] public bool canDoubleDown = false;
     [HideInInspector] public bool isRoundActive = false;
     private bool stayed = false;
-    private bool bossRound = false;
-    private bool LetItRide = false;
-
     [Header("Money")]
     [SerializeField] private int tutorialRoundsLimit = 3;
     [Tooltip("Money the player starts with.")]
@@ -58,7 +55,6 @@ public class BlackjackGame : MonoBehaviour
     private int currentBet = 100;
     private bool priceChanged = false;
     private int targetMoneyBalance;
-    private int ability;
 
     [HideInInspector] public int TimesWon;
     [HideInInspector] public int TimesLost;
@@ -93,7 +89,6 @@ public class BlackjackGame : MonoBehaviour
 
     #region Getters & Setters
     public int GetPlayerMoney() => playerMoney;
-    
     public DialogueSystem DialogueSystem => dialogueSystem;
     public CursorDetection CursorDetection => cursorDetection;
     public CursorFollow CursorFollow => cursorFollow;
@@ -126,7 +121,7 @@ public class BlackjackGame : MonoBehaviour
 
     private void Update()
     {
-        if(currentBustCoroutine != null || isActionLocked || isRoundActive || Elevator.isElevatorActive || LetItRide == true) return;
+        if(currentBustCoroutine != null || isActionLocked || isRoundActive || Elevator.isElevatorActive || eventManager.GetLetItRide) return;
 
         if(Input.mouseScrollDelta.y > 0f && Time.timeScale != 0f)
         {
@@ -498,21 +493,7 @@ public class BlackjackGame : MonoBehaviour
 
     private void ResetGame()
     {
-        if(eventManager.GetDealerRageNumber >=4 && bossRound == false)
-        {
-            bossRound = true;
-            ability = Random.Range(1,4);
-            if(ability <4)
-            {
-                DealerRagePickAbility(ability);
-            }
-            
-        }
-        if(eventManager.GetDealerRageNumber <4)
-        {
-            bossRound = false;
-            NoBossRound();
-        }
+        eventManager.ActivateOrDeactivateDealerAbility();
         KeepsakeManager.instance.ResetKeepsake();
 
         StartCoroutine(ButtonCoroutine());
@@ -638,11 +619,7 @@ public class BlackjackGame : MonoBehaviour
                 isActionLocked = false;
             }
         }
-        int handValue = tableCards.CalculateHandValue(tableCards.CurrentHand, true);
-        if(handValue >= 20 && bossRound && ability == 4)
-        {
-            DealerRagePickAbility(ability); 
-        }
+        eventManager.CheckForShuffleAbility();
     }
 
     private IEnumerator HitCoroutine()
@@ -969,7 +946,7 @@ public class BlackjackGame : MonoBehaviour
             Instantiate(greenParticlePrefab, particleSpawnPoint.position, particleSpawnPoint.rotation);
             if(eventManager.IsDealerRageActive)
             {
-                if(bossRound)
+                if(eventManager.GetIsBossRound)
                 {
                     eventManager.ChangeRageNumber(-2);
                 }
@@ -1011,7 +988,7 @@ public class BlackjackGame : MonoBehaviour
             }
             if(eventManager.IsDealerRageActive)
             {
-                if(bossRound)
+                if(eventManager.GetIsBossRound)
                 {
                     eventManager.ChangeRageNumber(-4);
                 }
@@ -1330,76 +1307,8 @@ public class BlackjackGame : MonoBehaviour
         return blackjackGoal - KeepsakeManager.instance.GetDealerBustModifier();
     }
 
-//dealer rage functions
-    private void ForcePlayerAllInn()
+    public void ChangeBetTo(int value)
     {
-        LetItRide = true;
-        dialogueSystem.ShowForcedAllInnTaunts();
-        currentBet = playerMoney;
-        betDownCollider.gameObject.SetActive(false);
-        betUpCollider.gameObject.SetActive(false);
-    }
-    private void ThrowAwayOneItem()
-    {
-        dialogueSystem.ShowDealerRemovesItemTaunts();
-        int item = Random.Range(0,1);
-        if(shopManager.InventoryItems.Count() == 1)
-        {
-            itemManager.AddItemToRemove(shopManager.InventoryItems[0]);
-        }
-        else
-        {
-            itemManager.AddItemToRemove(shopManager.InventoryItems[item]);
-        }
-        
-    }
-    private void HalvePlayerCards()
-    {
-        dialogueSystem.ShowDealerHalvesCardsTaunts();
-        tableCards.halvePlayerCards = true;
-    }
-
-    private void NoBossRound()
-    {
-        tableCards.halvePlayerCards = false;
-        LetItRide = false;
-        betDownCollider.gameObject.SetActive(true);
-        betUpCollider.gameObject.SetActive(true);
-    }
-    private void ShufflePlayerHand()
-    {
-        dialogueSystem.ShowDealerShuffleTaunts();
-        tableCards.destroyPlayerCards();
-    }
-
-    private void DealerRagePickAbility(int ability)
-    {
-
-        switch(ability)
-        {
-            case 1:
-            ForcePlayerAllInn();
-            break;
-
-            case 2:
-            if(shopManager.InventoryItems.Count() == 0)
-                {
-                    ability = Random.Range(0,4);
-                    DealerRagePickAbility(ability);
-                    break;
-                }
-            ThrowAwayOneItem();
-            break;
-
-            case 3:
-            HalvePlayerCards();
-            break;
-
-            case 4:
-            ShufflePlayerHand();
-            break;
-        }
-
-        
+        currentBet = value;
     }
 }

@@ -14,6 +14,10 @@ public class EventManager : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI statusText;
     [SerializeField] private DialogueSystem dialogueSystem;
     [SerializeField] private ProgressDisplay progressDisplay;
+    [SerializeField] private ItemManager itemManager;
+    [SerializeField] private ShopManager shopManager;
+    [SerializeField] private Collider betUpCollider;
+    [SerializeField] private Collider betDownCollider;
 
     [Header("Cards Event Actions")]
     [SerializeField] private AddCardChoiceEvent addCardChoiceEvent;
@@ -28,10 +32,12 @@ public class EventManager : MonoBehaviour
 
     public Image dealerRagebar;
     private int dealerRageNumber;
+    [SerializeField] private int bossRound = 4; 
     private float currentValue = 0;
-    public float maxValue = 4f;
+    private bool letItRide = false;
     private bool isDealerRageActive = false;
-    
+    private bool isBossRound = false;
+    private DealerRageAbility ability;
     private BlackjackGame blackjackGame;
     private TableCards tableCards;
 
@@ -41,7 +47,9 @@ public class EventManager : MonoBehaviour
 
     public bool IsDealerRageActive => isDealerRageActive;
     public int GetDealerRageNumber => dealerRageNumber;
-    
+    public bool GetIsBossRound => isBossRound;
+    public bool GetLetItRide => letItRide;
+
     #endregion
 
     #region Setters
@@ -53,7 +61,15 @@ public class EventManager : MonoBehaviour
     }
 
     #endregion
-    
+    #region enum for dealer rage
+    public enum DealerRageAbility
+    {
+        ForceAllIn,
+        RemoveItem,
+        HalvePlayerCards,
+        ShufflePlayerHand
+    }
+    #endregion
     #region Monobehaviour Methods
     
     private void Awake()
@@ -217,6 +233,7 @@ public class EventManager : MonoBehaviour
 
     #endregion
 
+    #region dealer rage event
     public void ChangeRageNumber(int value)
     {
         dealerRageNumber += value;
@@ -224,11 +241,110 @@ public class EventManager : MonoBehaviour
         {
             dealerRageNumber = 0;
         }
-        currentValue = Mathf.Clamp(currentValue+value, 0, maxValue);
+        currentValue = Mathf.Clamp(currentValue+value, 0, bossRound);
         UpdateBar();
     }
     void UpdateBar()
     {
-        dealerRagebar.fillAmount = currentValue / maxValue;
+        dealerRagebar.fillAmount = currentValue / bossRound;
     }
+    public void ActivateOrDeactivateDealerAbility()
+    {
+        if(GetDealerRageNumber >= bossRound && isBossRound == false)
+        {
+            isBossRound = true;
+            ability = (DealerRageAbility)Random.Range(0,3);
+            if(ability != DealerRageAbility.ShufflePlayerHand)
+            {
+                DealerRagePickAbility(ability);
+            }
+                
+        }
+        if(GetDealerRageNumber < bossRound)
+        {
+            NoBossRound();
+        }
+    }
+    private void ForcePlayerAllInn()
+    {
+        letItRide = true;
+        blackjackGame.ChangeBetTo(blackjackGame.GetPlayerMoney());
+        dialogueSystem.ShowForcedAllInnTaunts();
+        betDownCollider.gameObject.SetActive(false);
+        betUpCollider.gameObject.SetActive(false);
+    }
+
+    public void CheckForShuffleAbility()
+    {
+        int handValue = tableCards.CalculateHandValue(tableCards.CurrentHand, true);
+        if(handValue >= 20 && isBossRound && ability == DealerRageAbility.ShufflePlayerHand)
+        {
+            DealerRagePickAbility(ability); 
+        }
+    }
+
+    private void ThrowAwayOneItem()
+    {
+        dialogueSystem.ShowDealerRemovesItemTaunts();
+        int item = Random.Range(0,1);
+        if(shopManager.InventoryItems.Count == 1)
+        {
+            itemManager.AddItemToRemove(shopManager.InventoryItems[0]);
+        }
+        else
+        {
+            itemManager.AddItemToRemove(shopManager.InventoryItems[item]);
+        }
+        
+    }
+    private void HalvePlayerCards()
+    {
+        dialogueSystem.ShowDealerHalvesCardsTaunts();
+        tableCards.halvePlayerCards = true;
+    }
+
+    private void NoBossRound()
+    {
+        isBossRound = false;
+        tableCards.halvePlayerCards = false;
+        letItRide = false;
+        betDownCollider.gameObject.SetActive(true);
+        betUpCollider.gameObject.SetActive(true);
+    }
+    private void ShufflePlayerHand()
+    {
+        dialogueSystem.ShowDealerShuffleTaunts();
+        tableCards.destroyPlayerCards();
+    }
+
+    private void DealerRagePickAbility(DealerRageAbility ability)
+    {
+        switch(ability)
+        {
+            case DealerRageAbility.ForceAllIn:
+            ForcePlayerAllInn();
+            break;
+
+            case DealerRageAbility.RemoveItem:
+            if(shopManager.InventoryItems.Count == 0)
+                {
+                    ability = (DealerRageAbility)Random.Range(0,3);
+                    DealerRagePickAbility(ability);
+                    break;
+                }
+            ThrowAwayOneItem();
+            break;
+
+            case DealerRageAbility.HalvePlayerCards:
+            HalvePlayerCards();
+            break;
+
+            case DealerRageAbility.ShufflePlayerHand:
+            ShufflePlayerHand();
+            break;
+        }
+
+        
+    }
+    #endregion
 }
