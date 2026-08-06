@@ -37,8 +37,6 @@ public class Pyro : Keepsake
         tableCards = blackjackGame.TableCards;
         cardEffect = new CardEffectActions(
             game,
-            game.CursorFollow,
-            game.CursorDetection,
             CursorType.Pyro,
             CardTrigger.Pyro
         );
