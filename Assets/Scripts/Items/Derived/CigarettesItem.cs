@@ -52,9 +52,10 @@ public class CigarettesItem : Item
         yield return tableCards.FlipDealerHiddenCard(0);
         yield return SwitchHands();
     
-        StopSmokeAnimation();
-        
+        tableCards.UpdateSplitOutlines(true);
         blackjackGame.CalculateBust();
+        
+        StopSmokeAnimation();
     }
 
     #endregion

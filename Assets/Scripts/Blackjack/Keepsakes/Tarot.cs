@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Tarot", menuName = "Keepsakes/Tarot")]
@@ -53,16 +52,19 @@ public class Tarot : Keepsake
 
     private void AddTarotCard(CardInstance cardInstance)
     {
+        Debug.Log("add tarot card");
         var clickable = game.CursorDetection.AddTarotClickable(game, cardInstance);
         clickable?.AddCardEffect(SacrificeTarot);
     }
 
     private void SacrificeTarot(CardInstance cardInstance)
     {
+        Debug.Log(!game.isRoundActive + " " + game.isActionLocked + " " + !tableCards.IsPlayerTurn);
         if(!game.isRoundActive || game.isActionLocked || !tableCards.IsPlayerTurn) return;
     
         TarotCard tarotData = cardInstance.tarotData;
     
+        Debug.Log(tarotData + " " + tarotData.rewardItemPrefab);
         if(!tarotData || !tarotData.rewardItemPrefab)
         {
             AudioManager.instance.Play("ItemDeny");
