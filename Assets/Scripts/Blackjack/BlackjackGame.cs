@@ -921,7 +921,7 @@ public class BlackjackGame : MonoBehaviour
 
             if((message.Contains("Dealer wins") || message.Contains("Bust")) && betAmount >= (playerMoney * 0.5f))
             {
-                if(playerMoney - betAmount > 100 || playerMoney - betAmount <= 0)
+                if(playerMoney - betAmount > minBet || playerMoney - betAmount <= 0)
                 {
                     shouldPlayBetLostTaunt = true;
                 }
