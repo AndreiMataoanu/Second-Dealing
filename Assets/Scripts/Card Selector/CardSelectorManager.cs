@@ -30,6 +30,7 @@ public class CardSelectorManager : MonoBehaviour
         hasPrintedThisTurn = false;
         activeKeepsake = keepsake;
         blackjackManager.CursorDetection.SetAllInactive();
+        blackjackManager.ShopManager.SetInventoryActive(false);
         cardSelector.SetActive(true);
 
         foreach(var button in selectorButtons)
@@ -44,6 +45,7 @@ public class CardSelectorManager : MonoBehaviour
     {
         animator.SetTrigger("hideTrigger");
         blackjackManager.CursorDetection.OnRoundActive();
+        blackjackManager.ShopManager.SetInventoryActive(true);
 
         if(!hasPrintedThisTurn)
         {

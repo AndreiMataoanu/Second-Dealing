@@ -1,4 +1,5 @@
 using Managers;
+using UnityEngine;
 
 public class ScissorsItem : Item
 {
@@ -8,7 +9,6 @@ public class ScissorsItem : Item
 
     public override bool Activate()
     {
-        SetMembers();
         return ActivateScissors();
     }
 
@@ -16,6 +16,7 @@ public class ScissorsItem : Item
     {
         if(!blackjackGame.isRoundActive || isScissorsActive || blackjackGame.CheckItemAfterStand()) return false;
 
+        isCardSelecting = true;
         isScissorsActive = true;
         cardEffect.SelectCard();
         cardEffect.AddItemCardEffectAction(OnCutCard);
@@ -33,6 +34,7 @@ public class ScissorsItem : Item
         AudioManager.instance.Play("Scissors(Clone)");
 
         isScissorsActive = false;
+        isCardSelecting = false;
         
         CardEffects.AddCutCard(cardInstance, 2);
         cardEffect.OnCardSelected();
@@ -40,13 +42,26 @@ public class ScissorsItem : Item
 
     public override void SetMembers()
     {
+        delayDestroy = true;
         tableCards = blackjackGame.TableCards;
         cardEffect = new CardEffectActions(
             blackjackGame,
-            blackjackGame.CursorFollow,
-            blackjackGame.CursorDetection,
             CursorType.Scissors,
             CardTrigger.Scissors
         );
+    }
+
+    protected override void OnCancelCardEffect()
+    {
+        base.OnCancelCardEffect();
+        isScissorsActive = false;
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            OnCancelCardEffect();
+        }
     }
 }

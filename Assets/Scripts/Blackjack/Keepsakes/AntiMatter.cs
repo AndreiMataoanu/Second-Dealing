@@ -5,6 +5,7 @@ using UnityEngine;
 public class AntiMatter : Keepsake
 {
     public static bool isAntiMatterActive;
+    private bool isCardSelecting;
 
     private CardEffectActions cardEffect;
     private BlackjackGame game;
@@ -27,8 +28,6 @@ public class AntiMatter : Keepsake
         game = blackjackGame;
         cardEffect = new CardEffectActions(
             game,
-            game.CursorFollow,
-            game.CursorDetection,
             CursorType.None,
             CardTrigger.AntiMatter
         );
@@ -50,6 +49,8 @@ public class AntiMatter : Keepsake
         if(!game.isRoundActive || game.isActionLocked || isAntiMatterActive) return false;
 
         isAntiMatterActive = true;
+        isCardSelecting = true;
+        
         cardEffect.SelectCard();
         cardEffect.AddItemCardEffectAction(OnAntiMatterCard);
         usesThisRound++;
@@ -63,7 +64,9 @@ public class AntiMatter : Keepsake
 
         cardEffect.OnCardSelected();
         ApplyAntiMatterToCard(cardInstance);
+
         isAntiMatterActive = false;
+        isCardSelecting = false;
     }
 
     private void ApplyAntiMatterToCard(CardInstance cardInstance)
@@ -82,4 +85,19 @@ public class AntiMatter : Keepsake
 
     #endregion
     
+    #region Cancel Hat Trick
+    
+    public override bool OnCancel()
+    {
+        if (cardEffect == null || !isCardSelecting) return false;
+
+        usesThisRound--;
+        cardEffect.OnCancelSelect();
+        isCardSelecting = false;
+        isAntiMatterActive = false;
+
+        return true;
+    }
+
+    #endregion
 }

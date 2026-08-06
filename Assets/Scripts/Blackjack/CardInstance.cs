@@ -10,7 +10,7 @@ public class CardInstance
 
     public bool isHidden;
     
-    public GameObject CardObject => displayComponent?.gameObject; 
+    public GameObject CardObject => displayComponent?.gameObject;
 
     public CardInstance(Card card, CardDisplay display, bool hidden = false)
     {

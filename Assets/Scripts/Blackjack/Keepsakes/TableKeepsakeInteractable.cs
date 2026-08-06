@@ -64,4 +64,20 @@ public class TableKeepsakeInteractable : Clickable
 
         base.ApplyOutline();
     }
+
+    private void CancelKeepsake()
+    {
+        if (keepsake.OnCancel())
+        {
+            keepsake.isActive = true;
+            usedThisRound = false;
+            IsActive = true;
+        }
+    }
+    
+    private void Update()
+    {
+        if (!Input.GetMouseButtonDown(1)) return;
+        CancelKeepsake();
+    }
 }

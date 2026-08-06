@@ -37,7 +37,7 @@ public class TableCards : MonoBehaviour
     private int maxSplits = 3;
 
     // Peek
-    public CardInstance PeekCardInstance = null;
+    [HideInInspector] public CardInstance PeekCardInstance = null;
     
     // Player
     private List<List<CardInstance>> playerHands = new();
@@ -45,6 +45,7 @@ public class TableCards : MonoBehaviour
     
     // Dealer
     private List<CardInstance> dealerHand = new();
+    [HideInInspector] public bool isDealerCardFlipped = false;
     
     #region Monobehaviour Methods
 
@@ -124,6 +125,8 @@ public class TableCards : MonoBehaviour
         playerHands.ForEach(hand => hand.Clear());
         playerHands.Clear();
         dealerHand.Clear();
+
+        isDealerCardFlipped = false;
     }
 
     public void ResetCards()
@@ -245,7 +248,8 @@ public class TableCards : MonoBehaviour
         int idealValue = game.CalculateIdealNextValue(isForPlayer, handValue);
         
         var card = CrucifixItem.TryPrayForCard(gameDeck, idealValue);
-
+        // var card = isForPlayer ? gameDeck.DealBestCard(5) : DealCard(); // test split
+        
         CardInstance newCardInstance;
         if (PeekCardInstance == null)
             newCardInstance = DealCardInstance(card, hand, isHidden);
@@ -660,6 +664,7 @@ public class TableCards : MonoBehaviour
             yield return StartCoroutine(FlipCardCoroutine(hiddenCard.displayComponent, 0.4f));
 
             hiddenCard.isHidden = false;
+            isDealerCardFlipped = true;
 
             game.UpdateUI(true);
 
@@ -694,7 +699,7 @@ public class TableCards : MonoBehaviour
     #region TODO Region
 
     // TODO: maybe move to cursor
-    public void UpdateSplitOutlines()
+    public void UpdateSplitOutlines(bool updateDealer=false)
     {
         if(playerHands.Count <= 1) return;
 
@@ -710,6 +715,14 @@ public class TableCards : MonoBehaviour
                     else clickable.OnRemoveOutline(false);
                 }
             }
+        }
+
+        if (!updateDealer) return;
+        
+        foreach (var card in dealerHand)
+        {
+            ClickableCard clickable = card.displayComponent.GetComponentInChildren<ClickableCard>();
+            clickable?.OnRemoveOutline(false);
         }
     }
     
