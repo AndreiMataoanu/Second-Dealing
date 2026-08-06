@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "OnyxRing", menuName = "Keepsakes/Onyx Ring")]
-public class OnyxRing : Keepsake
+[CreateAssetMenu(fileName = "OnyxRose", menuName = "Keepsakes/Onyx Rose")]
+public class OnyxRose : Keepsake
 {
     [Tooltip("The multiplier applied to your original payout.")]
     public int payoutMultiplier = 2;
-
     private int timesTriggered = 0;
 
     public override void OnRoundStart()
@@ -47,9 +46,7 @@ public class OnyxRing : Keepsake
 
             foreach(var cardInstance in hand)
             {
-                var suit = cardInstance.cardData.suit;
-
-                if(suit != Card.Suit.Spades && suit != Card.Suit.Clubs)
+                if(!cardInstance.cardData.IsBlackSuit())
                 {
                     isPureBlack = false;
 

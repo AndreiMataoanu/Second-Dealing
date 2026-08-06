@@ -57,6 +57,7 @@ public class CashOutSystem : MonoBehaviour
         if(game.PlayerMoney >= 1000000)
             KeepsakeUnlockProgression.instance.AddStat(ChallengeType.Millionaire);
 
+        CardEffects.ClearColorSwappedCards();
         SceneManager.LoadSceneAsync(2);
     }
     

@@ -114,6 +114,8 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipContent: Double down won't end your turn
   showTooltip: 1
+  outlineUse: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
+  outlineCantUse: {fileID: 2100000, guid: 36f05641255eb3e43a4474d269a6ccf1, type: 2}
 --- !u!64 &4261924294986405115
 MeshCollider:
   m_ObjectHideFlags: 0

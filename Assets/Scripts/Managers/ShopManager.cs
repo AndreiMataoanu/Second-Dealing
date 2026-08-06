@@ -217,9 +217,13 @@ public class ShopManager : MonoBehaviour
     
     public Item SpawnItemInventory(GameObject prefab)
     {
+        Debug.Log("inventoryItemCount " + inventoryItemCount);
+        Debug.Log("useSpawnPoints.Count " + useSpawnPoints.Count);
+
         if(inventoryItemCount >= useSpawnPoints.Count) return null;
 
         var t = FindEmptyInventorySlot();
+        Debug.Log(t);
         if (!t) return null;
         
         var item = SpawnItem(prefab, t);
@@ -263,6 +267,13 @@ public class ShopManager : MonoBehaviour
         if (!item.delayDestroy) return;
         inventoryItemCount--;
         inventoryItems.Remove(item);
+    }
+
+    public void UndoDelayRemoveFromInventory(Item item)
+    {
+        if (!item.delayDestroy) return;
+        inventoryItemCount++;
+        inventoryItems.Add(item);
     }
 
     private Transform FindEmptyInventorySlot()

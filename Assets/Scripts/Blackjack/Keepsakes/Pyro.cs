@@ -12,6 +12,7 @@ public class Pyro : Keepsake
     public float burnBorder = 1.3f;
     
     public static bool isPyroActive;
+    private bool isCardSelecting;
     
     private CardEffectActions cardEffect;
     private BlackjackGame game;
@@ -36,9 +37,7 @@ public class Pyro : Keepsake
         tableCards = blackjackGame.TableCards;
         cardEffect = new CardEffectActions(
             game,
-            game.CursorFollow,
-            game.CursorDetection,
-            CursorType.None,
+            CursorType.Pyro,
             CardTrigger.Pyro
         );
     }
@@ -59,6 +58,8 @@ public class Pyro : Keepsake
         if(!game.isRoundActive || game.isActionLocked || isPyroActive) return false;
 
         isPyroActive = true;
+        isCardSelecting = true;
+        
         cardEffect.SelectCard();
         cardEffect.AddItemCardEffectAction(OnBurnCard);
         usesThisRound++;
@@ -71,8 +72,11 @@ public class Pyro : Keepsake
         AudioManager.instance.Play("Pyro");
         
         cardEffect.OnCardSelected();
+        cardInstance.displayComponent.SetFaceColliderActive(false);
         game.StartCoroutine(BurnCard(cardInstance));
+        
         isPyroActive = false;
+        isCardSelecting = false;
     }
     
     private IEnumerator BurnCard(CardInstance cardInstance)
@@ -101,6 +105,22 @@ public class Pyro : Keepsake
         fx.Play();
     }
     
+    #endregion
+
+    #region Cancel Pyro
+    
+    public override bool OnCancel()
+    {
+        if (cardEffect == null || !isCardSelecting) return false;
+
+        usesThisRound--;
+        cardEffect.OnCancelSelect();
+        isCardSelecting = false;
+        isPyroActive = false;
+
+        return true;
+    }
+
     #endregion
     
 }

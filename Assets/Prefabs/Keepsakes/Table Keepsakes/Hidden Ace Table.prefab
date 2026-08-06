@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7475114096118663616}
   - component: {fileID: 7977626433283862258}
   m_Layer: 0
-  m_Name: Hat Trick
+  m_Name: Hidden Ace Table
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -127,6 +127,9 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls: []
-  outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
+  outline: {fileID: 0}
   tooltipHeader: 
-  tooltipContent: '[Use] Duplicate 1 card'
+  tooltipContent: '[Use] Add +1 to a card'
+  showTooltip: 1
+  outlineUse: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
+  outlineCantUse: {fileID: 2100000, guid: 36f05641255eb3e43a4474d269a6ccf1, type: 2}

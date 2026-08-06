@@ -221,12 +221,36 @@ public class KeepsakeManager : MonoBehaviour
         }
     }
 
+    public bool ForceRevealDealerCard()
+    {
+        foreach(var keepsake in equippedKeepsakes)
+        {
+            if(keepsake.ForceRevealDealerCard()) return true;
+        }
+
+        return false;
+    }
+
+    public float GetShopDiscount()
+    {
+        float discount = 0f;
+
+        foreach(var keepsake in equippedKeepsakes)
+        {
+            discount += keepsake.GetShopDiscount();
+        }
+
+        return discount;
+    }
+
     public void RechargeSecondDealing()
     {
-        foreach (var keepsake in equippedKeepsakes)
+        foreach(var keepsake in equippedKeepsakes)
         {
-            if (keepsake is SecondDealing secondDealing)
+            if(keepsake is SecondDealing secondDealing)
+            {
                 secondDealing.Recharge();
+            }
         }
     }
 }

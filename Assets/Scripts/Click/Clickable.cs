@@ -27,8 +27,8 @@ public class Clickable : MonoBehaviour
         meshRenderer.enabled = active;
         meshRenderers.ForEach(r => r.enabled = active);
     }
-    
-    private void Awake()
+
+    protected virtual void Awake()
     {
         meshCollider = GetComponent<MeshCollider>();
         if (!meshCollider)

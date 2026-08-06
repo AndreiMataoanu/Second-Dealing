@@ -8,12 +8,15 @@ public class CardDisplay : MonoBehaviour
     [SerializeField] private GameObject cardFace;
     private Renderer render;
     private CardInstance cardInstance;
+    private MeshCollider faceCollider;
 
     private void Awake()
     {
+        faceCollider = cardFace.GetComponent<MeshCollider>();
         render = GetComponentInChildren<Renderer>();
     }
 
+    public void SetFaceColliderActive(bool isActive) => faceCollider.enabled = isActive;
     public void SetCardInstance(CardInstance instance) => cardInstance = instance;
     public CardInstance GetCardInstance() => cardInstance;
     
@@ -58,5 +61,12 @@ public class CardDisplay : MonoBehaviour
         }
         
         render.material.SetFloat("_Dissolve", 1f);
+    }
+
+    public void SetColorSwapVisual(bool isSwapped)
+    {
+        float floatValue = isSwapped ? 1f : 0f;
+
+        render.material.SetFloat("_ColorSwapped", floatValue);
     }
 }

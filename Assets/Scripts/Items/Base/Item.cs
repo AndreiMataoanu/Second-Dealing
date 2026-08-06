@@ -20,7 +20,9 @@ public abstract class Item : Clickable
     [SerializeField] public int spawnWeight = 10;
     
     [HideInInspector] public bool isPurchased;
-    [HideInInspector] public bool delayDestroy = false;
+    [HideInInspector] public bool delayDestroy;
+    protected bool isCardSelecting;
+
     private float multiplier = 1.0f;
 
     internal CardEffectActions cardEffect;
@@ -107,6 +109,17 @@ public abstract class Item : Clickable
     #region Activate
 
     public abstract bool Activate();
+
+    protected virtual void OnCancelCardEffect()
+    {
+        if (cardEffect == null || !isCardSelecting) return;
+
+        IsActive = true;
+        cardEffect.OnCancelSelect();
+        SetVisibility(true);
+        blackjackGame.ItemManager.UndoItemToRemove(this);
+        isCardSelecting = false;
+    }
     
     #endregion
 
@@ -114,16 +127,16 @@ public abstract class Item : Clickable
 
     public int GetPrice()
     {
-        if(!blackjackGame) return basePrice;
+        float discount = 0f;
 
-        int money = blackjackGame.PlayerMoney;
-
-        if(money >= blackjackGame.percentagePriceThreshold)
+        if(KeepsakeManager.instance != null)
         {
-            return Mathf.RoundToInt(money * percentagePrice * multiplier);
+            discount = KeepsakeManager.instance.GetShopDiscount();
         }
 
-        return Mathf.RoundToInt(basePrice * multiplier);
+        int finalPrice = Mathf.RoundToInt(basePrice * (1f - discount));
+
+        return Mathf.Max(1, finalPrice);
     }
 
     public int GetResalePrice()

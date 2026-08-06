@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4488206875934345577
+--- !u!1 &8772358196734130818
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,48 +8,48 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6116808503941293194}
-  - component: {fileID: 6934705520519072642}
-  - component: {fileID: 3058014293159159868}
-  - component: {fileID: 4358068880825526133}
-  - component: {fileID: 5908992732174171176}
+  - component: {fileID: 7643244776236736907}
+  - component: {fileID: 5670146682041372131}
+  - component: {fileID: 8039166042778243500}
+  - component: {fileID: 7138599807789756320}
+  - component: {fileID: 7013252414386593054}
   m_Layer: 0
-  m_Name: Onyx Ring
+  m_Name: Hidden Ace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6116808503941293194
+--- !u!4 &7643244776236736907
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4488206875934345577}
+  m_GameObject: {fileID: 8772358196734130818}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.33, y: 10.4, z: 0.295}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 19.522, y: 1.16, z: -0.623}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &6934705520519072642
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!33 &5670146682041372131
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4488206875934345577}
+  m_GameObject: {fileID: 8772358196734130818}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &3058014293159159868
+--- !u!23 &8039166042778243500
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4488206875934345577}
+  m_GameObject: {fileID: 8772358196734130818}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -91,13 +91,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &4358068880825526133
+--- !u!114 &7138599807789756320
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4488206875934345577}
+  m_GameObject: {fileID: 8772358196734130818}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 80d3ba8abff0e9f4cb2b61ea58571f61, type: 3}
@@ -106,22 +106,22 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls: []
-  outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
+  outline: {fileID: 2100000, guid: d91925fefc835b0459f833b7a203a011, type: 2}
   tooltipHeader: 
   tooltipContent: 
   showTooltip: 1
-  keepsake: {fileID: 11400000, guid: f8e9a086f7932a44baa016f1b6107e4a, type: 2}
+  keepsake: {fileID: 11400000, guid: d9c46e6a910368849a6b2b77a9765e10, type: 2}
   blackjackGame: {fileID: 0}
   lockedMaterial: {fileID: 2100000, guid: 0a832a2e81c13f949bb53db9acc6b339, type: 2}
-  rotationInHand: {x: 0, y: 0, z: 0, w: 0}
-  scaleInHand: {x: 0.03, y: 0.03, z: 0.03}
---- !u!64 &5908992732174171176
+  rotationInHand: {x: 0, y: 0, z: 0}
+  scaleInHand: {x: 0, y: 0, z: 0}
+--- !u!64 &7013252414386593054
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4488206875934345577}
+  m_GameObject: {fileID: 8772358196734130818}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2

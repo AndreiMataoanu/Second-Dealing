@@ -21,7 +21,7 @@ public class ClickableCard : Clickable
 
     public override void OnClick(int mouseButton = 0)
     {
-        if(!IsActive) return;
+        if(!IsActive || mouseButton != 0) return;
         
         base.OnClick();
 

@@ -860,7 +860,7 @@ public class BlackjackGame : MonoBehaviour
             }
         }
 
-        UpdateUI(false);
+        UpdateUI(!tableCards.isDealerCardFlipped);
 
         yield return StartCoroutine(RevealJokers());
 
@@ -912,7 +912,7 @@ public class BlackjackGame : MonoBehaviour
             if(!tieTauntPlayed)
             {
                 dialogueSystem.ShowTieTaunt();
-                shouldPlayBetLostTaunt = true;
+                tieTauntPlayed = true;
             }
 
             yield return new WaitWhile(() => dialogueSystem.IsPlaying);
@@ -923,7 +923,10 @@ public class BlackjackGame : MonoBehaviour
 
             if((message.Contains("Dealer wins") || message.Contains("Bust")) && betAmount >= (playerMoney * 0.5f))
             {
-                shouldPlayBetLostTaunt = true;
+                if(playerMoney - betAmount > minBet || playerMoney - betAmount <= 0)
+                {
+                    shouldPlayBetLostTaunt = true;
+                }
             }
         }
 
@@ -936,6 +939,7 @@ public class BlackjackGame : MonoBehaviour
         if(message.Contains("You win"))
         {
             TimesWon++;
+
             KeepsakeUnlockProgression.instance.CheckSuitWinCondition(allHands);
             KeepsakeUnlockProgression.instance.CheckThreeOfAKind(allHands);
 
@@ -960,6 +964,7 @@ public class BlackjackGame : MonoBehaviour
         else if(message.Contains("Dealer wins") || message.Contains("Bust"))
         {
             TimesLost ++;
+
             if(!OrganBagItem.isOrganActive)
             {
                 targetMoneyBalance = playerMoney - betAmount;
@@ -1235,8 +1240,12 @@ public class BlackjackGame : MonoBehaviour
             KeepsakeUnlockProgression.instance.EndRun();
             
             FadeInAnimator.SetTrigger("fadeInTrig");
+
             yield return StartCoroutine(GameUtils.WaitDelayOrInput(3.0f));
+
+            CardEffects.ClearColorSwappedCards();
             SceneManager.LoadSceneAsync(2);
+
             yield break;
         }
 

@@ -9,7 +9,9 @@ namespace Managers
         Flip,
         Pyro,
         HatTrick,
-        Antimatter,
+        AntiMatter,
+        HiddenAce,
+        SprayCan,
         None
     }
 
@@ -19,6 +21,10 @@ namespace Managers
         [SerializeField] private GameObject scissorsFollow;
         [SerializeField] private GameObject acidFollow;
         [SerializeField] private GameObject handFollow;
+        [SerializeField] private GameObject tokenFollow;
+        [SerializeField] private GameObject antiMatterFollow;
+        [SerializeField] private GameObject pyroFollow;
+        [SerializeField] private GameObject sprayCanFollow;
 
         [Header("Deactivate")] 
         [SerializeField] private GameObject rightHand;
@@ -39,6 +45,18 @@ namespace Managers
                 case CursorType.Flip:
                     handFollow?.SetActive(isActive);
                     rightHand?.SetActive(!isActive);
+                    break;
+                case CursorType.HiddenAce:
+                    tokenFollow?.SetActive(isActive);
+                    break;
+                case CursorType.AntiMatter:
+                    antiMatterFollow?.SetActive(isActive);
+                    break;
+                case CursorType.Pyro:
+                    pyroFollow?.SetActive(isActive);
+                    break;
+                case CursorType.SprayCan:
+                    sprayCanFollow?.SetActive(isActive);
                     break;
             }
         }

@@ -131,6 +131,17 @@ namespace Progress
                 blackjackGame.ShopManager.SetInventoryActive(false);
             }
 
+            if(passedMilestone.milestoneType == MilestoneType.CanonEvent)
+            {
+                foreach(var keepsake in KeepsakeManager.instance.equippedKeepsakes)
+                {
+                    if(keepsake is TrustFund trustFund)
+                    {
+                        trustFund.ScaleIncome();
+                    }
+                }
+            }
+
             UpdateEventKeepsakes();
             
             UpdateProgressDisplay();

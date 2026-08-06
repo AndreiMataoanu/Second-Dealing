@@ -33,7 +33,7 @@ Material:
   stringTagMap: {}
   disabledShaderPasses:
   - MOTIONVECTORS
-  m_LockedProperties: 
+  m_LockedProperties: _MainTex
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -55,6 +55,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _ColorSwapped: 0
     - _CutInHalf: 0
     - _CutOnce: 0
     - _CutTwice: 0
@@ -81,6 +82,8 @@ Material:
     - _VoronoiCellDensity: 2.5
     - _dHeight: 100
     - _dWidth: 45
+    - _startsBlack: 1
+    - _startsRed: 1
     m_Colors:
     - _BottomColor: {r: 1, g: 0.7452829, b: 0.7452829, a: 1}
     - _DissolveColor: {r: 3.295597, g: 0.4707996, b: 0, a: 1}
