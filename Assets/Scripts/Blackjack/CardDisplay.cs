@@ -36,7 +36,7 @@ public class CardDisplay : MonoBehaviour
         }
     }
 
-    public void SetDoubledVisual(bool isDoubled)
+    public void SetDoubledOnceVisual(bool isDoubled)
     {
         float floatValue = isDoubled ? 1f : 0f;
 
@@ -46,13 +46,33 @@ public class CardDisplay : MonoBehaviour
         }
     }
 
-    public void SetCutVisual(bool isCut)
+    public void SetDoubledTwiceVisual(bool isDoubled)
+    {
+        float floatValue = isDoubled ? 1f : 0f;
+
+        foreach(var render in renderers)
+        {
+            render.material.SetFloat("_DoubledTwice", floatValue);
+        }
+    }
+
+    public void SetCutOnceVisual(bool isCut)
     {
         float floatValue = isCut ? 1f : 0f;
 
         foreach(var render in renderers)
         {
             render.material.SetFloat("_CutOnce", floatValue);
+        }
+    }
+
+    public void SetCutTwiceVisual(bool isCut)
+    {
+        float floatValue = isCut ? 1f : 0f;
+
+        foreach(var render in renderers)
+        {
+            render.material.SetFloat("_CutTwice", floatValue);
         }
     }
 

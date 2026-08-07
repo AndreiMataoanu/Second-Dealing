@@ -610,7 +610,7 @@ public class TableCards : MonoBehaviour
                 display?.SetNegativeVisual(true);
 
             if(card.cardData.jokerValue > 11 || card.cardData.jokerValue < -11)
-                display?.SetDoubledVisual(true);
+                display?.SetDoubledOnceVisual(true);
 
             activeCardObjects.Add(realCardObject);      
         }
