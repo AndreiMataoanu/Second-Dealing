@@ -122,41 +122,45 @@ namespace Progress
         {
             UpdateTurnsLeft();
             
-            var passedMilestone = GoToNextMilestone();
-            if (passedMilestone == null) yield break;
-            if (passedMilestone.milestoneType == MilestoneType.FinalGoal) useTurnLimit = false;
-            else
-            {
-                blackjackGame.CursorDetection.SetAllInactive();
-                blackjackGame.ShopManager.SetInventoryActive(false);
-            }
+            var passedMilestones = GetPassedMilestones();
 
-            if(passedMilestone.milestoneType == MilestoneType.CanonEvent)
+            if(passedMilestones == null || passedMilestones.Count == 0) yield break;
+
+            foreach(var passedMilestone in passedMilestones)
             {
-                foreach(var keepsake in KeepsakeManager.instance.equippedKeepsakes)
+                KeepsakeManager.instance.IncreaseMaxKeepsakes();
+
+                if(passedMilestone.milestoneType == MilestoneType.FinalGoal) useTurnLimit = false;
+                else
                 {
-                    if(keepsake is TrustFund trustFund)
+                    blackjackGame.CursorDetection.SetAllInactive();
+                    blackjackGame.ShopManager.SetInventoryActive(false);
+                }
+
+                if(passedMilestone.milestoneType == MilestoneType.CanonEvent)
+                {
+                    foreach(var keepsake in KeepsakeManager.instance.equippedKeepsakes)
                     {
-                        trustFund.ScaleIncome();
+                        if(keepsake is TrustFund trustFund)
+                        {
+                            trustFund.ScaleIncome();
+                        }
                     }
                 }
+
+                if(passedMilestone.milestoneType == MilestoneType.CanonEvent)
+                {
+                    blackjackGame.ShopManager.DoublePrices();
+                }
+
+                UpdateEventKeepsakes();
+                UpdateProgressDisplay();
+
+                yield return eventManager.TriggerEvent(passedMilestone.gameEvent);
+                yield return PresentKeepsakeChoice(passedMilestone);
             }
-
-            if(passedMilestone.milestoneType == MilestoneType.CanonEvent)
-            {
-                blackjackGame.ShopManager.DoublePrices();
-            }
-
-            UpdateEventKeepsakes();
-            
-            UpdateProgressDisplay();
-
-            yield return eventManager.TriggerEvent(passedMilestone.gameEvent);
-
-            yield return PresentKeepsakeChoice(passedMilestone);
             
             gameCamera.ChangeToCamera(CameraType.Sitting);
-            
             blackjackGame.CursorDetection.OnRoundInactive();
             blackjackGame.ShopManager.SetInventoryActive(true);
         }
@@ -178,28 +182,31 @@ namespace Progress
             
             SceneManager.LoadSceneAsync(2);
         }
-        
+
         #endregion
 
         #region Next Milestone
-        
-        private Milestone GoToNextMilestone()
-        {
-            if (milestones == null || milestones.Count == 0) return null;
-                
-            var milestone = milestones.First();
-            if (blackjackGame.TargetMoneyBalance >= milestone.moneyAmount)
-            {
-                milestones.RemoveAt(0);
 
-                UpdateNextMilestone();
-                
-                return milestone;
+        private List<Milestone> GetPassedMilestones()
+        {
+            List<Milestone> passed = new List<Milestone>();
+            if(milestones == null || milestones.Count == 0) return passed;
+
+            while(milestones.Count > 0 && blackjackGame.TargetMoneyBalance >= milestones.First().moneyAmount)
+            {
+                var milestone = milestones.First();
+                milestones.RemoveAt(0);
+                passed.Add(milestone);
             }
 
-            return null;
+            if(passed.Count > 0)
+            {
+                UpdateNextMilestone();
+            }
+
+            return passed;
         }
-        
+
         private void UpdateNextMilestone()
         {
             nextMilestone = milestones.Count == 0 ? null : milestones.First();

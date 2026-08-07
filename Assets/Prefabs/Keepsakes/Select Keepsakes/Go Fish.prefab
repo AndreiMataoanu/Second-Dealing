@@ -234,13 +234,15 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls: []
-  outline: {fileID: 2100000, guid: d91925fefc835b0459f833b7a203a011, type: 2}
+  outline: {fileID: 0}
   tooltipHeader: 
   tooltipContent: 
   showTooltip: 1
   keepsake: {fileID: 11400000, guid: 23d34eb82b4a8594596ff632ab35cbed, type: 2}
   blackjackGame: {fileID: 0}
   lockedMaterial: {fileID: 2100000, guid: 0a832a2e81c13f949bb53db9acc6b339, type: 2}
+  outlineSelect: {fileID: 2100000, guid: d91925fefc835b0459f833b7a203a011, type: 2}
+  outlineFull: {fileID: 2100000, guid: 36f05641255eb3e43a4474d269a6ccf1, type: 2}
   rotationInHand: {x: -1.3, y: -2.89, z: 76.05}
   scaleInHand: {x: 14.8, y: 14.8, z: 14.8}
 --- !u!64 &166613686936768490
