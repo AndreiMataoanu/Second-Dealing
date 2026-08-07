@@ -180,6 +180,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardDisplay
   cardBack: {fileID: 8257183386900652375}
   cardFace: {fileID: 8845548402229867667}
+  textureAce11: {fileID: 2800000, guid: 6ed830af81d95484fa6c449716107144, type: 3}
+  textureAce1: {fileID: 2800000, guid: 680d2e5ffe0c9524e8de9fecb69b0325, type: 3}
 --- !u!1 &8845548402229867667
 GameObject:
   m_ObjectHideFlags: 0
@@ -248,7 +250,7 @@ MeshRenderer:
   m_RenderingLayerMask: 32
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 36183ab4fdf13af4fa6bc32d7c0dbe1e, type: 2}
+  - {fileID: 2100000, guid: a31cb09d25ccb314194929aa7e40f88e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

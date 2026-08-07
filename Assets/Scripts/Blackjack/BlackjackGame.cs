@@ -1112,6 +1112,8 @@ public class BlackjackGame : MonoBehaviour
             }
         }
 
+        tableCards.UpdateAceVisuals();
+
         UpdateBettingUI();
     }
 

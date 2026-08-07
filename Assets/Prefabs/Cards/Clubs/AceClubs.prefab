@@ -68,7 +68,7 @@ MeshRenderer:
   m_RenderingLayerMask: 32
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1cfa4075c79d35c4c9647c913ec869dc, type: 2}
+  - {fileID: 2100000, guid: 328b93422b81e9f43960cfa26814aae4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -312,3 +312,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardDisplay
   cardBack: {fileID: 1742745258782196491}
   cardFace: {fileID: 499767640524095390}
+  textureAce11: {fileID: 2800000, guid: 80c8cb10919a474438916bf4046c692e, type: 3}
+  textureAce1: {fileID: 2800000, guid: 34a6528ab8b4bcb43af6cf2c31b39d57, type: 3}

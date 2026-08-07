@@ -14323,8 +14323,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 40dd43a7e1baf33479325c4c8079abca, type: 2}
     - target: {fileID: 2531318046483965639, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
+      propertyPath: milestones.Array.data[0].moneyAmount
+      value: 600
+      objectReference: {fileID: 0}
+    - target: {fileID: 2531318046483965639, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
       propertyPath: milestones.Array.data[1].moneyAmount
-      value: 700
+      value: 7000
       objectReference: {fileID: 0}
     - target: {fileID: 2531318046483965639, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
       propertyPath: milestones.Array.data[2].moneyAmount
