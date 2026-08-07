@@ -674,8 +674,37 @@ public class TableCards : MonoBehaviour
         return CardEffects.SetDissolvedVisual(card.displayComponent, 2.0f, Color.aliceBlue, 1.2f);                
     }
 
+    public void ReturnCardToDeckTop(CardInstance cardInstance)
+    {
+        GameObject cardObject = cardInstance.displayComponent.gameObject;
+        CardEffects.RemoveCutCard(cardInstance);
+        CardEffects.RemoveAlcoholCard(cardInstance);
+
+        activeCardObjects.Remove(cardObject);
+        GameDeck.AddCardToTop(cardInstance.cardData);
+
+        if(dealerHand.Remove(cardInstance))
+        {
+            UpdateHandVisuals(dealerHand, false);
+        }
+
+        playerHands.ForEach(hand =>
+        {
+            hand.Remove(cardInstance);
+            UpdateHandVisuals(hand, true);
+        });
+
+        if(cardInstance == PeekCardInstance)
+        {
+            PeekCardInstance = null;
+        }
+
+        Destroy(cardObject);
+
+        game.UpdateUI();
+    }
     #endregion
-    
+
     #region Helper Methods
 
     private void DestroyPeekCard()
