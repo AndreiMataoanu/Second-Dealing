@@ -38,9 +38,10 @@ public class ShopManager : MonoBehaviour
 
     public List<Item> InventoryItems => inventoryItems;
     public List<Item> AllInventoryItems => allItems;
+    public bool IsInventoryFull => inventoryItemCount >= useSpawnPoints.Count;
 
     #endregion
-    
+
     #region Setters
 
     public void SetBlackjackGame(BlackjackGame game) => blackjackGame = game;

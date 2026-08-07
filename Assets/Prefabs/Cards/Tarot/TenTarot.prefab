@@ -128,10 +128,12 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls: []
-  outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
+  outline: {fileID: 0}
   tooltipHeader: 
   tooltipContent: 
   showTooltip: 0
+  outlineUse: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
+  outlineCantUse: {fileID: 2100000, guid: 36f05641255eb3e43a4474d269a6ccf1, type: 2}
 --- !u!1 &1846285599611208699
 GameObject:
   m_ObjectHideFlags: 0
@@ -264,6 +266,8 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipContent: 
   showTooltip: 0
+  outlineUse: {fileID: 0}
+  outlineCantUse: {fileID: 0}
 --- !u!1 &7082712968241337282
 GameObject:
   m_ObjectHideFlags: 0
@@ -313,6 +317,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardDisplay
   cardBack: {fileID: 1846285599611208699}
   cardFace: {fileID: 188463719716016275}
+  textureAce11: {fileID: 0}
+  textureAce1: {fileID: 0}
 --- !u!114 &-902728906450394089
 MonoBehaviour:
   m_ObjectHideFlags: 0

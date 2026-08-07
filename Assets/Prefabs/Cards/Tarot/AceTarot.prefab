@@ -128,10 +128,12 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls: []
-  outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
+  outline: {fileID: 0}
   tooltipHeader: 
   tooltipContent: 
   showTooltip: 0
+  outlineUse: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
+  outlineCantUse: {fileID: 2100000, guid: 36f05641255eb3e43a4474d269a6ccf1, type: 2}
 --- !u!1 &1846285599611208699
 GameObject:
   m_ObjectHideFlags: 0
@@ -264,6 +266,8 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipContent: 
   showTooltip: 0
+  outlineUse: {fileID: 0}
+  outlineCantUse: {fileID: 0}
 --- !u!1 &7082712968241337282
 GameObject:
   m_ObjectHideFlags: 0
@@ -313,6 +317,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardDisplay
   cardBack: {fileID: 1846285599611208699}
   cardFace: {fileID: 188463719716016275}
+  textureAce11: {fileID: 0}
+  textureAce1: {fileID: 0}
 --- !u!114 &-902728906450394089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -325,4 +331,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 951e615659bc4ed4fbe192410e90f54b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TarotCard
-  rewardItemPrefab: {fileID: 3226192414058870725, guid: 08752688242307a4db155f11b51f3ae6, type: 3}
+  rewardItemPrefab: {fileID: 8709008291533084744, guid: 08752688242307a4db155f11b51f3ae6, type: 3}
