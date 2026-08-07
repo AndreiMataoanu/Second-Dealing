@@ -463,6 +463,81 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1986868646426404256, guid: 37cb37e8090ded54399f8d66b341e3ec, type: 3}
   m_PrefabInstance: {fileID: 1268948868}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &99959166
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 99959167}
+  - component: {fileID: 99959169}
+  - component: {fileID: 99959168}
+  m_Layer: 5
+  m_Name: DealerRageBar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &99959167
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 99959166}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 269621114}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 234, y: -50}
+  m_SizeDelta: {x: 500, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &99959168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 99959166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.9811321, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 0
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &99959169
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 99959166}
+  m_CullTransparentMesh: 1
 --- !u!1001 &109737085
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6374,6 +6449,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5510594154060938744, guid: 888789034740c35428917d11720891be, type: 3}
       insertIndex: -1
       addedObject: {fileID: 995581026}
+    - targetCorrespondingSourceObject: {fileID: 5510594154060938744, guid: 888789034740c35428917d11720891be, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 99959167}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 888789034740c35428917d11720891be, type: 3}
 --- !u!1 &1086669656
@@ -11731,12 +11809,44 @@ PrefabInstance:
       value: Go big or go home?
       objectReference: {fileID: 0}
     - target: {fileID: 6608549595112624214, guid: 1ec9ed4188d23e645a8969bc84ee8fd7, type: 3}
+      propertyPath: forcedAllInnTaunts.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6608549595112624214, guid: 1ec9ed4188d23e645a8969bc84ee8fd7, type: 3}
+      propertyPath: dealerShuffleTaunts.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6608549595112624214, guid: 1ec9ed4188d23e645a8969bc84ee8fd7, type: 3}
       propertyPath: chooseKeepsakeTaunts.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6608549595112624214, guid: 1ec9ed4188d23e645a8969bc84ee8fd7, type: 3}
+      propertyPath: 'forcedAllInnTaunts.Array.data[0]'
+      value: LET IT RIDE!!!
+      objectReference: {fileID: 0}
+    - target: {fileID: 6608549595112624214, guid: 1ec9ed4188d23e645a8969bc84ee8fd7, type: 3}
+      propertyPath: 'dealerShuffleTaunts.Array.data[0]'
+      value: Those cards where too good for you
+      objectReference: {fileID: 0}
+    - target: {fileID: 6608549595112624214, guid: 1ec9ed4188d23e645a8969bc84ee8fd7, type: 3}
       propertyPath: 'chooseKeepsakeTaunts.Array.data[0]'
       value: Choose one or refuse. I don't care.
+      objectReference: {fileID: 0}
+    - target: {fileID: 6608549595112624214, guid: 1ec9ed4188d23e645a8969bc84ee8fd7, type: 3}
+      propertyPath: dealerHalvesCardsTaunts.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6608549595112624214, guid: 1ec9ed4188d23e645a8969bc84ee8fd7, type: 3}
+      propertyPath: dealerRemovesItemTaunts.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6608549595112624214, guid: 1ec9ed4188d23e645a8969bc84ee8fd7, type: 3}
+      propertyPath: 'dealerHalvesCardsTaunts.Array.data[0]'
+      value: Your cards are worthless or almost
+      objectReference: {fileID: 0}
+    - target: {fileID: 6608549595112624214, guid: 1ec9ed4188d23e645a8969bc84ee8fd7, type: 3}
+      propertyPath: 'dealerRemovesItemTaunts.Array.data[0]'
+      value: No more item tehe
       objectReference: {fileID: 0}
     - target: {fileID: 7292004457831625453, guid: 1ec9ed4188d23e645a8969bc84ee8fd7, type: 3}
       propertyPath: m_Name
@@ -12778,6 +12888,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
+      propertyPath: bossRound
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
       propertyPath: gameCamera
       value: 
       objectReference: {fileID: 1240162380}
@@ -12786,9 +12900,29 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1545470627}
     - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
+      propertyPath: itemManager
+      value: 
+      objectReference: {fileID: 4031140933024232257}
+    - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
+      propertyPath: shopManager
+      value: 
+      objectReference: {fileID: 665891693}
+    - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
+      propertyPath: betUpCollider
+      value: 
+      objectReference: {fileID: 1712160668}
+    - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
+      propertyPath: dealerRagebar
+      value: 
+      objectReference: {fileID: 99959168}
+    - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
       propertyPath: dialogueSystem
       value: 
       objectReference: {fileID: 537238136}
+    - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
+      propertyPath: betDownCollider
+      value: 
+      objectReference: {fileID: 741130250}
     - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
       propertyPath: progressDisplay
       value: 
@@ -14033,7 +14167,7 @@ PrefabInstance:
     - target: {fileID: 2531318046483965639, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
       propertyPath: milestones.Array.data[0].gameEvent
       value: 
-      objectReference: {fileID: 11400000, guid: f9969251b08054a4b9f872af95840548, type: 2}
+      objectReference: {fileID: 11400000, guid: 2d1b5b04be7a3a64eb03f6da4994e13d, type: 2}
     - target: {fileID: 2531318046483965639, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
       propertyPath: milestones.Array.data[1].gameEvent
       value: 

@@ -51,6 +51,14 @@ public class DialogueSystem : MonoBehaviour
     [SerializeField] private List<string> unluckyCoinFlip;
     [Tooltip("Taunts shown when player chooses keepsake.")] 
     [SerializeField] private List<string> chooseKeepsakeTaunts;
+    [Tooltip("Taunts shown when dealer is raging and forcing the player to go all in.")]
+    [SerializeField] private List<string> forcedAllInnTaunts;
+     [Tooltip("Taunts shown when dealer is raging and halving cards")]
+    [SerializeField] private List<string> dealerHalvesCardsTaunts;
+     [Tooltip("Taunts shown when dealer is raging and removing and item.")]
+    [SerializeField] private List<string> dealerRemovesItemTaunts;
+     [Tooltip("Taunts shown when dealer is raging and forces a shuffle")]
+    [SerializeField] private List<string> dealerShuffleTaunts;
 
     [Header("Cash out")]
     [Tooltip("Shown when the player gets more than 100000 dollars")]
@@ -212,7 +220,10 @@ public class DialogueSystem : MonoBehaviour
     public void ShowLuckyCoinFlip() => ShowMessage(GetRandomTaunt(luckyCoinFlip));
     public void ShowUnluckyCoinFlip() => ShowMessage(GetRandomTaunt(unluckyCoinFlip));
     public void ShowKeepsakeTaunts() => ShowMessage(GetRandomTaunt(chooseKeepsakeTaunts));
-    
+    public void ShowForcedAllInnTaunts() => ShowMessage(GetRandomTaunt(forcedAllInnTaunts));
+    public void ShowDealerHalvesCardsTaunts() => ShowMessage(GetRandomTaunt(dealerHalvesCardsTaunts));
+    public void ShowDealerRemovesItemTaunts() => ShowMessage(GetRandomTaunt(dealerRemovesItemTaunts));
+    public void ShowDealerShuffleTaunts() => ShowMessage(GetRandomTaunt(dealerShuffleTaunts));
     private string GetRandomTaunt(List<string> taunts)
     {
         if(taunts == null || taunts.Count == 0) return "";

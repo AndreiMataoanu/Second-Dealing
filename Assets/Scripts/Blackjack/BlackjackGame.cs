@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Managers;
+using Unity.Collections;
 using Progress;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -40,7 +41,7 @@ public class BlackjackGame : MonoBehaviour
     private bool isTutorialActive => roundsCompleted < tutorialRoundsLimit;
     [HideInInspector] public bool canDoubleDown = false;
     [HideInInspector] public bool isRoundActive = false;
-
+    private bool stayed = false;
     [Header("Money")]
     [SerializeField] private int tutorialRoundsLimit = 3;
     [Tooltip("Money the player starts with.")]
@@ -88,7 +89,6 @@ public class BlackjackGame : MonoBehaviour
 
     #region Getters & Setters
     public int GetPlayerMoney() => playerMoney;
-    
     public DialogueSystem DialogueSystem => dialogueSystem;
     public CursorDetection CursorDetection => cursorDetection;
     public CursorFollow CursorFollow => cursorFollow;
@@ -121,7 +121,7 @@ public class BlackjackGame : MonoBehaviour
 
     private void Update()
     {
-        if(currentBustCoroutine != null || isActionLocked || isRoundActive || Elevator.isElevatorActive) return;
+        if(currentBustCoroutine != null || isActionLocked || isRoundActive || Elevator.isElevatorActive || eventManager.GetLetItRide) return;
 
         if(Input.mouseScrollDelta.y > 0f && Time.timeScale != 0f)
         {
@@ -493,6 +493,7 @@ public class BlackjackGame : MonoBehaviour
 
     private void ResetGame()
     {
+        eventManager.ActivateOrDeactivateDealerAbility();
         KeepsakeManager.instance.ResetKeepsake();
 
         StartCoroutine(ButtonCoroutine());
@@ -618,6 +619,7 @@ public class BlackjackGame : MonoBehaviour
                 isActionLocked = false;
             }
         }
+        eventManager.CheckForShuffleAbility();
     }
 
     private IEnumerator HitCoroutine()
@@ -946,7 +948,17 @@ public class BlackjackGame : MonoBehaviour
             AudioManager.instance.Play("MoneyGained");
 
             Instantiate(greenParticlePrefab, particleSpawnPoint.position, particleSpawnPoint.rotation);
-
+            if(eventManager.IsDealerRageActive)
+            {
+                if(eventManager.GetIsBossRound)
+                {
+                    eventManager.ChangeRageNumber(-2);
+                }
+                else
+                {
+                    eventManager.ChangeRageNumber(1);
+                }
+            }
             yield return StartCoroutine(AnimateBetChange(targetMoneyBalance, 3f / GameUtils.gameSpeedMultiplier));
         }
         else if(message.Contains("Dealer wins") || message.Contains("Bust"))
@@ -978,6 +990,18 @@ public class BlackjackGame : MonoBehaviour
                 targetMoneyBalance = playerMoney;
 
                 yield return GameUtils.WaitForSecondsScaled(1f);
+            }
+            if(eventManager.IsDealerRageActive)
+            {
+                if(eventManager.GetIsBossRound)
+                {
+                    eventManager.ChangeRageNumber(-4);
+                }
+                else
+                {
+                    eventManager.ChangeRageNumber(-1);  
+                }
+                
             }
         }
         else
@@ -1290,5 +1314,10 @@ public class BlackjackGame : MonoBehaviour
     private int GetDealerBustThreshold()
     {
         return blackjackGoal - KeepsakeManager.instance.GetDealerBustModifier();
+    }
+
+    public void ChangeBetTo(int value)
+    {
+        currentBet = value;
     }
 }
