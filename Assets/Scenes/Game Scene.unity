@@ -525,7 +525,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -1591,7 +1591,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1952328287}
+      - m_Target: {fileID: 697252909}
         m_TargetAssemblyTypeName: CashOutSystem, Assembly-CSharp
         m_MethodName: Stay
         m_Mode: 1
@@ -9429,7 +9429,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1952328287}
+      - m_Target: {fileID: 697252909}
         m_TargetAssemblyTypeName: CashOutSystem, Assembly-CSharp
         m_MethodName: Leave
         m_Mode: 1
@@ -10545,21 +10545,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8544534578533599230, guid: bec8e1691fbc02c48b6984d498794c9c, type: 3}
   m_PrefabInstance: {fileID: 1934868212}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1952328287
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a79aaffecce5e248addf131579d8e3b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CashOutSystem
-  leaveButton: {fileID: 0}
-  stayButton: {fileID: 0}
-  fadeInAnimator: {fileID: 0}
 --- !u!1 &2026687425
 GameObject:
   m_ObjectHideFlags: 0
