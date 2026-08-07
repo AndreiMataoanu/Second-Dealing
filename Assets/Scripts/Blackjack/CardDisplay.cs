@@ -7,6 +7,7 @@ public class CardDisplay : MonoBehaviour
     [SerializeField] private GameObject cardBack;
     [SerializeField] private GameObject cardFace;
     private Renderer[] renderers;
+    private Renderer[] faceRenderers;
     private CardInstance cardInstance;
     private MeshCollider faceCollider;
 
@@ -14,6 +15,7 @@ public class CardDisplay : MonoBehaviour
     {
         faceCollider = cardFace.GetComponent<MeshCollider>();
         renderers = GetComponentsInChildren<Renderer>();
+        faceRenderers = cardFace.GetComponentsInChildren<Renderer>();
     }
 
     public void SetFaceColliderActive(bool isActive) => faceCollider.enabled = isActive;
@@ -30,7 +32,7 @@ public class CardDisplay : MonoBehaviour
     {
         float floatValue = isNegative ? 1f : 0f;
 
-        foreach(var render in renderers)
+        foreach(var render in faceRenderers)
         {
             render.material.SetFloat("_Negative", floatValue);
         }
@@ -40,7 +42,7 @@ public class CardDisplay : MonoBehaviour
     {
         float floatValue = isDoubled ? 1f : 0f;
 
-        foreach(var render in renderers)
+        foreach(var render in faceRenderers)
         {
             render.material.SetFloat("_DoubledOnce", floatValue);
         }
@@ -50,7 +52,7 @@ public class CardDisplay : MonoBehaviour
     {
         float floatValue = isDoubled ? 1f : 0f;
 
-        foreach(var render in renderers)
+        foreach(var render in faceRenderers)
         {
             render.material.SetFloat("_DoubledTwice", floatValue);
         }
