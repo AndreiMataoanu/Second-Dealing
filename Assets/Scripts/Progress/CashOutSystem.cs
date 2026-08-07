@@ -9,7 +9,7 @@ public class CashOutSystem : MonoBehaviour
     [SerializeField] private Button leaveButton;
     [SerializeField] private Button stayButton;
     [SerializeField] private Animator fadeInAnimator;
-
+    [SerializeField] private GameObject champagneFlask;
     private static readonly int FadeInTrig = Animator.StringToHash("fadeInTrig");
 
     private DialogueSystem dialogueSystem;
@@ -67,5 +67,7 @@ public class CashOutSystem : MonoBehaviour
         stayButton.gameObject.SetActive(false);
         cursorDetection.OnRoundInactive();
         stayed = true;
+        champagneFlask.SetActive(true);
+
     }
 }
