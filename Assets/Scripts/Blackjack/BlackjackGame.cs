@@ -116,6 +116,7 @@ public class BlackjackGame : MonoBehaviour
         blackjackGoal = 21;
 
         ManagerSetup();
+        CardEffects.ClearCutCards();
         ResetGame();
     }
 

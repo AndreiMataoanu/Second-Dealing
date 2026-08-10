@@ -512,7 +512,7 @@ public class TableCards : MonoBehaviour
             CardEffects.SetVisualEffects(card, false, true, true);
 
         foreach(CardInstance card in dealerHand)
-            CardEffects.SetVisualEffects(card, false, false, true);
+            CardEffects.SetVisualEffects(card, card.isHidden, false, true);
 
         if (!PeekCardInstance?.CardObject) return;
         
