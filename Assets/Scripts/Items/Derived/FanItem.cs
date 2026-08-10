@@ -40,13 +40,14 @@ public class FanItem : Item
         blackjackGame.isRoundActive = false;
 
         yield return blackjackGame.StopDealerTurn();
-        
         yield return StartCoroutine(AnimateCardsOffScreen());
     
         tableCards.ClearTable();
         tableCards.ResetCards();
+
+        if(tableCards.PeekCardInstance != null) tableCards.ShuffleCards();
+
         blackjackGame.ResetToSingleBet();
-    
         blackjackGame.OnStartGame();
     }
 

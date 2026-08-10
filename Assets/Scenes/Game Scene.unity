@@ -14403,6 +14403,22 @@ PrefabInstance:
       propertyPath: progressDisplay
       value: 
       objectReference: {fileID: 571720867}
+    - target: {fileID: 2531318046483965639, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
+      propertyPath: milestones.Array.data[0].keepsakes.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2531318046483965639, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
+      propertyPath: 'milestones.Array.data[0].keepsakes.Array.data[0]'
+      value: 
+      objectReference: {fileID: 3079444025674053781, guid: ee1994429ab7fab42ba86330b2dffdc9, type: 3}
+    - target: {fileID: 2531318046483965639, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
+      propertyPath: 'milestones.Array.data[0].keepsakes.Array.data[1]'
+      value: 
+      objectReference: {fileID: 823484939574808708, guid: d0570014268ffe24dae62630cb977b1f, type: 3}
+    - target: {fileID: 2531318046483965639, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
+      propertyPath: 'milestones.Array.data[0].keepsakes.Array.data[2]'
+      value: 
+      objectReference: {fileID: 9010154421799291270, guid: b7bf96b78d397eb43ab30ac654131963, type: 3}
     - target: {fileID: 4292728565048229037, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
       propertyPath: m_Name
       value: MilestoneProgress
