@@ -119,7 +119,6 @@ public class TableCards : MonoBehaviour
     public void ClearTable()
     {
         CardEffects.ClearAlcoholCards();
-        CardEffects.ClearCutCards();
         CardEffects.ClearHiddenAces();
 
         DestroyActiveCards();
@@ -336,6 +335,7 @@ public class TableCards : MonoBehaviour
         yield return PlaceCardAtIndex(cardOrderIndex, newCardInstance, currentParent, offset);
         
         game.UpdateUI();
+        UpdateCardVFX();
     }
 
     public IEnumerator PlaceCardAtPlayerHandIndex(int cardOrderIndex, CardInstance newCardInstance)
@@ -512,7 +512,7 @@ public class TableCards : MonoBehaviour
             CardEffects.SetVisualEffects(card, false, true, true);
 
         foreach(CardInstance card in dealerHand)
-            CardEffects.SetVisualEffects(card, false, false, true);
+            CardEffects.SetVisualEffects(card, card.isHidden, false, true);
 
         if (!PeekCardInstance?.CardObject) return;
         

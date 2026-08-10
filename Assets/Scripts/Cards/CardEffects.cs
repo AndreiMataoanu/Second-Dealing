@@ -4,7 +4,8 @@ using UnityEngine;
 
 public static class CardEffects
 {
-    private static Dictionary<CardInstance, int> cutCards = new();
+    private static Dictionary<(Card.Rank,Card.Suit), int> cutCards = new();
+    private static Dictionary<CardInstance, int> jokerCutCards = new();
     private static List<Card.Suit> negativeSuits = new();
     private static HashSet<(Card.Rank, Card.Suit)> antiMatterCards = new();
     private static HashSet<CardInstance> alcoholCards = new();
@@ -15,7 +16,8 @@ public static class CardEffects
 
     public static int? GetCutReduction(CardInstance cardInstance)
     {
-        if (cutCards.TryGetValue(cardInstance, out int reduction))
+        var key = (cardInstance.cardData.rank,cardInstance.cardData.suit);
+        if (cutCards.TryGetValue(key, out int reduction))
             return reduction;
 
         return null;
@@ -23,12 +25,21 @@ public static class CardEffects
     
     public static void AddCutCard(CardInstance cardInstance, int reduction)
     {
-        if (!cutCards.TryAdd(cardInstance, reduction))
-            cutCards[cardInstance] *= reduction;
-
+        if(cardInstance.cardData.rank == Card.Rank.Joker)
+        {
+            if (!jokerCutCards.TryAdd(cardInstance, reduction))
+            jokerCutCards[cardInstance] *= reduction;
+        }
+        else
+        {
+            var key = (cardInstance.cardData.rank, cardInstance.cardData.suit);
+            if (!cutCards.TryAdd(key, reduction))
+            cutCards[key] *= reduction;    
+        }
+        Debug.Log(cardInstance);
         SetCutVisual(cardInstance.displayComponent, true);
     }
-    public static void RemoveCutCard(CardInstance cardInstance) => cutCards.Remove(cardInstance);
+    public static void RemoveCutCard(CardInstance cardInstance) => cutCards.Remove((cardInstance.cardData.rank,cardInstance.cardData.suit));
     public static void ClearCutCards() => cutCards.Clear();
     
     public static void AddNegativeSuit(Card.Suit suit) => negativeSuits.Add(suit);
@@ -87,7 +98,7 @@ public static class CardEffects
 
     #region Check Effects
 
-    public static bool IsCardCut(CardInstance cardInstance) => cutCards.ContainsKey(cardInstance);
+    public static bool IsCardCut(CardInstance cardInstance) => cutCards.ContainsKey((cardInstance.cardData.rank,cardInstance.cardData.suit));
     public static bool IsSuitNegative(Card.Suit suit) => negativeSuits.Contains(suit);
     public static bool IsCardAntiMatter(Card card) => antiMatterCards.Contains((card.rank, card.suit));
     
@@ -157,7 +168,7 @@ public static class CardEffects
         bool isDoubled = IsCardDoubled(cardInstance.cardData) || (countAlcohol && AlcoholItem.isAlcoholActive);
         bool isHalved = IsCardHalved(cardInstance.cardData) || (countScissors && IsCardCut(cardInstance));
         bool isColorSwapped = IsColorSwapped(cardInstance.cardData);
-
+        Debug.Log(isHalved);
         var display = cardInstance.displayComponent;
         display?.SetNegativeVisual(isNegative);
         display?.SetDoubledVisual(isDoubled);
@@ -170,7 +181,7 @@ public static class CardEffects
 
     public static void Reset()
     {
-        cutCards.Clear();
+        jokerCutCards.Clear();
         negativeSuits.Clear();
         antiMatterCards.Clear();
         alcoholCards.Clear();
