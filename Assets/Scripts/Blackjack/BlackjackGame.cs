@@ -853,7 +853,7 @@ public class BlackjackGame : MonoBehaviour
                 int finalPlayerValue = tableCards.CalculateHandValue(tableCards.PlayerHands[i], true);
                 string resultMessage = DetermineWinner(finalPlayerValue, finalDealerValue);
 
-                yield return StartCoroutine(ProcessPayout(resultMessage, handBets[i], tableCards.PlayerHands));
+                yield return StartCoroutine(ProcessPayout(resultMessage, handBets[i], tableCards.PlayerHands[i], tableCards.PlayerHands));
                 yield return GameUtils.WaitForSecondsScaled(1f);
             }
 
@@ -868,7 +868,7 @@ public class BlackjackGame : MonoBehaviour
         }
     }
 
-    private IEnumerator ProcessPayout(string message, int betAmount, List<List<CardInstance>> allHands = null)
+    private IEnumerator ProcessPayout(string message, int betAmount, List<CardInstance> currentHand, List<List<CardInstance>> allHands = null)
     {
         bool shouldPlayBetLostTaunt = false;
 
@@ -908,7 +908,7 @@ public class BlackjackGame : MonoBehaviour
             KeepsakeUnlockProgression.instance.CheckSuitWinCondition(allHands);
             KeepsakeUnlockProgression.instance.CheckThreeOfAKind(allHands);
 
-            targetMoneyBalance = playerMoney + KeepsakeManager.instance.ApplyPayoutModifiers(betAmount, allHands);
+            targetMoneyBalance = playerMoney + KeepsakeManager.instance.ApplyPayoutModifiers(betAmount, currentHand, allHands);
 
             AudioManager.instance.Play("MoneyGained");
 
@@ -1039,7 +1039,7 @@ public class BlackjackGame : MonoBehaviour
 
         int activeBetAmount = (handBets != null && handBets.Count > 0) ? handBets[0] : currentBet;
 
-        yield return StartCoroutine(ProcessPayout(message, activeBetAmount, tableCards.PlayerHands));
+        yield return StartCoroutine(ProcessPayout(message, activeBetAmount, tableCards.PlayerHands[0], tableCards.PlayerHands));
         yield return StartCoroutine(EndRoundSequence());
     }
     #endregion

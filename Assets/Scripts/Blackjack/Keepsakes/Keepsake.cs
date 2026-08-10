@@ -63,6 +63,11 @@ public abstract class Keepsake : ScriptableObject
         return originalPayout;
     }
 
+    public virtual int ModifyHandPayout(int originalPayout, List<CardInstance> currentHand)
+    {
+        return originalPayout;
+    }
+
     public virtual bool IsConditionMet(List<List<CardInstance>> allHands)
     {
         return false;

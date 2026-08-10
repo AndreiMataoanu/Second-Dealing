@@ -6,23 +6,24 @@ public class BloodRose : Keepsake
 {
     [Tooltip("The multiplier applied to your original payout.")]
     public int payoutMultiplier = 2;
-    private int timesTriggered = 0;
 
-    public override void OnRoundStart()
+    public override int ModifyHandPayout(int originalPayout, List<CardInstance> currentHand)
     {
-        timesTriggered = 0;
-    }
+        if(currentHand == null || currentHand.Count == 0) return originalPayout;
 
-    public override int ModifyPayout(int originalPayout, List<List<CardInstance>> allHands)
-    {
-        if(allHands == null || allHands.Count == 0) return originalPayout;
+        bool isPureRed = true;
 
-        if(CountRedHands(allHands) - timesTriggered > 0)
+        foreach(var cardInstance in currentHand)
         {
-            timesTriggered++;
+            if(!cardInstance.cardData.IsRedSuit())
+            {
+                isPureRed = false;
 
-            return originalPayout * payoutMultiplier;
+                break;
+            }
         }
+
+        if(isPureRed) return originalPayout * payoutMultiplier;
 
         return originalPayout;
     }
@@ -30,13 +31,6 @@ public class BloodRose : Keepsake
     public override bool IsConditionMet(List<List<CardInstance>> allHands)
     {
         if(allHands == null || allHands.Count == 0) return false;
-
-        return CountRedHands(allHands) > 0;
-    }
-
-    private int CountRedHands(List<List<CardInstance>> allHands)
-    {
-        int count = 0;
 
         foreach(var hand in allHands)
         {
@@ -54,12 +48,9 @@ public class BloodRose : Keepsake
                 }
             }
 
-            if(isPureRed)
-            {
-                count++;
-            }
+            if(isPureRed) return true;
         }
 
-        return count;
+        return false;
     }
 }

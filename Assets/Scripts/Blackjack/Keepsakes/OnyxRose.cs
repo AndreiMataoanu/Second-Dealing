@@ -6,23 +6,24 @@ public class OnyxRose : Keepsake
 {
     [Tooltip("The multiplier applied to your original payout.")]
     public int payoutMultiplier = 2;
-    private int timesTriggered = 0;
 
-    public override void OnRoundStart()
+    public override int ModifyHandPayout(int originalPayout, List<CardInstance> currentHand)
     {
-        timesTriggered = 0;
-    }
+        if(currentHand == null || currentHand.Count == 0) return originalPayout;
 
-    public override int ModifyPayout(int originalPayout, List<List<CardInstance>> allHands)
-    {
-        if(allHands == null || allHands.Count == 0) return originalPayout;
+        bool isPureBlack = true;
 
-        if(CountBlackHands(allHands) - timesTriggered > 0)
+        foreach(var cardInstance in currentHand)
         {
-            timesTriggered++;
+            if(!cardInstance.cardData.IsBlackSuit())
+            {
+                isPureBlack = false;
 
-            return originalPayout * payoutMultiplier;
+                break;
+            }
         }
+
+        if(isPureBlack) return originalPayout * payoutMultiplier;
 
         return originalPayout;
     }
@@ -30,13 +31,6 @@ public class OnyxRose : Keepsake
     public override bool IsConditionMet(List<List<CardInstance>> allHands)
     {
         if(allHands == null || allHands.Count == 0) return false;
-
-        return CountBlackHands(allHands) > 0;
-    }
-
-    private int CountBlackHands(List<List<CardInstance>> allHands)
-    {
-        int count = 0;
 
         foreach(var hand in allHands)
         {
@@ -54,12 +48,9 @@ public class OnyxRose : Keepsake
                 }
             }
 
-            if(isPureBlack)
-            {
-                count++;
-            }
+            if(isPureBlack) return true;
         }
 
-        return count;
+        return false;
     }
 }

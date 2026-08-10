@@ -88,13 +88,14 @@ public class KeepsakeManager : MonoBehaviour
         }
     }
 
-    public int ApplyPayoutModifiers(int payout, List<List<CardInstance>> allHands)
+    public int ApplyPayoutModifiers(int payout, List<CardInstance> currentHand, List<List<CardInstance>> allHands)
     {
         int currentPayout = payout;
 
         foreach(var keepsake in equippedKeepsakes)
         {
             currentPayout = keepsake.ModifyPayout(currentPayout, allHands);
+            currentPayout = keepsake.ModifyHandPayout(currentPayout, currentHand);
         }
 
         return currentPayout;
