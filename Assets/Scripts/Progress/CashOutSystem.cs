@@ -27,7 +27,7 @@ public class CashOutSystem : MonoBehaviour
 
     public void CheckCashOut()
     {
-        if(game.PlayerMoney >= 100000 && stayed == false)
+        if(game.PlayerMoney >= 300000 && stayed == false)
             StartCoroutine(LeaveOrStayCoroutine());
     }
     
@@ -68,6 +68,5 @@ public class CashOutSystem : MonoBehaviour
         cursorDetection.OnRoundInactive();
         stayed = true;
         champagneFlask.SetActive(true);
-
     }
 }
