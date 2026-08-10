@@ -29,7 +29,8 @@ MonoBehaviour:
   - {fileID: 782283533179586490}
   - {fileID: 1747399987359833453}
   - {fileID: 1852331726674742471}
-  m_RendererFeatureMap: ad6b866f10d7b46cba87ce8cba3adb0a6ddd1ac707034018c74ca22ee4cdb419
+  - {fileID: 1519070705341108080}
+  m_RendererFeatureMap: ad6b866f10d7b46cba87ce8cba3adb0a6ddd1ac707034018c74ca22ee4cdb419700f8f14c2d21415
   m_UseNativeRenderPass: 1
   xrSystemData: {fileID: 0}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
@@ -107,8 +108,6 @@ MonoBehaviour:
     _scale: 50
     _velocity: {x: 0, y: 0}
   _shader: {fileID: 4800000, guid: 9a902e6d68fe8344890c5926c684e820, type: 3}
-  _outlineMat: {fileID: 0}
-  _step: {x: 0.00019687501, y: 0.00035000002, z: 0, w: 0}
 --- !u!114 &1747399987359833453
 MonoBehaviour:
   m_ObjectHideFlags: 0

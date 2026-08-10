@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class TableKeepsakeInteractable : Clickable
 {
-    [SerializeField] private Material outlineUse;
-    [SerializeField] private Material outlineCantUse;
+    [SerializeField] private Color outlineUse = Color.blue;
+    [SerializeField] private Color outlineCantUse = Color.red;
     private BlackjackGame blackjackGame;
     public Keepsake keepsake { get; private set; }
     private bool usedThisRound = false;
@@ -79,7 +79,7 @@ public class TableKeepsakeInteractable : Clickable
         }
     }
 
-    protected override Material GetOutlineMaterial()
+    protected override Color GetOutlineColor()
     {
         if(!keepsake.isActive || usedThisRound)
         {
