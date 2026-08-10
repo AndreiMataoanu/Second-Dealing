@@ -39,10 +39,10 @@ MonoBehaviour:
     m_Bits: 4294967295
   m_OpaqueLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 63
   m_TransparentLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 63
   m_DefaultStencilState:
     overrideStencilState: 0
     stencilReference: 1
@@ -78,6 +78,37 @@ MonoBehaviour:
   passIndex: 0
   bindDepthStencilAttachment: 0
   m_Version: 1
+--- !u!114 &1519070705341108080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 177ddeadd26a80641ad757c51fb7f5d1, type: 3}
+  m_Name: OutlineFxFeature
+  m_EditorClassIdentifier: OutlineFx::OutlineFx.OutlineFxFeature
+  m_Active: 1
+  _event: 600
+  _solid: 0
+  _thickness: 0.05
+  _alphaCutout: 0.5
+  _mode: 0
+  _filter: 1
+  _attachDepth: 1
+  _output:
+    enabled: 0
+    value: _globalTex
+  _solidMask:
+    _enabled: 0
+    _pattern: {fileID: 2800000, guid: 41acea03acbaebe4a9dc26dd8264449e, type: 3}
+    _scale: 50
+    _velocity: {x: 0, y: 0}
+  _shader: {fileID: 4800000, guid: 9a902e6d68fe8344890c5926c684e820, type: 3}
+  _outlineMat: {fileID: 0}
+  _step: {x: 0.00019687501, y: 0.00035000002, z: 0, w: 0}
 --- !u!114 &1747399987359833453
 MonoBehaviour:
   m_ObjectHideFlags: 0

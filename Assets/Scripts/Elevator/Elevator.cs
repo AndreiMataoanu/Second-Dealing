@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using Unity.Cinemachine;
+using System.Collections.Generic;
 
 public class Elevator : MonoBehaviour
 {
@@ -30,10 +31,16 @@ public class Elevator : MonoBehaviour
     [SerializeField] private float doorFrequency = 8.0f;
     [SerializeField] private float doorDuration = 0.3f;
 
+    public List<Clickable> clickableButtons;
     private string currentFloor;
     private bool doorsOpen = false;
     private bool isMoving = false;
     public static bool isElevatorActive = true;
+
+    private void Awake()
+    {
+        clickableButtons = new List<Clickable>(GetComponentsInChildren<Clickable>());
+    }
 
     private void Start()
     {
@@ -225,6 +232,11 @@ public class Elevator : MonoBehaviour
 
         elevatorCamera.Priority = 0;
         zoomCamera.Priority = 10;
+
+        foreach(Clickable button in clickableButtons)
+        {
+            button.ShowTooltip = true;
+        }
     }
 
     private IEnumerator KeepsakesCoroutine()
@@ -253,11 +265,21 @@ public class Elevator : MonoBehaviour
 
         elevatorCamera.Priority = 0;
         zoomCamera.Priority = 10;
+
+        foreach(Clickable button in clickableButtons)
+        {
+            button.ShowTooltip = true;
+        }
     }
 
     private IEnumerator MoveFloor(GameObject nextFloor, float waitTime)
     {
         elevatorCamera.Priority = 10;
+
+        foreach(Clickable button in clickableButtons)
+        {
+            button.ShowTooltip = false;
+        }
 
         AudioManager.instance.Play("ElevatorTravel");
         AudioManager.instance.Play("ElevatorMusic");

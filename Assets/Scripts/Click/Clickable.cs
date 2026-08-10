@@ -28,6 +28,12 @@ public class Clickable : MonoBehaviour
         meshRenderers.ForEach(r => r.enabled = active);
     }
 
+    public bool ShowTooltip
+    {
+        get => showTooltip;
+        set => showTooltip = value;
+    }
+
     protected virtual void Awake()
     {
         meshCollider = GetComponent<MeshCollider>();
