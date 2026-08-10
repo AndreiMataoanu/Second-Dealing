@@ -36,8 +36,8 @@ public static class CardEffects
             if (!cutCards.TryAdd(key, reduction))
             cutCards[key] *= reduction;    
         }
-        Debug.Log(cardInstance);
-        SetCutVisual(cardInstance.displayComponent, true);
+        
+        SetVisualEffects(cardInstance, cardInstance.isHidden, true, true);
     }
     public static void RemoveCutCard(CardInstance cardInstance) => cutCards.Remove((cardInstance.cardData.rank,cardInstance.cardData.suit));
     public static void ClearCutCards() => cutCards.Clear();
@@ -47,7 +47,7 @@ public static class CardEffects
     private static void AddAlcoholCard(CardInstance cardInstance)
     {
         alcoholCards.Add(cardInstance);
-        SetDoubledVisual(cardInstance.displayComponent, true);
+        SetVisualEffects(cardInstance, cardInstance.isHidden, true, true);
     }
     public static void AddAlcoholCardList(List<CardInstance> cards) => cards.ForEach(AddAlcoholCard);
     public static void RemoveAlcoholCard(CardInstance cardInstance) => alcoholCards.Remove(cardInstance);
@@ -87,9 +87,9 @@ public static class CardEffects
 
     #region Set Visuals
 
-    private static void SetCutVisual(CardDisplay cardDisplay, bool active) => cardDisplay.SetCutVisual(active);
+    private static void SetCutVisual(CardDisplay cardDisplay, bool active) => cardDisplay.SetCutOnceVisual(active);
     
-    private static void SetDoubledVisual(CardDisplay cardDisplay, bool active) => cardDisplay.SetDoubledVisual(active);
+    private static void SetDoubledVisual(CardDisplay cardDisplay, bool active) => cardDisplay.SetDoubledOnceVisual(active);
     
     public static Coroutine SetDissolvedVisual(CardDisplay cardDisplay, float dissolveTime, Color color,float border) 
         => cardDisplay.StartCoroutine(cardDisplay.SetDissolvedVisual(dissolveTime, color, border));
@@ -165,16 +165,20 @@ public static class CardEffects
     public static void SetVisualEffects(CardInstance cardInstance, bool isHidden, bool countAlcohol, bool countScissors)
     {
         bool isNegative = IsCardNegative(cardInstance.cardData);
-        bool isDoubled = IsCardDoubled(cardInstance.cardData) || (countAlcohol && AlcoholItem.isAlcoholActive);
-        bool isHalved = IsCardHalved(cardInstance.cardData) || (countScissors && IsCardCut(cardInstance));
         bool isColorSwapped = IsColorSwapped(cardInstance.cardData);
-        Debug.Log(isHalved);
+        bool isDoubledOnce = IsCardDoubled(cardInstance.cardData) || (countAlcohol && AlcoholItem.isAlcoholActive);
+        bool isDoubledTwice = IsCardDoubled(cardInstance.cardData) && (countAlcohol && AlcoholItem.isAlcoholActive);
+        bool isCutOnce = IsCardHalved(cardInstance.cardData) || (countScissors && IsCardCut(cardInstance));
+        bool isCutTwice = IsCardHalved(cardInstance.cardData) && (countScissors && IsCardCut(cardInstance));
         var display = cardInstance.displayComponent;
-        display?.SetNegativeVisual(isNegative);
-        display?.SetDoubledVisual(isDoubled);
-        display?.SetCutVisual(isHalved);
-        display?.SetColorSwapVisual(isColorSwapped);
+
         display?.SetHidden(isHidden);
+        display?.SetNegativeVisual(isNegative);
+        display?.SetColorSwapVisual(isColorSwapped);
+        display?.SetDoubledOnceVisual(isDoubledOnce);
+        display?.SetDoubledTwiceVisual(isDoubledTwice);
+        display?.SetCutOnceVisual(isCutOnce);
+        display?.SetCutTwiceVisual(isCutTwice);
     }
     
     #endregion

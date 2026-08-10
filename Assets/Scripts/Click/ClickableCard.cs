@@ -1,11 +1,12 @@
 using System;
+using UnityEngine;
 
 public class ClickableCard : Clickable
 {
-    private int index;
+    [SerializeField] private Material outlineUse;
+    [SerializeField] private Material outlineCantUse;
     private CardInstance cardInstance;
     private BlackjackGame blackjackGame;
-
     private Action cardAction;
     private Action<CardInstance> cardEffect;
     
@@ -27,5 +28,20 @@ public class ClickableCard : Clickable
 
         cardEffect?.Invoke(cardInstance);
         cardAction?.Invoke();
+    }
+
+    protected override Material GetOutlineMaterial()
+    {
+        if(cardInstance != null && cardInstance.tarotData != null)
+        {
+            if(blackjackGame != null && blackjackGame.ShopManager.IsInventoryFull)
+            {
+                return outlineCantUse;
+            }
+
+            return outlineUse;
+        }
+
+        return base.GetOutlineMaterial();
     }
 }

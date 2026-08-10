@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 7723900486377494674}
   - component: {fileID: 4271305740355395440}
   - component: {fileID: 2977236935779726152}
+  - component: {fileID: 6715192796997446084}
+  - component: {fileID: 5795830307654412241}
   m_Layer: 0
   m_Name: Back
   m_TagString: Untagged
@@ -89,6 +91,47 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &6715192796997446084
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4109562166024597720}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &5795830307654412241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4109562166024597720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a9cd3a51046fcf48a5377107e8f1893, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ClickableCard
+  clickEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
+  tooltipHeader: 
+  tooltipContent: 
+  showTooltip: 0
 --- !u!1 &6293517785715495983
 GameObject:
   m_ObjectHideFlags: 0
@@ -137,6 +180,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardDisplay
   cardBack: {fileID: 4109562166024597720}
   cardFace: {fileID: 9034940212256219247}
+  textureAce11: {fileID: 2800000, guid: 48380517547075d498c6f414bedc198e, type: 3}
+  textureAce1: {fileID: 2800000, guid: bd3c882db5537004996538d6954aee18, type: 3}
 --- !u!1 &9034940212256219247
 GameObject:
   m_ObjectHideFlags: 0
@@ -205,7 +250,7 @@ MeshRenderer:
   m_RenderingLayerMask: 32
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 77de20245e42a504ba70893c19db7303, type: 2}
+  - {fileID: 2100000, guid: c0ec1354f68b85841928fbd85d55a84a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

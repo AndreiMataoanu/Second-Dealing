@@ -79,12 +79,19 @@ public class ItemManager : MonoBehaviour
             blackjackGame.SellItem(item.GetResalePrice());
             
             AudioManager.instance.Play("ItemBuy");
-            
+
+            item.delayDestroy = false;
+
             shopManager.RemoveFromInventory(item); 
         }
-        if(shopManager.State == ShopState.Closed)
+
+        if(shopManager.State == ShopState.Open)
         {
-            shopManager.PlaySuitcaseOpen();   
+            shopManager.DespawnShopItems(1);
+        }
+        else if(shopManager.State == ShopState.Closed)
+        {
+            shopManager.PlaySuitcaseOpen(1);
         }
     }
     

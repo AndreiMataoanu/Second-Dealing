@@ -11,8 +11,6 @@ public abstract class Item : Clickable
 
     [Header("Shop Stats")]
     [SerializeField] protected int basePrice;
-    [Tooltip("Percentage cost. Example: 0.1 = 10%")]
-    [SerializeField] private float percentagePrice = 0.1f;
     [Tooltip("Subtract percentage of current price on resale.")]
     [Range(0, 1)] [SerializeField] private float resaleLossPercentage = 0.5f;
     [SerializeField] public ItemType type;
@@ -23,7 +21,7 @@ public abstract class Item : Clickable
     [HideInInspector] public bool delayDestroy;
     protected bool isCardSelecting;
 
-    private float multiplier = 1.0f;
+    private float coinMultiplier = 1.0f;
 
     internal CardEffectActions cardEffect;
 
@@ -46,7 +44,7 @@ public abstract class Item : Clickable
     public void SetMultiplier(float value = 1.0f)
     {
         if (type == ItemType.Coin) return;
-        multiplier = value;
+        coinMultiplier = value;
     }
 
     #endregion
@@ -134,7 +132,7 @@ public abstract class Item : Clickable
             discount = KeepsakeManager.instance.GetShopDiscount();
         }
 
-        int finalPrice = Mathf.RoundToInt(basePrice * (1f - discount));
+        int finalPrice = Mathf.RoundToInt(basePrice * coinMultiplier * blackjackGame.ShopManager.priceMultiplier * (1f - discount));
 
         return Mathf.Max(1, finalPrice);
     }
@@ -143,16 +141,7 @@ public abstract class Item : Clickable
     {
         if(!blackjackGame) return basePrice;
 
-        int money = blackjackGame.PlayerMoney;
-
-        if(money >= blackjackGame.percentagePriceThreshold)
-        {
-            var currentPrice = Mathf.RoundToInt(money * percentagePrice);
-            currentPrice -= Mathf.RoundToInt(currentPrice * resaleLossPercentage);
-            return currentPrice;
-        }
-
-        return basePrice - Mathf.RoundToInt(basePrice * resaleLossPercentage);
+        return GetPrice() - Mathf.RoundToInt(GetPrice() * resaleLossPercentage);
     }
 
     #endregion

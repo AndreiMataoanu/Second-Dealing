@@ -56,11 +56,20 @@ public class AcidItem : Item
     private IEnumerator DissolveCard(CardInstance cardInstance)
     {
         CardEffects.SetDissolvedVisual(cardInstance.displayComponent, dissolveTime, color,dissolveBorder);
+
         cardInstance.displayComponent.SetFaceColliderActive(false);
 
         yield return new WaitForSeconds(dissolveTime);
-        
-        tableCards.DestroyCard(cardInstance);
+
+        if(cardInstance.cardData.rank == Card.Rank.Joker)
+        {
+            tableCards.ReturnCardToDeckTop(cardInstance);
+        }
+        else
+        {
+            tableCards.DestroyCard(cardInstance);
+        }
+
         blackjackGame.EvaluateDoubleDownCondition();
         
         yield return null;

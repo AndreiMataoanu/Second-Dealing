@@ -6,11 +6,11 @@ public class KeepsakeManager : MonoBehaviour
     public static KeepsakeManager instance;
 
     [SerializeField] private List<Transform> tableSpawnPoints;
-    public int maxKeepsakes = 3;
+    public int currentKeepsakes = 1;
     private List<GameObject> currentTableObjects = new List<GameObject>();
     public List<Keepsake> equippedKeepsakes = new List<Keepsake>();
 
-    public bool IsKeepsakeEquipFull => equippedKeepsakes.Count >= maxKeepsakes;
+    public bool IsKeepsakeEquipFull => equippedKeepsakes.Count >= currentKeepsakes;
     
     private void Awake()
     {
@@ -251,6 +251,14 @@ public class KeepsakeManager : MonoBehaviour
             {
                 secondDealing.Recharge();
             }
+        }
+    }
+
+    public void IncreaseMaxKeepsakes()
+    {
+        if(currentKeepsakes < 4)
+        {
+            currentKeepsakes++;
         }
     }
 }

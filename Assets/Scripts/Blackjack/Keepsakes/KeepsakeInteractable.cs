@@ -5,6 +5,8 @@ public class KeepsakeInteractable : Clickable
     [SerializeField] private Keepsake keepsake;
     [SerializeField] private BlackjackGame blackjackGame;
     [SerializeField] private Material lockedMaterial;
+    [SerializeField] private Material outlineSelect;
+    [SerializeField] private Material outlineFull;
     [SerializeField] public Vector3 rotationInHand;
     [SerializeField] public Vector3 scaleInHand;
 
@@ -13,7 +15,7 @@ public class KeepsakeInteractable : Clickable
 
     public void SetBlackjackGame(BlackjackGame game) => blackjackGame = game;
     public Keepsake GetKeepsake() => keepsake;
-    
+
     private void Start()
     {
         objectRenderer = GetComponent<Renderer>();
@@ -110,5 +112,24 @@ public class KeepsakeInteractable : Clickable
         }
 
         return $"\n{keepsake.description}";
+    }
+
+    protected override Material GetOutlineMaterial()
+    {
+        bool requirementMet = KeepsakeUnlockProgression.instance.HasMetRequirement(keepsake);
+
+        if(!requirementMet)
+        {
+            return base.GetOutlineMaterial();
+        }
+
+        bool isFull = KeepsakeManager.instance.IsKeepsakeEquipFull;
+
+        if(isFull)
+        {
+            return outlineFull;
+        }
+
+        return outlineSelect;
     }
 }

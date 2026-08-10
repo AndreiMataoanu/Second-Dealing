@@ -199,4 +199,9 @@ public class Deck
 
         return null;
     }
+
+    public void AddCardToTop(Card card)
+    {
+        cards.Insert(0, card);
+    }
 }

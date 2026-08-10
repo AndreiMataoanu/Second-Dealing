@@ -523,6 +523,56 @@ public class TableCards : MonoBehaviour
         CardEffects.SetVisualEffects(PeekCardInstance, false, false, true);
     }
 
+    public void UpdateAceVisuals()
+    {
+        foreach(var hand in playerHands)
+        {
+            CheckAceVisuals(hand, true);
+        }
+
+        CheckAceVisuals(dealerHand, false);
+    }
+
+    private void CheckAceVisuals(List<CardInstance> hand, bool countJoker)
+    {
+        var aces = new List<(CardInstance instance, float reduction)>();
+        float handValue = 0f;
+
+        foreach(var cardInstance in hand)
+        {
+            var possibleValues = CardEffects.GetCardValuesFromEffects(cardInstance, countJoker);
+
+            handValue += possibleValues[0];
+
+            if(possibleValues.Count == 2 && cardInstance.cardData.rank == Card.Rank.Ace)
+            {
+                aces.Add((cardInstance, possibleValues[0] - possibleValues[1]));
+            }
+        }
+
+        HashSet<CardInstance> reducedAces = new HashSet<CardInstance>();
+
+        if(EventManager.currentAceRule == AceValueRule.Flexible)
+        {
+            aces.Sort((a, b) => b.reduction.CompareTo(a.reduction));
+
+            foreach(var ace in aces)
+            {
+                if(handValue > BlackjackGame.blackjackGoal || handValue < -BlackjackGame.blackjackGoal)
+                {
+                    handValue += (handValue > 0) ? -ace.reduction : ace.reduction;
+                    reducedAces.Add(ace.instance);
+                }
+            }
+        }
+
+        foreach(var ace in aces)
+        {
+            bool shouldBe1 = reducedAces.Contains(ace.instance) || EventManager.currentAceRule == AceValueRule.Always1;
+
+            ace.instance.displayComponent.SetAceValueVisual(shouldBe1);
+        }
+    }
     #endregion
 
     #region Calculate Hand Values
@@ -604,22 +654,57 @@ public class TableCards : MonoBehaviour
         {
             cardPrefabLookup.TryGetValue((Card.GetRankForValue(Mathf.Abs(realValue)), card.cardData.suit), out GameObject realCard);
             GameObject realCardObject = Instantiate(realCard, card.CardObject.transform.position, card.CardObject.transform.rotation, parent);
+
+            Vector3 newLocalPos = card.CardObject.transform.localPosition;
+
+            newLocalPos.z += 0.0005f;
+            realCardObject.transform.localPosition = newLocalPos;
+
             var display = realCardObject.GetComponent<CardDisplay>();
             
             if(card.cardData.jokerValue < 0)
                 display?.SetNegativeVisual(true);
 
             if(card.cardData.jokerValue > 11 || card.cardData.jokerValue < -11)
-                display?.SetDoubledVisual(true);
+                display?.SetDoubledOnceVisual(true);
 
             activeCardObjects.Add(realCardObject);      
         }
         
-        return CardEffects.SetDissolvedVisual(card.displayComponent, 2.0f, Color.aliceBlue,1.2f);                
+        return CardEffects.SetDissolvedVisual(card.displayComponent, 2.0f, Color.aliceBlue, 1.2f);                
     }
 
+    public void ReturnCardToDeckTop(CardInstance cardInstance)
+    {
+        GameObject cardObject = cardInstance.displayComponent.gameObject;
+        CardEffects.RemoveCutCard(cardInstance);
+        CardEffects.RemoveAlcoholCard(cardInstance);
+
+        activeCardObjects.Remove(cardObject);
+        GameDeck.AddCardToTop(cardInstance.cardData);
+
+        if(dealerHand.Remove(cardInstance))
+        {
+            UpdateHandVisuals(dealerHand, false);
+        }
+
+        playerHands.ForEach(hand =>
+        {
+            hand.Remove(cardInstance);
+            UpdateHandVisuals(hand, true);
+        });
+
+        if(cardInstance == PeekCardInstance)
+        {
+            PeekCardInstance = null;
+        }
+
+        Destroy(cardObject);
+
+        game.UpdateUI();
+    }
     #endregion
-    
+
     #region Helper Methods
 
     private void DestroyPeekCard()
