@@ -139,6 +139,17 @@ public class ShopManager : MonoBehaviour
 
         ResetShopPrices();
 
+        if(restockAmount == -1)
+        {
+            foreach(var spawnPoint in buySpawnPoints)
+            {
+                foreach(Transform child in spawnPoint.transform)
+                {
+                    Destroy(child.gameObject);
+                }
+            }
+        }
+
         state = ShopState.Closed;
 
         if(!blackjackGame.isRoundActive && inventoryItemCount < useSpawnPoints.Count)

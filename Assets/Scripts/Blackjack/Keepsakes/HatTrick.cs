@@ -53,7 +53,6 @@ public class HatTrick : Keepsake
 
         isHatTrickActive = true;
         isCardSelecting = true;
-        
         cardEffect.SelectCard();
         cardEffect.AddItemCardEffectAction(TryHatTrickCard);
         usesThisRound++;
@@ -63,9 +62,10 @@ public class HatTrick : Keepsake
 
     private void TryHatTrickCard(CardInstance cardInstance)
     {
-        if (!CheckHatTrickValid(cardInstance)) return;
+        if(!CheckHatTrickValid(cardInstance)) return;
 
         isCardSelecting = false;
+
         AddHatTrickCard(cardInstance);        
     }
 
@@ -76,9 +76,10 @@ public class HatTrick : Keepsake
         if(!isValidTarget && tableCards.DealerHand.Contains(cardInstance))
             isValidTarget = true;
 
-        if (isValidTarget && !cardInstance.isHidden) return true;
+        if(isValidTarget) return true;
         
         AudioManager.instance.Play("ItemDeny");
+
         return false;
     }
 
@@ -88,7 +89,6 @@ public class HatTrick : Keepsake
         
         game.isActionLocked = true;
         game.canDoubleDown = false;
-        
         tableCards.GameDeck.AddCardCopies(cardInstance.cardData, 1);
         game.HandleNewCardInPlayerHand(cardInstance);
         cardEffect.OnCardSelected();

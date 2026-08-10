@@ -32,7 +32,6 @@ public class BlackjackGame : MonoBehaviour
     private int maxMoneyThisRun = 0;
     [HideInInspector] public bool isSplitting = false;
     [HideInInspector] public bool isActionLocked = false;
-    private bool isMedicineActive = false;
     private bool useAfterStand = false;
     private bool tutorialCompleted = false;
     private bool hasSeenSplitTutorial = false;
@@ -329,22 +328,14 @@ public class BlackjackGame : MonoBehaviour
     
     public bool ActivateBpMedicine()
     {
-        if (!isRoundActive) return false;
-        isMedicineActive = true;
+        if(!isRoundActive) return false;
+
+        useAfterStand = true;
 
         return true;
     }
 
-    public void DeactivateBpMedicine() => isMedicineActive = false;
-
-    private IEnumerator ActivateMedicineCoroutine()
-    {
-        useAfterStand = true;
-        
-        yield return new WaitForSeconds(5.0f);
-        
-        useAfterStand = false;
-    }
+    public void DeactivateBpMedicine() => useAfterStand = false;
 
     public void HandleNewCardInPlayerHand(CardInstance cardInstance)
     {
@@ -489,7 +480,8 @@ public class BlackjackGame : MonoBehaviour
         canDoubleDown = false;
         isSplitting = false;
         tieTauntPlayed = false;
-        
+        useAfterStand = false;
+
         itemManager.DeactivateItems();
         KeepsakeManager.instance.DeactivateKeepsakes();
 
@@ -632,7 +624,6 @@ public class BlackjackGame : MonoBehaviour
         isActionLocked = true;
         
         KeepsakeManager.instance.AllowPostStandItem(this);
-        if(isMedicineActive) StartCoroutine(ActivateMedicineCoroutine());
         
         standHandAnimator.SetTrigger("standTrigger");
 
@@ -835,6 +826,8 @@ public class BlackjackGame : MonoBehaviour
         UpdateUI(!tableCards.isDealerCardFlipped);
 
         yield return StartCoroutine(RevealJokers());
+
+        useAfterStand = false;
 
         int finalDealerValue = tableCards.CalculateDealerHandValue(true);
         int playerValue = tableCards.CalculateHandValue(tableCards.PlayerHands[0], true);
@@ -1267,6 +1260,14 @@ public class BlackjackGame : MonoBehaviour
         if(!tableCards.IsPlayerTurn)
         {
             canDoubleDown = false;
+
+            return;
+        }
+
+        if(tableCards.CurrentHand.Count > 2 && !KeepsakeManager.instance.AllowEndlessDoubleDown())
+        {
+            canDoubleDown = false;
+
             return;
         }
 
