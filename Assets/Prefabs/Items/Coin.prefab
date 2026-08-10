@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5322661908984034421}
   - component: {fileID: 1723909990596231264}
   - component: {fileID: 1180288339886193368}
-  - component: {fileID: 3212397742131236875}
+  - component: {fileID: 8531535238682378152}
   m_Layer: 0
   m_Name: Coin
   m_TagString: Untagged
@@ -115,14 +115,13 @@ MonoBehaviour:
   outlineCantUse: {fileID: 2100000, guid: 36f05641255eb3e43a4474d269a6ccf1, type: 2}
   outlineSell: {fileID: 2100000, guid: 8d473ecee8d3b76488e03a78e946413a, type: 2}
   basePrice: 1
-  percentagePrice: 0
   resaleLossPercentage: 0
   type: 10
   spawnWeight: 10
   isPurchased: 0
   delayDestroy: 0
---- !u!136 &3212397742131236875
-CapsuleCollider:
+--- !u!64 &8531535238682378152
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -139,8 +138,7 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5216581434543980006, guid: 036d09e2b159c463f805508a950628c7, type: 3}

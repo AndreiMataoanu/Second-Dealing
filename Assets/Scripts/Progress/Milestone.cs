@@ -16,6 +16,8 @@ public class Milestone
     [HideInInspector] public List<GameObject> keepsakes;
 }
 
+#if UNITY_EDITOR
+
 [CustomPropertyDrawer(typeof(Milestone))]
 public class MilestonePropertyDrawer : PropertyDrawer
 {
@@ -52,3 +54,5 @@ public class MilestonePropertyDrawer : PropertyDrawer
             EditorGUILayout.PropertyField(keepsakesProperty);
     }
 }
+
+#endif
