@@ -1,5 +1,18 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+
+public enum CardTrigger
+{
+    Acid,
+    Scissors,
+    AddCardsEvent,
+    AntiMatter,
+    Pyro,
+    HatTrick,
+    HiddenAce,
+    SprayCan
+}
 
 public class CursorDetection : MonoBehaviour
 {
@@ -7,9 +20,12 @@ public class CursorDetection : MonoBehaviour
     [SerializeField] private List<Clickable> roundActiveClickables;
     [SerializeField] private List<Clickable> roundInactiveClickables;
     [SerializeField] private List<Transform> cardTransforms;
-    
+    [SerializeField] private Transform cardOptions;
+
+    private bool isSelectingCard;
     private List<Clickable> cardClickables;
-    
+    public List<Clickable> tarotClickables = new();
+
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.None;
@@ -31,7 +47,7 @@ public class CursorDetection : MonoBehaviour
             {
                 var clickable = hit.transform.GetComponent<Clickable>();
 
-                if(clickable != null)
+                if(clickable)
                 {
                     clickable.OnClick(mouseButton);
                 }
@@ -49,92 +65,152 @@ public class CursorDetection : MonoBehaviour
     {
         SetClickables(roundActiveClickables, false);
         SetClickables(roundInactiveClickables, true);
+        SetClickables(tarotClickables, false);
     }
 
-    public void OnDealerTurn()
+    public void SetAllInactive()
     {
         SetClickables(roundActiveClickables, false);
         SetClickables(roundInactiveClickables, false);
+        SetClickables(tarotClickables, false);
     }
 
     private void SetClickables(List<Clickable> clickables, bool isActive)
     {
-        foreach (var clickable in clickables)
+        clickables.ForEach(clickable => SetClickable(clickable, isActive));
+    }
+
+    private void SetClickable(Clickable clickable, bool isActive)
+    {
+        clickable.SetActive(isActive);
+        clickable.OnRemoveOutline();
+    }
+
+    #region Clickable Cards
+    public void OnEventSelectCard(Transform cardsPosition, BlackjackGame blackjackGame, CardTrigger cardTrigger)
+    {
+        cardClickables = new List<Clickable>();
+        AddClickableCards(cardsPosition, blackjackGame, cardTrigger);
+        SetClickables(cardClickables, true);
+        SetClickables(roundActiveClickables, false);
+    }
+
+    public void OnItemSelectCard(BlackjackGame blackjackGame, CardTrigger cardTrigger)
+    {
+        isSelectingCard = true;
+        AddAllClickableCards(blackjackGame, cardTrigger);
+        SetClickables(cardClickables, true);
+        SetClickables(roundActiveClickables, false);
+        SetClickables(tarotClickables, false);
+    }
+
+    private void AddAllClickableCards(BlackjackGame blackjackGame, CardTrigger cardTrigger)
+    {
+        cardClickables = new List<Clickable>();
+        foreach (var cardsTransform in cardTransforms)
+            AddClickableCards(cardsTransform, blackjackGame, cardTrigger);
+    }
+
+    private void AddClickableCards(Transform cardsTransform, BlackjackGame blackjackGame, CardTrigger cardTrigger)
+    {
+        foreach(Transform card in cardsTransform)
         {
-            clickable.SetActive(isActive);
-            clickable.OnRemoveOutline();
+            var cardDisplay = card.GetComponent<CardDisplay>();
+            var clickableCard = card.GetComponentInChildren<ClickableCard>();
+
+            if(clickableCard)
+            {
+                var cardInstance = cardDisplay.GetCardInstance();
+                if (cardTrigger == CardTrigger.Scissors && CardEffects.IsCardCut(cardInstance)) continue;
+                if (cardInstance.tarotData) continue;
+                
+                clickableCard.SetCardInstance(cardInstance);
+                clickableCard.SetBlackjackGame(blackjackGame);
+                clickableCard.AddCardAction(EndSelectCard);
+
+                cardClickables.Add(clickableCard);
+            }
+        }
+    }
+
+    private void AddActionToClickableCards(Action<CardInstance> cardAction, List<Clickable> clickableList)
+    {
+        foreach (var clickable in clickableList)
+        {
+            var card = (ClickableCard)clickable;
+            card.AddCardEffect(cardAction);
+        }
+    }
+    
+    public void AddActionToClickableCards(Action<CardInstance> cardAction)
+    {
+        AddActionToClickableCards(cardAction, cardClickables);
+    }
+
+    public void EndSelectCard()
+    {
+        if (!isSelectingCard) return;
+        
+        ResetClickables(cardClickables);
+        SetClickables(roundActiveClickables, true);
+        SetClickables(tarotClickables, true);
+        
+        isSelectingCard = false;
+    }
+
+    private void ResetClickables(List<Clickable> clickables)
+    {
+        RemoveCardEffects(clickables);
+        SetClickables(clickables, false);
+        clickables.RemoveAll(_ => true);
+    }
+
+    private void RemoveCardEffects(List<Clickable> clickableCards)
+    {
+        foreach(var clickable in clickableCards)
+        {
+            var cardClickable = clickable as ClickableCard;
+            cardClickable?.RemoveCardEffect();
         }
     }
 
     public void AddRoundActiveClickable(Clickable clickable)
     {
-        roundActiveClickables.Add(clickable);
+        if(!roundActiveClickables.Contains(clickable))
+            roundActiveClickables.Add(clickable);
     }
 
-    #region Clickable Cards
-
-    public void OnUseScissors(BlackjackGame blackjackGame)
+    public void RemoveRoundActiveClickable(Clickable clickable)
     {
-        AddAllClickableCards(blackjackGame);
-        SetClickables(cardClickables, true);
-        SetClickables(roundActiveClickables, false);
+        roundActiveClickables.Remove(clickable);
     }
-
-    private void AddAllClickableCards(BlackjackGame blackjackGame)
-    {
-        cardClickables = new List<Clickable>();
-        foreach (var cardsTransform in cardTransforms)
-            AddClickableCards(cardsTransform, blackjackGame);
-    }
-
-    private void AddClickableCards(Transform cardsTransform, BlackjackGame blackjackGame)
-    {
-        foreach (Transform card in cardsTransform)
-        {
-            var cardDisplay = card.GetComponent<CardDisplay>();
-            var face = card.transform.GetChild(0);
-            if (face)
-            {
-                var clickableCard = face.GetComponent<ClickableCard>();
-                if (clickableCard)
-                {
-                    if(blackjackGame.IsCardScissored(cardDisplay.GetCardInstance())) continue;
-
-                    clickableCard.SetCardInstance(cardDisplay.GetCardInstance());
-                    clickableCard.SetBlackjackGame(blackjackGame);
-                    clickableCard.AddAction(OnClickCard);
-                    clickableCard.AddAction(clickableCard.OnCutCard);
-                    clickableCard.AddAction(ReactivateClickables);
-                    cardClickables.Add(clickableCard);
-                }
-            }
-        }
-    }
-    
-    private void OnClickCard()
-    {
-        RemoveCardActions();
-        SetClickables(cardClickables, false);
-        cardClickables.RemoveAll(_ => true);
-    }
-
-    private void RemoveCardActions()
-    {
-        foreach (var clickable in cardClickables)
-        {
-            var cardClickable = (ClickableCard)clickable;
-
-            if (cardClickable)
-            {
-                cardClickable.RemoveAction(OnClickCard);
-                cardClickable.RemoveAction(cardClickable.OnCutCard);
-                cardClickable.RemoveAction(ReactivateClickables);
-            }
-        }
-    }
-
-    private void ReactivateClickables() => SetClickables(roundActiveClickables, true);
 
     #endregion
 
+    #region Clickable Tarot Cards
+
+    public void ResetTarotClickables() => ResetClickables(tarotClickables);
+
+    public ClickableCard AddTarotClickable(BlackjackGame blackjackGame, CardInstance cardInstance)
+    {
+        ClickableCard clickableCard = cardInstance.CardObject.GetComponentInChildren<ClickableCard>();
+        
+        if (!clickableCard || !cardInstance.tarotData || !cardInstance.tarotData.rewardItemPrefab) return null;
+                    
+        clickableCard.SetCardInstance(cardInstance);
+        clickableCard.SetBlackjackGame(blackjackGame);
+
+        SetClickable(clickableCard, true);
+        tarotClickables.Add(clickableCard);
+
+        return clickableCard;
+    }
+
+    public void SetCardActive(CardInstance cardInstance, bool isActive)
+    {
+        var clickableCard = cardInstance.CardObject.GetComponentInChildren<ClickableCard>();
+        SetClickable(clickableCard, isActive);
+    }
+    
+    #endregion
 }

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7f244b17a111d14a92eb72c6ffc098d, type: 3}
+  m_Name: GlassEye
+  m_EditorClassIdentifier: Assembly-CSharp::GlassEye
+  keepsakeName: Glass Eye
+  description: Permanently reveal the facedown card of the dealer
+  unlockDescription: 
+  requiredChallenge: 0
+  requiredTarget: 0
+  tablePrefab: {fileID: 8502350734266684865, guid: 39f755fa21069f048ab2c7d1d0729216, type: 3}
+  isActive: 0

@@ -1,0 +1,39 @@
+using System.Collections;
+using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using Utils;
+
+public class Stats : MonoBehaviour
+{
+    [SerializeField] private TextMeshProUGUI moneyEarnedText;
+    [SerializeField] private TextMeshProUGUI timesWon;
+    [SerializeField] private TextMeshProUGUI timesLost;
+    [SerializeField] private Animator fadeInAnimator;
+    [SerializeField] private float delay = 2f;
+
+    private void Start()
+    {
+        Time.timeScale = 1f;
+
+        moneyEarnedText.text = "Money earned: " + (PlayerPrefs.GetInt("PreviousRunMoney") - 500).ToString();
+        timesWon.text = "Rounds won: " + PlayerPrefs.GetInt("PreviousRunWins").ToString();
+        timesLost.text = "Rounds lost: " + PlayerPrefs.GetInt("PreviousRunLoss").ToString();
+    }
+
+    public void GoBack()
+    {
+        StartCoroutine(fadeRoutine());
+    }
+
+    public IEnumerator fadeRoutine()
+    {
+        fadeInAnimator.SetTrigger("fadeInTrig");
+
+        yield return StartCoroutine(GameUtils.WaitDelayOrInput(delay));
+
+        SceneManager.LoadSceneAsync(1);
+
+        yield return null;
+    }
+}

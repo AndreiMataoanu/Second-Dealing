@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4002626337910349976
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2146022833143056090}
+  - component: {fileID: 6917493003461796987}
+  m_Layer: 0
+  m_Name: ShopManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2146022833143056090
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4002626337910349976}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6917493003461796987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4002626337910349976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea2df35e22e2a8147b59c89436d212f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShopManager
+  buySpawnPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  useSpawnPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  itemPrefabs:
+  - {fileID: 1924209306517141075, guid: 37d5d85146b9d8844b7ae3cacc03e4a1, type: 3}
+  - {fileID: 8494693382871204226, guid: 61423405580a5a64d930ccf474fe397d, type: 3}
+  - {fileID: 8317044011722196100, guid: 8aeb761f10f864350a0aecf0e0c10996, type: 3}
+  - {fileID: 8971799658439938891, guid: 283d37590a8bfac4b8a554ed0f4817ee, type: 3}
+  - {fileID: 759079984103332867, guid: ddbd409d070fcbd409595389bde2128c, type: 3}
+  - {fileID: 7098207735584986369, guid: 56af34de3a7d441eaa5726c833ab73ef, type: 3}
+  - {fileID: 7609562550686427152, guid: 724a128212951a445a7e2d9de9e4aa2c, type: 3}
+  - {fileID: 3226192414058870725, guid: 08752688242307a4db155f11b51f3ae6, type: 3}
+  - {fileID: 2913302698420253507, guid: 7e9e18d91886a45a4b32e403eadfb330, type: 3}
+  - {fileID: 6253389534292605265, guid: 08275bcefc07b4b52ab13520a11ef74b, type: 3}
+  - {fileID: 2980179407904630526, guid: 726c88f1c8721024993d2112799b21f0, type: 3}
+  denySoundCooldown: 0.3
+  suitcaseAnimator: {fileID: 0}

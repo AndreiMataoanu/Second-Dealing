@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 536278a1f5947de4bae9b6435b76868d, type: 3}
+  m_Name: AntiMatter
+  m_EditorClassIdentifier: Assembly-CSharp::KeepsakeAntiMatter
+  keepsakeName: Anti Matter
+  description: Make 1 card negative per round
+  unlockDescription: Trigger negative events
+  requiredChallenge: 2
+  requiredTarget: 21
+  tablePrefab: {fileID: 2708514875635923006, guid: 4434f6f741ce327469a7fbd0663a11fe, type: 3}
+  isActive: 1

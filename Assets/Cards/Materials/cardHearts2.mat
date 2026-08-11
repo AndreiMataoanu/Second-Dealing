@@ -90,15 +90,22 @@ Material:
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
+    - _ColorSwapped: 0
     - _Cull: 2
     - _CutInHalf: 0
+    - _CutOnce: 0
+    - _CutTwice: 0
     - _Cutoff: 0.5
-    - _CutoffHeight: -0.15
+    - _CutoffHeight: -0.4
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _Direction: -1
+    - _Dissolve: 0.000001
+    - _DissolveEdge: 1.15
     - _Doubled: 0
-    - _DoubledEffectSpeed: 0.3
+    - _DoubledEffectSpeed: 0.03
+    - _DoubledOnce: 0
+    - _DoubledTwice: 0
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EffectSpeed: 0.05
@@ -107,10 +114,11 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _GlowThickness: -1
+    - _GlowThickness: -1.6
     - _Metallic: 0
     - _Negative: 0
     - _NegativeEffectSpeed: 0.05
+    - _NegativeShimmer: 1.2
     - _NoiseScale: 10
     - _NoiseStrength: 0.15
     - _OcclusionStrength: 1
@@ -119,25 +127,30 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
+    - _SecondCutoffHeight: 0
+    - _SecondGlowThickness: -0.9
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
-    - _VoronoiCellDensity: 1
+    - _VoronoiCellDensity: 2.5
     - _WorkflowMode: 1
     - _XRMotionVectorsPass: 1
     - _ZWrite: 1
     - _dHeight: 100
     - _dWidth: 45
+    - _startsBlack: 0
+    - _startsRed: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _BottomColor: {r: 1, g: 0, b: 0, a: 1}
+    - _BottomColor: {r: 1, g: 0.7452829, b: 0.7452829, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _DissolveColor: {r: 3.295597, g: 0.4707996, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _TopColor: {r: 1, g: 0.8874066, b: 0, a: 1}
+    - _TopColor: {r: 1, g: 0.9738932, b: 0.7704402, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &5643395009676826388

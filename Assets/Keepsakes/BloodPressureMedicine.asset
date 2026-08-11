@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 793d9a51359168342980f71ee7fa9c6b, type: 3}
+  m_Name: BloodPressureMedicine
+  m_EditorClassIdentifier: Assembly-CSharp::BloodPressureMedicine
+  keepsakeName: Blood Pressure Medicine
+  description: Use items for a short period after standing
+  unlockDescription: Try to use an item after standing
+  requiredChallenge: 5
+  requiredTarget: 21
+  tablePrefab: {fileID: 7995830724896159290, guid: 2c396bbf08daf5844a2b089d6decdc67, type: 3}
+  isActive: 0

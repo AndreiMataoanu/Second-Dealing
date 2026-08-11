@@ -1,59 +1,93 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+//using OutlineFx;
 
 public class Clickable : MonoBehaviour
 {
     [SerializeField] private UnityEvent clickEvent;
-    [SerializeField] private Material outline;
+    [SerializeField] private Color defaultOutlineColor = Color.white;
 
     [Header("Tooltip Settings")]
     [SerializeField] public string tooltipHeader;
-    [SerializeField] private string tooltipContent;
+    [TextArea][SerializeField] private string tooltipContent;
+    [SerializeField] protected bool showTooltip = true;
 
     private MeshCollider meshCollider;
     private Renderer meshRenderer;
+    private List<Renderer> meshRenderers = new();
+    private List<OutlineFx.OutlineFx> outlineEffects = new();
+    private OutlineFx.OutlineFx outlineFx;
     private bool hasOutline;
     protected bool IsActive;
 
     public void SetActive(bool active) => IsActive = active;
-    
-    private void Awake()
+    public void SetColliderActive(bool active) => meshCollider.enabled = active;
+    public bool IsVisible => meshRenderer.enabled;
+
+    public void SetVisibility(bool active)
+    {
+        meshRenderer.enabled = active;
+        meshRenderers.ForEach(r => r.enabled = active);
+    }
+
+    public bool ShowTooltip
+    {
+        get => showTooltip;
+        set => showTooltip = value;
+    }
+
+    protected virtual void Awake()
     {
         meshCollider = GetComponent<MeshCollider>();
         if (!meshCollider)
             meshCollider = gameObject.AddComponent<MeshCollider>();
         
         meshRenderer = GetComponent<Renderer>();
+        meshRenderers = new List<Renderer>(gameObject.GetComponentsInChildren<MeshRenderer>());
+        outlineFx = GetComponent<OutlineFx.OutlineFx>();
+        outlineEffects = new List<OutlineFx.OutlineFx>(gameObject.GetComponentsInChildren<OutlineFx.OutlineFx>());
+
+        if(!outlineFx)
+        {
+            outlineFx = gameObject.AddComponent<OutlineFx.OutlineFx>();
+        }
+
+        outlineFx.enabled = false;
     }
 
     protected virtual void OnMouseEnter()
     {
-        if (!outline || !IsActive) return;
-        
-        var materials = new List<Material>(meshRenderer.materials) { outline };
-        meshRenderer.materials = materials.ToArray();
-        hasOutline = true;
+        if(!IsActive) return;
+
+        ApplyOutline();
+
+        if(!showTooltip) return;
 
         TooltipManager.instance.ShowTooltip(GetTooltipContent(), GetTooltipHeader());
     }
 
     protected virtual void OnMouseExit()
     {
-        if (!IsActive) return;
+        if(!IsActive) return;
+
         OnRemoveOutline();
     }
 
-    public void OnRemoveOutline()
+    public void OnRemoveOutline(bool hideTooltip = true)
     {
-        if (!outline || !hasOutline) return;
-        
-        var materials = new List<Material>(meshRenderer.materials);
-        materials.RemoveAt(materials.Count - 1);
-        meshRenderer.materials = materials.ToArray();
-        hasOutline = false;
+        if(hideTooltip) TooltipManager.instance.HideTooltip();
 
-        TooltipManager.instance.HideTooltip();
+        if(!hasOutline) return;
+        
+        outlineFx.enabled = false;
+
+        foreach(var outline in outlineEffects)
+        {
+            outline.enabled = false;
+        }
+
+        hasOutline = false;
     }
 
     public virtual void OnClick(int mouseButton = 0)
@@ -68,13 +102,19 @@ public class Clickable : MonoBehaviour
         OnRemoveOutline();
     }
 
-    public void ApplyOutline()
+    public virtual void ApplyOutline()
     {
-        if(!outline || hasOutline || meshRenderer == null) return;
+        if(hasOutline) return;
 
-        var materials = new List<Material>(meshRenderer.materials) { outline };
+        outlineFx.Color = GetOutlineColor();
+        outlineFx.enabled = true;
 
-        meshRenderer.materials = materials.ToArray();
+        foreach(var outline in outlineEffects)
+        {
+            outline.Color = GetOutlineColor();
+            outline.enabled = true;
+        }
+
         hasOutline = true;
     }
 
@@ -85,6 +125,16 @@ public class Clickable : MonoBehaviour
 
     protected virtual string GetTooltipContent()
     {
-        return tooltipContent;
+        return $"\n{tooltipContent}";
+    }
+
+    //protected virtual Material GetOutlineMaterial()
+    //{
+    //    return outline;
+    //}
+
+    protected virtual Color GetOutlineColor()
+    {
+        return defaultOutlineColor;
     }
 }

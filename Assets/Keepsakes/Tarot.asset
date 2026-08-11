@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ef0aa4d8082d1a4eb0f5cd285f6b3dc, type: 3}
+  m_Name: Tarot
+  m_EditorClassIdentifier: Assembly-CSharp::Tarot
+  keepsakeName: Tarot
+  description: Adds tarot cards. Using tarot cards gives an item
+  unlockDescription: Use 21 items
+  requiredChallenge: 9
+  requiredTarget: 21
+  tablePrefab: {fileID: 8529617385274922148, guid: 0468823fa5a104242b2389021262dd74, type: 3}
+  isActive: 0

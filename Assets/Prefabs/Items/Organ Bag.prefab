@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 773640230402853183}
   - component: {fileID: 1486369379395768431}
   - component: {fileID: 2420839996289793243}
-  - component: {fileID: 1104469173180168018}
+  - component: {fileID: 2884707871050103308}
   - component: {fileID: 6708864065135472937}
   m_Layer: 0
   m_Name: Organ Bag
@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.5, y: -0.5, z: -0.5, w: 0.5}
   m_LocalPosition: {x: 0, y: 0.1, z: -0.08}
-  m_LocalScale: {x: 80, y: 80, z: 80}
+  m_LocalScale: {x: 50, y: 50, z: 50}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 9107966763981720886}
@@ -94,7 +94,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1104469173180168018
+--- !u!114 &2884707871050103308
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -103,21 +103,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 2913302698420253507}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b4b69a41c3e6634587c1021a34ba729, type: 3}
+  m_Script: {fileID: 11500000, guid: 4bd121e39b682aa4ca66bb6e59768bfc, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Item
+  m_EditorClassIdentifier: Assembly-CSharp::OrganBagItem
   clickEvent:
     m_PersistentCalls:
       m_Calls: []
-  outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
-  tooltipHeader: Organ in a Bag
-  tooltipContent: 'Passive: Sacrifice instead of your life'
-  basePrice: 600
-  percentagePrice: 0.4
+  defaultOutlineColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltipHeader: Organ in a bag
+  tooltipContent: 'Passive: Sacrifice it to save your life'
+  showTooltip: 1
+  outlineBuy: {r: 0, g: 1, b: 0, a: 1}
+  outlineUse: {r: 0, g: 0, b: 1, a: 1}
+  outlineCantUse: {r: 1, g: 0, b: 0, a: 1}
+  outlineSell: {r: 0.627451, g: 0.1254902, b: 0.9411765, a: 1}
+  basePrice: 150
+  resaleLossPercentage: 0.5
   type: 4
   spawnWeight: 4
   isPurchased: 0
-  lottoWorldText: {fileID: 0}
+  delayDestroy: 0
 --- !u!64 &6708864065135472937
 MeshCollider:
   m_ObjectHideFlags: 0

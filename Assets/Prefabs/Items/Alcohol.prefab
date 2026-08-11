@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3226192414058870725
+--- !u!1 &5069771665445725745
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,48 +8,46 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 197260204283052266}
-  - component: {fileID: 6178679673419364032}
-  - component: {fileID: 3438098718679603741}
-  - component: {fileID: -3838537479509687455}
-  - component: {fileID: 8674433730413865787}
+  - component: {fileID: 1541150443192908976}
+  - component: {fileID: 4190479075753304543}
+  - component: {fileID: 7149150385457960399}
   m_Layer: 0
-  m_Name: Alcohol
+  m_Name: Liquid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &197260204283052266
+--- !u!4 &1541150443192908976
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3226192414058870725}
+  m_GameObject: {fileID: 5069771665445725745}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.06, z: -0.04}
-  m_LocalScale: {x: 150, y: 150, z: 150}
-  m_ConstrainProportionsScale: 1
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!33 &6178679673419364032
+  m_Father: {fileID: 3464679359826424673}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &4190479075753304543
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3226192414058870725}
-  m_Mesh: {fileID: -7816268752676095930, guid: 51a5bd875f6884dbc8767c655f1d31e1, type: 3}
---- !u!23 &3438098718679603741
+  m_GameObject: {fileID: 5069771665445725745}
+  m_Mesh: {fileID: -9216810965846887918, guid: 6be16851f820cb84fa64f27f41a14182, type: 3}
+--- !u!23 &7149150385457960399
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3226192414058870725}
+  m_GameObject: {fileID: 5069771665445725745}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -68,7 +66,6 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 79e92628d33444a67a159c319ecbb249, type: 2}
   - {fileID: 2100000, guid: 604f974ea5cb6403eb8bfc13bd4c6fda, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -92,36 +89,105 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &-3838537479509687455
-MonoBehaviour:
+--- !u!1 &8494693382871204226
+GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3226192414058870725}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3464679359826424673}
+  - component: {fileID: 805975913673972836}
+  - component: {fileID: 6350047759576369490}
+  - component: {fileID: 7510145440598358499}
+  - component: {fileID: 8749637944679786812}
+  m_Layer: 0
+  m_Name: Alcohol
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3464679359826424673
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8494693382871204226}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.7071069, y: -0, z: 0, w: 0.7071067}
+  m_LocalPosition: {x: 0, y: 0.06, z: -0.04}
+  m_LocalScale: {x: 150, y: 150, z: 150}
+  m_ConstrainProportionsScale: 1
+  m_Children:
+  - {fileID: 1541150443192908976}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &805975913673972836
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8494693382871204226}
+  m_Mesh: {fileID: -920840221868071930, guid: 6be16851f820cb84fa64f27f41a14182, type: 3}
+--- !u!23 &6350047759576369490
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8494693382871204226}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b4b69a41c3e6634587c1021a34ba729, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Item
-  clickEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
-  tooltipHeader: Alcohol
-  tooltipContent: You see double
-  basePrice: 100
-  percentagePrice: 0.1
-  type: 6
-  spawnWeight: 15
-  isPurchased: 0
---- !u!64 &8674433730413865787
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 79e92628d33444a67a159c319ecbb249, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &7510145440598358499
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3226192414058870725}
+  m_GameObject: {fileID: 8494693382871204226}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -136,4 +202,34 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: -7816268752676095930, guid: 51a5bd875f6884dbc8767c655f1d31e1, type: 3}
+  m_Mesh: {fileID: -920840221868071930, guid: 6be16851f820cb84fa64f27f41a14182, type: 3}
+--- !u!114 &8749637944679786812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8494693382871204226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f452a679ecd0ae4fb1152c69fb7cb47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AlcoholItem
+  clickEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  outline: {fileID: 0}
+  tooltipHeader: Alcohol
+  tooltipContent: You see double
+  showTooltip: 1
+  outlineBuy: {fileID: 2100000, guid: d91925fefc835b0459f833b7a203a011, type: 2}
+  outlineUse: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
+  outlineCantUse: {fileID: 2100000, guid: 36f05641255eb3e43a4474d269a6ccf1, type: 2}
+  outlineSell: {fileID: 2100000, guid: 8d473ecee8d3b76488e03a78e946413a, type: 2}
+  basePrice: 50
+  resaleLossPercentage: 0.5
+  type: 6
+  spawnWeight: 15
+  isPurchased: 0
+  delayDestroy: 0
+  drinkDuration: 1

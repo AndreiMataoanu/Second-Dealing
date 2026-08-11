@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6203ff6a15df3334faa1061c8bca34fb, type: 3}
+  m_Name: 777
+  m_EditorClassIdentifier: Assembly-CSharp::Keepsake777
+  keepsakeName: 777
+  description: Get 3x payout when your hand contain three of the same value cards
+  unlockDescription: End a hand with 3 of the same value card
+  requiredChallenge: 13
+  requiredTarget: 1
+  tablePrefab: {fileID: 2708514875635923006, guid: 0d57b9b8183b18445bff91343c9b1c93, type: 3}
+  isActive: 0
+  requiredMatches: 3
+  payoutMultiplier: 3

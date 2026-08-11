@@ -65,7 +65,7 @@ MeshRenderer:
   m_SmallMeshCulling: 1
   m_ForceMeshLod: -1
   m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 32
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: e96bc2304419fa740b57f3101994c2c1, type: 2}
@@ -131,6 +131,7 @@ MonoBehaviour:
   outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
   tooltipHeader: 
   tooltipContent: 
+  showTooltip: 0
 --- !u!1 &5049072674838816431
 GameObject:
   m_ObjectHideFlags: 0
@@ -142,6 +143,8 @@ GameObject:
   - component: {fileID: 4625785199399545615}
   - component: {fileID: 2947140657169875005}
   - component: {fileID: 8458693262744694084}
+  - component: {fileID: 4857816823629861224}
+  - component: {fileID: 1611736372353853232}
   m_Layer: 0
   m_Name: Back
   m_TagString: Untagged
@@ -194,7 +197,7 @@ MeshRenderer:
   m_SmallMeshCulling: 1
   m_ForceMeshLod: -1
   m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 32
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 3fa98cde44111ab4fbb206b5d55ac01c, type: 2}
@@ -220,6 +223,47 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &4857816823629861224
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5049072674838816431}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1611736372353853232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5049072674838816431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a9cd3a51046fcf48a5377107e8f1893, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ClickableCard
+  clickEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
+  tooltipHeader: 
+  tooltipContent: 
+  showTooltip: 0
 --- !u!1 &6225167520831362867
 GameObject:
   m_ObjectHideFlags: 0

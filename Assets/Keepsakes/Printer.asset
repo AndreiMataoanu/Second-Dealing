@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ad75b612ecfa474e8dc55e503a203ed, type: 3}
+  m_Name: Printer
+  m_EditorClassIdentifier: Assembly-CSharp::Printer
+  keepsakeName: Printer
+  description: Permanently duplicate a card into the deck
+  unlockDescription: Trigger Add events
+  requiredChallenge: 4
+  requiredTarget: 21
+  tablePrefab: {fileID: 156278592956899532, guid: eb7d04515c81b7645b94343ea0a234cd, type: 3}
+  isActive: 1

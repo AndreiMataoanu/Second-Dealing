@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2de0e7b9410e2914ebb1a39043a69ca2, type: 3}
+  m_Name: BlueBall
+  m_EditorClassIdentifier: Assembly-CSharp::BlueBall
+  keepsakeName: Blue Ball
+  description: Dealer busts on blackjack
+  unlockDescription: Lose a turn by 1
+  requiredChallenge: 1
+  requiredTarget: 21
+  tablePrefab: {fileID: 7230270030638196340, guid: 28c9663549dc0d74e92e14635bb14ce2, type: 3}
+  isActive: 0

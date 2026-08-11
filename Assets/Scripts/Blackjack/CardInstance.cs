@@ -1,21 +1,26 @@
+using UnityEngine;
+
 public class CardInstance
 {
     public Card cardData;
 
     public CardDisplay displayComponent;
 
-    public bool isHidden;
+    public TarotCard tarotData;
 
-    public int jokerValue = 0;
+    public bool isHidden;
+    
+    public GameObject CardObject => displayComponent?.gameObject;
 
     public CardInstance(Card card, CardDisplay display, bool hidden = false)
     {
         cardData = card;
         displayComponent = display;
 
-        if(displayComponent != null)
+        if(displayComponent)
         {
             displayComponent.SetCardInstance(this);
+            tarotData = display.GetComponent<TarotCard>();
         }
 
         isHidden = hidden;
