@@ -4,10 +4,10 @@ using UnityEngine;
 public abstract class Item : Clickable
 {
     [Header("Outlines")]
-    [SerializeField] private Material outlineBuy;
-    [SerializeField] private Material outlineUse;
-    [SerializeField] private Material outlineCantUse;
-    [SerializeField] private Material outlineSell;
+    [SerializeField] private Color outlineBuy = Color.green;
+    [SerializeField] private Color outlineUse = Color.blue;
+    [SerializeField] private Color outlineCantUse = Color.red;
+    [SerializeField] private Color outlineSell = Color.purple;
 
     [Header("Shop Stats")]
     [SerializeField] protected int basePrice;
@@ -70,7 +70,7 @@ public abstract class Item : Clickable
         return base.GetTooltipHeader();
     }
 
-    protected override Material GetOutlineMaterial()
+    protected override Color GetOutlineColor()
     {
         if(!isPurchased)
         {

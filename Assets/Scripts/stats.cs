@@ -16,7 +16,7 @@ public class Stats : MonoBehaviour
     {
         Time.timeScale = 1f;
 
-        moneyEarnedText.text = "Money earned: "+ PlayerPrefs.GetInt("PreviousRunMoney").ToString();
+        moneyEarnedText.text = "Money earned: " + (PlayerPrefs.GetInt("PreviousRunMoney") - 500).ToString();
         timesWon.text = "Rounds won: " + PlayerPrefs.GetInt("PreviousRunWins").ToString();
         timesLost.text = "Rounds lost: " + PlayerPrefs.GetInt("PreviousRunLoss").ToString();
     }

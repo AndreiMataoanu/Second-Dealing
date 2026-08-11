@@ -3,7 +3,17 @@ guid: a97ca8fee6f1244b2bd013c06cfeb019
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hands.001
+    second: {fileID: 2100000, guid: 20115105cd40548ada271d3e8411073a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hattrick_cards
+    second: {fileID: 2100000, guid: a60ad19937d274a0d83ad840e3d0db65, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

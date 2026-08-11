@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+//using OutlineFx;
 
 public class Clickable : MonoBehaviour
 {
     [SerializeField] private UnityEvent clickEvent;
-    [SerializeField] private Material outline;
+    [SerializeField] private Color defaultOutlineColor = Color.white;
 
     [Header("Tooltip Settings")]
     [SerializeField] public string tooltipHeader;
@@ -15,6 +16,8 @@ public class Clickable : MonoBehaviour
     private MeshCollider meshCollider;
     private Renderer meshRenderer;
     private List<Renderer> meshRenderers = new();
+    private List<OutlineFx.OutlineFx> outlineEffects = new();
+    private OutlineFx.OutlineFx outlineFx;
     private bool hasOutline;
     protected bool IsActive;
 
@@ -42,6 +45,15 @@ public class Clickable : MonoBehaviour
         
         meshRenderer = GetComponent<Renderer>();
         meshRenderers = new List<Renderer>(gameObject.GetComponentsInChildren<MeshRenderer>());
+        outlineFx = GetComponent<OutlineFx.OutlineFx>();
+        outlineEffects = new List<OutlineFx.OutlineFx>(gameObject.GetComponentsInChildren<OutlineFx.OutlineFx>());
+
+        if(!outlineFx)
+        {
+            outlineFx = gameObject.AddComponent<OutlineFx.OutlineFx>();
+        }
+
+        outlineFx.enabled = false;
     }
 
     protected virtual void OnMouseEnter()
@@ -68,9 +80,13 @@ public class Clickable : MonoBehaviour
 
         if(!hasOutline) return;
         
-        var materials = new List<Material>(meshRenderer.materials);
-        materials.RemoveAt(materials.Count - 1);
-        meshRenderer.materials = materials.ToArray();
+        outlineFx.enabled = false;
+
+        foreach(var outline in outlineEffects)
+        {
+            outline.enabled = false;
+        }
+
         hasOutline = false;
     }
 
@@ -88,13 +104,17 @@ public class Clickable : MonoBehaviour
 
     public virtual void ApplyOutline()
     {
-        Material currentOutline = GetOutlineMaterial();
+        if(hasOutline) return;
 
-        if(!currentOutline || hasOutline || meshRenderer == null) return;
+        outlineFx.Color = GetOutlineColor();
+        outlineFx.enabled = true;
 
-        var materials = new List<Material>(meshRenderer.materials) { currentOutline };
+        foreach(var outline in outlineEffects)
+        {
+            outline.Color = GetOutlineColor();
+            outline.enabled = true;
+        }
 
-        meshRenderer.materials = materials.ToArray();
         hasOutline = true;
     }
 
@@ -108,8 +128,13 @@ public class Clickable : MonoBehaviour
         return $"\n{tooltipContent}";
     }
 
-    protected virtual Material GetOutlineMaterial()
+    //protected virtual Material GetOutlineMaterial()
+    //{
+    //    return outline;
+    //}
+
+    protected virtual Color GetOutlineColor()
     {
-        return outline;
+        return defaultOutlineColor;
     }
 }

@@ -43,7 +43,8 @@ public static class CardEffects
     public static void ClearCutCards() => cutCards.Clear();
     
     public static void AddNegativeSuit(Card.Suit suit) => negativeSuits.Add(suit);
-    
+    public static void ClearNegativeSuits() => negativeSuits.Clear();
+
     private static void AddAlcoholCard(CardInstance cardInstance)
     {
         alcoholCards.Add(cardInstance);
@@ -62,6 +63,8 @@ public static class CardEffects
     {
         return antiMatterCards.Remove((cardInstance.cardData.rank, cardInstance.cardData.suit));
     }
+
+    public static void ClearAntiMatterCards() => antiMatterCards.Clear();
 
     public static void AddHiddenAce(CardInstance cardInstance, int bonus)
     {
@@ -186,8 +189,6 @@ public static class CardEffects
     public static void Reset()
     {
         jokerCutCards.Clear();
-        negativeSuits.Clear();
-        antiMatterCards.Clear();
         alcoholCards.Clear();
         hiddenAceCards.Clear();
     }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class KeepsakeInteractable : Clickable
@@ -5,21 +6,26 @@ public class KeepsakeInteractable : Clickable
     [SerializeField] private Keepsake keepsake;
     [SerializeField] private BlackjackGame blackjackGame;
     [SerializeField] private Material lockedMaterial;
-    [SerializeField] private Material outlineSelect;
-    [SerializeField] private Material outlineFull;
+    [SerializeField] private Color outlineSelect = Color.green;
+    [SerializeField] private Color outlineFull = Color.red;
+    [SerializeField] private Color outlineDeselect = Color.purple;
     [SerializeField] public Vector3 rotationInHand;
     [SerializeField] public Vector3 scaleInHand;
 
-    private Renderer objectRenderer;
-    private Material[] originalMaterials;
+    private Renderer[] allRenderers;
+    private Dictionary<Renderer, Material[]> originalMaterialsDict = new Dictionary<Renderer, Material[]>();
 
     public void SetBlackjackGame(BlackjackGame game) => blackjackGame = game;
     public Keepsake GetKeepsake() => keepsake;
 
     private void Start()
     {
-        objectRenderer = GetComponent<Renderer>();
-        originalMaterials = objectRenderer.materials;
+        allRenderers = GetComponentsInChildren<Renderer>(true);
+
+        foreach(var r in allRenderers)
+        {
+            originalMaterialsDict[r] = r.materials;
+        }
 
         KeepsakeUnlockProgression.instance.OnProgressChanged += UpdateVisuals;
 
@@ -34,25 +40,32 @@ public class KeepsakeInteractable : Clickable
     private void UpdateVisuals()
     {
         bool isLocked = !KeepsakeUnlockProgression.instance.HasMetRequirement(keepsake);
+        bool isEquipped = KeepsakeManager.instance.equippedKeepsakes.Contains(keepsake);
 
-        if(isLocked)
+        if(isLocked || isEquipped)
         {
             OnRemoveOutline(true);
 
-            Material[] lockedMats = new Material[originalMaterials.Length];
-
-            for(int i = 0; i < lockedMats.Length; i++)
+            foreach(var r in allRenderers)
             {
-                lockedMats[i] = lockedMaterial;
-            }
+                Material[] lockedMats = new Material[originalMaterialsDict[r].Length];
 
-            objectRenderer.materials = lockedMats;
+                for(int i = 0; i < lockedMats.Length; i++)
+                {
+                    lockedMats[i] = lockedMaterial;
+                }
+
+                r.materials = lockedMats;
+            }
         }
-        else if(!isLocked)
+        else
         {
             OnRemoveOutline(true);
 
-            objectRenderer.materials = originalMaterials;
+            foreach(var r in allRenderers)
+            {
+                r.materials = originalMaterialsDict[r];
+            }
         }
     }
 
@@ -73,6 +86,8 @@ public class KeepsakeInteractable : Clickable
         {
             KeepsakeManager.instance.UnequipKeepsake(keepsake);
             AudioManager.instance.Play("ItemBuy");
+
+            UpdateVisuals();
         }
         else
         {
@@ -83,7 +98,8 @@ public class KeepsakeInteractable : Clickable
                 AudioManager.instance.Play("ItemBuy");
 
                 keepsake.ApplyInheritance(blackjackGame);
-                gameObject.SetActive(false);
+
+                UpdateVisuals();
             }
             else
             {
@@ -114,13 +130,18 @@ public class KeepsakeInteractable : Clickable
         return $"\n{keepsake.description}";
     }
 
-    protected override Material GetOutlineMaterial()
+    protected override Color GetOutlineColor()
     {
         bool requirementMet = KeepsakeUnlockProgression.instance.HasMetRequirement(keepsake);
 
         if(!requirementMet)
         {
-            return base.GetOutlineMaterial();
+            return base.GetOutlineColor();
+        }
+
+        if(KeepsakeManager.instance.equippedKeepsakes.Contains(keepsake))
+        {
+            return outlineDeselect;
         }
 
         bool isFull = KeepsakeManager.instance.IsKeepsakeEquipFull;

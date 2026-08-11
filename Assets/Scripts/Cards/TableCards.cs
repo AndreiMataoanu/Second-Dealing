@@ -69,8 +69,24 @@ public class TableCards : MonoBehaviour
     public List<List<CardInstance>> PlayerHands => playerHands;
     public List<CardInstance> CurrentHand
     {
-        get => playerHands[currentHandIndex];
-        set => playerHands[currentHandIndex] = value;
+        get
+        {
+            if(playerHands == null || playerHands.Count == 0)
+                return new List<CardInstance>();
+
+            int safeIndex = Mathf.Min(currentHandIndex, playerHands.Count - 1);
+
+            return playerHands[safeIndex];
+        }
+        set
+        {
+            if(playerHands != null && playerHands.Count > 0)
+            {
+                int safeIndex = Mathf.Min(currentHandIndex, playerHands.Count - 1);
+
+                playerHands[safeIndex] = value;
+            }
+        }
     }
 
     public List<CardInstance> DealerHand

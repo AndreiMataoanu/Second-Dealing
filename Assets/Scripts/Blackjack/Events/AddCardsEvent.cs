@@ -20,7 +20,6 @@ public class AddCardsEvent : BlackjackEvent
 
     public override IEnumerator GiveChoiceToPlayer(GameCamera gameCamera, CardChoiceEvent cardChoiceEvent)
     {
-        copyCount = Random.Range(copyRangeMin, copyRangeMax + 1);
         gameCamera.ChangeToCamera(CameraType.Playing);
         
         yield return new WaitForSeconds(1.5f);
@@ -32,6 +31,8 @@ public class AddCardsEvent : BlackjackEvent
 
     public override void ExplainChoiceDialogue(DialogueSystem dialogue)
     {
+        copyCount = Random.Range(copyRangeMin, copyRangeMax + 1);
+
         dialogue.ShowAddCardsText(copyCount);
     }
 
