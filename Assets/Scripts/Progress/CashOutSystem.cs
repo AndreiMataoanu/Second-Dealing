@@ -58,6 +58,7 @@ public class CashOutSystem : MonoBehaviour
             KeepsakeUnlockProgression.instance.AddStat(ChallengeType.Millionaire);
 
         CardEffects.ClearColorSwappedCards();
+        CardEffects.ClearAntiMatterCards();
         SceneManager.LoadSceneAsync(2);
     }
     

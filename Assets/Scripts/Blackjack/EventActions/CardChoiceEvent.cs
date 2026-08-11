@@ -34,12 +34,12 @@ public abstract class CardChoiceEvent : MonoBehaviour
     private IEnumerator DealAllOptionsCoroutine()
     {
         isChoosing = true;
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1f);
 
         for (int i = 0; i < OptionCount; i++)
         {
             StartCoroutine(DealCardOption(i));
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.5f);
         }
 
         CardEffects.SelectCard();

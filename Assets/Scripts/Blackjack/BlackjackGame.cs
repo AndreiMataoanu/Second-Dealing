@@ -1206,6 +1206,7 @@ public class BlackjackGame : MonoBehaviour
             yield return StartCoroutine(GameUtils.WaitDelayOrInput(3.0f));
 
             CardEffects.ClearColorSwappedCards();
+            CardEffects.ClearAntiMatterCards();
             SceneManager.LoadSceneAsync(2);
 
             yield break;
