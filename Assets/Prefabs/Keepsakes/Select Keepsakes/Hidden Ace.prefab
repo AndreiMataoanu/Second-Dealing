@@ -173,7 +173,7 @@ MeshRenderer:
   m_RenderingLayerMask: 64
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6003727835557305537, guid: a97ca8fee6f1244b2bd013c06cfeb019, type: 3}
+  - {fileID: 2100000, guid: a60ad19937d274a0d83ad840e3d0db65, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -220,6 +220,7 @@ MonoBehaviour:
   lockedMaterial: {fileID: 2100000, guid: 0a832a2e81c13f949bb53db9acc6b339, type: 2}
   outlineSelect: {r: 0, g: 1, b: 0, a: 1}
   outlineFull: {r: 1, g: 0, b: 0, a: 1}
+  outlineDeselect: {r: 0.627451, g: 0.1254902, b: 0.9411765, a: 1}
   rotationInHand: {x: -90, y: 0, z: 0}
   scaleInHand: {x: 20, y: 20, z: 20}
 --- !u!135 &4228661149058835237

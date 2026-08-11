@@ -59,6 +59,7 @@ public class CashOutSystem : MonoBehaviour
 
         CardEffects.ClearColorSwappedCards();
         CardEffects.ClearAntiMatterCards();
+        CardEffects.ClearNegativeSuits();
         SceneManager.LoadSceneAsync(2);
     }
     

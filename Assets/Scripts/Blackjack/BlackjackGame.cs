@@ -1207,6 +1207,7 @@ public class BlackjackGame : MonoBehaviour
 
             CardEffects.ClearColorSwappedCards();
             CardEffects.ClearAntiMatterCards();
+            CardEffects.ClearNegativeSuits();
             SceneManager.LoadSceneAsync(2);
 
             yield break;
