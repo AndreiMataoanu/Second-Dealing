@@ -5,8 +5,8 @@ public class KeepsakeInteractable : Clickable
     [SerializeField] private Keepsake keepsake;
     [SerializeField] private BlackjackGame blackjackGame;
     [SerializeField] private Material lockedMaterial;
-    [SerializeField] private Material outlineSelect;
-    [SerializeField] private Material outlineFull;
+    [SerializeField] private Color outlineSelect = Color.green;
+    [SerializeField] private Color outlineFull = Color.red;
     [SerializeField] public Vector3 rotationInHand;
     [SerializeField] public Vector3 scaleInHand;
 
@@ -114,13 +114,13 @@ public class KeepsakeInteractable : Clickable
         return $"\n{keepsake.description}";
     }
 
-    protected override Material GetOutlineMaterial()
+    protected override Color GetOutlineColor()
     {
         bool requirementMet = KeepsakeUnlockProgression.instance.HasMetRequirement(keepsake);
 
         if(!requirementMet)
         {
-            return base.GetOutlineMaterial();
+            return base.GetOutlineColor();
         }
 
         bool isFull = KeepsakeManager.instance.IsKeepsakeEquipFull;

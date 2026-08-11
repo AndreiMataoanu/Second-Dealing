@@ -6,7 +6,6 @@ using UnityEngine.Events;
 public class Clickable : MonoBehaviour
 {
     [SerializeField] private UnityEvent clickEvent;
-    //[SerializeField] private Material outline;
     [SerializeField] private Color defaultOutlineColor = Color.white;
 
     [Header("Tooltip Settings")]
@@ -17,6 +16,7 @@ public class Clickable : MonoBehaviour
     private MeshCollider meshCollider;
     private Renderer meshRenderer;
     private List<Renderer> meshRenderers = new();
+    private List<OutlineFx.OutlineFx> outlineEffects = new();
     private OutlineFx.OutlineFx outlineFx;
     private bool hasOutline;
     protected bool IsActive;
@@ -46,6 +46,7 @@ public class Clickable : MonoBehaviour
         meshRenderer = GetComponent<Renderer>();
         meshRenderers = new List<Renderer>(gameObject.GetComponentsInChildren<MeshRenderer>());
         outlineFx = GetComponent<OutlineFx.OutlineFx>();
+        outlineEffects = new List<OutlineFx.OutlineFx>(gameObject.GetComponentsInChildren<OutlineFx.OutlineFx>());
 
         if(!outlineFx)
         {
@@ -80,6 +81,12 @@ public class Clickable : MonoBehaviour
         if(!hasOutline) return;
         
         outlineFx.enabled = false;
+
+        foreach(var outline in outlineEffects)
+        {
+            outline.enabled = false;
+        }
+
         hasOutline = false;
     }
 
@@ -101,6 +108,13 @@ public class Clickable : MonoBehaviour
 
         outlineFx.Color = GetOutlineColor();
         outlineFx.enabled = true;
+
+        foreach(var outline in outlineEffects)
+        {
+            outline.Color = GetOutlineColor();
+            outline.enabled = true;
+        }
+
         hasOutline = true;
     }
 

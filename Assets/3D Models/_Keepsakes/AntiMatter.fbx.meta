@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 874470d74196d432ab46531c7d0efcea
+guid: 63c6dacdeec24db4fbd231fed6322738
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -7,23 +7,18 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: 777
-    second: {fileID: 2100000, guid: 3159bf0ae40b641e58bbda818af8bac2, type: 2}
+      name: Antimatter
+    second: {fileID: 2100000, guid: e793c4601f17e47848ea9ce53a4b5587, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Snowglobe_Glass
-    second: {fileID: 2100000, guid: c34a7954f58374908a1bcd264cfc9cde, type: 2}
+      name: Antimatter_Glass
+    second: {fileID: 2100000, guid: f82cc5c4ea0474205a33ccb0cbe72db3, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Snowglobe_Snow
-    second: {fileID: 2100000, guid: 0610c3eab2b3249c0a0148abfbca540e, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Snowglobe_Solid
-    second: {fileID: 2100000, guid: d3fb4dc1b458847a183e80ed24dc0251, type: 2}
+      name: Antimatter_Metal
+    second: {fileID: 2100000, guid: 9e6dcaed5fa544d71881c2157fc39b4d, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class ClickableCard : Clickable
 {
-    [SerializeField] private Material outlineUse;
-    [SerializeField] private Material outlineCantUse;
+    [SerializeField] private Color outlineUse = Color.blue;
+    [SerializeField] private Color outlineCantUse = Color.red;
     private CardInstance cardInstance;
     private BlackjackGame blackjackGame;
     private Action cardAction;
@@ -30,7 +30,7 @@ public class ClickableCard : Clickable
         cardAction?.Invoke();
     }
 
-    protected override Material GetOutlineMaterial()
+    protected override Color GetOutlineColor()
     {
         if(cardInstance != null && cardInstance.tarotData != null)
         {
@@ -42,6 +42,6 @@ public class ClickableCard : Clickable
             return outlineUse;
         }
 
-        return base.GetOutlineMaterial();
+        return base.GetOutlineColor();
     }
 }

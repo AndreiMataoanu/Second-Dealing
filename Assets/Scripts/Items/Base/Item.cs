@@ -4,10 +4,6 @@ using UnityEngine;
 public abstract class Item : Clickable
 {
     [Header("Outlines")]
-    //[SerializeField] private Material outlineBuy;
-    //[SerializeField] private Material outlineUse;
-    //[SerializeField] private Material outlineCantUse;
-    //[SerializeField] private Material outlineSell;
     [SerializeField] private Color outlineBuy = Color.green;
     [SerializeField] private Color outlineUse = Color.blue;
     [SerializeField] private Color outlineCantUse = Color.red;

@@ -287,6 +287,7 @@ Transform:
   m_LocalScale: {x: 200, y: 200, z: 200}
   m_ConstrainProportionsScale: 1
   m_Children:
+  - {fileID: 3386714161150806303}
   - {fileID: 4077136958332808923}
   - {fileID: 1331659046878978364}
   m_Father: {fileID: 0}
@@ -298,7 +299,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6929845434209378395}
-  m_Mesh: {fileID: -2320662550866978509, guid: 6cfa12bd6b15a464dad09aad11f20956, type: 3}
+  m_Mesh: {fileID: -2320662550866978509, guid: 04cecc5e2f8f93345b12852ecad3936f, type: 3}
 --- !u!23 &5965676800457575201
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -324,7 +325,6 @@ MeshRenderer:
   m_RenderingLayerMask: 64
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2f89f5ed7270c4ca0864b537808f2b8b, type: 2}
   - {fileID: 2100000, guid: f54af448fc3bf4730aea3c553e2b706b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -363,15 +363,15 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls: []
-  outline: {fileID: 0}
+  defaultOutlineColor: {r: 1, g: 1, b: 1, a: 1}
   tooltipHeader: 
   tooltipContent: 
   showTooltip: 1
   keepsake: {fileID: 11400000, guid: 2e31083dd4d138d4ba940db859f4bbbb, type: 2}
   blackjackGame: {fileID: 0}
   lockedMaterial: {fileID: 2100000, guid: 0a832a2e81c13f949bb53db9acc6b339, type: 2}
-  outlineSelect: {fileID: 2100000, guid: d91925fefc835b0459f833b7a203a011, type: 2}
-  outlineFull: {fileID: 2100000, guid: 36f05641255eb3e43a4474d269a6ccf1, type: 2}
+  outlineSelect: {r: 0, g: 1, b: 0, a: 1}
+  outlineFull: {r: 1, g: 0, b: 0, a: 1}
   rotationInHand: {x: -90, y: 60, z: 0}
   scaleInHand: {x: 20, y: 20, z: 20}
 --- !u!64 &1969462655908685457
@@ -396,3 +396,106 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2320662550866978509, guid: 6cfa12bd6b15a464dad09aad11f20956, type: 3}
+--- !u!1 &8009187128862140366
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3386714161150806303}
+  - component: {fileID: 6781414372282936171}
+  - component: {fileID: 89135895503235222}
+  - component: {fileID: 5870000685165968307}
+  m_Layer: 0
+  m_Name: Eye
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3386714161150806303
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8009187128862140366}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4260327052138540703}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &6781414372282936171
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8009187128862140366}
+  m_Mesh: {fileID: -7388797419363941253, guid: 04cecc5e2f8f93345b12852ecad3936f, type: 3}
+--- !u!23 &89135895503235222
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8009187128862140366}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 64
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 2f89f5ed7270c4ca0864b537808f2b8b, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5870000685165968307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8009187128862140366}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4218d78ef2d54d0898b7514e121a781f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OutlineFx::OutlineFx.OutlineFx
+  _color: {r: 1, g: 1, b: 1, a: 1}
