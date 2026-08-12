@@ -342,8 +342,8 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipContent: '[Use] Add +1 to a card'
   showTooltip: 1
-  outlineUse: {r: 0, g: 0, b: 1, a: 1}
-  outlineCantUse: {r: 1, g: 0, b: 0, a: 1}
+  outlineUse: {r: 0, g: 0.43529412, b: 0.7490196, a: 1}
+  outlineCantUse: {r: 1, g: 0.24380913, b: 0, a: 1}
 --- !u!135 &4948761204467494664
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -214,16 +214,15 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls: []
-  outline: {fileID: 0}
+  defaultOutlineColor: {r: 1, g: 1, b: 1, a: 1}
   tooltipHeader: Fan
   tooltipContent: Remove all cards
   showTooltip: 1
-  outlineBuy: {fileID: 2100000, guid: d91925fefc835b0459f833b7a203a011, type: 2}
-  outlineUse: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
-  outlineCantUse: {fileID: 2100000, guid: 36f05641255eb3e43a4474d269a6ccf1, type: 2}
-  outlineSell: {fileID: 2100000, guid: 8d473ecee8d3b76488e03a78e946413a, type: 2}
+  outlineBuy: {r: 0.41119346, g: 0.7353569, b: 0, a: 1}
+  outlineUse: {r: 0, g: 0.43529412, b: 0.7490196, a: 1}
+  outlineCantUse: {r: 1, g: 0.24380913, b: 0, a: 1}
+  outlineSell: {r: 1, g: 0, b: 0.7744977, a: 1}
   basePrice: 100
-  percentagePrice: 0.1
   resaleLossPercentage: 0.5
   type: 7
   spawnWeight: 15

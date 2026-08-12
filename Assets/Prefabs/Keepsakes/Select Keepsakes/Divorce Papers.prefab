@@ -107,15 +107,16 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls: []
-  outline: {fileID: 0}
+  defaultOutlineColor: {r: 1, g: 1, b: 1, a: 1}
   tooltipHeader: 
   tooltipContent: 
   showTooltip: 1
   keepsake: {fileID: 11400000, guid: 02427674c9c9fdb4aaa0dc0859b332e6, type: 2}
   blackjackGame: {fileID: 0}
   lockedMaterial: {fileID: 2100000, guid: 0a832a2e81c13f949bb53db9acc6b339, type: 2}
-  outlineSelect: {fileID: 2100000, guid: d91925fefc835b0459f833b7a203a011, type: 2}
-  outlineFull: {fileID: 2100000, guid: 36f05641255eb3e43a4474d269a6ccf1, type: 2}
+  outlineSelect: {r: 0.41119346, g: 0.7353569, b: 0, a: 1}
+  outlineFull: {r: 1, g: 0.24380913, b: 0, a: 1}
+  outlineDeselect: {r: 1, g: 0, b: 0.7744977, a: 1}
   rotationInHand: {x: 0, y: 0, z: -90}
   scaleInHand: {x: 20, y: 20, z: 20}
 --- !u!64 &7788225220878101753

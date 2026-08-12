@@ -48,6 +48,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardDisplay
   cardBack: {fileID: 8078238588129647875}
   cardFace: {fileID: 4456579903061674950}
+  textureAce11: {fileID: 0}
+  textureAce1: {fileID: 0}
 --- !u!1 &4456579903061674950
 GameObject:
   m_ObjectHideFlags: 0
@@ -176,10 +178,12 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls: []
-  outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
+  defaultOutlineColor: {r: 0, g: 0.43529412, b: 0.7490196, a: 1}
   tooltipHeader: 
   tooltipContent: 
   showTooltip: 0
+  outlineUse: {r: 0.41119346, g: 0.7353569, b: 0, a: 1}
+  outlineCantUse: {r: 1, g: 0.24380913, b: 0, a: 1}
 --- !u!1 &8078238588129647875
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,7 +312,9 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls: []
-  outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
+  defaultOutlineColor: {r: 0, g: 0.43529412, b: 0.7490196, a: 1}
   tooltipHeader: 
   tooltipContent: 
   showTooltip: 0
+  outlineUse: {r: 0.41119346, g: 0.7353569, b: 0, a: 1}
+  outlineCantUse: {r: 1, g: 0.24380913, b: 0, a: 1}

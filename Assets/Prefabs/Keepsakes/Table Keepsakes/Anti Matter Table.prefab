@@ -241,8 +241,8 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipContent: '[Use] Make 1 card negative'
   showTooltip: 1
-  outlineUse: {r: 0, g: 0, b: 1, a: 1}
-  outlineCantUse: {r: 1, g: 0, b: 0, a: 1}
+  outlineUse: {r: 0, g: 0.43529412, b: 0.7490196, a: 1}
+  outlineCantUse: {r: 1, g: 0.24380913, b: 0, a: 1}
 --- !u!64 &-2351458337384116157
 MeshCollider:
   m_ObjectHideFlags: 0

@@ -2957,6 +2957,18 @@ PrefabInstance:
       value: 'Hit [Left-click]'
       objectReference: {fileID: 0}
     - target: {fileID: 3384233393079924373, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
+      propertyPath: defaultOutlineColor.b
+      value: 0.7490196
+      objectReference: {fileID: 0}
+    - target: {fileID: 3384233393079924373, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
+      propertyPath: defaultOutlineColor.g
+      value: 0.5882353
+      objectReference: {fileID: 0}
+    - target: {fileID: 3384233393079924373, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
+      propertyPath: defaultOutlineColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3384233393079924373, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
       propertyPath: clickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1343293108}
@@ -3040,17 +3052,41 @@ PrefabInstance:
       value: 'Stand [Left-click]'
       objectReference: {fileID: 0}
     - target: {fileID: 3781399002905546207, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
+      propertyPath: defaultOutlineColor.b
+      value: 0.7490196
+      objectReference: {fileID: 0}
+    - target: {fileID: 3781399002905546207, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
+      propertyPath: defaultOutlineColor.g
+      value: 0.5882353
+      objectReference: {fileID: 0}
+    - target: {fileID: 3781399002905546207, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
+      propertyPath: defaultOutlineColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3781399002905546207, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
+      propertyPath: clickEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3781399002905546207, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
       propertyPath: clickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1343293108}
     - target: {fileID: 3781399002905546207, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
       propertyPath: clickEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1306894128}
+      objectReference: {fileID: 1343293108}
     - target: {fileID: 3781399002905546207, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
       propertyPath: clickEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 1343293108}
+    - target: {fileID: 3781399002905546207, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
+      propertyPath: clickEvent.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: OnSplit
+      objectReference: {fileID: 0}
+    - target: {fileID: 3781399002905546207, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
+      propertyPath: clickEvent.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: BlackjackGame, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 4522091202416236978, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -45.05027
@@ -4995,7 +5031,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  defaultOutlineColor: {r: 1, g: 1, b: 1, a: 1}
+  defaultOutlineColor: {r: 0, g: 0.43529412, b: 0.7490196, a: 1}
   tooltipHeader: Decrease Bet
   tooltipContent: 'Shortcut: [Scrollwheel]'
   showTooltip: 1
@@ -6190,10 +6226,6 @@ PrefabInstance:
     - target: {fileID: 823484939574808708, guid: d0570014268ffe24dae62630cb977b1f, type: 3}
       propertyPath: m_Name
       value: Tarot
-      objectReference: {fileID: 0}
-    - target: {fileID: 823484939574808708, guid: d0570014268ffe24dae62630cb977b1f, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1338748525649068244, guid: d0570014268ffe24dae62630cb977b1f, type: 3}
       propertyPath: blackjackGame
@@ -8314,7 +8346,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  defaultOutlineColor: {r: 1, g: 1, b: 1, a: 1}
+  defaultOutlineColor: {r: 0, g: 0.43529412, b: 0.7490196, a: 1}
   tooltipHeader: Start Round
   tooltipContent: 
   showTooltip: 1
@@ -10099,7 +10131,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  defaultOutlineColor: {r: 1, g: 1, b: 1, a: 1}
+  defaultOutlineColor: {r: 0, g: 0.43529412, b: 0.7490196, a: 1}
   tooltipHeader: Increase Bet
   tooltipContent: 'Shortcut: [Scrollwheel]'
   showTooltip: 1
@@ -12067,10 +12099,6 @@ PrefabInstance:
     - target: {fileID: 2917597795105246076, guid: cf4aa979c98daff4787d74976486a720, type: 3}
       propertyPath: m_Name
       value: Inheritance
-      objectReference: {fileID: 0}
-    - target: {fileID: 2917597795105246076, guid: cf4aa979c98daff4787d74976486a720, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3412512454478385345, guid: cf4aa979c98daff4787d74976486a720, type: 3}
       propertyPath: blackjackGame
@@ -14898,10 +14926,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -59.247
       objectReference: {fileID: 0}
-    - target: {fileID: 8039166042778243500, guid: 86ed570a28ed8fe458f082ff2d7912d7, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: a60ad19937d274a0d83ad840e3d0db65, type: 2}
     - target: {fileID: 8772358196734130818, guid: 86ed570a28ed8fe458f082ff2d7912d7, type: 3}
       propertyPath: m_Name
       value: Hidden Ace

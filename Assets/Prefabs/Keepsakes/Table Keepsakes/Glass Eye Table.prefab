@@ -470,8 +470,8 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipContent: Permanently reveal the facedown card of the dealer
   showTooltip: 1
-  outlineUse: {r: 0, g: 0, b: 1, a: 1}
-  outlineCantUse: {r: 1, g: 0, b: 0, a: 1}
+  outlineUse: {r: 0, g: 0.43529412, b: 0.7490196, a: 1}
+  outlineCantUse: {r: 1, g: 0.24380913, b: 0, a: 1}
 --- !u!64 &5978317972983291230
 MeshCollider:
   m_ObjectHideFlags: 0

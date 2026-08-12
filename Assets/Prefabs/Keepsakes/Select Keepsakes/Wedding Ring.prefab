@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3079444025674053781}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.18884559, y: -0.7084936, z: -0.67504805, w: 0.08175828}
+  m_LocalRotation: {x: -0.1888436, y: -0.7084937, z: -0.67504865, w: 0.08175681}
   m_LocalPosition: {x: 19.894, y: -0.334, z: -0.167}
   m_LocalScale: {x: 199.99997, y: 199.99997, z: 199.99997}
   m_ConstrainProportionsScale: 1
@@ -109,15 +109,16 @@ MonoBehaviour:
   clickEvent:
     m_PersistentCalls:
       m_Calls: []
-  outline: {fileID: 0}
+  defaultOutlineColor: {r: 1, g: 1, b: 1, a: 1}
   tooltipHeader: 
   tooltipContent: 
   showTooltip: 1
   keepsake: {fileID: 11400000, guid: 53fb29a119ee0534b9f91aca21d40057, type: 2}
   blackjackGame: {fileID: 0}
   lockedMaterial: {fileID: 2100000, guid: 0a832a2e81c13f949bb53db9acc6b339, type: 2}
-  outlineSelect: {fileID: 2100000, guid: d91925fefc835b0459f833b7a203a011, type: 2}
-  outlineFull: {fileID: 2100000, guid: 36f05641255eb3e43a4474d269a6ccf1, type: 2}
+  outlineSelect: {r: 0.41119346, g: 0.7353569, b: 0, a: 1}
+  outlineFull: {r: 1, g: 0.24380913, b: 0, a: 1}
+  outlineDeselect: {r: 1, g: 0, b: 0.7744977, a: 1}
   rotationInHand: {x: -90, y: 0, z: 0}
   scaleInHand: {x: 20, y: 20, z: 20}
 --- !u!1 &5503653912647075107
