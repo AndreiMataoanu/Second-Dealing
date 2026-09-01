@@ -21,7 +21,9 @@ public class DialogueSystem : MonoBehaviour
     [SerializeField] private string[] doubleDownTutorialLines;
     [Tooltip("Tutorial shown when the player can double down for the first time.")]
     [SerializeField] private string[] powerballTutorialLines;
-
+    [Tooltip("Tutorial shown when the player gets add cards event.")]
+    [SerializeField] private string[] addCardsTutorialLines;
+    
     [Header("Taunt Quotes")]
     [Tooltip("Taunts shown when the player is low on money.")]
     [SerializeField] private List<string> lowMoneyTaunts;
@@ -53,11 +55,11 @@ public class DialogueSystem : MonoBehaviour
     [SerializeField] private List<string> chooseKeepsakeTaunts;
     [Tooltip("Taunts shown when dealer is raging and forcing the player to go all in.")]
     [SerializeField] private List<string> forcedAllInnTaunts;
-     [Tooltip("Taunts shown when dealer is raging and halving cards")]
+    [Tooltip("Taunts shown when dealer is raging and halving cards")]
     [SerializeField] private List<string> dealerHalvesCardsTaunts;
-     [Tooltip("Taunts shown when dealer is raging and removing and item.")]
+    [Tooltip("Taunts shown when dealer is raging and removing and item.")]
     [SerializeField] private List<string> dealerRemovesItemTaunts;
-     [Tooltip("Taunts shown when dealer is raging and forces a shuffle")]
+    [Tooltip("Taunts shown when dealer is raging and forces a shuffle")]
     [SerializeField] private List<string> dealerShuffleTaunts;
 
     [Header("Cash out")]
@@ -113,12 +115,11 @@ public class DialogueSystem : MonoBehaviour
         sequenceCoroutine = StartCoroutine(SequenceCoroutine(cashOutText));
     }
 
-    public void ShowAddCardsText(int copyNumber)
+    public void ShowAddCardsText()
     {
         StopCurrentDialogue();
-        string text = "Choose which card to copy " + copyNumber + " ";
-        text += copyNumber == 1 ? "time." : "times."; 
-        sequenceCoroutine = StartCoroutine(SingleMessageCoroutine(text, 4f));
+        
+        sequenceCoroutine = StartCoroutine(SequenceCoroutine(addCardsTutorialLines));
     }
 
     private IEnumerator SequenceCoroutine(string[] lines)

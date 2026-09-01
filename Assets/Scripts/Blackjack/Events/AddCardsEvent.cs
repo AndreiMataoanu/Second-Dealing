@@ -8,10 +8,6 @@ public class AddCardsEvent : BlackjackEvent
     [Min(1)] [SerializeField] private int copyRangeMin;
     [Min(1)] [SerializeField] private int copyRangeMax;
 
-    private int copyCount;
-
-    public int CopyCount => copyCount;
-
     private void OnEnable()
     {
         if (copyRangeMax < copyRangeMin)
@@ -20,24 +16,26 @@ public class AddCardsEvent : BlackjackEvent
 
     public override IEnumerator GiveChoiceToPlayer(GameCamera gameCamera, CardChoiceEvent cardChoiceEvent)
     {
+        var addCardsEvent = cardChoiceEvent as AddCardChoiceEvent;
+        addCardsEvent?.SetAddCardsEvent(this);
+        addCardsEvent?.SetDartsActive(true);
+        
         gameCamera.ChangeToCamera(CameraType.Playing);
         
         yield return new WaitForSeconds(1.5f);
 
-        var addCardsEvent = cardChoiceEvent as AddCardChoiceEvent;
         addCardsEvent?.DealOptions();
-        addCardsEvent?.SetAddCardsEvent(this);
     }
 
     public override void ExplainChoiceDialogue(DialogueSystem dialogue)
     {
-        copyCount = Random.Range(copyRangeMin, copyRangeMax + 1);
-
-        dialogue.ShowAddCardsText(copyCount);
+        dialogue.ShowAddCardsText();
     }
 
     public override void Apply(EventManager events)
     {
         KeepsakeUnlockProgression.instance.AddStat(ChallengeType.TriggerAddEvent);
     }
+
+    public int GenerateCopyCount() => Random.Range(copyRangeMin, copyRangeMax + 1);
 }

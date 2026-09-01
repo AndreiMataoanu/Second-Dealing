@@ -12,6 +12,7 @@ namespace Managers
         AntiMatter,
         HiddenAce,
         SprayCan,
+        Dart,
         None
     }
 
@@ -25,6 +26,7 @@ namespace Managers
         [SerializeField] private GameObject antiMatterFollow;
         [SerializeField] private GameObject pyroFollow;
         [SerializeField] private GameObject sprayCanFollow;
+        [SerializeField] private GameObject dartFollow;
 
         [Header("Deactivate")] 
         [SerializeField] private GameObject rightHand;
@@ -57,6 +59,9 @@ namespace Managers
                     break;
                 case CursorType.SprayCan:
                     sprayCanFollow?.SetActive(isActive);
+                    break;
+                case CursorType.Dart:
+                    dartFollow?.SetActive(isActive);
                     break;
             }
         }

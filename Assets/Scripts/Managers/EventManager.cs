@@ -41,6 +41,14 @@ public class EventManager : MonoBehaviour
     private BlackjackGame blackjackGame;
     private TableCards tableCards;
 
+    public enum DealerRageAbility
+    {
+        ForceAllIn,
+        RemoveItem,
+        HalvePlayerCards,
+        ShufflePlayerHand
+    }
+    
     #region Getters
     
     public List<int> PowerballGoal => powerballNumbers;
@@ -61,15 +69,7 @@ public class EventManager : MonoBehaviour
     }
 
     #endregion
-    #region enum for dealer rage
-    public enum DealerRageAbility
-    {
-        ForceAllIn,
-        RemoveItem,
-        HalvePlayerCards,
-        ShufflePlayerHand
-    }
-    #endregion
+    
     #region Monobehaviour Methods
     
     private void Awake()
@@ -233,7 +233,7 @@ public class EventManager : MonoBehaviour
 
     #endregion
 
-    #region dealer rage event
+    #region Dealer rage event
     public void ChangeRageNumber(int value)
     {
         dealerRageNumber += value;

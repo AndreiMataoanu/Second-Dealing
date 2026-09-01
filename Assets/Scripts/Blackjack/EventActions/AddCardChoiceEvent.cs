@@ -5,19 +5,30 @@ public class AddCardChoiceEvent : CardChoiceEvent
 {
     private AddCardsEvent addCardsEvent;
 
+    private int currentCopyCount;
+
     public void SetAddCardsEvent(AddCardsEvent addCards) => addCardsEvent = addCards;
     
     private void Awake()
     {
-        OptionCount = 3;
+        OptionCount = 6;
     }
 
     #region Select Option
 
+    protected override IEnumerator DealAllOptionsCoroutine()
+    {
+        currentCopyCount = addCardsEvent.GenerateCopyCount();
+        cardText.text = currentCopyCount + " ";
+        cardText.text += currentCopyCount > 0 ? "copies" : "copy";
+
+        yield return base.DealAllOptionsCoroutine();
+    }
+
     protected override void OnSelectCardOption(CardInstance cardInstance)
     {
         AudioManager.instance.Play("CardHit");
-        TableCards.GameDeck.AddCardCopies(cardInstance.cardData, addCardsEvent.CopyCount);
+        TableCards.GameDeck.AddCardCopies(cardInstance.cardData, currentCopyCount);
 
         Destroy(cardInstance.CardObject);
         CardEffects.OnCardSelected();
