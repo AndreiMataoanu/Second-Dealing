@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine;
 
 public class DialogueSystem : MonoBehaviour
 {
     [Header("Set-up")]
     [SerializeField] private TextMeshProUGUI dialogueText;
-    [SerializeField] private Image panel;
+    [SerializeField] private UnityEngine.UI.Image panel;
     [SerializeField] private float delayBetweenLines = 1f;
     [SerializeField] private float typingSpeed = 0.02f;
 
@@ -68,13 +67,67 @@ public class DialogueSystem : MonoBehaviour
     private bool isPlaying = false;
     private bool allowSkip = false;
 
+    [Header("Progress Bar")]
+    [SerializeField] private SpriteRenderer progressBar;
+    [SerializeField] private float holdTimeToSkip = 1.0f;
+    private float currentHoldTime = 0f;
+    private Material progressMaterial;
+
     public bool IsPlaying => isPlaying;
+
+    private void Start()
+    {
+        if(progressBar != null)
+        {
+            progressMaterial = progressBar.material;
+            progressMaterial.SetFloat("_Percentage", 0f);
+            progressBar.enabled = false;
+        }
+    }
 
     private void Update()
     {
-        if(isPlaying && allowSkip && Input.anyKeyDown)
+        if(isPlaying && allowSkip)
         {
-            SkipDialogue();
+            ProcessSkipInput();
+        }
+        else
+        {
+            ResetSkipProgress(true);
+        }
+    }
+
+    private void ProcessSkipInput()
+    {
+        if(Input.GetMouseButton(0))
+        {
+            progressBar.enabled = true;
+            currentHoldTime += Time.deltaTime;
+
+            float holdTime = Mathf.Max(0.1f, holdTimeToSkip);
+            float percentage = (currentHoldTime / holdTime) * 100f;
+
+            progressMaterial.SetFloat("_Percentage", percentage);
+
+            if(currentHoldTime >= holdTime)
+            {
+                ResetSkipProgress(true);
+                SkipDialogue();
+            }
+        }
+        else
+        {
+            ResetSkipProgress(false);
+        }
+    }
+
+    private void ResetSkipProgress(bool forceReset)
+    {
+        if(currentHoldTime > 0f || forceReset)
+        {
+            currentHoldTime = 0f;
+            progressMaterial.SetFloat("_Percentage", 0f);
+            progressBar.enabled = false;
         }
     }
 
