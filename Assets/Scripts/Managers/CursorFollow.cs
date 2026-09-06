@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Managers
 {
@@ -18,6 +20,9 @@ namespace Managers
 
     public class CursorFollow : MonoBehaviour
     {
+        [Header("Camera")]
+        [SerializeField] private Camera mainCamera;
+        
         [Header("Cursor types")]
         [SerializeField] private GameObject scissorsFollow;
         [SerializeField] private GameObject acidFollow;
@@ -30,6 +35,31 @@ namespace Managers
 
         [Header("Deactivate")] 
         [SerializeField] private GameObject rightHand;
+
+        public void UseCursorAtPosition(bool isActive, CursorType cursorType, Vector3? worldPosition)
+        {
+            StartCoroutine(UseCursorAtPositionCoroutine(isActive, cursorType, worldPosition));
+        }
+        
+        private IEnumerator UseCursorAtPositionCoroutine(bool isActive, CursorType cursorType, Vector3? worldPosition)
+        {
+            if (worldPosition == null) yield break;
+            
+            Cursor.visible = false;
+            SetMousePosition((Vector3)worldPosition);
+
+            yield return new WaitForSeconds(0.1f);
+            
+            SetCursorTypeActive(isActive, cursorType);
+        }
+        
+        private void SetMousePosition(Vector3 worldPosition)
+        {
+            if (!mainCamera) return;
+            
+            var screenPoint = mainCamera.WorldToScreenPoint(worldPosition);
+            Mouse.current.WarpCursorPosition(screenPoint);
+        }
         
         public void SetCursorTypeActive(bool isActive, CursorType cursorType)
         {

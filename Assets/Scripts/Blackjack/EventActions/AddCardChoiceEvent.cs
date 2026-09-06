@@ -18,35 +18,43 @@ public class AddCardChoiceEvent : CardChoiceEvent
 
     protected override IEnumerator DealAllOptionsCoroutine()
     {
-        currentCopyCount = addCardsEvent.GenerateCopyCount();
-        cardText.text = currentCopyCount + " ";
-        cardText.text += currentCopyCount > 0 ? "copies" : "copy";
+        UpdateCopyCount();
 
         yield return base.DealAllOptionsCoroutine();
     }
 
     protected override void OnSelectCardOption(CardInstance cardInstance)
     {
+        dartSelection.ThrowDart(SelectIndex, cardInstance.CardObject.transform.position);
+        
         AudioManager.instance.Play("CardHit");
         TableCards.GameDeck.AddCardCopies(cardInstance.cardData, currentCopyCount);
+        UpdateCopyCount();
 
-        Destroy(cardInstance.CardObject);
         CardEffects.OnCardSelected();
-        
-        StartCoroutine(SelectCardCopyEndCoroutine());
+        StartCoroutine(ChangeDart());
     }
     
-    private IEnumerator SelectCardCopyEndCoroutine()
+    protected override IEnumerator SelectCardCopyEndCoroutine()
     {
         yield return new WaitForSeconds(0.7f);
         blackjackGame.DialogueSystem.ShowCopyChoiceTaunt();
         
-        yield return new WaitForSeconds(1.5f);
-        
-        DestroyCards();
-        isChoosing = false;
+        yield return base.SelectCardCopyEndCoroutine();
     }
 
     #endregion
 
+    #region Helpers
+
+    private void UpdateCopyCount()
+    {
+        if (SelectIndex == dartNumber) return;
+        
+        currentCopyCount = addCardsEvent.GenerateCopyCount();
+        cardText.text = currentCopyCount + " ";
+        cardText.text += currentCopyCount > 0 ? "copies" : "copy";
+    }
+    
+    #endregion
 }

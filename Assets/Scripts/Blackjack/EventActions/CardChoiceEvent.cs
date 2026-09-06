@@ -58,9 +58,7 @@ public abstract class CardChoiceEvent : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
 
-        dartSelection.UseDartAtIndex(SelectIndex);
-        
-        CardEffects.SelectCard();
+        UseDart();
         CardEffects.AddEventCardEffectAction(OnSelectCardOption, cardsPosition);
     }
     
@@ -78,6 +76,15 @@ public abstract class CardChoiceEvent : MonoBehaviour
     // has to set isChoosing to false at the end (used in event manager)
     protected abstract void OnSelectCardOption(CardInstance cardInstance);
 
+    protected virtual IEnumerator SelectCardCopyEndCoroutine()
+    {
+        yield return new WaitForSeconds(1.5f);
+        
+        DestroyCards();
+        dartSelection.ResetDarts();
+        isChoosing = false;
+    }
+
     #endregion
     
     #region Helpers
@@ -88,6 +95,32 @@ public abstract class CardChoiceEvent : MonoBehaviour
             Destroy(card.gameObject);
     }
 
+    #endregion
+
+    #region Using Darts
+
+    private void UseDart()
+    {
+        dartSelection.DeactivateDartAtIndex(SelectIndex);
+        
+        CardEffects.SelectCard(dartSelection.GetDartPositionAtIndex(SelectIndex));
+    }
+    
+    protected IEnumerator ChangeDart()
+    {
+        SelectIndex++;
+
+        yield return new WaitForSeconds(0.5f);
+
+        if (SelectIndex < dartNumber)
+        {
+            UseDart();
+            yield break;
+        }
+
+        yield return SelectCardCopyEndCoroutine();
+    }
+    
     public void SetDartsActive(bool active)
     {
         dartSelection.SetDartSelectionActive(active);
@@ -97,5 +130,4 @@ public abstract class CardChoiceEvent : MonoBehaviour
     }
 
     #endregion
-
 }
