@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,11 +7,11 @@ public class DartSelection : MonoBehaviour
     [Header("Position on cards")]
     [Tooltip("All children darts have to be after start throw transform")]
     [SerializeField] private Transform startThrow;
-    [SerializeField] private Vector3 posRange = new(0.0101f, 0.0f, 0.0055f);
-    [SerializeField] private float rotRange = 20f;
+    [SerializeField] private Vector3 positionRange = new(0.0101f, 0.0f, 0.0055f);
+    [SerializeField] private float rotationRange = 20f;
+    [SerializeField] private float throwTime = 0.3f;
     
     private List<GameObject> darts = new();
-    private List<Rigidbody> rigidbodies = new();
     private List<Vector3> originalPositions = new();
     private List<Quaternion> originalRotations = new();
     
@@ -28,7 +29,6 @@ public class DartSelection : MonoBehaviour
         {
             var dart = transform.GetChild(i).gameObject;
             darts.Add(dart);
-            rigidbodies.Add(dart.GetComponent<Rigidbody>());
             originalPositions.Add(dart.transform.position);
             originalRotations.Add(dart.transform.rotation);
         }
@@ -75,25 +75,55 @@ public class DartSelection : MonoBehaviour
     {
         var dart = darts[index];
         dart.SetActive(true);
-        dart.transform.position = to;
+        dart.transform.position = startThrow.position;
+        dart.transform.rotation = startThrow.rotation;
+        dart.transform.LookAt(to);
         
-        RandomizePlacement(dart);
+        StartCoroutine(ThrowMovementCoroutine(dart,
+            dart.transform.position, GetRandomPosition(to),
+            dart.transform.rotation, GetRandomRotation()));
     }
 
-    private void RandomizePlacement(GameObject dart)
+    private IEnumerator ThrowMovementCoroutine(GameObject dart, 
+        Vector3 startPosition, Vector3 endPosition,
+        Quaternion startRotation, Quaternion endRotation)
     {
-        var lPos = dart.transform.localPosition;
-        var xPos = Random.Range(lPos.x - posRange.x, lPos.x + posRange.x);
-        var yPos = lPos.y + 0.08f;
-        var zPos = Random.Range(lPos.z - posRange.z, lPos.z + posRange.z);
-        dart.transform.localPosition = new Vector3(xPos, yPos, zPos);
+        var elapsed = 0.0f;
 
-        dart.transform.rotation = Quaternion.Euler(-90, 0, 0);
-        var leftRight = Random.Range(-rotRange, rotRange);
-        var frontBack = Random.Range(-rotRange, rotRange);
+        while (elapsed < throwTime)
+        {
+            elapsed += Time.deltaTime;
+            dart.transform.position = Vector3.Lerp(startPosition, endPosition, elapsed / throwTime);
+            dart.transform.rotation = Quaternion.Lerp(startRotation, endRotation, elapsed / throwTime);
+            yield return null;
+        }
+        
+        dart.transform.position = endPosition;
+        dart.transform.rotation = endRotation;
+    }
+
+    #endregion
+
+    #region Randomize placement
+
+    private Vector3 GetRandomPosition(Vector3 pos)
+    {
+        var xPos = Random.Range(pos.x - positionRange.x, pos.x + positionRange.x);
+        var yPos = pos.y + 0.08f;
+        var zPos = Random.Range(pos.z - positionRange.z, pos.z + positionRange.z);
+        
+        return new Vector3(xPos, yPos, zPos);
+    }
+
+    private Quaternion GetRandomRotation()
+    {
+        var start = Quaternion.Euler(90, 0, 0);
+        var leftRight = Random.Range(-rotationRange, rotationRange);
+        var frontBack = Random.Range(-rotationRange, rotationRange);
         var rotX = Quaternion.AngleAxis(frontBack, Vector3.right);
         var rotZ = Quaternion.AngleAxis(leftRight, Vector3.forward);
-        dart.transform.rotation = dart.transform.rotation * rotX * rotZ;
+        
+        return start * rotX * rotZ;
     }
 
     #endregion
