@@ -4095,6 +4095,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CursorFollower
   mainCamera: {fileID: 1365003152}
   distanceFromCamera: 0.8
+  positionOffset: {x: 20, y: -20}
 --- !u!1 &488802144
 GameObject:
   m_ObjectHideFlags: 0
@@ -6468,6 +6469,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 275698759}
     m_Modifications:
+    - target: {fileID: 692461279391876133, guid: 888789034740c35428917d11720891be, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 1365003152}
     - target: {fileID: 5510594154060938744, guid: 888789034740c35428917d11720891be, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -10155,6 +10160,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1003238327235684533, guid: 6c29181922dfb1749a7bf2bb6994e105, type: 3}
   m_PrefabInstance: {fileID: 601427085}
   m_PrefabAsset: {fileID: 0}
+--- !u!212 &1711545462 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 165000918635092808, guid: 888789034740c35428917d11720891be, type: 3}
+  m_PrefabInstance: {fileID: 1077769436}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1712160660 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6266607957284480553, guid: 8624eb4fc2049944a9faf1ceea35c0c1, type: 3}
@@ -11881,9 +11891,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 488802146}
     - target: {fileID: 6608549595112624214, guid: 1ec9ed4188d23e645a8969bc84ee8fd7, type: 3}
+      propertyPath: progressBar
+      value: 
+      objectReference: {fileID: 1711545462}
+    - target: {fileID: 6608549595112624214, guid: 1ec9ed4188d23e645a8969bc84ee8fd7, type: 3}
       propertyPath: dialogueText
       value: 
       objectReference: {fileID: 172934057}
+    - target: {fileID: 6608549595112624214, guid: 1ec9ed4188d23e645a8969bc84ee8fd7, type: 3}
+      propertyPath: holdTimeToSkip
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 6608549595112624214, guid: 1ec9ed4188d23e645a8969bc84ee8fd7, type: 3}
       propertyPath: cashOutText.Array.size
       value: 1
@@ -13337,6 +13355,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CursorFollower
   mainCamera: {fileID: 1365003152}
   distanceFromCamera: 0.8
+  positionOffset: {x: 20, y: -20}
 --- !u!33 &3555535361149596588
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -13460,6 +13479,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CursorFollower
   mainCamera: {fileID: 1365003152}
   distanceFromCamera: 0.8
+  positionOffset: {x: 20, y: -20}
 --- !u!1001 &3808499372601816272
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14363,6 +14383,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CursorFollower
   mainCamera: {fileID: 1365003152}
   distanceFromCamera: 0.8
+  positionOffset: {x: 20, y: -20}
 --- !u!114 &6399175095168774844 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2014727378909587698, guid: e4175e903b2367441a15b60ba0d7f9d4, type: 3}
@@ -14845,6 +14866,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CursorFollower
   mainCamera: {fileID: 1365003152}
   distanceFromCamera: 0.8
+  positionOffset: {x: 20, y: -20}
 --- !u!1001 &7856878842427330326
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15134,6 +15156,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CursorFollower
   mainCamera: {fileID: 1365003152}
   distanceFromCamera: 0.8
+  positionOffset: {x: 20, y: -20}
 --- !u!1 &8388153250401400913
 GameObject:
   m_ObjectHideFlags: 0
@@ -15193,6 +15216,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CursorFollower
   mainCamera: {fileID: 1365003152}
   distanceFromCamera: 0.8
+  positionOffset: {x: 20, y: -20}
 --- !u!4 &8691589494562578782 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7227739352559778350, guid: 3cbecb655e2dffe4da6cc09e18395037, type: 3}
