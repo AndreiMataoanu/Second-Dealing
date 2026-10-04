@@ -16,15 +16,26 @@ public abstract class Item : Clickable
     [SerializeField] public ItemType type;
     [Tooltip("Higher number means more common.")]
     [SerializeField] public int spawnWeight = 10;
-    
+
+    [Header("Hover Animation")]
+    [SerializeField] private Vector3 hoverPositionOffset = new Vector3(0f, 0.03f, 0f);
+    [SerializeField] private Vector3 hoverRotationOffset = new Vector3(-30f, 0f, 0f);
+    [SerializeField] private float hoverAnimationSpeed = 10f;
+    [SerializeField] private float hoverRadius = 100f;
+
+    private Vector3 originalLocalPosition;
+    private Quaternion originalLocalRotation;
+    private Vector3 originalWorldPosition;
+
     [HideInInspector] public bool isPurchased;
     [HideInInspector] public bool delayDestroy;
     protected bool isCardSelecting;
+    private bool isHovering;
+    private bool positionInitialized;
 
     private float coinMultiplier = 1.0f;
 
     internal CardEffectActions cardEffect;
-
     private Action<Item> itemAction;
     protected BlackjackGame blackjackGame;
 
@@ -49,8 +60,54 @@ public abstract class Item : Clickable
 
     #endregion
 
+    protected virtual void Update()
+    {
+        if(!positionInitialized) return;
+
+        if(isHovering)
+        {
+            Vector3 screenPoint = Camera.main.WorldToScreenPoint(originalWorldPosition);
+
+            float distance = Vector2.Distance(Input.mousePosition, new Vector2(screenPoint.x, screenPoint.y));
+
+            if(distance > hoverRadius)
+            {
+                isHovering = false;
+            }
+        }
+
+        Vector3 targetPosition = isHovering ? originalLocalPosition + hoverPositionOffset : originalLocalPosition;
+        Quaternion targetRotation = isHovering ? originalLocalRotation * Quaternion.Euler(hoverRotationOffset) : originalLocalRotation;
+
+        transform.localPosition = Vector3.Lerp(transform.localPosition, targetPosition, Time.deltaTime * hoverAnimationSpeed);
+        transform.localRotation = Quaternion.Lerp(transform.localRotation, targetRotation, Time.deltaTime * hoverAnimationSpeed);
+    }
+
     #region Override Methods
-    
+
+    protected override void OnMouseEnter()
+    {
+        base.OnMouseEnter();
+
+        if(isPurchased && blackjackGame != null && blackjackGame.isRoundActive)
+        {
+            if(!positionInitialized)
+            {
+                originalLocalPosition = transform.localPosition;
+                originalLocalRotation = transform.localRotation;
+                originalWorldPosition = transform.position;
+                positionInitialized = true;
+            }
+
+            isHovering = true;
+        }
+    }
+
+    protected override void OnMouseExit()
+    {
+        base.OnMouseExit();
+    }
+
     public override void OnClick(int mouseButton = 0)
     {
         if(!IsActive) return;

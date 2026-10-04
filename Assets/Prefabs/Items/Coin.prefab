@@ -118,6 +118,10 @@ MonoBehaviour:
   resaleLossPercentage: 0
   type: 10
   spawnWeight: 10
+  hoverPositionOffset: {x: 0, y: 0.03, z: 0}
+  hoverRotationOffset: {x: -30, y: 0, z: 0}
+  hoverAnimationSpeed: 10
+  hoverRadius: 100
   isPurchased: 0
   delayDestroy: 0
 --- !u!64 &8531535238682378152

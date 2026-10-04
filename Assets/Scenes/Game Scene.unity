@@ -3286,7 +3286,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6138854418761743429, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: MainCamera
       objectReference: {fileID: 0}
     - target: {fileID: 6566804607919484629, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -12780,6 +12780,14 @@ PrefabInstance:
     - target: {fileID: 1786123253888517127, guid: 9ea67119ccb449c44b7ac0dacefcf055, type: 3}
       propertyPath: m_Name
       value: Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 1786123253888517127, guid: 9ea67119ccb449c44b7ac0dacefcf055, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1786123253888517127, guid: 9ea67119ccb449c44b7ac0dacefcf055, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4520539403049382478, guid: 9ea67119ccb449c44b7ac0dacefcf055, type: 3}
       propertyPath: noise
