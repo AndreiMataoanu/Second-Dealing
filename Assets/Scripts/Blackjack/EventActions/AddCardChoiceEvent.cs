@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class AddCardChoiceEvent : CardChoiceEvent
 {
+    [Header("Card copies")]
+    [SerializeField] protected TMPro.TextMeshProUGUI cardText;
+    
     private AddCardsEvent addCardsEvent;
 
     private int currentCopyCount;
@@ -35,12 +38,12 @@ public class AddCardChoiceEvent : CardChoiceEvent
         StartCoroutine(ChangeDart());
     }
     
-    protected override IEnumerator SelectCardCopyEndCoroutine()
+    protected override IEnumerator SelectChoiceEndCoroutine()
     {
         yield return new WaitForSeconds(0.7f);
         blackjackGame.DialogueSystem.ShowCopyChoiceTaunt();
         
-        yield return base.SelectCardCopyEndCoroutine();
+        yield return base.SelectChoiceEndCoroutine();
     }
 
     #endregion

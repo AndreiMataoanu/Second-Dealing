@@ -10,7 +10,6 @@ public abstract class CardChoiceEvent : MonoBehaviour
     [Header("Cards")]
     [SerializeField] protected Transform cardsPosition;
     [SerializeField] protected float radius = 0.2f;
-    [SerializeField] protected TMPro.TextMeshProUGUI cardText;
 
     [Header("Darts")]
     [SerializeField] protected DartSelection dartSelection;
@@ -76,7 +75,7 @@ public abstract class CardChoiceEvent : MonoBehaviour
     // has to set isChoosing to false at the end (used in event manager)
     protected abstract void OnSelectCardOption(CardInstance cardInstance);
 
-    protected virtual IEnumerator SelectCardCopyEndCoroutine()
+    protected virtual IEnumerator SelectChoiceEndCoroutine()
     {
         yield return new WaitForSeconds(1.5f);
         
@@ -118,7 +117,7 @@ public abstract class CardChoiceEvent : MonoBehaviour
             yield break;
         }
 
-        yield return SelectCardCopyEndCoroutine();
+        yield return SelectChoiceEndCoroutine();
     }
     
     public void SetDartsActive(bool active)

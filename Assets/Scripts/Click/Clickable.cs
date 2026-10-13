@@ -74,6 +74,8 @@ public class Clickable : MonoBehaviour
         OnRemoveOutline();
     }
 
+    public void RemoveOutline() => OnRemoveOutline();
+    
     public void OnRemoveOutline(bool hideTooltip = true)
     {
         if(hideTooltip) TooltipManager.instance.HideTooltip();

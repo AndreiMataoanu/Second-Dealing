@@ -4064,6 +4064,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 454897963}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &468870049 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 69835914741500865, guid: 541ae4e7ca2db504bbc8df49b7ce8558, type: 3}
+  m_PrefabInstance: {fileID: 4109581827045791215}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &472231983
 GameObject:
   m_ObjectHideFlags: 0
@@ -12071,6 +12076,18 @@ PrefabInstance:
       propertyPath: dialogueText
       value: 
       objectReference: {fileID: 172934057}
+    - target: {fileID: 6608549595112624214, guid: 1ec9ed4188d23e645a8969bc84ee8fd7, type: 3}
+      propertyPath: removeCardsTutorialLines.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6608549595112624214, guid: 1ec9ed4188d23e645a8969bc84ee8fd7, type: 3}
+      propertyPath: 'removeCardsTutorialLines.Array.data[0]'
+      value: You will throw one explosive dart.
+      objectReference: {fileID: 0}
+    - target: {fileID: 6608549595112624214, guid: 1ec9ed4188d23e645a8969bc84ee8fd7, type: 3}
+      propertyPath: 'removeCardsTutorialLines.Array.data[1]'
+      value: The card you hit and its neighbours will be destroyed.
+      objectReference: {fileID: 0}
     - target: {fileID: 7292004457831625453, guid: 1ec9ed4188d23e645a8969bc84ee8fd7, type: 3}
       propertyPath: m_Name
       value: DialogueManager
@@ -13295,6 +13312,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4109581827045791216}
     - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
+      propertyPath: removeCardChoiceEvent
+      value: 
+      objectReference: {fileID: 4109581827045791217}
+    - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
       propertyPath: mediumSeverityEvents.Array.size
       value: 6
       objectReference: {fileID: 0}
@@ -14034,19 +14055,40 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 69835914741500865, guid: 541ae4e7ca2db504bbc8df49b7ce8558, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4109581827045791217}
   m_SourcePrefab: {fileID: 100100000, guid: 541ae4e7ca2db504bbc8df49b7ce8558, type: 3}
 --- !u!114 &4109581827045791216 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 752010697212828273, guid: 541ae4e7ca2db504bbc8df49b7ce8558, type: 3}
   m_PrefabInstance: {fileID: 4109581827045791215}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 468870049}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a29114993910faf4da718308833c5438, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AddCardsEventAction
+--- !u!114 &4109581827045791217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 468870049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14961791e61e4884fa389fb6e514b546, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RemoveCardChoiceEvent
+  blackjackGame: {fileID: 1343293108}
+  cardsPosition: {fileID: 826400919}
+  radius: 0.18
+  dartSelection: {fileID: 914054724}
+  dartNumber: 1
+  isChoosing: 0
 --- !u!4 &4196823323493360381 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7643244776236736907, guid: 86ed570a28ed8fe458f082ff2d7912d7, type: 3}
@@ -14461,7 +14503,7 @@ PrefabInstance:
     - target: {fileID: 2531318046483965639, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
       propertyPath: milestones.Array.data[0].gameEvent
       value: 
-      objectReference: {fileID: 11400000, guid: 40dd43a7e1baf33479325c4c8079abca, type: 2}
+      objectReference: {fileID: 11400000, guid: a2dca14c25396c349a5b91b853ba2209, type: 2}
     - target: {fileID: 2531318046483965639, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
       propertyPath: milestones.Array.data[0].milestoneType
       value: 0
