@@ -51,6 +51,8 @@ public class RemoveCardChoiceEvent : CardChoiceEvent
         
         yield return new WaitUntil(() => particles.All(p => !p.isPlaying));
         
+        particles.ForEach(p => Destroy(p.gameObject));
+        
         yield return base.SelectChoiceEndCoroutine();
     }
 
