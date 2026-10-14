@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 152006869610446000}
   - component: {fileID: 752010697212828273}
+  - component: {fileID: 369307294511997388}
   m_Layer: 0
   m_Name: EventActionManager
   m_TagString: Untagged
@@ -46,4 +47,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AddCardsEventAction
   blackjackGame: {fileID: 0}
   cardsPosition: {fileID: 0}
-  horizontalSpacing: 0.2
+  radius: 0.18
+  dartSelection: {fileID: 0}
+  dartNumber: 3
+  isChoosing: 0
+  cardText: {fileID: 0}
+--- !u!114 &369307294511997388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 69835914741500865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14961791e61e4884fa389fb6e514b546, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RemoveCardChoiceEvent
+  blackjackGame: {fileID: 0}
+  cardsPosition: {fileID: 0}
+  radius: 0.18
+  dartSelection: {fileID: 0}
+  dartNumber: 1
+  isChoosing: 0
+  particleSystem: {fileID: 1458591839492578532, guid: 88bf20cb6f7be934d99edbf12b253f4a, type: 3}
