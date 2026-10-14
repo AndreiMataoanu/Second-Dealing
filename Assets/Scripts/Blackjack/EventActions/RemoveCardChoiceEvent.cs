@@ -1,11 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 public class RemoveCardChoiceEvent : CardChoiceEvent
 {
+    [Header("VFX")] 
+    [SerializeField] private new ParticleSystem particleSystem;
+    
     private List<ClickableCard> clickableCards = new();
     private List<CardInstance> instanceCards = new();
+    private List<CardInstance> removedCards = new();
     
     private void Awake()
     {
@@ -30,6 +36,22 @@ public class RemoveCardChoiceEvent : CardChoiceEvent
         CardEffects.OnCardSelected();
 
         StartCoroutine(SelectChoiceEndCoroutine());
+    }
+
+    protected override IEnumerator SelectChoiceEndCoroutine()
+    {
+        List<ParticleSystem> particles = new();
+        
+        foreach (var removed in removedCards)
+            particles.Add(Instantiate(particleSystem, removed.CardObject.transform.position, particleSystem.transform.rotation));
+
+        particles.ForEach(p => p.Play());
+        removedCards.ForEach(rc => Destroy(rc.CardObject));        
+        dartSelection.ResetDarts();
+        
+        yield return new WaitUntil(() => particles.All(p => !p.isPlaying));
+        
+        yield return base.SelectChoiceEndCoroutine();
     }
 
     private void AddClickableCardSelection()
@@ -87,5 +109,9 @@ public class RemoveCardChoiceEvent : CardChoiceEvent
         TableCards.GameDeck.AddRemovedCard(middle.cardData.rank, middle.cardData.suit);
         TableCards.GameDeck.AddRemovedCard(left.cardData.rank, left.cardData.suit);
         TableCards.GameDeck.AddRemovedCard(right.cardData.rank, right.cardData.suit);
+
+        removedCards.Add(left);
+        removedCards.Add(middle);
+        removedCards.Add(right);
     }
 }
