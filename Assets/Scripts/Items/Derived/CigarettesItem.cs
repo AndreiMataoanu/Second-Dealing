@@ -64,7 +64,8 @@ public class CigarettesItem : Item
     
     private IEnumerator PlaySmokeAnimation()
     {
-        AudioManager.instance.Play("Smoking");
+        AudioManager.instance.Play("Smoking"); //DELETE LATER
+        AudioManagerFMOD.Play(AudioEvent.sfxCigarettesItem);
     
         yield return new WaitForSeconds(1f);
     

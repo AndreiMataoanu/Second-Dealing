@@ -77,15 +77,19 @@ public class HatTrick : Keepsake
             isValidTarget = true;
 
         if(isValidTarget) return true;
-        
-        AudioManager.instance.Play("ItemDeny");
+
+        {
+            AudioManager.instance.Play("ItemDeny"); //DELETE LATER
+            AudioManagerFMOD.Play(AudioEvent.sfxCantUseItem);
+        }
 
         return false;
     }
 
     private void AddHatTrickCard(CardInstance cardInstance)
     {
-        AudioManager.instance.Play("ItemBuy");
+        AudioManager.instance.Play("ItemBuy"); //DELETE LATER
+        AudioManagerFMOD.Play(AudioEvent.sfxShopBuy);
         
         game.isActionLocked = true;
         game.canDoubleDown = false;

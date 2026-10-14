@@ -86,7 +86,8 @@ public class CardSelectorManager : MonoBehaviour
     {
         if(selectedSuit == null || selectedRank == null)
         {
-            AudioManager.instance.Play("ItemDeny");
+            AudioManager.instance.Play("ItemDeny"); //DELETE LATER
+            AudioManagerFMOD.Play(AudioEvent.sfxCantUseItem);
 
             return;
         }
@@ -118,7 +119,8 @@ public class CardSelectorManager : MonoBehaviour
 
         GoFishRank(goFish, newCard.rank, (success) =>
         {
-            AudioManager.instance.Play(success ? "CardHit" : "ItemDeny");
+            AudioManager.instance.Play(success ? "CardHit" : "ItemDeny"); //DELETE LATER
+            AudioManagerFMOD.Play(AudioEvent.sfxGoFishKeepsake);
         });
 
         CloseCardSelector();
@@ -134,8 +136,8 @@ public class CardSelectorManager : MonoBehaviour
         tableCards.GameDeck.AddCardCopy(newCard);
         hasPrintedThisTurn = true;
 
-        AudioManager.instance.Play("CardHit");
-
+        AudioManager.instance.Play("CardHit"); //DELETE LATER
+        AudioManagerFMOD.Play(AudioEvent.sfxDeal);
         CloseCardSelector();
     }
 
@@ -151,13 +153,14 @@ public class CardSelectorManager : MonoBehaviour
             hasPrintedThisTurn = true;
             blackjackManager.HandleNewCardInPlayerHand(instance);
 
-            AudioManager.instance.Play("CardHit");
-
+            AudioManager.instance.Play("CardHit"); //DELETE LATER
+            AudioManagerFMOD.Play(AudioEvent.sfxDeal);
             CloseCardSelector();
         }
         else
         {
-            AudioManager.instance.Play("ItemDeny");
+            AudioManager.instance.Play("ItemDeny"); //DELETE LATER
+            AudioManagerFMOD.Play(AudioEvent.sfxCantUseItem);
         }
     }
 

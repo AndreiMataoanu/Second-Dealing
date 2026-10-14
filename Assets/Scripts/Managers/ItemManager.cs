@@ -58,12 +58,16 @@ public class ItemManager : MonoBehaviour
     {
         if(!item.Activate())
         {
-            if(item.type != ItemType.Organ) 
-                AudioManager.instance.Play("ItemDeny");
+            if (item.type != ItemType.Organ)
+            {
+                AudioManager.instance.Play("ItemDeny"); //DELETE LATER
+                AudioManagerFMOD.Play(AudioEvent.sfxCantUseItem);   
+            }
             return;
         }
 
-        AudioManager.instance.Play("ItemBuy");
+        AudioManager.instance.Play("ItemBuy"); //DELETE LATER
+        AudioManagerFMOD.Play(AudioEvent.sfxShopBuy);
         KeepsakeUnlockProgression.instance.AddStat(ChallengeType.UseItems);
 
         if (!item.delayDestroy)
@@ -78,7 +82,8 @@ public class ItemManager : MonoBehaviour
         {
             blackjackGame.SellItem(item.GetResalePrice());
             
-            AudioManager.instance.Play("ItemBuy");
+            AudioManager.instance.Play("ItemBuy"); //DELETE LATER
+            AudioManagerFMOD.Play(AudioEvent.sfxShopBuy);
 
             item.delayDestroy = false;
 
@@ -148,11 +153,13 @@ public class ItemManager : MonoBehaviour
         var item = shopManager.SpawnItemInventory(rewardPrefab);
         if (!item)
         {
-            AudioManager.instance.Play("ItemDeny");
+            AudioManager.instance.Play("ItemDeny"); //DELETE LATER
+            AudioManagerFMOD.Play(AudioEvent.sfxCantUseItem);
             return false;
         }
         
-        AudioManager.instance.Play("ItemBuy");
+        AudioManager.instance.Play("ItemBuy"); //DELETE LATER
+        AudioManagerFMOD.Play(AudioEvent.sfxShopBuy);
         
         item.AddAction(Activate);
         item.SetActive(true);

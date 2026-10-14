@@ -70,7 +70,8 @@ public class OptionsBox : MonoBehaviour
         UpdateKnobRotation(knobTransform, volumeRef, startRot);
         UpdateVolumeText(label, volumeRef);
 
-        AudioManager.instance.Play(playUpSound ? "BetUp" : "BetDown");
+        AudioManager.instance.Play(playUpSound ? "BetUp" : "BetDown"); // DELETE LATER
+        AudioManagerFMOD.Play(AudioEvent.uiSettingsDialTurn); //Maybe use this sound for Bet increase//decrease or vice versa
     }
 
     public void IncreaseGameSpeed()
@@ -84,7 +85,8 @@ public class OptionsBox : MonoBehaviour
 
         UpdateSpeedVisuals();
 
-        AudioManager.instance.Play("BetUp");
+        AudioManager.instance.Play("BetUp"); //DELETE LATER
+        AudioManagerFMOD.Play(AudioEvent.sfxIncreasingBet);
     }
 
     public void DecreaseGameSpeed()
@@ -97,8 +99,9 @@ public class OptionsBox : MonoBehaviour
         }
 
         UpdateSpeedVisuals();
-
-        AudioManager.instance.Play("BetDown");
+        
+        AudioManager.instance.Play("BetDown"); //DELETE LATER
+        AudioManagerFMOD.Play(AudioEvent.sfxDecreasingBet);
     }
 
     public void ToggleScreenMode()
@@ -107,13 +110,15 @@ public class OptionsBox : MonoBehaviour
 
         UpdateSwitchVisuals();
 
-        AudioManager.instance.Play(isWindowed ? "BetUp" : "BetDown");
+        AudioManager.instance.Play(isWindowed ? "BetUp" : "BetDown"); //Is windowed UI sound? DELETE LATER
+        AudioManagerFMOD.Play(AudioEvent.uiMenuButtonPress);
     }
 
     public void SavePreferences()
     {
-        AudioManager.instance.Play("BetUp");
-        PlayerPrefs.SetFloat("MasterVolume", master);
+        AudioManager.instance.Play("BetUp"); //DELETE LATER
+        AudioManagerFMOD.Play(AudioEvent.uiPauseResumeGame);
+        PlayerPrefs.SetFloat("MasterVolume", master); //REPLACE WITH FMOD PARAM
         PlayerPrefs.SetFloat("SFXVolume", sfx);
         PlayerPrefs.SetFloat("MusicVolume", music);
         PlayerPrefs.SetInt("GameSpeedIndex", speedIndex);

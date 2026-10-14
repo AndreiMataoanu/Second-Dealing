@@ -11,7 +11,8 @@ public class NftItem : Item
         
         if(basePrice == 0)
         {
-            AudioManager.instance.Play("ItemBuy");
+            AudioManager.instance.Play("ItemBuy"); //DELETE LATER
+            AudioManagerFMOD.Play(AudioEvent.sfxShopBuy);
             return true;
         }
         

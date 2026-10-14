@@ -27,7 +27,8 @@ public class FanItem : Item
     {
         if(!blackjackGame.isRoundActive || blackjackGame.CheckItemAfterStand()) return false;
 
-        AudioManager.instance.Play("Fan(Clone)");
+        AudioManager.instance.Play("Fan(Clone)"); //DELETE LATER
+        AudioManagerFMOD.Play(AudioEvent.sfxFanItem);
 
         blackjackGame.StartCoroutine(FanCoroutine());
 

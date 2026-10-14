@@ -59,8 +59,8 @@ public class TableKeepsakeInteractable : Clickable
 
         if(!isUsable)
         {
-            AudioManager.instance.Play("ItemDeny");
-
+            AudioManager.instance.Play("ItemDeny"); //DELETE LATER
+            AudioManagerFMOD.Play(AudioEvent.sfxCantUseItem);
             return;
         }
 
@@ -75,7 +75,8 @@ public class TableKeepsakeInteractable : Clickable
         }
         else
         {
-            AudioManager.instance.Play("ItemDeny");
+            AudioManager.instance.Play("ItemDeny"); //DELETE LATER
+            AudioManagerFMOD.Play(AudioEvent.sfxCantUseItem);
         }
     }
 

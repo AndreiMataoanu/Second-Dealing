@@ -52,7 +52,8 @@ public class SprayCan : Keepsake
 
     private void OnSprayCard(CardInstance cardInstance)
     {
-        AudioManager.instance.Play("ItemBuy");
+        AudioManager.instance.Play("ItemBuy"); //DELETE LATER
+        AudioManagerFMOD.Play(AudioEvent.sfxShopBuy);
         CardEffects.ToggleColorSwap(cardInstance.cardData);
         CardEffects.SetVisualEffects(cardInstance, cardInstance.isHidden, true, true);
 

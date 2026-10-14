@@ -69,7 +69,8 @@ public class Pyro : Keepsake
     
     private void OnBurnCard(CardInstance cardInstance)
     {
-        AudioManager.instance.Play("Pyro");
+        AudioManager.instance.Play("Pyro"); //DELETE LATER
+        AudioManagerFMOD.Play(AudioEvent.sfxPyroKeepsake);
         
         cardEffect.OnCardSelected();
         cardInstance.displayComponent.SetFaceColliderActive(false);

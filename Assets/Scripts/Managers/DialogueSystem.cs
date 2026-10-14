@@ -240,7 +240,10 @@ public class DialogueSystem : MonoBehaviour
         {
             dialogueText.text += letter;
 
-            if(AudioManager.instance != null) AudioManager.instance.Play("Typing");
+            if(AudioManager.instance != null) AudioManager.instance.Play("Typing"); //DEALER TALK DELETE LATER
+            //(MIGHT NOT WORK BY DEFAULT)
+            AudioManagerFMOD.Play(AudioEvent.sfxDealerTalk);
+            
 
             yield return new WaitForSeconds(typingSpeed);
         }

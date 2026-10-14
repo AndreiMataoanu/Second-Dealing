@@ -60,7 +60,8 @@ public class AntiMatter : Keepsake
     
     private void OnAntiMatterCard(CardInstance cardInstance)
     {
-        AudioManager.instance.Play("ItemBuy");
+        AudioManager.instance.Play("ItemBuy"); //DELETE LATER
+        AudioManagerFMOD.Play(AudioEvent.sfxShopBuy);
 
         cardEffect.OnCardSelected();
         ApplyAntiMatterToCard(cardInstance);

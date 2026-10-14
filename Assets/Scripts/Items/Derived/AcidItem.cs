@@ -44,7 +44,8 @@ public class AcidItem : Item
         if(tableCards.DealerHand.Contains(cardInstance))
             KeepsakeUnlockProgression.instance.AddStat(ChallengeType.AlterDealerHand);
 
-        AudioManager.instance.Play("Acid(Clone)");
+        AudioManager.instance.Play("Acid(Clone)"); //DELETE LATER
+        AudioManagerFMOD.Play(AudioEvent.sfxAcidItem);
 
         isAcidActive = false;
         isCardSelecting = false;
