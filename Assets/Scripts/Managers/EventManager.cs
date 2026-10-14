@@ -21,6 +21,11 @@ public class EventManager : MonoBehaviour
 
     [Header("Cards Event Actions")]
     [SerializeField] private AddCardChoiceEvent addCardChoiceEvent;
+    [SerializeField] private RemoveCardChoiceEvent removeCardChoiceEvent;
+    
+    [Header("Rage event")]
+    public Image dealerRagebar;
+    [SerializeField] private int bossRound = 4;
     
     private List<int> powerballNumbers = new();
     
@@ -30,9 +35,7 @@ public class EventManager : MonoBehaviour
     private bool isRouletteBlackjackActive = false;
     private bool isNewPowerball = false;
 
-    public Image dealerRagebar;
     private int dealerRageNumber;
-    [SerializeField] private int bossRound = 4; 
     private float currentValue = 0;
     private bool letItRide = false;
     private bool isDealerRageActive = false;
@@ -41,6 +44,14 @@ public class EventManager : MonoBehaviour
     private BlackjackGame blackjackGame;
     private TableCards tableCards;
 
+    public enum DealerRageAbility
+    {
+        ForceAllIn,
+        RemoveItem,
+        HalvePlayerCards,
+        ShufflePlayerHand
+    }
+    
     #region Getters
     
     public List<int> PowerballGoal => powerballNumbers;
@@ -61,15 +72,7 @@ public class EventManager : MonoBehaviour
     }
 
     #endregion
-    #region enum for dealer rage
-    public enum DealerRageAbility
-    {
-        ForceAllIn,
-        RemoveItem,
-        HalvePlayerCards,
-        ShufflePlayerHand
-    }
-    #endregion
+    
     #region Monobehaviour Methods
     
     private void Awake()
@@ -220,6 +223,9 @@ public class EventManager : MonoBehaviour
     {
         var addCards = blackjackEvent as AddCardsEvent;
         if (addCards) return addCardChoiceEvent;
+        
+        var removeCards = blackjackEvent as RemoveCardsEvent;
+        if (removeCards) return removeCardChoiceEvent;
 
         return null;
     }
@@ -233,7 +239,7 @@ public class EventManager : MonoBehaviour
 
     #endregion
 
-    #region dealer rage event
+    #region Dealer rage event
     public void ChangeRageNumber(int value)
     {
         dealerRageNumber += value;

@@ -20,10 +20,18 @@ public class CardEffectActions
         this.cardTrigger = cardTrigger;
     }
 
+    #region Select card
+    
     public void SelectCard()
     {
         blackjackGame.ShopManager.SetInventoryActive(false);
         cursorFollow.SetCursorTypeActive(true, cursorType);
+    }
+
+    public void SelectCard(Vector3 startMousePosition)
+    {
+        blackjackGame.ShopManager.SetInventoryActive(false);
+        cursorFollow.UseCursorAtPosition(true, cursorType, startMousePosition);
     }
     
     public void OnCardSelected()
@@ -39,6 +47,10 @@ public class CardEffectActions
         cursorFollow.SetCursorTypeActive(false, cursorType);
         cursorDetection.EndSelectCard();
     }
+    
+    #endregion
+
+    #region Add card effects
 
     public void AddItemCardEffectAction(Action<CardInstance> cardEffect)
     {
@@ -51,4 +63,6 @@ public class CardEffectActions
         cursorDetection.OnEventSelectCard(cardsPosition, blackjackGame, cardTrigger);
         cursorDetection.AddActionToClickableCards(cardEffect);
     }
+
+    #endregion
 }

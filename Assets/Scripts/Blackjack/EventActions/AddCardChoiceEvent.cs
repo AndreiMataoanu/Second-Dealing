@@ -3,39 +3,61 @@ using UnityEngine;
 
 public class AddCardChoiceEvent : CardChoiceEvent
 {
+    [Header("Card copies")]
+    [SerializeField] protected TMPro.TextMeshProUGUI cardText;
+    
     private AddCardsEvent addCardsEvent;
+
+    private int currentCopyCount;
 
     public void SetAddCardsEvent(AddCardsEvent addCards) => addCardsEvent = addCards;
     
     private void Awake()
     {
-        OptionCount = 3;
+        OptionCount = 6;
     }
 
     #region Select Option
 
+    protected override IEnumerator DealAllOptionsCoroutine()
+    {
+        UpdateCopyCount();
+
+        yield return base.DealAllOptionsCoroutine();
+    }
+
     protected override void OnSelectCardOption(CardInstance cardInstance)
     {
-        AudioManager.instance.Play("CardHit");
-        TableCards.GameDeck.AddCardCopies(cardInstance.cardData, addCardsEvent.CopyCount);
-
-        Destroy(cardInstance.CardObject);
-        CardEffects.OnCardSelected();
+        dartSelection.ThrowDart(SelectIndex, cardInstance.CardObject.transform.position);
         
-        StartCoroutine(SelectCardCopyEndCoroutine());
+        AudioManager.instance.Play("CardHit");
+        TableCards.GameDeck.AddCardCopies(cardInstance.cardData, currentCopyCount);
+        UpdateCopyCount();
+
+        CardEffects.OnCardSelected();
+        StartCoroutine(ChangeDart());
     }
     
-    private IEnumerator SelectCardCopyEndCoroutine()
+    protected override IEnumerator SelectChoiceEndCoroutine()
     {
         yield return new WaitForSeconds(0.7f);
         blackjackGame.DialogueSystem.ShowCopyChoiceTaunt();
         
-        yield return new WaitForSeconds(1.5f);
-        
-        DestroyCards();
-        isChoosing = false;
+        yield return base.SelectChoiceEndCoroutine();
     }
 
     #endregion
 
+    #region Helpers
+
+    private void UpdateCopyCount()
+    {
+        if (SelectIndex == dartNumber) return;
+        
+        currentCopyCount = addCardsEvent.GenerateCopyCount();
+        cardText.text = currentCopyCount + " ";
+        cardText.text += currentCopyCount > 0 ? "copies" : "copy";
+    }
+    
+    #endregion
 }

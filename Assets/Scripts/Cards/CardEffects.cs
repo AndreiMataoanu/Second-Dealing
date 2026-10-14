@@ -28,13 +28,13 @@ public static class CardEffects
         if(cardInstance.cardData.rank == Card.Rank.Joker)
         {
             if (!jokerCutCards.TryAdd(cardInstance, reduction))
-            jokerCutCards[cardInstance] *= reduction;
+                jokerCutCards[cardInstance] *= reduction;
         }
         else
         {
             var key = (cardInstance.cardData.rank, cardInstance.cardData.suit);
             if (!cutCards.TryAdd(key, reduction))
-            cutCards[key] *= reduction;    
+                cutCards[key] *= reduction;    
         }
         
         SetVisualEffects(cardInstance, cardInstance.isHidden, true, true);

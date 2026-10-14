@@ -4,22 +4,32 @@ using UnityEngine;
 
 public abstract class CardChoiceEvent : MonoBehaviour
 {
+    [Header("Systems")]
     [SerializeField] protected BlackjackGame blackjackGame;
+    
+    [Header("Cards")]
     [SerializeField] protected Transform cardsPosition;
-    [SerializeField] protected Vector3 cardsOffset = new(0.2f, 0.0f, 0.0f);
+    [SerializeField] protected float radius = 0.2f;
+
+    [Header("Darts")]
+    [SerializeField] protected DartSelection dartSelection;
+    [SerializeField] [Range(1, 3)] protected int dartNumber;
 
     [HideInInspector] public bool isChoosing = false;
     protected int OptionCount;
-    
+    protected int SelectIndex;
+
     protected TableCards TableCards;
     protected CardEffectActions CardEffects;
+    
+    private Vector3 cardsOffset;
     
     private void Start()
     {
         TableCards = blackjackGame.TableCards;
         CardEffects = new CardEffectActions(
             blackjackGame,
-            CursorType.Flip,
+            CursorType.Dart,
             CardTrigger.AddCardsEvent
         );
     }
@@ -31,26 +41,31 @@ public abstract class CardChoiceEvent : MonoBehaviour
         StartCoroutine(DealAllOptionsCoroutine());
     }
 
-    private IEnumerator DealAllOptionsCoroutine()
+    protected virtual IEnumerator DealAllOptionsCoroutine()
     {
         isChoosing = true;
         yield return new WaitForSeconds(1f);
 
+        Quaternion slice = Quaternion.Euler(0.0f, 0.0f, 360.0f / OptionCount);
+        cardsOffset = Vector3.up * radius;
+        
         for (int i = 0; i < OptionCount; i++)
         {
-            StartCoroutine(DealCardOption(i));
+            StartCoroutine(DealCardOption());
+            cardsOffset = slice * cardsOffset;
+            
             yield return new WaitForSeconds(0.5f);
         }
 
-        CardEffects.SelectCard();
+        UseDart();
         CardEffects.AddEventCardEffectAction(OnSelectCardOption, cardsPosition);
     }
     
-    private IEnumerator DealCardOption(int optionIndex)
+    private IEnumerator DealCardOption()
     {
         var card = TableCards.DealCard();
         var cardInstance = TableCards.DealCardInstance(card, false);
-        yield return TableCards.PlaceCardAtIndex(optionIndex, cardInstance, cardsPosition, cardsOffset);
+        yield return TableCards.PlaceCardAtIndex(1, cardInstance, cardsPosition, cardsOffset);
     }
 
     #endregion
@@ -59,6 +74,15 @@ public abstract class CardChoiceEvent : MonoBehaviour
 
     // has to set isChoosing to false at the end (used in event manager)
     protected abstract void OnSelectCardOption(CardInstance cardInstance);
+
+    protected virtual IEnumerator SelectChoiceEndCoroutine()
+    {
+        yield return new WaitForSeconds(1.5f);
+        
+        DestroyCards();
+        dartSelection.ResetDarts();
+        isChoosing = false;
+    }
 
     #endregion
     
@@ -72,4 +96,37 @@ public abstract class CardChoiceEvent : MonoBehaviour
 
     #endregion
 
+    #region Using Darts
+
+    private void UseDart()
+    {
+        dartSelection.DeactivateDartAtIndex(SelectIndex);
+        
+        CardEffects.SelectCard(dartSelection.GetDartPositionAtIndex(SelectIndex));
+    }
+    
+    protected IEnumerator ChangeDart()
+    {
+        SelectIndex++;
+
+        yield return new WaitForSeconds(0.5f);
+
+        if (SelectIndex < dartNumber)
+        {
+            UseDart();
+            yield break;
+        }
+
+        yield return SelectChoiceEndCoroutine();
+    }
+    
+    public void SetDartsActive(bool active)
+    {
+        dartSelection.SetDartSelectionActive(active);
+
+        var activeDarts = active ? dartNumber : 0;
+        dartSelection.SetActiveDartCount(activeDarts);
+    }
+
+    #endregion
 }
