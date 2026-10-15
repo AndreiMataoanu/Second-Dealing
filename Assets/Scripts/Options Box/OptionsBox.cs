@@ -1,8 +1,9 @@
+using FMOD.Studio;
+using FMODUnity;
 using TMPro;
 using UnityEngine;
 using Utils;
 
-//TODO: Uncomment FMOD stuff when we have it.
 public class OptionsBox : MonoBehaviour
 {
     [SerializeField] private Transform masterKnob;
@@ -20,9 +21,9 @@ public class OptionsBox : MonoBehaviour
     private Quaternion sfxStartRot;
     private Quaternion musicStartRot;
     private Quaternion speedStartRot;
-    //Bus masterBus;
-    //Bus sfxBus;
-    //Bus musicBus;
+    VCA masterVCA;
+    VCA sfxVCA;
+    VCA musicVCA;
     private float[] speedOptions = { 0.5f, 0.75f, 1.0f, 1.25f, 1.5f, 1.75f, 2.0f, 2.25f, 2.5f, 2.75f, 3.0f };
     private float master;
     private float music;
@@ -32,9 +33,9 @@ public class OptionsBox : MonoBehaviour
 
     private void Awake()
     {
-        //masterBus = FMODUnity.RuntimeManager.GetBus("bus:/");
-        //sfxBus = FMODUnity.RuntimeManager.GetBus("bus:/SFX");
-        //musicBus = FMODUnity.RuntimeManager.GetBus("bus:/Music");
+        masterVCA = RuntimeManager.GetVCA("vca:/MASTER");
+        sfxVCA = RuntimeManager.GetVCA("vca:/SFX");
+        musicVCA = RuntimeManager.GetVCA("vca:/MUSIC");
     }
 
     private void Start()
@@ -65,13 +66,13 @@ public class OptionsBox : MonoBehaviour
     private void AdjustVolume(ref float volumeRef, float delta, Transform knobTransform, Quaternion startRot, TextMeshProUGUI label, bool playUpSound)
     {
         volumeRef = Mathf.Clamp01(volumeRef + delta);
-        //bus.setVolume(volumeRef);
+        //bus.setVolume(volumeRef); //Unsure if this is still needed? - Frode
 
         UpdateKnobRotation(knobTransform, volumeRef, startRot);
         UpdateVolumeText(label, volumeRef);
 
         AudioManager.instance.Play(playUpSound ? "BetUp" : "BetDown"); // DELETE LATER
-        AudioManagerFMOD.Play(AudioEvent.uiSettingsDialTurn); //Maybe use this sound for Bet increase//decrease or vice versa
+        AudioManagerFMOD.Play(AudioEvent.uiSettingsDialTurn);
     }
 
     public void IncreaseGameSpeed()
@@ -84,9 +85,11 @@ public class OptionsBox : MonoBehaviour
         }
 
         UpdateSpeedVisuals();
+        
+        AudioManagerFMOD.Instance.SetGameSpeedParam(speedIndex);
 
         AudioManager.instance.Play("BetUp"); //DELETE LATER
-        AudioManagerFMOD.Play(AudioEvent.sfxIncreasingBet);
+        AudioManagerFMOD.Play(AudioEvent.uiSettingsDialTurn);
     }
 
     public void DecreaseGameSpeed()
@@ -100,8 +103,10 @@ public class OptionsBox : MonoBehaviour
 
         UpdateSpeedVisuals();
         
+        AudioManagerFMOD.Instance.SetGameSpeedParam(speedIndex);
+        
         AudioManager.instance.Play("BetDown"); //DELETE LATER
-        AudioManagerFMOD.Play(AudioEvent.sfxDecreasingBet);
+        AudioManagerFMOD.Play(AudioEvent.uiSettingsDialTurn);
     }
 
     public void ToggleScreenMode()

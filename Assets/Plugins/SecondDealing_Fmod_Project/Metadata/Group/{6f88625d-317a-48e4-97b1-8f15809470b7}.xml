@@ -7,6 +7,12 @@
 		<property name="name">
 			<value>AMB</value>
 		</property>
+		<relationship name="automators">
+			<destination>{b1dda34e-9aab-4e66-8ea3-6d02153502dd}</destination>
+		</relationship>
+		<relationship name="masters">
+			<destination>{18e11b87-a968-4243-8c34-5e92b17fc1b1}</destination>
+		</relationship>
 		<relationship name="effectChain">
 			<destination>{b720eeb0-dc90-4d76-b9e5-5d8d5a008cae}</destination>
 		</relationship>
@@ -16,6 +22,11 @@
 		<relationship name="output">
 			<destination>{f7396170-0087-4561-a818-775b0e9ae576}</destination>
 		</relationship>
+	</object>
+	<object class="Automator" id="{b1dda34e-9aab-4e66-8ea3-6d02153502dd}">
+		<property name="nameOfPropertyBeingAutomated">
+			<value>volume</value>
+		</property>
 	</object>
 	<object class="MixerBusEffectChain" id="{b720eeb0-dc90-4d76-b9e5-5d8d5a008cae}">
 		<relationship name="effects">
