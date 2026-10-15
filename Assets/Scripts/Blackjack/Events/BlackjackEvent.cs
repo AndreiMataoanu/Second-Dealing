@@ -9,7 +9,8 @@ public abstract class BlackjackEvent : ScriptableObject
     public IEnumerator StartDisplay(GameCamera gameCamera, TMPro.TextMeshProUGUI statusText)
     {
         gameCamera.ChangeToCamera(CameraType.Event);
-        AudioManager.instance.Play("Laugh");
+        AudioManager.instance.Play("Laugh"); //DELETE LATER
+        AudioManagerFMOD.Play(AudioEvent.sfxGenerelEvent);
         statusText.text = "Let's make it more interesting";
         yield return GameUtils.WaitDelayOrInput(5.0f);
 

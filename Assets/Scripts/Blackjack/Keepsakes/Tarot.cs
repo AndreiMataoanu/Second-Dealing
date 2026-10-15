@@ -67,7 +67,8 @@ public class Tarot : Keepsake
         Debug.Log(tarotData + " " + tarotData.rewardItemPrefab);
         if(!tarotData || !tarotData.rewardItemPrefab)
         {
-            AudioManager.instance.Play("ItemDeny");
+            AudioManager.instance.Play("ItemDeny"); //DELETE LATER
+            AudioManagerFMOD.Play(AudioEvent.sfxCantUseItem);
     
             return;
         }

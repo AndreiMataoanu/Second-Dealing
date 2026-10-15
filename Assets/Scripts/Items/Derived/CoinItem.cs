@@ -4,7 +4,8 @@ public class CoinItem : Item
     {
         if(!blackjackGame.isRoundActive || blackjackGame.CheckItemAfterStand()) return false;
 
-        AudioManager.instance.Play("Coin(Clone)");
+        AudioManager.instance.Play("Coin(Clone)"); //DELETE LATER
+        AudioManagerFMOD.Play(AudioEvent.sfxCoinItem);
 
         var isLucky = blackjackGame.ShopManager.FlipCoin();
 

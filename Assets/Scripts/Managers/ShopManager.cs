@@ -129,7 +129,8 @@ public class ShopManager : MonoBehaviour
     {
         state = ShopState.Closing;
 
-        AudioManager.instance.Play("SuitcaseClose");
+        AudioManager.instance.Play("SuitcaseClose"); //DELETE LATER
+        AudioManagerFMOD.Play(AudioEvent.sfxShopClose);
 
         yield return new WaitForSeconds(0.6f);
 
@@ -176,7 +177,8 @@ public class ShopManager : MonoBehaviour
     
     private void MoveToInventoryPosition(Item item, bool isFree=false)
     {
-        AudioManager.instance.Play("ItemBuy");
+        AudioManager.instance.Play("ItemBuy"); //DELETE LATER
+        AudioManagerFMOD.Play(AudioEvent.sfxShopBuy);
 
         if(!isFree) blackjackGame.BuyItem(item.GetPrice());
         
@@ -275,7 +277,8 @@ public class ShopManager : MonoBehaviour
 
         if(Time.time >= nextDenyTime)
         {
-            AudioManager.instance.Play("ItemDeny");
+            AudioManager.instance.Play("ItemDeny"); //DELETE LATER
+            AudioManagerFMOD.Play(AudioEvent.sfxCantUseItem);
 
             nextDenyTime = Time.time + denySoundCooldown;
         }
@@ -363,8 +366,9 @@ public class ShopManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.2f);
 
-        AudioManager.instance.Play("Latch");
-        AudioManager.instance.Play("SuitcaseOpen");
+        AudioManager.instance.Play("Latch"); //DELETE
+        AudioManager.instance.Play("SuitcaseOpen"); //DELETE
+        AudioManagerFMOD.Play(AudioEvent.sfxShopOpen);
         state = ShopState.Open;
     }
     

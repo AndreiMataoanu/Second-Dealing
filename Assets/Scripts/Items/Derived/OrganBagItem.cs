@@ -19,7 +19,8 @@ public class OrganBagItem : Item
             {
                 isOrganActive = false;
 
-                AudioManager.instance.Play("OrganExpire");
+                AudioManager.instance.Play("OrganExpire"); //DELETE LATER
+                AudioManagerFMOD.Play(AudioEvent.sfxOrganItem);
                 
                 blackjackGame.ItemManager.AddItemToRemove(this);
             }
@@ -50,7 +51,8 @@ public class OrganBagItem : Item
 
     public static void Expire(ShopManager shopManager)
     {
-        AudioManager.instance.Play("OrganExpire");
+        AudioManager.instance.Play("OrganExpire"); //DELETE LATER
+        AudioManagerFMOD.Play(AudioEvent.sfxOrganItem);
         shopManager.RemoveFromInventory(ItemType.Organ);
         isOrganActive = false;
     }

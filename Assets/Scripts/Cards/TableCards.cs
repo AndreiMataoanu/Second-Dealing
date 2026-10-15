@@ -210,7 +210,11 @@ public class TableCards : MonoBehaviour
 
         float halfDuration = duration / 2.0f;
 
-        if(!CigarettesItem.isCigaretteActive) AudioManager.instance.Play("Flip");
+        if(!CigarettesItem.isCigaretteActive) 
+        {
+            AudioManager.instance.Play("Flip"); //DELETE LATER
+            AudioManagerFMOD.Play(AudioEvent.TEST); //Dont know what this does, assuming its just a deal sound
+        }
 
         yield return RotateCardCoroutine(halfDuration, cardTransform, startRotation, ninetyDegrees);
 
@@ -362,7 +366,8 @@ public class TableCards : MonoBehaviour
     {
         if (newCardInstance == null) yield break;
         
-        AudioManager.instance.Play("CardHit");
+        AudioManager.instance.Play("CardHit"); //DELETE LATER
+        AudioManagerFMOD.Play(AudioEvent.sfxDeal);
 
         Vector3 targetLocalPos = offset * cardOrderIndex;
         Quaternion targetRotation = Quaternion.identity;
@@ -407,7 +412,8 @@ public class TableCards : MonoBehaviour
             UpdateHandVisuals(playerHands[i], true);
         }
 
-        AudioManager.instance.Play("CardHit");
+        AudioManager.instance.Play("CardHit"); //DELETE LATER
+        AudioManagerFMOD.Play(AudioEvent.sfxDeal);
         Transform targetPosition = playerCardPositions[currentHandIndex + 1];
 
         yield return StartCoroutine(CardAnimationCoroutine(
@@ -761,7 +767,8 @@ public class TableCards : MonoBehaviour
             yield return null;
         }
 
-        AudioManager.instance.Play("Shuffle");
+        AudioManager.instance.Play("Shuffle"); //DELETE LATER
+        AudioManagerFMOD.Play(AudioEvent.sfxShuffle);
     }
     public void destroyPlayerCards()
         {

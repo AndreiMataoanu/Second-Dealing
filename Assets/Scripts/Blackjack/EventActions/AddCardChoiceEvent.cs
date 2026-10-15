@@ -30,7 +30,8 @@ public class AddCardChoiceEvent : CardChoiceEvent
     {
         dartSelection.ThrowDart(SelectIndex, cardInstance.CardObject.transform.position);
         
-        AudioManager.instance.Play("CardHit");
+        AudioManager.instance.Play("CardHit"); //DELETE LATER
+        AudioManagerFMOD.Play(AudioEvent.sfxDeal);
         TableCards.GameDeck.AddCardCopies(cardInstance.cardData, currentCopyCount);
         UpdateCopyCount();
 

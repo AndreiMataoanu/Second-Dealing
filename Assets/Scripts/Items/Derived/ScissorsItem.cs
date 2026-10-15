@@ -31,7 +31,8 @@ public class ScissorsItem : Item
             KeepsakeUnlockProgression.instance.AddStat(ChallengeType.AlterDealerHand);
         }
 
-        AudioManager.instance.Play("Scissors(Clone)");
+        AudioManager.instance.Play("Scissors(Clone)"); //DELETE LATER
+        AudioManagerFMOD.Play(AudioEvent.sfxScissorsItem);
 
         isScissorsActive = false;
         isCardSelecting = false;

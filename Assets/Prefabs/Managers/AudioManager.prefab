@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 4375733557009657759}
   - component: {fileID: 1966843140165819095}
   - component: {fileID: 6783201524656525989}
+  - component: {fileID: 583701980104234528}
+  - component: {fileID: 1428309926756368847}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -425,3 +427,736 @@ AudioLowPassFilter:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &583701980104234528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5036363664628651963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FMODUnity::FMODUnity.StudioListener
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 0}
+--- !u!114 &1428309926756368847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5036363664628651963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a997177de23784899b1bac2d6a99ed3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManagerFMOD
+  TEST:
+    Guid:
+      Data1: 109322525
+      Data2: 1125541714
+      Data3: 1680033712
+      Data4: 505945103
+    Path: event:/TEST
+  sfxRoundStart:
+    Guid:
+      Data1: 109322525
+      Data2: 1125541714
+      Data3: 1680033712
+      Data4: 505945103
+    Path: event:/TEST
+  sfxNegativeCard:
+    Guid:
+      Data1: -406993298
+      Data2: 1143816896
+      Data3: -2082503250
+      Data4: -1755504391
+    Path: event:/SFX/CARDS/sfxNegativeCard
+  sfxDoubledCard:
+    Guid:
+      Data1: -1674322434
+      Data2: 1086617395
+      Data3: 906058404
+      Data4: -1359260752
+    Path: event:/SFX/CARDS/sfxDoubleDCard
+  sfxCutCard:
+    Guid:
+      Data1: -2006739248
+      Data2: 1112325963
+      Data3: 689700267
+      Data4: 1318757081
+    Path: event:/SFX/CARDS/sfxCutCard
+  sfxDeal:
+    Guid:
+      Data1: -779867942
+      Data2: 1124215304
+      Data3: 1926860966
+      Data4: 1846517629
+    Path: event:/SFX/CARDS/sfxDeal
+  sfxHit:
+    Guid:
+      Data1: -1456477535
+      Data2: 1180843566
+      Data3: -188210807
+      Data4: 1639394955
+    Path: event:/SFX/CARDS/sfxHit
+  sfxStand:
+    Guid:
+      Data1: -681320224
+      Data2: 1076469405
+      Data3: 1860507556
+      Data4: 373314029
+    Path: event:/SFX/CARDS/sfxStand
+  sfxDoubleDown:
+    Guid:
+      Data1: -1508775400
+      Data2: 1310592227
+      Data3: -2021762663
+      Data4: 1419019741
+    Path: event:/SFX/CARDS/sfxDoubleDown
+  sfxSplit:
+    Guid:
+      Data1: 1342851015
+      Data2: 1123090081
+      Data3: 822447255
+      Data4: 868088519
+    Path: event:/SFX/CARDS/sfxSplit
+  sfxShuffle:
+    Guid:
+      Data1: -1709967603
+      Data2: 1326295653
+      Data3: 889427856
+      Data4: -1028034856
+    Path: event:/SFX/CARDS/sfxShuffle
+  sfxPlayerBored:
+    Guid:
+      Data1: -1880130481
+      Data2: 1297259369
+      Data3: -2021415030
+      Data4: 659208075
+    Path: event:/SFX/PLAYER/sfxPlayerBored
+  sfxPlayerWin:
+    Guid:
+      Data1: 2001420739
+      Data2: 1157043133
+      Data3: 1493391236
+      Data4: -1530335378
+    Path: event:/SFX/PLAYER/sfxPlayerWin
+  sfxPlayerLose:
+    Guid:
+      Data1: 1804758504
+      Data2: 1278872462
+      Data3: -1413476421
+      Data4: -1641937035
+    Path: event:/SFX/PLAYER/sfxPlayerLose
+  sfxPlayerSelect:
+    Guid:
+      Data1: -1360535750
+      Data2: 1337609645
+      Data3: 206316710
+      Data4: -206818749
+    Path: event:/SFX/PLAYER/sfxPlayerSelect
+  sfxPlayerDeselect:
+    Guid:
+      Data1: -705914813
+      Data2: 1281655829
+      Data3: 1627023540
+      Data4: 945300569
+    Path: event:/SFX/PLAYER/sfxPlayerDeselect
+  sfxElevatorDoorOpen:
+    Guid:
+      Data1: -1168280713
+      Data2: 1237950812
+      Data3: 721086091
+      Data4: 1090486044
+    Path: event:/SFX/ELEVATOR/sfxElevatorDoorOpen
+  sfxElevatorDoorClose:
+    Guid:
+      Data1: -426912481
+      Data2: 1277587221
+      Data3: 1522218672
+      Data4: 1123552377
+    Path: event:/SFX/ELEVATOR/sfxElevatorDoorClose
+  sfxElevatorDrive:
+    Guid:
+      Data1: 106860694
+      Data2: 1108168153
+      Data3: -1971014257
+      Data4: -501388747
+    Path: event:/SFX/ELEVATOR/sfxElevatorDrive
+  sfxElevatorButton:
+    Guid:
+      Data1: 347079499
+      Data2: 1262686455
+      Data3: 1778177673
+      Data4: -1364936933
+    Path: event:/SFX/ELEVATOR/sfxElevatorButton
+  sfxFootstepsPlayer:
+    Guid:
+      Data1: -45117230
+      Data2: 1286299815
+      Data3: -2084707967
+      Data4: 815724616
+    Path: event:/SFX/ELEVATOR/sfxElevatorFootsteps
+  sfxCantUseItem:
+    Guid:
+      Data1: -84890825
+      Data2: 1247631349
+      Data3: -548413304
+      Data4: 2137435863
+    Path: event:/SFX/GENEREL/sfxCantUseItem
+  sfxEventSelect:
+    Guid:
+      Data1: -1529760236
+      Data2: 1094305930
+      Data3: 361040771
+      Data4: 43688130
+    Path: event:/SFX/GENEREL/sfxEventSelected
+  sfxEventRerolled:
+    Guid:
+      Data1: 1875637175
+      Data2: 1223034393
+      Data3: 445465250
+      Data4: -2098639799
+    Path: event:/SFX/GENEREL/sfxEventRerolled
+  sfxIncreasingBet:
+    Guid:
+      Data1: -1589616871
+      Data2: 1235808300
+      Data3: 694440349
+      Data4: -1617081628
+    Path: event:/SFX/GENEREL/sfxIncreasingBet
+  sfxDecreasingBet:
+    Guid:
+      Data1: 2094752331
+      Data2: 1266483446
+      Data3: 1968593282
+      Data4: 20474420
+    Path: event:/SFX/GENEREL/sfxDecreasingBet
+  sfxMaximumBet:
+    Guid:
+      Data1: -1034872057
+      Data2: 1294774461
+      Data3: -561036913
+      Data4: 294032723
+    Path: event:/SFX/GENEREL/sfxMaximumBet
+  sfxMinimumBet:
+    Guid:
+      Data1: -661356192
+      Data2: 1244621800
+      Data3: 1481333124
+      Data4: -1756320079
+    Path: event:/SFX/GENEREL/sfxMinimumBet
+  sfxShopOpen:
+    Guid:
+      Data1: 1913265617
+      Data2: 1153372617
+      Data3: 1965533363
+      Data4: 2073912666
+    Path: event:/SFX/GENEREL/sfxShopOpen
+  sfxShopClose:
+    Guid:
+      Data1: 496099180
+      Data2: 1306240171
+      Data3: 214106510
+      Data4: 585472508
+    Path: event:/SFX/GENEREL/sfxShopClose
+  sfxShopBuy:
+    Guid:
+      Data1: -1997061201
+      Data2: 1298544104
+      Data3: -1411740492
+      Data4: -1352639932
+    Path: event:/SFX/GENEREL/sfxShopBuy
+  sfxShopSell:
+    Guid:
+      Data1: 152665319
+      Data2: 1120358607
+      Data3: -777765982
+      Data4: 1554163535
+    Path: event:/SFX/GENEREL/sfxShopSell
+  sfxCantBuy:
+    Guid:
+      Data1: 87664201
+      Data2: 1305988361
+      Data3: -515644248
+      Data4: -1621064869
+    Path: event:/SFX/GENEREL/sfxCantBuy
+  sfxCardSelectorPress:
+    Guid:
+      Data1: 35163754
+      Data2: 1219863924
+      Data3: -2025556087
+      Data4: -278770378
+    Path: event:/SFX/GENEREL/sfxCardSelectorPress
+  sfxCardSelectorPrint:
+    Guid:
+      Data1: -285491017
+      Data2: 1224678354
+      Data3: 797476525
+      Data4: 1557657773
+    Path: event:/SFX/GENEREL/sfxCardSelectorPrint
+  sfxCashOut:
+    Guid:
+      Data1: 538742867
+      Data2: 1092329418
+      Data3: -1523908980
+      Data4: 881886874
+    Path: event:/SFX/GENEREL/sfxCashOut
+  sfxCashOutChampagneSpawn:
+    Guid:
+      Data1: 1982694833
+      Data2: 1166687317
+      Data3: -1282243932
+      Data4: -538371270
+    Path: event:/SFX/GENEREL/sfxCashOutChampagneBottleSpawn
+  sfxCashOutChampagnePop:
+    Guid:
+      Data1: -1838375352
+      Data2: 1305430891
+      Data3: -592667220
+      Data4: 1766297431
+    Path: event:/SFX/GENEREL/sfxCashOutChampagneBottlePop
+  sfxDealerTalk:
+    Guid:
+      Data1: 18211565
+      Data2: 1338911550
+      Data3: 1855046027
+      Data4: -691845004
+    Path: event:/SFX/GENEREL/sfxDealerTalk
+  sfxGenerelEvent:
+    Guid:
+      Data1: 1800226292
+      Data2: 1113645252
+      Data3: -1782982010
+      Data4: -735727698
+    Path: event:/SFX/EVENT/sfxGenerelEvent
+  sfxDartEventHit:
+    Guid:
+      Data1: 29006480
+      Data2: 1133003595
+      Data3: -2130649940
+      Data4: 1128015895
+    Path: event:/SFX/EVENT/sfxDartEventHit
+  sfxDartEventBurn:
+    Guid:
+      Data1: -929601549
+      Data2: 1279348324
+      Data3: -1768878455
+      Data4: 1231769442
+    Path: event:/SFX/EVENT/sfxDartEventBurn
+  sfxPowerBall:
+    Guid:
+      Data1: 202648492
+      Data2: 1281377245
+      Data3: -781652035
+      Data4: 2130505091
+    Path: event:/SFX/EVENT/sfxPowerballEvent
+  sfxAceSetEventOne:
+    Guid:
+      Data1: -702841242
+      Data2: 1317858776
+      Data3: 1650053005
+      Data4: 1798655427
+    Path: event:/SFX/EVENT/sfxAceSetEventOne
+  sfxAceSetEventEleven:
+    Guid:
+      Data1: 986766781
+      Data2: 1256358536
+      Data3: -90465117
+      Data4: -828095125
+    Path: event:/SFX/EVENT/sfxAceSetEventEleven
+  sfxNegativeSuitEvent:
+    Guid:
+      Data1: 2034475300
+      Data2: 1103881936
+      Data3: -628979527
+      Data4: -1205519841
+    Path: event:/SFX/EVENT/sfxNegativeSuitEvent
+  sfxRageEventStart:
+    Guid:
+      Data1: -1412112112
+      Data2: 1278694272
+      Data3: -1514471260
+      Data4: 1803080081
+    Path: event:/SFX/EVENT/sfxRageEventStart
+  sfxRageEventIncrease:
+    Guid:
+      Data1: -7605527
+      Data2: 1331077945
+      Data3: 638069436
+      Data4: 277249210
+    Path: event:/SFX/EVENT/sfxRageEventIncrease
+  sfxRageEventThreshold:
+    Guid:
+      Data1: 148743891
+      Data2: 1301235674
+      Data3: 1374552504
+      Data4: 2103841928
+    Path: event:/SFX/EVENT/sfxRageEventThreshold
+  sfxJokerEvent:
+    Guid:
+      Data1: 287049881
+      Data2: 1183105116
+      Data3: -1540504130
+      Data4: 703141947
+    Path: event:/SFX/EVENT/sfxJokerEvent
+  sfxRouletteEvent:
+    Guid:
+      Data1: -375970361
+      Data2: 1325017161
+      Data3: -1853400157
+      Data4: 208185287
+    Path: event:/SFX/EVENT/sfxRouletteEvent
+  sfxDoubleFiveBelowEvent:
+    Guid:
+      Data1: -1451082669
+      Data2: 1085714428
+      Data3: -916509299
+      Data4: 124962705
+    Path: event:/SFX/EVENT/sfxDoubleFiveBelowEvent
+  sfxHalfSixAboveEvent:
+    Guid:
+      Data1: 969584439
+      Data2: 1093878172
+      Data3: -719171183
+      Data4: 1116218529
+    Path: event:/SFX/EVENT/sfxHalfSixAboveEvent
+  sfxGenerelItem:
+    Guid:
+      Data1: -1357766250
+      Data2: 1199268535
+      Data3: -633059439
+      Data4: -181636942
+    Path: event:/SFX/ITEMS/sfxGenerelItem
+  sfxKnifeItem:
+    Guid:
+      Data1: 143892692
+      Data2: 1254355860
+      Data3: -39550830
+      Data4: 2013672413
+    Path: event:/SFX/ITEMS/sfxKnifeItem
+  sfxCrossItem:
+    Guid:
+      Data1: 755279929
+      Data2: 1287416440
+      Data3: 1309802893
+      Data4: 1591309479
+    Path: event:/SFX/ITEMS/sfxCrossItem
+  sfxScissorsItem:
+    Guid:
+      Data1: 1046077657
+      Data2: 1102260557
+      Data3: 1307000478
+      Data4: -80851655
+    Path: event:/SFX/ITEMS/sfxScissorsItem
+  sfxFanItem:
+    Guid:
+      Data1: -1159421675
+      Data2: 1087180400
+      Data3: 105706940
+      Data4: -1562263804
+    Path: event:/SFX/ITEMS/sfxFanItem
+  sfxCigarettesItem:
+    Guid:
+      Data1: -1168375219
+      Data2: 1253813705
+      Data3: 2065050516
+      Data4: 664288385
+    Path: event:/SFX/ITEMS/sfxCigarettesItem
+  sfxNFTItem:
+    Guid:
+      Data1: -769054434
+      Data2: 1272393742
+      Data3: -1127393872
+      Data4: -295194885
+    Path: event:/SFX/ITEMS/sfxNFTItem
+  sfxOrganItem:
+    Guid:
+      Data1: -1795091346
+      Data2: 1165559769
+      Data3: -1276933701
+      Data4: 2025079228
+    Path: event:/SFX/ITEMS/sfxOrganItem
+  sfxCoinItem:
+    Guid:
+      Data1: 981179579
+      Data2: 1299698057
+      Data3: 1734287496
+      Data4: -1514153491
+    Path: event:/SFX/ITEMS/sfxCoinItem
+  sfxAlcoholItem:
+    Guid:
+      Data1: 1515556090
+      Data2: 1191619740
+      Data3: 414077568
+      Data4: 11632229
+    Path: event:/SFX/ITEMS/sfxAlcoholItem
+  sfxAcidItem:
+    Guid:
+      Data1: 328992553
+      Data2: 1091437676
+      Data3: -1516643951
+      Data4: -172111164
+    Path: event:/SFX/ITEMS/sfxAcidItem
+  sfxSunglassesItem:
+    Guid:
+      Data1: -71897032
+      Data2: 1242037906
+      Data3: -2024717416
+      Data4: 1493245533
+    Path: event:/SFX/ITEMS/sfxSunglassesItem
+  sfxKeepsakeGenerel:
+    Guid:
+      Data1: -1062418831
+      Data2: 1107674750
+      Data3: -407369331
+      Data4: -875330379
+    Path: event:/SFX/KEEPSAKES/sfxKeepsakeGenerel
+  sfxBlueBallsKeepsake:
+    Guid:
+      Data1: 943911615
+      Data2: 1227749718
+      Data3: -1193778811
+      Data4: -1557477727
+    Path: event:/SFX/KEEPSAKES/sfxBlueBallsKeepsake
+  sfxSnowGlobeKeepsake:
+    Guid:
+      Data1: -1038399240
+      Data2: 1252250592
+      Data3: -454064204
+      Data4: 1506698455
+    Path: event:/SFX/KEEPSAKES/sfxSnowGlobeKeepsake
+  sfx777Keepsake:
+    Guid:
+      Data1: 1066108411
+      Data2: 1180442088
+      Data3: -541044037
+      Data4: -813800180
+    Path: event:/SFX/KEEPSAKES/sfx777Keepsake
+  sfxTrustFundKeepsake:
+    Guid:
+      Data1: -1579183571
+      Data2: 1247106420
+      Data3: 1732839078
+      Data4: 239152802
+    Path: event:/SFX/KEEPSAKES/sfxTrustFundKeepsake
+  sfxInheritanceKeepsake:
+    Guid:
+      Data1: -477819095
+      Data2: 1164426030
+      Data3: 1011625903
+      Data4: 1515857662
+    Path: event:/SFX/KEEPSAKES/sfxInheritanceKeepsake
+  sfxHattricKeepsake:
+    Guid:
+      Data1: 2062538319
+      Data2: 1079269199
+      Data3: 1134875289
+      Data4: -1935433091
+    Path: event:/SFX/KEEPSAKES/sfxHattricKeepsake
+  sfxBloodPressureKeepsake:
+    Guid:
+      Data1: -581314442
+      Data2: 1230980110
+      Data3: 1485635242
+      Data4: -118154825
+    Path: event:/SFX/KEEPSAKES/sfxBloodPressureKeepsake
+  sfxGoFishKeepsake:
+    Guid:
+      Data1: -1771509397
+      Data2: 1336154110
+      Data3: -665028949
+      Data4: -680241243
+    Path: event:/SFX/KEEPSAKES/sfxGoFishKeepsake
+  sfxBloodRoseKeepsake:
+    Guid:
+      Data1: 249233232
+      Data2: 1187559133
+      Data3: 1839207858
+      Data4: 1595875752
+    Path: event:/SFX/KEEPSAKES/sfxBloodRoseKeepsake
+  sfxOnyxRoseKeepsake:
+    Guid:
+      Data1: -400795030
+      Data2: 1287559167
+      Data3: 1150325660
+      Data4: 1284352827
+    Path: event:/SFX/KEEPSAKES/sfxOnyxRoseKeepsake
+  sfxGlassEyeKeepsake:
+    Guid:
+      Data1: -2096185371
+      Data2: 1089035054
+      Data3: 729419710
+      Data4: -1680789002
+    Path: event:/SFX/KEEPSAKES/sfxGlassEyeKeepsake
+  sfxLoyalyCardKeepsake:
+    Guid:
+      Data1: 2111801912
+      Data2: 1235403780
+      Data3: 1995433903
+      Data4: -289073731
+    Path: event:/SFX/KEEPSAKES/sfxLoyaltyCardKeepsake
+  sfxPyroKeepsake:
+    Guid:
+      Data1: -771288248
+      Data2: 1226953271
+      Data3: 1789352378
+      Data4: 539809580
+    Path: event:/SFX/KEEPSAKES/sfxPyroKeepsake
+  sfxPrinterKeepsake:
+    Guid:
+      Data1: 1610107998
+      Data2: 1275550020
+      Data3: 1614954146
+      Data4: -804811844
+    Path: event:/SFX/KEEPSAKES/sfxPrinterKeepsake
+  sfxSecondDealingKeepsake:
+    Guid:
+      Data1: -677415724
+      Data2: 1293874799
+      Data3: -1923613013
+      Data4: -375533160
+    Path: event:/SFX/KEEPSAKES/sfxSecondDealingKeepsake
+  sfxTarotKeepsake:
+    Guid:
+      Data1: 460675576
+      Data2: 1310698212
+      Data3: 704154
+      Data4: -791771082
+    Path: event:/SFX/KEEPSAKES/sfxTarotKeepsake
+  sfxDivorcePaperKeepsake:
+    Guid:
+      Data1: 1427689821
+      Data2: 1249291503
+      Data3: 1456762281
+      Data4: 1707886378
+    Path: event:/SFX/KEEPSAKES/sfxDivorcePaperKeepsake
+  sfxWeddingRingKeepsake:
+    Guid:
+      Data1: -674493226
+      Data2: 1257095296
+      Data3: 1203884677
+      Data4: -199695028
+    Path: event:/SFX/KEEPSAKES/sfxWeddingRingKeepsake
+  sfxHiddenAceKeepsake:
+    Guid:
+      Data1: 1682770358
+      Data2: 1100631045
+      Data3: -624821825
+      Data4: -371563766
+    Path: event:/SFX/KEEPSAKES/sfxHiddenAceKeepsake
+  sfxSprayCanKeepsake:
+    Guid:
+      Data1: 2040953445
+      Data2: 1253624294
+      Data3: 615891871
+      Data4: 1141477957
+    Path: event:/SFX/KEEPSAKES/sfxSprayCanKeepsake
+  sfxJointAccountKeepsake:
+    Guid:
+      Data1: -1622895014
+      Data2: 1086443824
+      Data3: -1912566644
+      Data4: 856645511
+    Path: event:/SFX/KEEPSAKES/sfxJointAccountKeepsake
+  sfxAntiMatterKeepsake:
+    Guid:
+      Data1: 1917947490
+      Data2: 1251704646
+      Data3: 1816990354
+      Data4: 1570228364
+    Path: event:/SFX/KEEPSAKES/sfxAntiMatterKeepsake
+  ambCasinoMain:
+    Guid:
+      Data1: -249314723
+      Data2: 1285038323
+      Data3: -184498243
+      Data4: 2092608856
+    Path: event:/AMB/ambCasinoMain
+  ambElevatorMain:
+    Guid:
+      Data1: 2123750888
+      Data2: 1251391837
+      Data3: 314430593
+      Data4: 1393658512
+    Path: event:/AMB/ambElevatorMain
+  uiMenuButtonHover:
+    Guid:
+      Data1: -170900388
+      Data2: 1079127863
+      Data3: -1516216908
+      Data4: -1591831222
+    Path: event:/UI/uiMenuButtonHover
+  uiMenuButtonPress:
+    Guid:
+      Data1: 636259629
+      Data2: 1161392954
+      Data3: -1156183929
+      Data4: 1658059627
+    Path: event:/UI/uiMenuButtonPress
+  uiMenuStartGame:
+    Guid:
+      Data1: 99012280
+      Data2: 1083964241
+      Data3: 1301830799
+      Data4: 875495088
+    Path: event:/UI/uiMenuStartGame
+  uiPauseGame:
+    Guid:
+      Data1: 848940848
+      Data2: 1258567689
+      Data3: -1463187041
+      Data4: 1222821942
+    Path: event:/UI/uiPauseGame
+  uiPauseResumeGame:
+    Guid:
+      Data1: -677207767
+      Data2: 1186693353
+      Data3: -769029972
+      Data4: 23222011
+    Path: event:/UI/uiPauseResumeGame
+  uiPauseQuitGame:
+    Guid:
+      Data1: 1171886104
+      Data2: 1117103430
+      Data3: -1250862713
+      Data4: -1979980221
+    Path: event:/UI/uiPauseQuitGame
+  uiHoverIngameButton:
+    Guid:
+      Data1: -1280606945
+      Data2: 1283568869
+      Data3: 1120800907
+      Data4: 345950446
+    Path: event:/UI/uiHoverIngameButton
+  musMainMenu:
+    Guid:
+      Data1: -540580858
+      Data2: 1198364111
+      Data3: -1815367763
+      Data4: -619384630
+    Path: event:/MUS/musMainMenu
+  musElevator1:
+    Guid:
+      Data1: 2046157061
+      Data2: 1097465971
+      Data3: -1813402723
+      Data4: 1193854653
+    Path: event:/MUS/musElevator
+  musMainGame:
+    Guid:
+      Data1: -540580858
+      Data2: 1198364111
+      Data3: -1815367763
+      Data4: -619384630
+    Path: event:/MUS/musMainMenu
+  musWIn:
+    Guid:
+      Data1: -2075041066
+      Data2: 1169444094
+      Data3: -828502877
+      Data4: 1971820944
+    Path: event:/MUS/musWinGame

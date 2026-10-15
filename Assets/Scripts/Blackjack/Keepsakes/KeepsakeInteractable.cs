@@ -77,15 +77,16 @@ public class KeepsakeInteractable : Clickable
 
         if(!KeepsakeUnlockProgression.instance.HasMetRequirement(keepsake))
         {
-            AudioManager.instance.Play("ItemDeny");
-
+            AudioManager.instance.Play("ItemDeny"); //DELETE LATER
+            AudioManagerFMOD.Play(AudioEvent.sfxCantUseItem);
             return;
         }
 
         if(KeepsakeManager.instance.equippedKeepsakes.Contains(keepsake))
         {
             KeepsakeManager.instance.UnequipKeepsake(keepsake);
-            AudioManager.instance.Play("ItemBuy");
+            AudioManager.instance.Play("ItemBuy"); //DELETE LATER
+            AudioManagerFMOD.Play(AudioEvent.sfxKeepsakeGenerel);
 
             UpdateVisuals();
         }
@@ -95,7 +96,8 @@ public class KeepsakeInteractable : Clickable
 
             if(equipped)
             {
-                AudioManager.instance.Play("ItemBuy");
+                AudioManager.instance.Play("ItemBuy"); //DELETE LATER
+                AudioManagerFMOD.Play(AudioEvent.sfxKeepsakeGenerel);
 
                 keepsake.ApplyInheritance(blackjackGame);
 
@@ -103,7 +105,8 @@ public class KeepsakeInteractable : Clickable
             }
             else
             {
-                AudioManager.instance.Play("ItemDeny");
+                AudioManager.instance.Play("ItemDeny"); //DELETE LATER
+                AudioManagerFMOD.Play(AudioEvent.sfxCantUseItem);
             }
         }
     }

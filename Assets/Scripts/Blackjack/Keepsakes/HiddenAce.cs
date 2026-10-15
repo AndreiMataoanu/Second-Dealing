@@ -53,7 +53,8 @@ public class HiddenAce : Keepsake
 
     private void OnApplyToken(CardInstance cardInstance)
     {
-        AudioManager.instance.Play("Coin(Clone)");
+        AudioManager.instance.Play("Coin(Clone)"); //DELETE LATER
+        AudioManagerFMOD.Play(AudioEvent.sfxCoinItem);
         CardEffects.AddHiddenAce(cardInstance, 1);
 
         Instantiate(tokenPrefab, cardInstance.displayComponent.transform);

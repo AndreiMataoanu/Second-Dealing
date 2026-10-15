@@ -14,12 +14,13 @@ public class CardSelectorButton : Clickable
 
         if(isDummyButton)
         {
-            AudioManager.instance.Play("ItemDeny");
-
+            AudioManager.instance.Play("ItemDeny"); //DELETE LATER
+            AudioManagerFMOD.Play(AudioEvent.sfxCantUseItem);
             return;
         }
 
-        AudioManager.instance.Play("BetUp");
+        AudioManager.instance.Play("BetUp"); //DELETE LATER
+        AudioManagerFMOD.Play(AudioEvent.sfxIncreasingBet);
 
         onClickAction.Invoke();
     }

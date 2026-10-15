@@ -20,8 +20,9 @@ public class AlcoholItem : Item
     
         isAlcoholActive = true;
         SetVisibility(false);
-
-        AudioManager.instance.Play("Drink");
+        
+        AudioManager.instance.Play("Drink"); //DELETE LATER
+        AudioManagerFMOD.Play(AudioEvent.sfxAlcoholItem);
         StartCoroutine(AlcoholCoroutine());
         
         return true;
