@@ -22,7 +22,7 @@ public abstract class CardChoiceEvent : MonoBehaviour
     protected TableCards TableCards;
     protected CardEffectActions CardEffects;
     
-    private Vector3 cardsOffset;
+    protected Vector3 CardsOffset;
     
     private void Start()
     {
@@ -47,12 +47,12 @@ public abstract class CardChoiceEvent : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         Quaternion slice = Quaternion.Euler(0.0f, 0.0f, 360.0f / OptionCount);
-        cardsOffset = Vector3.up * radius;
+        CardsOffset = Vector3.up * radius;
         
         for (int i = 0; i < OptionCount; i++)
         {
             StartCoroutine(DealCardOption());
-            cardsOffset = slice * cardsOffset;
+            CardsOffset = slice * CardsOffset;
             
             yield return new WaitForSeconds(0.5f);
         }
@@ -61,11 +61,11 @@ public abstract class CardChoiceEvent : MonoBehaviour
         CardEffects.AddEventCardEffectAction(OnSelectCardOption, cardsPosition);
     }
     
-    private IEnumerator DealCardOption()
+    protected virtual IEnumerator DealCardOption()
     {
         var card = TableCards.DealCard();
         var cardInstance = TableCards.DealCardInstance(card, false);
-        yield return TableCards.PlaceCardAtIndex(1, cardInstance, cardsPosition, cardsOffset);
+        yield return TableCards.PlaceCardAtIndex(1, cardInstance, cardsPosition, CardsOffset);
     }
 
     #endregion

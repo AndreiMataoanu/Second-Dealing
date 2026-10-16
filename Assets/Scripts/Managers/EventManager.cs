@@ -22,6 +22,8 @@ public class EventManager : MonoBehaviour
     [Header("Cards Event Actions")]
     [SerializeField] private AddCardChoiceEvent addCardChoiceEvent;
     [SerializeField] private RemoveCardChoiceEvent removeCardChoiceEvent;
+    [SerializeField] private NegativeSuitChoiceEvent negativeSuitChoiceEvent;
+    [SerializeField] private RemoveSuitChoiceEvent removeSuitChoiceEvent;
     
     [Header("Rage event")]
     public Image dealerRagebar;
@@ -227,6 +229,12 @@ public class EventManager : MonoBehaviour
         var removeCards = blackjackEvent as RemoveCardsEvent;
         if (removeCards) return removeCardChoiceEvent;
 
+        var negativeSuit = blackjackEvent as NegativeSuitEvent;
+        if (negativeSuit) return negativeSuitChoiceEvent;
+        
+        var removeSuit = blackjackEvent as RemoveSuitEvent;
+        if (removeSuit) return removeSuitChoiceEvent;
+        
         return null;
     }
     

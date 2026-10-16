@@ -27,6 +27,14 @@ public class CardDisplay : MonoBehaviour
     public void SetCardInstance(CardInstance instance) => cardInstance = instance;
     public CardInstance GetCardInstance() => cardInstance;
     
+    public void SetTextureAce1()
+    {
+        if (!textureAce1) return;
+        
+        var meshRenderer = cardFace.GetComponent<MeshRenderer>();
+        meshRenderer.material.SetTexture("_MainTex", textureAce1);
+    }
+    
     public void SetHidden(bool isHidden)
     {
         cardBack?.SetActive(isHidden);

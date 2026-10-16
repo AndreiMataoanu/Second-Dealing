@@ -10,7 +10,7 @@ public static class CardEffects
     private static HashSet<(Card.Rank, Card.Suit)> antiMatterCards = new();
     private static HashSet<CardInstance> alcoholCards = new();
     private static HashSet<(Card.Rank, Card.Suit)> colorSwappedCards = new();
-    public static Dictionary<CardInstance, int> hiddenAceCards = new();
+    private static Dictionary<CardInstance, int> hiddenAceCards = new();
 
     #region Card Collection
 
