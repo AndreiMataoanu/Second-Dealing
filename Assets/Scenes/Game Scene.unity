@@ -13270,10 +13270,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
-      propertyPath: bossRound
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
       propertyPath: gameCamera
       value: 
       objectReference: {fileID: 1240162380}
@@ -13318,69 +13314,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4109581827045791217}
     - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
+      propertyPath: removeSuitChoiceEvent
+      value: 
+      objectReference: {fileID: 4109581827045791219}
+    - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
       propertyPath: negativeSuitChoiceEvent
       value: 
       objectReference: {fileID: 4109581827045791218}
-    - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
-      propertyPath: mediumSeverityEvents.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
-      propertyPath: 'mediumSeverityEvents.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 40dd43a7e1baf33479325c4c8079abca, type: 2}
-    - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
-      propertyPath: 'mediumSeverityEvents.Array.data[1]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 16f803c2a8c8cae4b83d83c657ad3736, type: 2}
-    - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
-      propertyPath: 'mediumSeverityEvents.Array.data[2]'
-      value: 
-      objectReference: {fileID: 11400000, guid: f9969251b08054a4b9f872af95840548, type: 2}
-    - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
-      propertyPath: 'mediumSeverityEvents.Array.data[3]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 2c8cce2d0e09e354fa259a7d81357cc0, type: 2}
-    - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
-      propertyPath: 'mediumSeverityEvents.Array.data[4]'
-      value: 
-      objectReference: {fileID: 11400000, guid: a9a8993cbd530094985a4dcea8afa488, type: 2}
-    - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
-      propertyPath: 'mediumSeverityEvents.Array.data[5]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 6d1cb0823b67dd541a8a8e684dbf6102, type: 2}
-    - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
-      propertyPath: OnAddCardsEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
-      propertyPath: DeleteCopyOptions.m_PersistentCalls.m_Calls.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
-      propertyPath: ChangeProgressText.m_PersistentCalls.m_Calls.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
-      propertyPath: UpdatePowerballGoal.m_PersistentCalls.m_Calls.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
-      propertyPath: OnAddCardsEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 4109581827045791216}
-    - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
-      propertyPath: DeleteCopyOptions.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 4109581827045791216}
-    - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
-      propertyPath: ChangeProgressText.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 571720867}
-    - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
-      propertyPath: UpdatePowerballGoal.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 571720867}
     - target: {fileID: 8245742672918616645, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
       propertyPath: m_Name
       value: EventManager
@@ -14061,10 +14001,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 914054724}
     - target: {fileID: 818796316016900278, guid: 541ae4e7ca2db504bbc8df49b7ce8558, type: 3}
-      propertyPath: radius
-      value: 0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 818796316016900278, guid: 541ae4e7ca2db504bbc8df49b7ce8558, type: 3}
       propertyPath: blackjackGame
       value: 
       objectReference: {fileID: 1343293108}
@@ -14073,6 +14009,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 826400919}
     - target: {fileID: 818796316016900278, guid: 541ae4e7ca2db504bbc8df49b7ce8558, type: 3}
+      propertyPath: dartSelection
+      value: 
+      objectReference: {fileID: 914054724}
+    - target: {fileID: 5511474774236074068, guid: 541ae4e7ca2db504bbc8df49b7ce8558, type: 3}
+      propertyPath: blackjackGame
+      value: 
+      objectReference: {fileID: 1343293108}
+    - target: {fileID: 5511474774236074068, guid: 541ae4e7ca2db504bbc8df49b7ce8558, type: 3}
+      propertyPath: cardsPosition
+      value: 
+      objectReference: {fileID: 826400919}
+    - target: {fileID: 5511474774236074068, guid: 541ae4e7ca2db504bbc8df49b7ce8558, type: 3}
       propertyPath: dartSelection
       value: 
       objectReference: {fileID: 914054724}
@@ -14114,6 +14062,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d9a0850c0d67ad428729aba890fe3ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NegativeSuitChoiceEvent
+--- !u!114 &4109581827045791219 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5511474774236074068, guid: 541ae4e7ca2db504bbc8df49b7ce8558, type: 3}
+  m_PrefabInstance: {fileID: 4109581827045791215}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 418ce470e92af364890fee537f79517c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RemoveSuitChoiceEvent
 --- !u!4 &4196823323493360381 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7643244776236736907, guid: 86ed570a28ed8fe458f082ff2d7912d7, type: 3}
@@ -14528,7 +14487,7 @@ PrefabInstance:
     - target: {fileID: 2531318046483965639, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
       propertyPath: milestones.Array.data[0].gameEvent
       value: 
-      objectReference: {fileID: 11400000, guid: be1edcce2a7b8944cbde04bf697172e6, type: 2}
+      objectReference: {fileID: 11400000, guid: b511067ff304a24429dcd823aafd0459, type: 2}
     - target: {fileID: 2531318046483965639, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
       propertyPath: milestones.Array.data[0].milestoneType
       value: 0
