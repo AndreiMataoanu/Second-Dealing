@@ -24,6 +24,8 @@ public class DialogueSystem : MonoBehaviour
     [SerializeField] private string[] addCardsTutorialLines;
     [Tooltip("Tutorial shown when the player gets remove cards event.")]
     [SerializeField] private string[] removeCardsTutorialLines;
+    [Tooltip("Tutorial shown when the player gets negative suit event.")]
+    [SerializeField] private string[] negativeSuitTutorialLines;
     
     [Header("Taunt Quotes")]
     [Tooltip("Taunts shown when the player is low on money.")]
@@ -182,6 +184,13 @@ public class DialogueSystem : MonoBehaviour
         StopCurrentDialogue();
         
         sequenceCoroutine = StartCoroutine(SequenceCoroutine(removeCardsTutorialLines));
+    }
+    
+    public void ShowNegativeSuitText()
+    {
+        StopCurrentDialogue();
+        
+        sequenceCoroutine = StartCoroutine(SequenceCoroutine(negativeSuitTutorialLines));
     }
 
     private IEnumerator SequenceCoroutine(string[] lines)

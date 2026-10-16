@@ -92,6 +92,12 @@ MonoBehaviour:
   addCardsTutorialLines:
   - Throw the darts at the cards you want to copy.
   - You can see for each dart how many copies it creates.
+  removeCardsTutorialLines:
+  - You will throw one explosive dart.
+  - The card you hit and its neighbours will be destroyed.
+  negativeSuitTutorialLines:
+  - Choose which suit you want to have a negative value.
+  - Yes, until the game is over.
   lowMoneyTaunts:
   - Careful now...
   betLostTaunts:
@@ -141,3 +147,5 @@ MonoBehaviour:
   - Those cards where too good for you
   cashOutText:
   - Go big or go home?
+  progressBar: {fileID: 0}
+  holdTimeToSkip: 0.25
