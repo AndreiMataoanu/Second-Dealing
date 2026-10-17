@@ -8,7 +8,7 @@
 			<value>sfxFlip</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{1e8706e4-6126-4c4f-adfc-de0347b5e477}</destination>
@@ -65,11 +65,18 @@
 	<object class="EventAutomatableProperties" id="{9bf6961b-9f3e-4d41-b83e-e21a8ebfaeca}" />
 	<object class="MarkerTrack" id="{f3de04c4-e4c2-4c79-a251-7c08ee561f71}" />
 	<object class="GroupTrack" id="{cb81abed-f780-41f1-8f1f-7ffde93e7712}">
+		<relationship name="modules">
+			<destination>{9917fd1e-7e83-45ee-aa5b-8517b09e90b9}</destination>
+		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{ab09b726-f77c-4cb5-8ae0-2c797ba55ad8}</destination>
 		</relationship>
 	</object>
-	<object class="Timeline" id="{ba627da5-d97b-4548-a1d3-6375252679bf}" />
+	<object class="Timeline" id="{ba627da5-d97b-4548-a1d3-6375252679bf}">
+		<relationship name="modules">
+			<destination>{9917fd1e-7e83-45ee-aa5b-8517b09e90b9}</destination>
+		</relationship>
+	</object>
 	<object class="ParameterProxy" id="{f2ec3916-87ed-454c-8330-32d96a6f35b7}">
 		<relationship name="preset">
 			<destination>{56d5a7e4-e88e-4137-a54f-149f0c1ec3e6}</destination>
@@ -92,6 +99,14 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{7964f100-63dc-4471-a95d-727ac7a2fe30}" />
+	<object class="SingleSound" id="{9917fd1e-7e83-45ee-aa5b-8517b09e90b9}">
+		<property name="length">
+			<value>1.9921875</value>
+		</property>
+		<relationship name="audioFile">
+			<destination>{c6aa46a9-a4a8-408b-87d9-3204a0a77141}</destination>
+		</relationship>
+	</object>
 	<object class="EventMixerGroup" id="{ab09b726-f77c-4cb5-8ae0-2c797ba55ad8}">
 		<property name="name">
 			<value>Audio 1</value>
