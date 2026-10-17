@@ -25,9 +25,23 @@ public class AudioManagerFMOD : MonoBehaviour
     // Event references (assign in the inspector)
     // Add to the top of this list so its easy to change in editor :)
     // ---------------------------------------------------------------
+    #region Global Parameters
+    [Header("Global Parameters")]
 
+    [SerializeField] [ParamRef] private string parGameSpeed;
+    
+    #endregion
+    
     #region EventRefrences
+    [Header("EventRefrences")]
+    
     [SerializeField] private EventReference TEST;
+    [SerializeField] private EventReference sfxJokerCard;
+    [SerializeField] private EventReference sfxDoubleDoubleCard;
+    [SerializeField] private EventReference sfxCutCutCard;
+    [SerializeField] private EventReference sfxTarotCard;
+    [SerializeField] private EventReference sfxFlip;
+    [SerializeField] private EventReference sfxKeepsakeUnlock;
     [SerializeField] private EventReference uiSettingsDialTurn;
     [SerializeField] private EventReference sfxRoundStart;
     [SerializeField] private EventReference sfxNegativeCard;
@@ -131,12 +145,6 @@ public class AudioManagerFMOD : MonoBehaviour
     [SerializeField] private EventReference musWIn;
     #endregion
     
-    #region Parameters
-    [SerializeField] private ParamRef parMasterSetting;
-    [SerializeField] private ParamRef parSfxSetting;
-    [SerializeField] private ParamRef parMusSetting;
-    [SerializeField] private ParamRef parAmbSetting ;
-    #endregion
     // ---------------------------------------------------------------
     // Lookup + live instance tracking
     // ---------------------------------------------------------------
@@ -162,7 +170,13 @@ public class AudioManagerFMOD : MonoBehaviour
     {
         #region RegisteredEvents
         events[AudioEvent.TEST] = TEST;
+        events[AudioEvent.sfxJokerCard] = sfxJokerCard;
+        events[AudioEvent.sfxDoubleDoubleCard] = sfxDoubleDoubleCard;
+        events[AudioEvent.sfxCutCutCard] = sfxCutCutCard;
+        events[AudioEvent.sfxTarotCard] = sfxTarotCard;
+        events[AudioEvent.sfxKeepsakeUnlock] = sfxKeepsakeUnlock;
         events[AudioEvent.uiSettingsDialTurn] = uiSettingsDialTurn;
+        events[AudioEvent.sfxFlip] = sfxFlip;
         events[AudioEvent.sfxRoundStart] = sfxRoundStart;
         events[AudioEvent.sfxNegativeCard] = sfxNegativeCard;
         events[AudioEvent.sfxDoubledCard] = sfxDoubledCard;
@@ -401,12 +415,22 @@ public class AudioManagerFMOD : MonoBehaviour
             }
         }
     }
+    public void SetGameSpeedParam(float value)
+    {
+        RuntimeManager.StudioSystem.setParameterByName(parGameSpeed, value);
+    }
 }
 
 /// <summary>One entry per event in the sound sheet (column E).</summary>
 public enum AudioEvent
 {
         TEST,
+        sfxJokerCard,
+        sfxDoubleDoubleCard,
+        sfxCutCutCard,
+        sfxTarotCard,
+        sfxFlip,
+        sfxKeepsakeUnlock,
         uiSettingsDialTurn,
         sfxRoundStart,
         sfxNegativeCard,

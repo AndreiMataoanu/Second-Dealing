@@ -7,6 +7,9 @@
 		<property name="name">
 			<value>MUS</value>
 		</property>
+		<relationship name="masters">
+			<destination>{2495b192-cb61-44cf-91bc-4b6241158287}</destination>
+		</relationship>
 		<relationship name="effectChain">
 			<destination>{1cd27ff6-fff7-4e8d-baee-5a525b1a8c1c}</destination>
 		</relationship>
