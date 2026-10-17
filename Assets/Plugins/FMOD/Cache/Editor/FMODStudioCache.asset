@@ -512,7 +512,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 5000
 --- !u!114 &-5727714274619583624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -648,6 +648,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-5124119659816613810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/ITEMS/sfxScissorsItemPickUp
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/SFX/ITEMS/sfxScissorsItemPickUp
+  Guid:
+    Data1: 1695664696
+    Data2: 1145425728
+    Data3: 1343913648
+    Data4: 1912318359
+  Banks:
+  - {fileID: -1251548946588217503}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1200
 --- !u!114 &-5081245374021515035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -671,10 +698,11 @@ MonoBehaviour:
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
-  Parameters: []
+  Parameters:
+  - {fileID: 1314051286452073346}
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 2750
 --- !u!114 &-5080950671153898449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -917,7 +945,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 1906
 --- !u!114 &-3973923336349118009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1026,6 +1054,34 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-2943842270961039233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/ITEMS/sfxAlcoholItemEffect
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/SFX/ITEMS/sfxAlcoholItemEffect
+  Guid:
+    Data1: -768540304
+    Data2: 1282851721
+    Data3: -2035904076
+    Data4: -1840457080
+  Banks:
+  - {fileID: -1251548946588217503}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters:
+  - {fileID: 732996281066623364}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 11500
 --- !u!114 &-2876284922180840082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1068,10 +1124,10 @@ MonoBehaviour:
   Path: Assets/Plugins/SecondDealing_Fmod_Project/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639275908544741538
+  lastModified: 639278388581257783
   FileSizes:
   - Name: Desktop
-    Value: 5758
+    Value: 6018
   Exists: 1
 --- !u!114 &-2562978601402148915
 MonoBehaviour:
@@ -1100,6 +1156,30 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-2369193966254794670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/AlcoholRoundActive
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
+  Name: AlcoholRoundActive
+  StudioPath: parameter:/AlcoholRoundActive
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 2297096267
+    data2: 3835611571
+  Type: 1
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
 --- !u!114 &-2193277957056023861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1235,6 +1315,32 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-1494374959908322118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/CoinFlipResult
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
+  Name: CoinFlipResult
+  StudioPath: parameter:/CoinFlipResult
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 4285545012
+    data2: 353615085
+  Type: 2
+  IsGlobal: 1
+  Labels:
+  - Good
+  - Bad
+  Exists: 1
 --- !u!114 &-1364342824017656182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1331,10 +1437,10 @@ MonoBehaviour:
   Path: Assets/Plugins/SecondDealing_Fmod_Project/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639275908544725064
+  lastModified: 639278388581243610
   FileSizes:
   - Name: Desktop
-    Value: 87200
+    Value: 1004288
   Exists: 1
 --- !u!114 &-1185908955002791401
 MonoBehaviour:
@@ -1751,13 +1857,18 @@ MonoBehaviour:
   - {fileID: 6633724544137124583}
   - {fileID: 8385515851199218582}
   - {fileID: -5568183558402198138}
-  EditorParameters: []
+  - {fileID: -5124119659816613810}
+  - {fileID: -2943842270961039233}
+  - {fileID: 4046538694443622712}
+  EditorParameters:
+  - {fileID: -2369193966254794670}
+  - {fileID: -1494374959908322118}
   MasterBanks:
   - {fileID: -1251548946588217503}
   StringsBanks:
   - {fileID: -2570264501736390697}
   cacheVersion: 131859
-  cacheTime: 639275908544741538
+  cacheTime: 639278388581257783
   SerializableEventsDict:
   - key: event:/MUS/musElevator
     index: 0
@@ -1963,6 +2074,12 @@ MonoBehaviour:
     index: 100
   - key: event:/TEST
     index: 101
+  - key: event:/SFX/ITEMS/sfxScissorsItemPickUp
+    index: 102
+  - key: event:/SFX/ITEMS/sfxAlcoholItemEffect
+    index: 103
+  - key: event:/UI/uiSettingsDialTurn
+    index: 104
 --- !u!114 &152451932833194479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2071,6 +2188,30 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &732996281066623364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/sfxAlcoholItemEffect/AlcoholRoundActive
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
+  Name: AlcoholRoundActive
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 2297096267
+    data2: 3835611571
+  Type: 1
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
 --- !u!114 &900671181624967817
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2098,6 +2239,32 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &1314051286452073346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/sfxCoinItem/CoinFlipResult
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
+  Name: CoinFlipResult
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 4285545012
+    data2: 353615085
+  Type: 2
+  IsGlobal: 1
+  Labels:
+  - Good
+  - Bad
+  Exists: 1
 --- !u!114 &1378340071814347217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2178,7 +2345,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 7770
 --- !u!114 &1579551555519142197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2359,6 +2526,33 @@ MonoBehaviour:
     Data2: 1180843566
     Data3: -188210807
     Data4: 1639394955
+  Banks:
+  - {fileID: -1251548946588217503}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &4046538694443622712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/uiSettingsDialTurn
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/UI/uiSettingsDialTurn
+  Guid:
+    Data1: 156791718
+    Data2: 1171893187
+    Data3: -1316959859
+    Data4: 2096352972
   Banks:
   - {fileID: -1251548946588217503}
   IsStream: 0
@@ -2583,7 +2777,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 3500
 --- !u!114 &5606880486265848034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2610,7 +2804,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 2718
 --- !u!114 &5640117763999884279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2664,7 +2858,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 1625
 --- !u!114 &6206072134473626026
 MonoBehaviour:
   m_ObjectHideFlags: 0

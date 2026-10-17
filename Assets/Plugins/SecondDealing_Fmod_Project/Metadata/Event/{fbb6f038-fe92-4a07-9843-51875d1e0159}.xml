@@ -8,7 +8,7 @@
 			<value>sfxSunglassesItem</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{573529cc-0948-469b-a74c-cac61702b1d4}</destination>
@@ -62,11 +62,18 @@
 	<object class="EventAutomatableProperties" id="{d488240e-2955-41ac-bc0d-b3ab7be562c5}" />
 	<object class="MarkerTrack" id="{7a06ac68-e3b6-47d5-bd67-6a070a0ae33b}" />
 	<object class="GroupTrack" id="{d414be0a-53ba-49bf-9083-f5d281ead1ef}">
+		<relationship name="modules">
+			<destination>{61ad501d-229b-47ba-8dc6-dc23874abadb}</destination>
+		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{2b84dc02-0482-4c01-8ae7-87b6e67b0e9b}</destination>
 		</relationship>
 	</object>
-	<object class="Timeline" id="{1d43243f-41c4-4c4a-bf38-f7a75b3173f3}" />
+	<object class="Timeline" id="{1d43243f-41c4-4c4a-bf38-f7a75b3173f3}">
+		<relationship name="modules">
+			<destination>{61ad501d-229b-47ba-8dc6-dc23874abadb}</destination>
+		</relationship>
+	</object>
 	<object class="EventMixerMaster" id="{d3a19b83-8209-44b9-a570-aed7c3b35358}">
 		<relationship name="effectChain">
 			<destination>{0aa2992c-63bb-4d7a-860b-998b8a065823}</destination>
@@ -84,6 +91,14 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{c9491310-3e3e-41a3-b8bc-dc4a9ce82b9e}" />
+	<object class="SingleSound" id="{61ad501d-229b-47ba-8dc6-dc23874abadb}">
+		<property name="length">
+			<value>1.90625</value>
+		</property>
+		<relationship name="audioFile">
+			<destination>{54d7fd1b-ea90-4dbd-ae8b-d528f35009d6}</destination>
+		</relationship>
+	</object>
 	<object class="EventMixerGroup" id="{2b84dc02-0482-4c01-8ae7-87b6e67b0e9b}">
 		<property name="name">
 			<value>Audio 1</value>
