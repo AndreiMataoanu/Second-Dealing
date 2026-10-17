@@ -83,7 +83,7 @@ public class ItemManager : MonoBehaviour
             blackjackGame.SellItem(item.GetResalePrice());
             
             AudioManager.instance.Play("ItemBuy"); //DELETE LATER
-            AudioManagerFMOD.Play(AudioEvent.sfxShopBuy);
+            AudioManagerFMOD.Play(AudioEvent.sfxShopSell);
 
             item.delayDestroy = false;
 

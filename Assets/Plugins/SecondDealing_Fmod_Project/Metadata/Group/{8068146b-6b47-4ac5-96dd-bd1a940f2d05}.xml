@@ -7,6 +7,12 @@
 		<property name="name">
 			<value>SFX</value>
 		</property>
+		<relationship name="automators">
+			<destination>{5dedd983-6324-431f-92c4-efbd957e13db}</destination>
+		</relationship>
+		<relationship name="masters">
+			<destination>{18e11b87-a968-4243-8c34-5e92b17fc1b1}</destination>
+		</relationship>
 		<relationship name="effectChain">
 			<destination>{6cc862ad-62b4-4989-afc8-f26f07396b28}</destination>
 		</relationship>
@@ -17,11 +23,46 @@
 			<destination>{f7396170-0087-4561-a818-775b0e9ae576}</destination>
 		</relationship>
 	</object>
+	<object class="Automator" id="{5dedd983-6324-431f-92c4-efbd957e13db}">
+		<property name="nameOfPropertyBeingAutomated">
+			<value>volume</value>
+		</property>
+	</object>
 	<object class="MixerBusEffectChain" id="{6cc862ad-62b4-4989-afc8-f26f07396b28}">
 		<relationship name="effects">
+			<destination>{3792b513-be5a-4be1-ace6-9093a6c8d883}</destination>
+			<destination>{932d27d8-7cba-45c4-9888-6c2db8d73bf2}</destination>
+			<destination>{a4561b8d-17a1-4bbc-9944-44d2e5563ed5}</destination>
 			<destination>{b5f1bca7-6ce7-4652-88a6-6969d2c7b06a}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{d39149e0-5be1-4f57-835c-4ef56c98509f}" />
+	<object class="DelayEffect" id="{3792b513-be5a-4be1-ace6-9093a6c8d883}">
+		<property name="delay">
+			<value>380</value>
+		</property>
+		<property name="feedback">
+			<value>43</value>
+		</property>
+		<property name="level">
+			<value>-80</value>
+		</property>
+		<property name="delayChangeMode">
+			<value>1</value>
+		</property>
+	</object>
+	<object class="SFXReverbEffect" id="{932d27d8-7cba-45c4-9888-6c2db8d73bf2}">
+		<property name="lowShelfGain">
+			<value>-10.5</value>
+		</property>
+		<property name="wetLevel">
+			<value>-80</value>
+		</property>
+	</object>
+	<object class="MultibandEqEffect" id="{a4561b8d-17a1-4bbc-9944-44d2e5563ed5}">
+		<property name="frequencyA">
+			<value>22000</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{b5f1bca7-6ce7-4652-88a6-6969d2c7b06a}" />
 </objects>

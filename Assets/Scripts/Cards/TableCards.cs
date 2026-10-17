@@ -203,6 +203,7 @@ public class TableCards : MonoBehaviour
     private static IEnumerator FlipCardCoroutine(CardDisplay cardDisplay, float duration)
     {
         Transform cardTransform = cardDisplay.transform;
+        AudioManagerFMOD.Play(AudioEvent.sfxFlip);
 
         Quaternion startRotation = cardTransform.localRotation;
         Quaternion ninetyDegrees = Quaternion.Euler(0, 90f, startRotation.eulerAngles.z);
@@ -213,7 +214,7 @@ public class TableCards : MonoBehaviour
         if(!CigarettesItem.isCigaretteActive) 
         {
             AudioManager.instance.Play("Flip"); //DELETE LATER
-            AudioManagerFMOD.Play(AudioEvent.TEST); //Dont know what this does, assuming its just a deal sound
+            AudioManagerFMOD.Play(AudioEvent.sfxFlip); //This must be Dealer Flip When cigarettes is not active?
         }
 
         yield return RotateCardCoroutine(halfDuration, cardTransform, startRotation, ninetyDegrees);
@@ -328,9 +329,18 @@ public class TableCards : MonoBehaviour
 
         CardInstance newCardInstance = new CardInstance(newCardData, cardDisplay, isHidden);
         CardEffects.SetVisualEffects(newCardInstance, isHidden, false, false);
+        AudioManagerFMOD.Play(AudioEvent.sfxDeal);
         
-        if(newCardInstance.cardData.rank == Card.Rank.Joker)
+        if(newCardInstance.cardData.suit == Card.Suit.Tarot) 
+            AudioManagerFMOD.Play(AudioEvent.sfxTarotCard);
+        if(newCardInstance.cardData.suit == Card.Suit.Tarot) 
+            AudioManagerFMOD.Play(AudioEvent.sfxTarotCard);
+
+        if (newCardInstance.cardData.rank == Card.Rank.Joker)
+        {
             newCardInstance.cardData.jokerValue = Random.Range(-10, 11);
+            AudioManagerFMOD.Play(AudioEvent.sfxJokerCard);
+        }
 
         return newCardInstance;
     }
@@ -366,8 +376,7 @@ public class TableCards : MonoBehaviour
     {
         if (newCardInstance == null) yield break;
         
-        AudioManager.instance.Play("CardHit"); //DELETE LATER
-        AudioManagerFMOD.Play(AudioEvent.sfxDeal);
+        AudioManager.instance.Play("CardHit"); //DELETE LATER ? is this the same as deal card? 
 
         Vector3 targetLocalPos = offset * cardOrderIndex;
         Quaternion targetRotation = Quaternion.identity;
@@ -413,7 +422,8 @@ public class TableCards : MonoBehaviour
         }
 
         AudioManager.instance.Play("CardHit"); //DELETE LATER
-        AudioManagerFMOD.Play(AudioEvent.sfxDeal);
+        AudioManagerFMOD.Play(AudioEvent.sfxSplit);
+        
         Transform targetPosition = playerCardPositions[currentHandIndex + 1];
 
         yield return StartCoroutine(CardAnimationCoroutine(

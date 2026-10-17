@@ -366,8 +366,8 @@ public class ShopManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.2f);
 
-        AudioManager.instance.Play("Latch"); //DELETE
-        AudioManager.instance.Play("SuitcaseOpen"); //DELETE
+        AudioManager.instance.Play("Latch"); //DELETE LATER
+        AudioManager.instance.Play("SuitcaseOpen"); //DELETE LATER
         AudioManagerFMOD.Play(AudioEvent.sfxShopOpen);
         state = ShopState.Open;
     }

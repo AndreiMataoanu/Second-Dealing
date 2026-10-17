@@ -23,6 +23,7 @@ public class AlcoholItem : Item
         
         AudioManager.instance.Play("Drink"); //DELETE LATER
         AudioManagerFMOD.Play(AudioEvent.sfxAlcoholItem);
+        
         StartCoroutine(AlcoholCoroutine());
         
         return true;
@@ -39,6 +40,7 @@ public class AlcoholItem : Item
     {
         if (!isAlcoholActive) return;
         blackjackGame.GameCamera.UseClearVision();
+        AudioManagerFMOD.Stop(AudioEvent.sfxAlcoholItemEffect);
     }
 
     public override void OnRoundEnd()
@@ -46,6 +48,7 @@ public class AlcoholItem : Item
         if (!isAlcoholActive) return;
         blackjackGame.GameCamera.UseClearVision();
         blackjackGame.ItemManager.AddItemToRemove(this);
+        AudioManagerFMOD.Stop(AudioEvent.sfxAlcoholItemEffect);
     }
 
     #endregion
@@ -61,6 +64,7 @@ public class AlcoholItem : Item
 
         blackjackGame.bottleAnimation.gameObject.SetActive(false);
         blackjackGame.GameCamera.UseDistortedVision();
+        AudioManagerFMOD.Play(AudioEvent.sfxAlcoholItemEffect);;
         UpdateAlcoholCards();
         blackjackGame.CalculateBust();
     }

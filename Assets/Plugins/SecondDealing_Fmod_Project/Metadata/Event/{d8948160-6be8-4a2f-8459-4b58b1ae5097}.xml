@@ -8,7 +8,7 @@
 			<value>sfxMinimumBet</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{34119c0f-b9d4-4fcf-a948-550b03d66e4e}</destination>
@@ -62,11 +62,18 @@
 	<object class="EventAutomatableProperties" id="{10228bdd-8476-458e-896d-e3514bf5a52e}" />
 	<object class="MarkerTrack" id="{f2412d43-4151-49d3-970b-e66f6a0fec07}" />
 	<object class="GroupTrack" id="{51dd788b-8088-4529-8e2d-1658f1ab259d}">
+		<relationship name="modules">
+			<destination>{66dcae6b-bd71-46d3-9dae-0f876e9a18fb}</destination>
+		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{bef47190-0c0a-4bdb-aadc-c913a3ba62e0}</destination>
 		</relationship>
 	</object>
-	<object class="Timeline" id="{b2e7dcab-1c76-4a36-9528-6af129afa3ad}" />
+	<object class="Timeline" id="{b2e7dcab-1c76-4a36-9528-6af129afa3ad}">
+		<relationship name="modules">
+			<destination>{66dcae6b-bd71-46d3-9dae-0f876e9a18fb}</destination>
+		</relationship>
+	</object>
 	<object class="EventMixerMaster" id="{5dd534a6-5626-428e-985d-fc372457cbe6}">
 		<relationship name="effectChain">
 			<destination>{37ae7cdb-4bad-496b-be32-7eba9cebbac1}</destination>
@@ -84,6 +91,14 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{36ec5667-405c-4212-a25d-859a3de2135c}" />
+	<object class="SingleSound" id="{66dcae6b-bd71-46d3-9dae-0f876e9a18fb}">
+		<property name="length">
+			<value>1.875</value>
+		</property>
+		<relationship name="audioFile">
+			<destination>{6a5beca9-7d5c-450b-b7ce-38968a2f6391}</destination>
+		</relationship>
+	</object>
 	<object class="EventMixerGroup" id="{bef47190-0c0a-4bdb-aadc-c913a3ba62e0}">
 		<property name="name">
 			<value>Audio 1</value>
