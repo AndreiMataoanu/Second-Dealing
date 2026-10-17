@@ -401,7 +401,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5036363664628651963}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!169 &6783201524656525989
 AudioLowPassFilter:
   m_ObjectHideFlags: 0
@@ -454,6 +454,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManagerFMOD
   parGameSpeed: parGameSpeed
+  parAlcoholEffectActive: parAlcoholRoundActive
+  parCoinFlipResult: parCoinFlipResult
   TEST:
     Guid:
       Data1: 109322525
@@ -944,6 +946,13 @@ MonoBehaviour:
       Data3: 414077568
       Data4: 11632229
     Path: event:/SFX/ITEMS/sfxAlcoholItem
+  sfxAlcoholItemEffect:
+    Guid:
+      Data1: -768540304
+      Data2: 1282851721
+      Data3: -2035904076
+      Data4: -1840457080
+    Path: event:/SFX/ITEMS/sfxAlcoholItemEffect
   sfxAcidItem:
     Guid:
       Data1: 328992553

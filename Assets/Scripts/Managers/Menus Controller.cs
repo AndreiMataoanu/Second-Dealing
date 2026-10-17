@@ -226,7 +226,7 @@ public class MenusController : MonoBehaviour
             currentSpeedIndex = speedOptions.Length - 1;
         }
         
-        AudioManagerFMOD.Instance.SetGameSpeedParam(currentSpeedIndex);
+        AudioManagerFMOD.SetGlobalParameter("parGameSpeed",currentSpeedIndex);
 
         ApplySpeed();
     }
@@ -240,7 +240,7 @@ public class MenusController : MonoBehaviour
             currentSpeedIndex = 0;
         }
         
-        AudioManagerFMOD.Instance.SetGameSpeedParam(currentSpeedIndex);
+        AudioManagerFMOD.SetGlobalParameter("parGameSpeed",currentSpeedIndex);
 
         ApplySpeed();
     }
@@ -251,7 +251,7 @@ public class MenusController : MonoBehaviour
         PlayerPrefs.SetInt("GameSpeedIndex", currentSpeedIndex);
         PlayerPrefs.Save();
         
-        AudioManagerFMOD.Instance.SetGameSpeedParam(currentSpeedIndex);
+        AudioManagerFMOD.SetGlobalParameter("parGameSpeed",currentSpeedIndex);
 
         UpdateSpeedUI();
     }

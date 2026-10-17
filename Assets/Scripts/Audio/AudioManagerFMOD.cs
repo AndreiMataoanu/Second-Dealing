@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 /// <summary>
 /// Single, persistent FMOD audio manager.
@@ -29,6 +30,7 @@ public class AudioManagerFMOD : MonoBehaviour
     [Header("Global Parameters")]
 
     [SerializeField] [ParamRef] private string parGameSpeed;
+    [SerializeField] [ParamRef] private string parCoinFlipResult;
     
     #endregion
     
@@ -105,6 +107,7 @@ public class AudioManagerFMOD : MonoBehaviour
     [SerializeField] private EventReference sfxOrganItem;
     [SerializeField] private EventReference sfxCoinItem;
     [SerializeField] private EventReference sfxAlcoholItem;
+    [SerializeField] private EventReference sfxAlcoholItemEffect;
     [SerializeField] private EventReference sfxAcidItem;
     [SerializeField] private EventReference sfxSunglassesItem;
     [SerializeField] private EventReference sfxKeepsakeGenerel;
@@ -239,6 +242,7 @@ public class AudioManagerFMOD : MonoBehaviour
         events[AudioEvent.sfxOrganItem] = sfxOrganItem;
         events[AudioEvent.sfxCoinItem] = sfxCoinItem;
         events[AudioEvent.sfxAlcoholItem] = sfxAlcoholItem;
+        events[AudioEvent.sfxAlcoholItemEffect] = sfxAlcoholItemEffect;
         events[AudioEvent.sfxAcidItem] = sfxAcidItem;
         events[AudioEvent.sfxSunglassesItem] = sfxSunglassesItem;
         events[AudioEvent.sfxKeepsakeGenerel] = sfxKeepsakeGenerel;
@@ -415,9 +419,11 @@ public class AudioManagerFMOD : MonoBehaviour
             }
         }
     }
-    public void SetGameSpeedParam(float value)
+    public static void SetGlobalParameter(string parameterName, float value)
     {
-        RuntimeManager.StudioSystem.setParameterByName(parGameSpeed, value);
+        if (!Require()) return;
+
+        RuntimeManager.StudioSystem.setParameterByName(parameterName, value);
     }
 }
 
@@ -494,6 +500,7 @@ public enum AudioEvent
         sfxOrganItem,
         sfxCoinItem,
         sfxAlcoholItem,
+        sfxAlcoholItemEffect,
         sfxAcidItem,
         sfxSunglassesItem,
         sfxKeepsakeGenerel,

@@ -86,7 +86,7 @@ public class OptionsBox : MonoBehaviour
 
         UpdateSpeedVisuals();
         
-        AudioManagerFMOD.Instance.SetGameSpeedParam(speedIndex);
+        AudioManagerFMOD.SetGlobalParameter("parGameSpeed", speedIndex);
 
         AudioManager.instance.Play("BetUp"); //DELETE LATER
         AudioManagerFMOD.Play(AudioEvent.uiSettingsDialTurn);
@@ -103,7 +103,7 @@ public class OptionsBox : MonoBehaviour
 
         UpdateSpeedVisuals();
         
-        AudioManagerFMOD.Instance.SetGameSpeedParam(speedIndex);
+        AudioManagerFMOD.SetGlobalParameter("parGameSpeed", speedIndex);
         
         AudioManager.instance.Play("BetDown"); //DELETE LATER
         AudioManagerFMOD.Play(AudioEvent.uiSettingsDialTurn);
