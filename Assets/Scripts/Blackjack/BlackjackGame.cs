@@ -275,6 +275,7 @@ public class BlackjackGame : MonoBehaviour
         }
 
         playerMoney = targetAmount;
+        AudioManagerFMOD.Stop(AudioEvent.sfxPlayerWin);
 
         UpdateBettingUI();
     }
@@ -305,7 +306,7 @@ public class BlackjackGame : MonoBehaviour
         int targetBalance = playerMoney + moneyGained;
 
         AudioManager.instance.Play("MoneyGained"); //DELETE LATER
-        AudioManagerFMOD.Play(AudioEvent.sfxPlayerWin);
+        //AudioManagerFMOD.Play(AudioEvent.sfxPlayerWin);
 
         StartCoroutine(AnimateBetChange(targetBalance, 3f / GameUtils.gameSpeedMultiplier));
     }
@@ -314,7 +315,7 @@ public class BlackjackGame : MonoBehaviour
     {
         var targetBalance = playerMoney + moneyAmount;
         AudioManager.instance.Play("MoneyGained"); //DELETE LATER
-        AudioManagerFMOD.Play(AudioEvent.sfxPlayerWin);
+        //AudioManagerFMOD.Play(AudioEvent.sfxPlayerWin);
         StartCoroutine(AnimateBetChange(targetBalance, 3f / GameUtils.gameSpeedMultiplier));
     }
 
@@ -606,6 +607,7 @@ public class BlackjackGame : MonoBehaviour
         }
 
         hitHandAnimator.SetTrigger("hitTrigger");
+        AudioManagerFMOD.Play(AudioEvent.sfxHit);
 
         yield return GameUtils.WaitForSecondsScaled(1f);
         yield return StartCoroutine(tableCards.DealCardToPlayerCoroutine());
@@ -632,6 +634,7 @@ public class BlackjackGame : MonoBehaviour
         KeepsakeManager.instance.AllowPostStandItem(this);
         
         standHandAnimator.SetTrigger("standTrigger");
+        AudioManagerFMOD.Play(AudioEvent.sfxStand);
 
         yield return StartCoroutine(eventManager.CheckPowerballCompletion());
 
@@ -671,7 +674,7 @@ public class BlackjackGame : MonoBehaviour
         UpdateBettingUI();
 
         AudioManager.instance.Play("BetUp"); //DELETE LATER
-        AudioManagerFMOD.Play(AudioEvent.sfxIncreasingBet);
+        AudioManagerFMOD.Play(AudioEvent.sfxDoubleDown);
 
         hitHandAnimator.SetTrigger("doubleDownTrigger");
 
@@ -919,7 +922,7 @@ public class BlackjackGame : MonoBehaviour
             targetMoneyBalance = playerMoney + KeepsakeManager.instance.ApplyPayoutModifiers(betAmount, currentHand, allHands);
 
             AudioManager.instance.Play("MoneyGained"); //DELETE LATER
-            AudioManagerFMOD.Play(AudioEvent.sfxPlayerWin);
+            //AudioManagerFMOD.Play(AudioEvent.sfxPlayerWin);
 
             Instantiate(greenParticlePrefab, particleSpawnPoint.position, particleSpawnPoint.rotation);
             if(eventManager.IsDealerRageActive)
@@ -943,7 +946,8 @@ public class BlackjackGame : MonoBehaviour
             {
                 targetMoneyBalance = playerMoney - betAmount;
 
-                AudioManager.instance.Play("MoneyLost");
+                AudioManager.instance.Play("MoneyLost"); //DELETE LATER
+                AudioManagerFMOD.Play(AudioEvent.sfxPlayerLose);
 
                 Instantiate(redParticlePrefab, particleSpawnPoint.position, particleSpawnPoint.rotation);
 
@@ -953,8 +957,9 @@ public class BlackjackGame : MonoBehaviour
             }
             else
             {
-                AudioManager.instance.Play("MoneyLost");
-
+                AudioManager.instance.Play("MoneyLost"); //DELETE LATER
+                AudioManagerFMOD.Play(AudioEvent.sfxPlayerLose);
+                
                 standHandAnimator.SetTrigger("flipperTrigger");
 
                 yield return GameUtils.WaitForSecondsScaled(0.5f);
@@ -1031,9 +1036,17 @@ public class BlackjackGame : MonoBehaviour
         int playerDiff = Mathf.Abs(Mathf.Abs(playerValue) - blackjackGoal);
         int dealerDiff = Mathf.Abs(Mathf.Abs(dealerValue) - blackjackGoal);
 
-        if(playerBust) return "Bust... You lose";
+        if (playerBust)
+        {
+            AudioManagerFMOD.Play(AudioEvent.sfxPlayerLose);
+            return "Bust... You lose";
+        }
 
-        if(dealerBust) return "Dealer busts... You win";
+        if (dealerBust)
+        {
+            //AudioManagerFMOD.Play(AudioEvent.sfxPlayerWin);
+            return "Dealer busts... You win";
+        }
 
         if(playerDiff < dealerDiff) return "You win";
 
@@ -1066,7 +1079,8 @@ public class BlackjackGame : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        AudioManager.instance.Play("ButtonOpen");
+        AudioManager.instance.Play("ButtonOpen"); //DELETE LATER ? Unsure what this is maybe just elevator button?
+        AudioManagerFMOD.Play(AudioEvent.TEST);
     }
     #endregion
 
@@ -1180,7 +1194,8 @@ public class BlackjackGame : MonoBehaviour
 
             yield return StartCoroutine(GameUtils.WaitDelayOrInput(5.0f));
 
-            AudioManager.instance.Play("NewEvent");
+            AudioManager.instance.Play("NewEvent"); //DELETE LATER
+            AudioManagerFMOD.Play(AudioEvent.sfxGenerelEvent); //INSERT SPECIFIC EVENT HERE?
 
             statusText.text = "Betting enabled";
 

@@ -43,7 +43,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5036363664628651963}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef7980deefcf83a4dbcaafe7db313de6, type: 3}
   m_Name: 
@@ -401,7 +401,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5036363664628651963}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!169 &6783201524656525989
 AudioLowPassFilter:
   m_ObjectHideFlags: 0
@@ -453,6 +453,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a997177de23784899b1bac2d6a99ed3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManagerFMOD
+  parGameSpeed: parGameSpeed
+  parCoinFlipResult: parCoinFlipResult
   TEST:
     Guid:
       Data1: 109322525
@@ -460,13 +462,62 @@ MonoBehaviour:
       Data3: 1680033712
       Data4: 505945103
     Path: event:/TEST
+  sfxJokerCard:
+    Guid:
+      Data1: 299895232
+      Data2: 1135168979
+      Data3: -1744832095
+      Data4: -694193036
+    Path: event:/SFX/CARDS/sfxJokerCard
+  sfxDoubleDoubleCard:
+    Guid:
+      Data1: -1962302728
+      Data2: 1330860895
+      Data3: -2013322588
+      Data4: -1749050546
+    Path: event:/SFX/CARDS/sfxDoubleDoubleCard
+  sfxCutCutCard:
+    Guid:
+      Data1: -394443684
+      Data2: 1244870817
+      Data3: -529533017
+      Data4: -1850309755
+    Path: event:/SFX/CARDS/sfxCutCutCard
+  sfxTarotCard:
+    Guid:
+      Data1: 618583354
+      Data2: 1154439453
+      Data3: 165328776
+      Data4: -1480171504
+    Path: event:/SFX/CARDS/sfxTarotCard
+  sfxFlip:
+    Guid:
+      Data1: 155697924
+      Data2: 1133795338
+      Data3: 1706039477
+      Data4: -1962448717
+    Path: event:/SFX/CARDS/sfxFlip
+  sfxKeepsakeUnlock:
+    Guid:
+      Data1: 1525463058
+      Data2: 1267989661
+      Data3: -612704858
+      Data4: -1655670465
+    Path: event:/SFX/KEEPSAKES/sfxKeepsakeUnlock
+  uiSettingsDialTurn:
+    Guid:
+      Data1: 156791718
+      Data2: 1171893187
+      Data3: -1316959859
+      Data4: 2096352972
+    Path: event:/UI/uiSettingsDialTurn
   sfxRoundStart:
     Guid:
-      Data1: 109322525
-      Data2: 1125541714
-      Data3: 1680033712
-      Data4: 505945103
-    Path: event:/TEST
+      Data1: -1120745680
+      Data2: 1122284911
+      Data3: -266352729
+      Data4: -1634868819
+    Path: event:/SFX/GENEREL/sfxRoundStart
   sfxNegativeCard:
     Guid:
       Data1: -406993298
@@ -539,10 +590,10 @@ MonoBehaviour:
     Path: event:/SFX/PLAYER/sfxPlayerBored
   sfxPlayerWin:
     Guid:
-      Data1: 2001420739
-      Data2: 1157043133
-      Data3: 1493391236
-      Data4: -1530335378
+      Data1: 538742867
+      Data2: 1092329418
+      Data3: -1523908980
+      Data4: 881886874
     Path: event:/SFX/PLAYER/sfxPlayerWin
   sfxPlayerLose:
     Guid:
@@ -894,6 +945,13 @@ MonoBehaviour:
       Data3: 414077568
       Data4: 11632229
     Path: event:/SFX/ITEMS/sfxAlcoholItem
+  sfxAlcoholItemEffect:
+    Guid:
+      Data1: -768540304
+      Data2: 1282851721
+      Data3: -2035904076
+      Data4: -1840457080
+    Path: event:/SFX/ITEMS/sfxAlcoholItemEffect
   sfxAcidItem:
     Guid:
       Data1: 328992553
@@ -1148,11 +1206,11 @@ MonoBehaviour:
     Path: event:/MUS/musElevator
   musMainGame:
     Guid:
-      Data1: -540580858
-      Data2: 1198364111
-      Data3: -1815367763
-      Data4: -619384630
-    Path: event:/MUS/musMainMenu
+      Data1: -146807614
+      Data2: 1243173815
+      Data3: 1654871947
+      Data4: -977509540
+    Path: event:/MUS/musMainGame
   musWIn:
     Guid:
       Data1: -2075041066

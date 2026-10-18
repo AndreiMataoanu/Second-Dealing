@@ -1,3 +1,4 @@
+using FMOD.Studio;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -29,17 +30,19 @@ public class MenusController : MonoBehaviour
     [SerializeField] private Volume volume;
     [SerializeField] private VolumeProfile normalVolume;
     [SerializeField] private VolumeProfile menuVolume;
-    //Bus masterBus;
-    //Bus sfxBus;
-    //Bus musicBus;
+    Bus masterBus;
+    VCA masterVCA;
+    VCA sfxVCA;
+    VCA musicVCA;
 
     private bool isPaused;
 
     private void Awake()
     {
-        //masterBus = FMODUnity.RuntimeManager.GetBus("bus:/");
-        //sfxBus = FMODUnity.RuntimeManager.GetBus("bus:/SFX");
-        //musicBus = FMODUnity.RuntimeManager.GetBus("bus:/Music");
+        masterBus = FMODUnity.RuntimeManager.GetBus("bus:/");
+        masterVCA = FMODUnity.RuntimeManager.GetVCA("vca:/MASTER");
+        sfxVCA = FMODUnity.RuntimeManager.GetVCA("vca:/SFX");
+        musicVCA = FMODUnity.RuntimeManager.GetVCA("vca:/MUSIC");
 
         if(darkImage == null || pausePanel == null || mainMenuPanel == null) return;
     }
@@ -93,6 +96,8 @@ public class MenusController : MonoBehaviour
         //volume.profile = menuVolume;
         isPaused = true;
 
+        AudioManagerFMOD.Play(AudioEvent.uiPauseGame);
+
         Time.timeScale = 0;
     }
 
@@ -103,13 +108,15 @@ public class MenusController : MonoBehaviour
         optionsPanel.SetActive(false);
         //volume.profile = normalVolume;
         isPaused = false;
+        
+        AudioManagerFMOD.Play(AudioEvent.uiPauseResumeGame);
 
         Time.timeScale = 1;
     }
 
     public void ReturnToMainMenu()
     {
-        //masterBus.stopAllEvents(STOP_MODE.IMMEDIATE);
+        masterBus.stopAllEvents(STOP_MODE.ALLOWFADEOUT);
 
         Time.timeScale = 1;
         SceneManager.LoadSceneAsync(0);
@@ -171,19 +178,19 @@ public class MenusController : MonoBehaviour
 
     private void LoadSettings()
     {
-        //masterSlider.value = PlayerPrefs.GetFloat("MasterVolume", 1f);
-        //sfxSlider.value = PlayerPrefs.GetFloat("SFXVolume", 1f);
-        //musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", 1f);
+        masterSlider.value = PlayerPrefs.GetFloat("MasterVolume", 1f);
+        sfxSlider.value = PlayerPrefs.GetFloat("SFXVolume", 1f);
+        musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", 1f);
         currentSpeedIndex = PlayerPrefs.GetInt("GameSpeedIndex", 2);
         currentScreenModeIndex = PlayerPrefs.GetInt("ScreenModeIndex", 0);
 
-        //SetMasterVolume(masterSlider.value);
-        //SetSFXVolume(sfxSlider.value);
-        //SetMusicVolume(musicSlider.value);
+        SetMasterVolume(masterSlider.value);
+        SetSFXVolume(sfxSlider.value);
+        SetMusicVolume(musicSlider.value);
 
-        //masterSlider.onValueChanged.AddListener(SetMasterVolume);
-        //sfxSlider.onValueChanged.AddListener(SetSFXVolume);
-        //musicSlider.onValueChanged.AddListener(SetMusicVolume);
+        masterSlider.onValueChanged.AddListener(SetMasterVolume);
+        sfxSlider.onValueChanged.AddListener(SetSFXVolume);
+        musicSlider.onValueChanged.AddListener(SetMusicVolume);
 
         ApplySpeed();
         ApplyScreenMode();
@@ -191,21 +198,21 @@ public class MenusController : MonoBehaviour
 
     public void SetMasterVolume(float volume)
     {
-        //masterBus.setVolume(volume);
+        masterVCA.setVolume(volume);
 
         PlayerPrefs.SetFloat("MasterVolume", volume);
     }
 
     public void SetSFXVolume(float volume)
     {
-        //sfxBus.setVolume(volume);
+        sfxVCA.setVolume(volume);
 
         PlayerPrefs.SetFloat("SFXVolume", volume);
     }
 
     public void SetMusicVolume(float volume)
     {
-        //musicBus.setVolume(volume);
+        musicVCA.setVolume(volume);
 
         PlayerPrefs.SetFloat("MusicVolume", volume);
     }
@@ -218,6 +225,8 @@ public class MenusController : MonoBehaviour
         {
             currentSpeedIndex = speedOptions.Length - 1;
         }
+        
+        AudioManagerFMOD.SetGlobalParameter("parGameSpeed",currentSpeedIndex);
 
         ApplySpeed();
     }
@@ -230,6 +239,8 @@ public class MenusController : MonoBehaviour
         {
             currentSpeedIndex = 0;
         }
+        
+        AudioManagerFMOD.SetGlobalParameter("parGameSpeed",currentSpeedIndex);
 
         ApplySpeed();
     }
@@ -239,6 +250,8 @@ public class MenusController : MonoBehaviour
         GameUtils.gameSpeedMultiplier = speedOptions[currentSpeedIndex];
         PlayerPrefs.SetInt("GameSpeedIndex", currentSpeedIndex);
         PlayerPrefs.Save();
+        
+        AudioManagerFMOD.SetGlobalParameter("parGameSpeed",currentSpeedIndex);
 
         UpdateSpeedUI();
     }

@@ -7,6 +7,9 @@
 		<property name="name">
 			<value>MUS</value>
 		</property>
+		<relationship name="masters">
+			<destination>{2495b192-cb61-44cf-91bc-4b6241158287}</destination>
+		</relationship>
 		<relationship name="effectChain">
 			<destination>{1cd27ff6-fff7-4e8d-baee-5a525b1a8c1c}</destination>
 		</relationship>
@@ -19,9 +22,18 @@
 	</object>
 	<object class="MixerBusEffectChain" id="{1cd27ff6-fff7-4e8d-baee-5a525b1a8c1c}">
 		<relationship name="effects">
+			<destination>{456f27f9-4469-4b71-a964-9ef8a21da7dd}</destination>
 			<destination>{26edf904-9e66-42bf-a50e-43e6f186b2ee}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{be09deb9-6d6e-443f-8689-f83390374f64}" />
+	<object class="MultibandEqEffect" id="{456f27f9-4469-4b71-a964-9ef8a21da7dd}">
+		<property name="filterTypeA">
+			<value>2</value>
+		</property>
+		<property name="frequencyA">
+			<value>22000</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{26edf904-9e66-42bf-a50e-43e6f186b2ee}" />
 </objects>

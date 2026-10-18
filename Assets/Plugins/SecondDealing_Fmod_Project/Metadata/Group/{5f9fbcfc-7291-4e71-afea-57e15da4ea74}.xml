@@ -7,6 +7,12 @@
 		<property name="name">
 			<value>UI</value>
 		</property>
+		<relationship name="automators">
+			<destination>{e336f129-688f-446b-ac54-e14f0d1939a3}</destination>
+		</relationship>
+		<relationship name="masters">
+			<destination>{18e11b87-a968-4243-8c34-5e92b17fc1b1}</destination>
+		</relationship>
 		<relationship name="effectChain">
 			<destination>{8aca80d1-1023-45ed-ac3b-e17d869ceef5}</destination>
 		</relationship>
@@ -16,6 +22,11 @@
 		<relationship name="output">
 			<destination>{f7396170-0087-4561-a818-775b0e9ae576}</destination>
 		</relationship>
+	</object>
+	<object class="Automator" id="{e336f129-688f-446b-ac54-e14f0d1939a3}">
+		<property name="nameOfPropertyBeingAutomated">
+			<value>volume</value>
+		</property>
 	</object>
 	<object class="MixerBusEffectChain" id="{8aca80d1-1023-45ed-ac3b-e17d869ceef5}">
 		<relationship name="effects">

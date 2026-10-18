@@ -313,7 +313,8 @@ public class Elevator : MonoBehaviour
         currentFloor = nextFloor.name;
         transform.position = nextFloorPos;
 
-        AudioManager.instance.Play("ElevatorDing");
+        AudioManager.instance.Play("ElevatorDing"); //DELETE LATER
+        AudioManagerFMOD.Play(AudioEvent.sfxElevatorButton);
 
         StartCoroutine(ShakeCamera(idleAmplitude, idleFrequency, 0.5f));
     }

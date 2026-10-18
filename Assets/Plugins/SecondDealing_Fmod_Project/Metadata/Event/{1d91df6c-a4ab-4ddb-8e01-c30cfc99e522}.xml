@@ -8,7 +8,7 @@
 			<value>sfxShopClose</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{34119c0f-b9d4-4fcf-a948-550b03d66e4e}</destination>
@@ -62,11 +62,18 @@
 	<object class="EventAutomatableProperties" id="{5c7190be-f87e-4342-bcf1-2c34c1032abe}" />
 	<object class="MarkerTrack" id="{976fed6b-1b02-4cb3-b867-c6e14665eb0c}" />
 	<object class="GroupTrack" id="{19911bcc-220f-4686-a059-77e015d3ff9b}">
+		<relationship name="modules">
+			<destination>{6cbbcc5c-aa5a-4aa4-8c21-21499cf09d3f}</destination>
+		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{7340065a-4994-4f9c-8ec1-b9e737f28c92}</destination>
 		</relationship>
 	</object>
-	<object class="Timeline" id="{0c85f157-122d-434a-af65-492949a5106b}" />
+	<object class="Timeline" id="{0c85f157-122d-434a-af65-492949a5106b}">
+		<relationship name="modules">
+			<destination>{6cbbcc5c-aa5a-4aa4-8c21-21499cf09d3f}</destination>
+		</relationship>
+	</object>
 	<object class="EventMixerMaster" id="{ec2c7bb8-3450-41b8-b134-c4c9f633598f}">
 		<relationship name="effectChain">
 			<destination>{97ebb16a-847a-46d9-ae10-a8002a3d3635}</destination>
@@ -84,6 +91,14 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{4cdb9adb-7706-411b-a7de-dd1326d2df2a}" />
+	<object class="SingleSound" id="{6cbbcc5c-aa5a-4aa4-8c21-21499cf09d3f}">
+		<property name="length">
+			<value>1.6992291666666666</value>
+		</property>
+		<relationship name="audioFile">
+			<destination>{c3bf2b88-51a1-4ade-8113-96fb0a89a8e3}</destination>
+		</relationship>
+	</object>
 	<object class="EventMixerGroup" id="{7340065a-4994-4f9c-8ec1-b9e737f28c92}">
 		<property name="name">
 			<value>Audio 1</value>
@@ -103,7 +118,11 @@
 			<destination>{c1ccea0f-e67d-4386-8973-e7770c798c36}</destination>
 		</relationship>
 	</object>
-	<object class="MixerBusPanner" id="{e79c94a4-d508-4dcc-b104-998e592fcc2b}" />
+	<object class="MixerBusPanner" id="{e79c94a4-d508-4dcc-b104-998e592fcc2b}">
+		<property name="stereoPan">
+			<value>20</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{ec2daaf1-5fa6-4118-b35b-042ae1b5ab8e}" />
 	<object class="MixerBusEffectChain" id="{3541d6c1-488e-4f81-ab45-2501036aaa82}">
 		<relationship name="effects">

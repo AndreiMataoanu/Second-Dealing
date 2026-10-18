@@ -122,6 +122,7 @@ public class KeepsakeUnlockProgression : MonoBehaviour
     public bool HasMetRequirement(Keepsake keepsake)
     {
         playthroughStats.TryGetValue(keepsake.requiredChallenge, out int progress);
+        AudioManagerFMOD.Play(AudioEvent.sfxKeepsakeUnlock); //Unsure if this gets called when you unlock a keepsake
 
         return progress >= keepsake.requiredTarget;
     }
