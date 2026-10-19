@@ -8,7 +8,7 @@
 			<value>sfxNFTItem</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{573529cc-0948-469b-a74c-cac61702b1d4}</destination>
@@ -62,11 +62,18 @@
 	<object class="EventAutomatableProperties" id="{c9fc0e19-bbad-42cc-88d6-947cfaf739c5}" />
 	<object class="MarkerTrack" id="{a31a1ce3-7e72-4def-81ad-a8ee7b55258e}" />
 	<object class="GroupTrack" id="{4164fc35-0e83-45d5-af62-67f0c70e795a}">
+		<relationship name="modules">
+			<destination>{49bd1075-f796-44f1-b143-063576789841}</destination>
+		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{54cc41c2-75ae-4d03-b7c4-95ecd578ef75}</destination>
 		</relationship>
 	</object>
-	<object class="Timeline" id="{bfd2d70f-fe12-43c1-af18-81a4db84a97b}" />
+	<object class="Timeline" id="{bfd2d70f-fe12-43c1-af18-81a4db84a97b}">
+		<relationship name="modules">
+			<destination>{49bd1075-f796-44f1-b143-063576789841}</destination>
+		</relationship>
+	</object>
 	<object class="EventMixerMaster" id="{3668f4da-a6b8-4472-979b-94d1a2a4569c}">
 		<relationship name="effectChain">
 			<destination>{e8b7deee-c331-4376-b45b-f2440fe603b5}</destination>
@@ -84,9 +91,20 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{2bb4da4a-1625-4f0b-8b34-3afaaeb7f817}" />
+	<object class="SingleSound" id="{49bd1075-f796-44f1-b143-063576789841}">
+		<property name="length">
+			<value>3.625</value>
+		</property>
+		<relationship name="audioFile">
+			<destination>{7ece5e37-3fc2-4705-843d-b14837f7bad4}</destination>
+		</relationship>
+	</object>
 	<object class="EventMixerGroup" id="{54cc41c2-75ae-4d03-b7c4-95ecd578ef75}">
+		<property name="volume">
+			<value>-3</value>
+		</property>
 		<property name="name">
-			<value>Audio 1</value>
+			<value>Use</value>
 		</property>
 		<relationship name="effectChain">
 			<destination>{c859ef3a-b01a-409c-a636-6acb3f596802}</destination>
