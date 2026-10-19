@@ -455,6 +455,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AudioManagerFMOD
   parGameSpeed: parGameSpeed
   parCoinFlipResult: parCoinFlipResult
+  parDoubledDown: 
   TEST:
     Guid:
       Data1: 109322525
@@ -751,10 +752,10 @@ MonoBehaviour:
     Path: event:/SFX/GENEREL/sfxCardSelectorPrint
   sfxCashOut:
     Guid:
-      Data1: 538742867
-      Data2: 1092329418
-      Data3: -1523908980
-      Data4: 881886874
+      Data1: 1573603613
+      Data2: 1166058843
+      Data3: 1088807809
+      Data4: -9904772
     Path: event:/SFX/GENEREL/sfxCashOut
   sfxCashOutChampagneSpawn:
     Guid:
@@ -924,6 +925,13 @@ MonoBehaviour:
       Data3: -1127393872
       Data4: -295194885
     Path: event:/SFX/ITEMS/sfxNFTItem
+  sfxNFTItemEmitter:
+    Guid:
+      Data1: -1232280656
+      Data2: 1202863623
+      Data3: 561129612
+      Data4: 1901838797
+    Path: event:/SFX/ITEMS/sfxNFTItemEmitter
   sfxOrganItem:
     Guid:
       Data1: -1795091346
@@ -959,6 +967,20 @@ MonoBehaviour:
       Data3: -1516643951
       Data4: -172111164
     Path: event:/SFX/ITEMS/sfxAcidItem
+  sfxAcidItemEmitter:
+    Guid:
+      Data1: -436659383
+      Data2: 1089237829
+      Data3: -378579529
+      Data4: -1199774552
+    Path: event:/SFX/ITEMS/sfxAcidItemEmitter
+  sfxAcidItemPickup:
+    Guid:
+      Data1: -1580386099
+      Data2: 1207247052
+      Data3: 2089179324
+      Data4: -966607618
+    Path: event:/SFX/ITEMS/sfxAcidItemPickup
   sfxSunglassesItem:
     Guid:
       Data1: -71897032

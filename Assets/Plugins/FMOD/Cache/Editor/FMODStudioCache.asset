@@ -324,6 +324,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-7418429441482021446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/ITEMS/sfxNFTItemEmitter
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/SFX/ITEMS/sfxNFTItemEmitter
+  Guid:
+    Data1: -1232280656
+    Data2: 1202863623
+    Data3: 561129612
+    Data4: 1901838797
+  Banks:
+  - {fileID: -1251548946588217503}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 12000
 --- !u!114 &-7328476971480352987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1482,10 +1509,10 @@ MonoBehaviour:
   Path: Assets/Plugins/SecondDealing_Fmod_Project/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639280201548514162
+  lastModified: 639280205319829466
   FileSizes:
   - Name: Desktop
-    Value: 6694
+    Value: 6742
   Exists: 1
 --- !u!114 &-2562978601402148915
 MonoBehaviour:
@@ -1826,10 +1853,10 @@ MonoBehaviour:
   Path: Assets/Plugins/SecondDealing_Fmod_Project/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639280201548476195
+  lastModified: 639280205319779881
   FileSizes:
   - Name: Desktop
-    Value: 4170048
+    Value: 4307776
   Exists: 1
 --- !u!114 &-1185908955002791401
 MonoBehaviour:
@@ -2261,6 +2288,7 @@ MonoBehaviour:
   - {fileID: 3226171383673049516}
   - {fileID: -4361894065234647578}
   - {fileID: -7716314000609591198}
+  - {fileID: -7418429441482021446}
   EditorParameters:
   - {fileID: 5973432139935727812}
   - {fileID: -8091403143882354314}
@@ -2269,7 +2297,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: -2570264501736390697}
   cacheVersion: 131859
-  cacheTime: 639280201548514162
+  cacheTime: 639280205319829466
   SerializableEventsDict:
   - key: event:/MUS/musElevator
     index: 0
@@ -2497,12 +2525,16 @@ MonoBehaviour:
     index: 111
   - key: event:/SFX/GENEREL/sfxRoundStart
     index: 112
-  - key: event:/SFX/ITEMS/sfxAcidItemEmitter
+  - key: snapshot:/DoubleDownActive
     index: 113
-  - key: snapshot:/OrganActive
+  - key: event:/SFX/ITEMS/sfxAcidItemEmitter
     index: 114
-  - key: event:/SFX/ITEMS/sfxAcidItemPickup
+  - key: snapshot:/OrganActive
     index: 115
+  - key: event:/SFX/ITEMS/sfxAcidItemPickup
+    index: 116
+  - key: event:/SFX/ITEMS/sfxNFTItemEmitter
+    index: 117
 --- !u!114 &152451932833194479
 MonoBehaviour:
   m_ObjectHideFlags: 0
