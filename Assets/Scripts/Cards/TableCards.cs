@@ -329,10 +329,9 @@ public class TableCards : MonoBehaviour
 
         CardInstance newCardInstance = new CardInstance(newCardData, cardDisplay, isHidden);
         CardEffects.SetVisualEffects(newCardInstance, isHidden, false, false);
+        
         AudioManagerFMOD.Play(AudioEvent.sfxDeal);
         
-        if(newCardInstance.cardData.suit == Card.Suit.Tarot) 
-            AudioManagerFMOD.Play(AudioEvent.sfxTarotCard);
         if(newCardInstance.cardData.suit == Card.Suit.Tarot) 
             AudioManagerFMOD.Play(AudioEvent.sfxTarotCard);
 

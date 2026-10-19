@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.03.00">
 	<object class="Snapshot" id="{f4813d97-d4f3-4d3e-b605-a98b3bbf548c}">
+		<property name="note">
+			<value>ALL AFFECTED PLUGINS ARE COLORED GREEN
+</value>
+		</property>
 		<property name="name">
 			<value>AlcoholActive</value>
 		</property>
+		<property name="behavior">
+			<value>1</value>
+		</property>
+		<relationship name="tags">
+			<destination>{d4159506-c1f3-41a2-a053-e5cb30923d01}</destination>
+		</relationship>
 		<relationship name="mixer">
 			<destination>{a4e62708-da0d-458b-a559-4c2aeab6aa57}</destination>
 		</relationship>

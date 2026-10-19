@@ -1031,6 +1031,8 @@ public class BlackjackGame : MonoBehaviour
 
     private string DetermineWinner(int playerValue, int dealerValue)
     {
+        AudioManagerFMOD.Stop(AudioEvent.sfxDoubleDown);
+        
         bool playerBust = (playerValue > blackjackGoal || playerValue < -blackjackGoal);
         bool dealerBust = (dealerValue > GetDealerBustThreshold() || dealerValue < -GetDealerBustThreshold());
         int playerDiff = Mathf.Abs(Mathf.Abs(playerValue) - blackjackGoal);
