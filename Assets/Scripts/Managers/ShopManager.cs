@@ -278,7 +278,7 @@ public class ShopManager : MonoBehaviour
         if(Time.time >= nextDenyTime)
         {
             AudioManager.instance.Play("ItemDeny"); //DELETE LATER
-            AudioManagerFMOD.Play(AudioEvent.sfxCantUseItem);
+            AudioManagerFMOD.Play(AudioEvent.sfxCantBuy);
 
             nextDenyTime = Time.time + denySoundCooldown;
         }

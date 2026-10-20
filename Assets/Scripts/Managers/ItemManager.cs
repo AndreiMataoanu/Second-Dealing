@@ -67,7 +67,6 @@ public class ItemManager : MonoBehaviour
         }
 
         AudioManager.instance.Play("ItemBuy"); //DELETE LATER
-        AudioManagerFMOD.Play(AudioEvent.sfxShopBuy);
         KeepsakeUnlockProgression.instance.AddStat(ChallengeType.UseItems);
 
         if (!item.delayDestroy)

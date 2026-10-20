@@ -31,6 +31,7 @@ public class AudioManagerFMOD : MonoBehaviour
 
     [SerializeField] [ParamRef] private string parGameSpeed;
     [SerializeField] [ParamRef] private string parCoinFlipResult;
+    [SerializeField] [ParamRef] private string parDoubledDown;
     
     #endregion
     
@@ -104,11 +105,14 @@ public class AudioManagerFMOD : MonoBehaviour
     [SerializeField] private EventReference sfxFanItem;
     [SerializeField] private EventReference sfxCigarettesItem;
     [SerializeField] private EventReference sfxNFTItem;
+    [SerializeField] private EventReference sfxNFTItemEmitter;
     [SerializeField] private EventReference sfxOrganItem;
     [SerializeField] private EventReference sfxCoinItem;
     [SerializeField] private EventReference sfxAlcoholItem;
     [SerializeField] private EventReference sfxAlcoholItemEffect;
     [SerializeField] private EventReference sfxAcidItem;
+    [SerializeField] private EventReference sfxAcidItemEmitter;
+    [SerializeField] private EventReference sfxAcidItemPickup;
     [SerializeField] private EventReference sfxSunglassesItem;
     [SerializeField] private EventReference sfxKeepsakeGenerel;
     [SerializeField] private EventReference sfxBlueBallsKeepsake;
@@ -239,11 +243,14 @@ public class AudioManagerFMOD : MonoBehaviour
         events[AudioEvent.sfxFanItem] = sfxFanItem;
         events[AudioEvent.sfxCigarettesItem] = sfxCigarettesItem;
         events[AudioEvent.sfxNFTItem] = sfxNFTItem;
+        events[AudioEvent.sfxNFTItemEmitter] = sfxNFTItemEmitter;
         events[AudioEvent.sfxOrganItem] = sfxOrganItem;
         events[AudioEvent.sfxCoinItem] = sfxCoinItem;
         events[AudioEvent.sfxAlcoholItem] = sfxAlcoholItem;
         events[AudioEvent.sfxAlcoholItemEffect] = sfxAlcoholItemEffect;
         events[AudioEvent.sfxAcidItem] = sfxAcidItem;
+        events[AudioEvent.sfxAcidItemEmitter] = sfxAcidItemEmitter;
+        events[AudioEvent.sfxAcidItemPickup] = sfxAcidItemPickup;
         events[AudioEvent.sfxSunglassesItem] = sfxSunglassesItem;
         events[AudioEvent.sfxKeepsakeGenerel] = sfxKeepsakeGenerel;
         events[AudioEvent.sfxBlueBallsKeepsake] = sfxBlueBallsKeepsake;
@@ -497,11 +504,14 @@ public enum AudioEvent
         sfxFanItem,
         sfxCigarettesItem,
         sfxNFTItem,
+        sfxNFTItemEmitter,
         sfxOrganItem,
         sfxCoinItem,
         sfxAlcoholItem,
         sfxAlcoholItemEffect,
         sfxAcidItem,
+        sfxAcidItemEmitter,
+        sfxAcidItemPickup,
         sfxSunglassesItem,
         sfxKeepsakeGenerel,
         sfxBlueBallsKeepsake,

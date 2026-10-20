@@ -188,7 +188,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 5750
 --- !u!114 &-7831556629100345801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,6 +243,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1875
+--- !u!114 &-7716314000609591198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/ITEMS/sfxAcidItemPickup
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/SFX/ITEMS/sfxAcidItemPickup
+  Guid:
+    Data1: -1580386099
+    Data2: 1207247052
+    Data3: 2089179324
+    Data4: -966607618
+  Banks:
+  - {fileID: -1251548946588217503}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2000
 --- !u!114 &-7544268237470042640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -297,6 +324,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-7418429441482021446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/ITEMS/sfxNFTItemEmitter
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/SFX/ITEMS/sfxNFTItemEmitter
+  Guid:
+    Data1: -1232280656
+    Data2: 1202863623
+    Data3: 561129612
+    Data4: 1901838797
+  Banks:
+  - {fileID: -1251548946588217503}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 12000
 --- !u!114 &-7328476971480352987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -485,7 +539,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 3625
 --- !u!114 &-6348140006482275664
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -540,6 +594,33 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
+  Length: 0
+--- !u!114 &-6321475347290010717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: snapshot:/DoubleDownActive
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: snapshot:/DoubleDownActive
+  Guid:
+    Data1: -1660015593
+    Data2: 1297300607
+    Data3: 156365192
+    Data4: -694745296
+  Banks:
+  - {fileID: -1251548946588217503}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
   Length: 0
 --- !u!114 &-6234791872872965165
 MonoBehaviour:
@@ -671,11 +752,11 @@ MonoBehaviour:
   - {fileID: -1251548946588217503}
   IsStream: 0
   Is3D: 0
-  IsOneShot: 1
+  IsOneShot: 0
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 13250
 --- !u!114 &-5568183558402198138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -756,7 +837,61 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 1500
+--- !u!114 &-5405192905350562893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/ITEMS/sfxAcidItemPickup
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/SFX/ITEMS/sfxAcidItemPickup
+  Guid:
+    Data1: -1580386099
+    Data2: 1207247052
+    Data3: 2089179324
+    Data4: -966607618
+  Banks:
+  - {fileID: -1251548946588217503}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2000
+--- !u!114 &-5387982225935995881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/ITEMS/sfxAcidItemEmitter
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/SFX/ITEMS/sfxAcidItemEmitter
+  Guid:
+    Data1: -436659383
+    Data2: 1089237829
+    Data3: -378579529
+    Data4: -1199774552
+  Banks:
+  - {fileID: -1251548946588217503}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 5250
 --- !u!114 &-5344997037043178400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -873,7 +1008,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 4625
 --- !u!114 &-4864363331334207876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -981,7 +1116,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 1171
 --- !u!114 &-4502315794190365722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1035,7 +1170,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 3100
 --- !u!114 &-4369541917833892067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1062,6 +1197,33 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
+  Length: 2275
+--- !u!114 &-4361894065234647578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: snapshot:/OrganActive
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: snapshot:/OrganActive
+  Guid:
+    Data1: 458874727
+    Data2: 1265734569
+    Data3: 1008877974
+    Data4: -182700245
+  Banks:
+  - {fileID: -1251548946588217503}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
   Length: 0
 --- !u!114 &-4303628102970910411
 MonoBehaviour:
@@ -1110,13 +1272,13 @@ MonoBehaviour:
     Data4: 2025079228
   Banks:
   - {fileID: -1251548946588217503}
-  IsStream: 0
+  IsStream: 1
   Is3D: 0
   IsOneShot: 1
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 11125
 --- !u!114 &-3778829639576237939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1305,6 +1467,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-2736148947008879919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: snapshot:/DoubleDownActive
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: snapshot:/DoubleDownActive
+  Guid:
+    Data1: -1660015593
+    Data2: 1297300607
+    Data3: 156365192
+    Data4: -694745296
+  Banks:
+  - {fileID: -1251548946588217503}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 0
 --- !u!114 &-2570264501736390697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1320,10 +1509,10 @@ MonoBehaviour:
   Path: Assets/Plugins/SecondDealing_Fmod_Project/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639278498548320736
+  lastModified: 639280205319829466
   FileSizes:
   - Name: Desktop
-    Value: 6506
+    Value: 6742
   Exists: 1
 --- !u!114 &-2562978601402148915
 MonoBehaviour:
@@ -1513,7 +1702,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 875
 --- !u!114 &-1525510830503936701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1648,7 +1837,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 750
 --- !u!114 &-1251548946588217503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1664,10 +1853,10 @@ MonoBehaviour:
   Path: Assets/Plugins/SecondDealing_Fmod_Project/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639278498548287376
+  lastModified: 639280205319779881
   FileSizes:
   - Name: Desktop
-    Value: 3560192
+    Value: 4307776
   Exists: 1
 --- !u!114 &-1185908955002791401
 MonoBehaviour:
@@ -2095,6 +2284,11 @@ MonoBehaviour:
   - {fileID: -1304520358229701223}
   - {fileID: 456304978608302031}
   - {fileID: 6938448083622513553}
+  - {fileID: -2736148947008879919}
+  - {fileID: 3226171383673049516}
+  - {fileID: -4361894065234647578}
+  - {fileID: -7716314000609591198}
+  - {fileID: -7418429441482021446}
   EditorParameters:
   - {fileID: 5973432139935727812}
   - {fileID: -8091403143882354314}
@@ -2103,7 +2297,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: -2570264501736390697}
   cacheVersion: 131859
-  cacheTime: 639278498548320736
+  cacheTime: 639280205319829466
   SerializableEventsDict:
   - key: event:/MUS/musElevator
     index: 0
@@ -2331,6 +2525,16 @@ MonoBehaviour:
     index: 111
   - key: event:/SFX/GENEREL/sfxRoundStart
     index: 112
+  - key: snapshot:/DoubleDownActive
+    index: 113
+  - key: event:/SFX/ITEMS/sfxAcidItemEmitter
+    index: 114
+  - key: snapshot:/OrganActive
+    index: 115
+  - key: event:/SFX/ITEMS/sfxAcidItemPickup
+    index: 116
+  - key: event:/SFX/ITEMS/sfxNFTItemEmitter
+    index: 117
 --- !u!114 &152451932833194479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2807,6 +3011,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 3500
+--- !u!114 &3226171383673049516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/ITEMS/sfxAcidItemEmitter
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/SFX/ITEMS/sfxAcidItemEmitter
+  Guid:
+    Data1: -436659383
+    Data2: 1089237829
+    Data3: -378579529
+    Data4: -1199774552
+  Banks:
+  - {fileID: -1251548946588217503}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 5250
 --- !u!114 &3378344599992089161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3202,6 +3433,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 3500
+--- !u!114 &5569858097383453303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: snapshot:/OrganActive
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: snapshot:/OrganActive
+  Guid:
+    Data1: 458874727
+    Data2: 1265734569
+    Data3: 1008877974
+    Data4: -182700245
+  Banks:
+  - {fileID: -1251548946588217503}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 0
 --- !u!114 &5606880486265848034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3433,7 +3691,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 1375
 --- !u!114 &6789138531004134150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3649,7 +3907,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 375
 --- !u!114 &7944063634223851705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3946,7 +4204,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 1375
 --- !u!114 &9203640065609183480
 MonoBehaviour:
   m_ObjectHideFlags: 0
