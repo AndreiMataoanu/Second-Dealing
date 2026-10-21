@@ -31,7 +31,6 @@ public class AudioManagerFMOD : MonoBehaviour
 
     [SerializeField] [ParamRef] private string parGameSpeed;
     [SerializeField] [ParamRef] private string parCoinFlipResult;
-    [SerializeField] [ParamRef] private string parDoubledDown;
     
     #endregion
     
@@ -39,6 +38,8 @@ public class AudioManagerFMOD : MonoBehaviour
     [Header("EventRefrences")]
     
     [SerializeField] private EventReference TEST;
+    [SerializeField] private EventReference sfxBlackJackHand;
+    [SerializeField] private EventReference sfxCardAddToDeck;
     [SerializeField] private EventReference sfxJokerCard;
     [SerializeField] private EventReference sfxDoubleDoubleCard;
     [SerializeField] private EventReference sfxCutCutCard;
@@ -85,9 +86,12 @@ public class AudioManagerFMOD : MonoBehaviour
     [SerializeField] private EventReference sfxCashOutChampagnePop;
     [SerializeField] private EventReference sfxDealerTalk;
     [SerializeField] private EventReference sfxGenerelEvent;
+    [SerializeField] private EventReference sfxDartRemoveEvent;
+    [SerializeField] private EventReference sfxDartAddEvent;
     [SerializeField] private EventReference sfxDartEventHit;
     [SerializeField] private EventReference sfxDartEventBurn;
     [SerializeField] private EventReference sfxPowerBall;
+    [SerializeField] private EventReference sfxPowerBallHit;
     [SerializeField] private EventReference sfxAceSetEventOne;
     [SerializeField] private EventReference sfxAceSetEventEleven;
     [SerializeField] private EventReference sfxNegativeSuitEvent;
@@ -95,9 +99,12 @@ public class AudioManagerFMOD : MonoBehaviour
     [SerializeField] private EventReference sfxRageEventIncrease;
     [SerializeField] private EventReference sfxRageEventThreshold;
     [SerializeField] private EventReference sfxJokerEvent;
+    [SerializeField] private EventReference sfxRemoveSuitEvent;
+    [SerializeField] private EventReference sfxRemoveValueEvent;
     [SerializeField] private EventReference sfxRouletteEvent;
+    [SerializeField] private EventReference sfxRouletteEventNewTarget;
     [SerializeField] private EventReference sfxDoubleFiveBelowEvent;
-    [SerializeField] private EventReference sfxHalfSixAboveEvent;
+    [SerializeField] private EventReference sfxHalveSixAboveEvent;
     [SerializeField] private EventReference sfxGenerelItem;
     [SerializeField] private EventReference sfxKnifeItem;
     [SerializeField] private EventReference sfxCrossItem;
@@ -157,6 +164,43 @@ public class AudioManagerFMOD : MonoBehaviour
     // ---------------------------------------------------------------
     private readonly Dictionary<AudioEvent, EventReference> events = new Dictionary<AudioEvent, EventReference>();
     private readonly Dictionary<AudioEvent, List<EventInstance>> liveInstances = new Dictionary<AudioEvent, List<EventInstance>>();
+    
+    
+    //Matches Event String Names with Audio Events, Add here if more events are added to game. 
+    // --UPDATE IF BLACKJACKEVENT.SO ARE CHANGED--
+    
+    private static readonly Dictionary<string, AudioEvent> eventLookup = new Dictionary<string, AudioEvent>
+    {
+        { "Adding Jokers",         AudioEvent.sfxJokerEvent },
+        { "Adding card copies",    AudioEvent.sfxDartAddEvent },
+        { "Remove cards",          AudioEvent.sfxDartRemoveEvent },
+        { "Powerball!",            AudioEvent.sfxPowerBall },
+        { "Ace is always 1",       AudioEvent.sfxAceSetEventOne },
+        { "Ace is always 11",      AudioEvent.sfxAceSetEventEleven },
+        { "Negative Spades",       AudioEvent.sfxNegativeSuitEvent },
+        { "Negative Clubs",        AudioEvent.sfxNegativeSuitEvent },
+        { "Negative Hearts",       AudioEvent.sfxNegativeSuitEvent },
+        { "Negative Diamonds",     AudioEvent.sfxNegativeSuitEvent },
+        { "Dealer got ragebaited", AudioEvent.sfxRageEventStart },
+        { "Roulette Blackjack",    AudioEvent.sfxRouletteEvent },
+        { "Low values doubled",    AudioEvent.sfxDoubleFiveBelowEvent },
+        { "High values halved",    AudioEvent.sfxHalveSixAboveEvent },
+        { "Removed Spades",        AudioEvent.sfxRemoveSuitEvent },
+        { "Removed Clubs",         AudioEvent.sfxRemoveSuitEvent },
+        { "Removed Hearts",        AudioEvent.sfxRemoveSuitEvent },
+        { "Removed Diamonds",      AudioEvent.sfxRemoveSuitEvent },
+        
+        { "Removed Value: 2",      AudioEvent.sfxRemoveValueEvent },
+        { "Removed Value: 3",      AudioEvent.sfxRemoveValueEvent },
+        { "Removed Value: 4",      AudioEvent.sfxRemoveValueEvent },
+        { "Removed Value: 5",      AudioEvent.sfxRemoveValueEvent },
+        { "Removed Value: 6",      AudioEvent.sfxRemoveValueEvent },
+        { "Removed Value: 7",      AudioEvent.sfxRemoveValueEvent },
+        { "Removed Value: 8",      AudioEvent.sfxRemoveValueEvent },
+        { "Removed Value: 9",      AudioEvent.sfxRemoveValueEvent },
+        { "Removed Value: 10",     AudioEvent.sfxRemoveValueEvent },
+        { "Removed Value: Ace",    AudioEvent.sfxRemoveValueEvent },
+    };
 
     private void Awake()
     {
@@ -172,11 +216,26 @@ public class AudioManagerFMOD : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         RegisterEvents();
     }
+    
+        //For event name matching, looks at the string of text played on monitor and matches it to sound event.
+    public static bool TryPlay(string eventName)
+    {
+        if (eventLookup.TryGetValue(eventName, out var audioEvent))
+        {
+            Play(audioEvent);
+            return true;
+        }
+
+        Debug.LogWarning($"[AudioManagerFmod] No sound mapped for event '{eventName}'.");
+        return false;
+    }
 
     private void RegisterEvents()
     {
         #region RegisteredEvents
         events[AudioEvent.TEST] = TEST;
+        events[AudioEvent.sfxBlackJackHand] = sfxBlackJackHand;
+        events[AudioEvent.sfxCardAddToDeck] = sfxCardAddToDeck;
         events[AudioEvent.sfxJokerCard] = sfxJokerCard;
         events[AudioEvent.sfxDoubleDoubleCard] = sfxDoubleDoubleCard;
         events[AudioEvent.sfxCutCutCard] = sfxCutCutCard;
@@ -223,9 +282,12 @@ public class AudioManagerFMOD : MonoBehaviour
         events[AudioEvent.sfxCashOutChampagnePop] = sfxCashOutChampagnePop;
         events[AudioEvent.sfxDealerTalk] = sfxDealerTalk;
         events[AudioEvent.sfxGenerelEvent] = sfxGenerelEvent;
+        events[AudioEvent.sfxDartRemoveEvent] = sfxDartRemoveEvent;
+        events[AudioEvent.sfxDartAddEvent] = sfxDartAddEvent;
         events[AudioEvent.sfxDartEventHit] = sfxDartEventHit;
         events[AudioEvent.sfxDartEventBurn] = sfxDartEventBurn;
         events[AudioEvent.sfxPowerBall] = sfxPowerBall;
+        events[AudioEvent.sfxPowerBallHit] = sfxPowerBallHit;
         events[AudioEvent.sfxAceSetEventOne] = sfxAceSetEventOne;
         events[AudioEvent.sfxAceSetEventEleven] = sfxAceSetEventEleven;
         events[AudioEvent.sfxNegativeSuitEvent] = sfxNegativeSuitEvent;
@@ -234,8 +296,11 @@ public class AudioManagerFMOD : MonoBehaviour
         events[AudioEvent.sfxRageEventThreshold] = sfxRageEventThreshold;
         events[AudioEvent.sfxJokerEvent] = sfxJokerEvent;
         events[AudioEvent.sfxRouletteEvent] = sfxRouletteEvent;
+        events[AudioEvent.sfxRouletteEventNewTarget] = sfxRouletteEventNewTarget;
+        events[AudioEvent.sfxRemoveSuitEvent] = sfxRemoveSuitEvent;
+        events[AudioEvent.sfxRemoveValueEvent] = sfxRemoveValueEvent;
         events[AudioEvent.sfxDoubleFiveBelowEvent] = sfxDoubleFiveBelowEvent;
-        events[AudioEvent.sfxHalfSixAboveEvent] = sfxHalfSixAboveEvent;
+        events[AudioEvent.sfxHalveSixAboveEvent] = sfxHalveSixAboveEvent;
         events[AudioEvent.sfxGenerelItem] = sfxGenerelItem;
         events[AudioEvent.sfxKnifeItem] = sfxKnifeItem;
         events[AudioEvent.sfxCrossItem] = sfxCrossItem;
@@ -434,10 +499,14 @@ public class AudioManagerFMOD : MonoBehaviour
     }
 }
 
+
+
 /// <summary>One entry per event in the sound sheet (column E).</summary>
 public enum AudioEvent
 {
         TEST,
+        sfxBlackJackHand,
+        sfxCardAddToDeck,
         sfxJokerCard,
         sfxDoubleDoubleCard,
         sfxCutCutCard,
@@ -484,9 +553,12 @@ public enum AudioEvent
         sfxCashOutChampagnePop,
         sfxDealerTalk,
         sfxGenerelEvent,
+        sfxDartRemoveEvent,
+        sfxDartAddEvent,
         sfxDartEventHit,
         sfxDartEventBurn,
         sfxPowerBall,
+        sfxPowerBallHit,
         sfxAceSetEventOne,
         sfxAceSetEventEleven,
         sfxNegativeSuitEvent,
@@ -494,9 +566,12 @@ public enum AudioEvent
         sfxRageEventIncrease,
         sfxRageEventThreshold,
         sfxJokerEvent,
+        sfxRemoveSuitEvent,
+        sfxRemoveValueEvent,
         sfxRouletteEvent,
+        sfxRouletteEventNewTarget,
         sfxDoubleFiveBelowEvent,
-        sfxHalfSixAboveEvent,
+        sfxHalveSixAboveEvent,
         sfxGenerelItem,
         sfxKnifeItem,
         sfxCrossItem,
@@ -550,3 +625,4 @@ public enum AudioEvent
         musMainGame,
         musWIn,
 }
+

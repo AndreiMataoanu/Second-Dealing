@@ -38,4 +38,6 @@ public class AddCardsEvent : BlackjackEvent
     }
 
     public int GenerateCopyCount() => Random.Range(copyRangeMin, copyRangeMax + 1);
+    
+    
 }

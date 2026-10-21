@@ -15,6 +15,9 @@ public abstract class BlackjackEvent : ScriptableObject
         yield return GameUtils.WaitDelayOrInput(5.0f);
 
         statusText.text = $"New Event: {eventName}";
+
+        AudioManagerFMOD.TryPlay(eventName);
+        
         yield return GameUtils.WaitDelayOrInput(5.0f);
     }
 

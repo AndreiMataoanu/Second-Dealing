@@ -455,7 +455,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AudioManagerFMOD
   parGameSpeed: parGameSpeed
   parCoinFlipResult: parCoinFlipResult
-  parDoubledDown: 
   TEST:
     Guid:
       Data1: 109322525
@@ -463,6 +462,20 @@ MonoBehaviour:
       Data3: 1680033712
       Data4: 505945103
     Path: event:/TEST
+  sfxBlackJackHand:
+    Guid:
+      Data1: -219114519
+      Data2: 1089588432
+      Data3: -375504751
+      Data4: -766739356
+    Path: event:/SFX/GENEREL/sfxBlackJackHand
+  sfxCardAddToDeck:
+    Guid:
+      Data1: -1842339646
+      Data2: 1265339254
+      Data3: -513416304
+      Data4: -1016219961
+    Path: event:/SFX/CARDS/sfxCardAddToDeck
   sfxJokerCard:
     Guid:
       Data1: 299895232
@@ -785,6 +798,20 @@ MonoBehaviour:
       Data3: -1782982010
       Data4: -735727698
     Path: event:/SFX/EVENT/sfxGenerelEvent
+  sfxDartRemoveEvent:
+    Guid:
+      Data1: -177475035
+      Data2: 1209351179
+      Data3: -499837019
+      Data4: -720042050
+    Path: event:/SFX/EVENT/sfxDartRemoveEvent
+  sfxDartAddEvent:
+    Guid:
+      Data1: -573290034
+      Data2: 1275638001
+      Data3: 925155977
+      Data4: -1211953311
+    Path: event:/SFX/EVENT/sfxDartAddEvent
   sfxDartEventHit:
     Guid:
       Data1: 29006480
@@ -806,6 +833,13 @@ MonoBehaviour:
       Data3: -781652035
       Data4: 2130505091
     Path: event:/SFX/EVENT/sfxPowerballEvent
+  sfxPowerBallHit:
+    Guid:
+      Data1: 430115890
+      Data2: 1091839169
+      Data3: -1222955363
+      Data4: -656840302
+    Path: event:/SFX/EVENT/sfxPowerballHit
   sfxAceSetEventOne:
     Guid:
       Data1: -702841242
@@ -855,6 +889,20 @@ MonoBehaviour:
       Data3: -1540504130
       Data4: 703141947
     Path: event:/SFX/EVENT/sfxJokerEvent
+  sfxRemoveSuitEvent:
+    Guid:
+      Data1: 1507030895
+      Data2: 1151812857
+      Data3: 1043141043
+      Data4: 1133681146
+    Path: event:/SFX/EVENT/sfxRemoveSuitEvent
+  sfxRemoveValueEvent:
+    Guid:
+      Data1: 1946061735
+      Data2: 1105201254
+      Data3: 1648021665
+      Data4: 221218225
+    Path: event:/SFX/EVENT/sfxRemoveValueEvent
   sfxRouletteEvent:
     Guid:
       Data1: -375970361
@@ -862,6 +910,13 @@ MonoBehaviour:
       Data3: -1853400157
       Data4: 208185287
     Path: event:/SFX/EVENT/sfxRouletteEvent
+  sfxRouletteEventNewTarget:
+    Guid:
+      Data1: -1167094380
+      Data2: 1181816234
+      Data3: 1365545662
+      Data4: -8227970
+    Path: event:/SFX/EVENT/sfxRouletteEventNewTarget
   sfxDoubleFiveBelowEvent:
     Guid:
       Data1: -1451082669
@@ -869,13 +924,13 @@ MonoBehaviour:
       Data3: -916509299
       Data4: 124962705
     Path: event:/SFX/EVENT/sfxDoubleFiveBelowEvent
-  sfxHalfSixAboveEvent:
+  sfxHalveSixAboveEvent:
     Guid:
       Data1: 969584439
       Data2: 1093878172
       Data3: -719171183
       Data4: 1116218529
-    Path: event:/SFX/EVENT/sfxHalfSixAboveEvent
+    Path: event:/SFX/EVENT/sfxHalveSixAboveEvent
   sfxGenerelItem:
     Guid:
       Data1: -1357766250
