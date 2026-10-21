@@ -93,6 +93,7 @@ public class BlackjackGame : MonoBehaviour
     public void SetBlackjackGoal(int gameGoal)
     {
         blackjackGoal = gameGoal;
+        AudioManagerFMOD.Play(AudioEvent.sfxRouletteEventNewTarget);
         rouletteText.text = blackjackGoal.ToString();
     }
     public int CurrentBet => currentBet;
@@ -361,6 +362,7 @@ public class BlackjackGame : MonoBehaviour
     {
         if(activeHand.Count == 7 && handValue <= blackjackGoal)
         {
+            if (handValue == blackjackGoal) AudioManagerFMOD.Play(AudioEvent.sfxBlackJackHand);
             statusText.text = "Hand full";
     
             yield return StartCoroutine(eventManager.CheckPowerballCompletion());
