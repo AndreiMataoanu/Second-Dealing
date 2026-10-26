@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1391469421394971492}
   - component: {fileID: 3438098718679603741}
   - component: {fileID: 2250242493983132545}
+  - component: {fileID: 3406916058022949774}
   m_Layer: 0
   m_Name: NFT
   m_TagString: Untagged
@@ -147,3 +148,34 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -3685785338027184218, guid: 0016373b75e9d4336b23c48a2d5a9bf5, type: 3}
+--- !u!114 &3406916058022949774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8709008291533084744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FMODUnity::FMODUnity.StudioEventEmitter
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1232280656
+      Data2: 1202863623
+      Data3: 561129612
+      Data4: 1901838797
+    Path: event:/SFX/ITEMS/sfxNFTItemEmitter
+  Event: 
+  EventPlayTrigger: 1
+  EventStopTrigger: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20

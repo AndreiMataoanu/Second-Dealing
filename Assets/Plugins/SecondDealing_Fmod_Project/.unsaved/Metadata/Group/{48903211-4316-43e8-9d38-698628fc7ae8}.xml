@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="MixerGroup" id="{48903211-4316-43e8-9d38-698628fc7ae8}">
+		<property name="color">
+			<value>Yellow</value>
+		</property>
+		<property name="volume">
+			<value>-80</value>
+		</property>
+		<property name="name">
+			<value>MUS</value>
+		</property>
+		<relationship name="masters">
+			<destination>{2495b192-cb61-44cf-91bc-4b6241158287}</destination>
+		</relationship>
+		<relationship name="effectChain">
+			<destination>{1cd27ff6-fff7-4e8d-baee-5a525b1a8c1c}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{be09deb9-6d6e-443f-8689-f83390374f64}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{f7396170-0087-4561-a818-775b0e9ae576}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{1cd27ff6-fff7-4e8d-baee-5a525b1a8c1c}">
+		<relationship name="effects">
+			<destination>{456f27f9-4469-4b71-a964-9ef8a21da7dd}</destination>
+			<destination>{85942b0a-9870-4426-b0ec-6e04397eec95}</destination>
+			<destination>{1724ae97-813f-4185-8b86-d95fec325c38}</destination>
+			<destination>{26edf904-9e66-42bf-a50e-43e6f186b2ee}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{be09deb9-6d6e-443f-8689-f83390374f64}" />
+	<object class="MultibandEqEffect" id="{456f27f9-4469-4b71-a964-9ef8a21da7dd}">
+		<property name="color">
+			<value>Green</value>
+		</property>
+		<property name="filterTypeA">
+			<value>2</value>
+		</property>
+		<property name="frequencyA">
+			<value>22000</value>
+		</property>
+	</object>
+	<object class="MultibandEqEffect" id="{85942b0a-9870-4426-b0ec-6e04397eec95}">
+		<property name="color">
+			<value>Red</value>
+		</property>
+		<property name="filterTypeA">
+			<value>14</value>
+		</property>
+		<property name="filterTypeD">
+			<value>8</value>
+		</property>
+		<property name="frequencyA">
+			<value>20</value>
+		</property>
+	</object>
+	<object class="SFXReverbEffect" id="{1724ae97-813f-4185-8b86-d95fec325c38}">
+		<property name="color">
+			<value>Red</value>
+		</property>
+		<property name="wetLevel">
+			<value>-80</value>
+		</property>
+	</object>
+	<object class="MixerBusFader" id="{26edf904-9e66-42bf-a50e-43e6f186b2ee}" />
+</objects>
