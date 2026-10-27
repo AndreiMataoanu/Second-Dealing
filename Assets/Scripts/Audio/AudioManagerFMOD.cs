@@ -31,6 +31,7 @@ public class AudioManagerFMOD : MonoBehaviour
 
     [SerializeField] [ParamRef] private string parGameSpeed;
     [SerializeField] [ParamRef] private string parCoinFlipResult;
+    [SerializeField] [ParamRef] private string parElevatorDoorOpen;
     
     #endregion
     
@@ -108,12 +109,15 @@ public class AudioManagerFMOD : MonoBehaviour
     [SerializeField] private EventReference sfxGenerelItem;
     [SerializeField] private EventReference sfxKnifeItem;
     [SerializeField] private EventReference sfxCrossItem;
+    [SerializeField] private EventReference sfxCrossItemEffect;
     [SerializeField] private EventReference sfxScissorsItem;
+    [SerializeField] private EventReference sfxScissorsItemPickup;
     [SerializeField] private EventReference sfxFanItem;
     [SerializeField] private EventReference sfxCigarettesItem;
     [SerializeField] private EventReference sfxNFTItem;
     [SerializeField] private EventReference sfxNFTItemEmitter;
     [SerializeField] private EventReference sfxOrganItem;
+    [SerializeField] private EventReference sfxOrganItemExpire;
     [SerializeField] private EventReference sfxCoinItem;
     [SerializeField] private EventReference sfxAlcoholItem;
     [SerializeField] private EventReference sfxAlcoholItemEffect;
@@ -304,12 +308,15 @@ public class AudioManagerFMOD : MonoBehaviour
         events[AudioEvent.sfxGenerelItem] = sfxGenerelItem;
         events[AudioEvent.sfxKnifeItem] = sfxKnifeItem;
         events[AudioEvent.sfxCrossItem] = sfxCrossItem;
+        events[AudioEvent.sfxCrossItemEffect] = sfxCrossItemEffect;
         events[AudioEvent.sfxScissorsItem] = sfxScissorsItem;
+        events[AudioEvent.sfxScissorsItemPickup] = sfxScissorsItemPickup;
         events[AudioEvent.sfxFanItem] = sfxFanItem;
         events[AudioEvent.sfxCigarettesItem] = sfxCigarettesItem;
         events[AudioEvent.sfxNFTItem] = sfxNFTItem;
         events[AudioEvent.sfxNFTItemEmitter] = sfxNFTItemEmitter;
         events[AudioEvent.sfxOrganItem] = sfxOrganItem;
+        events[AudioEvent.sfxOrganItemExpire] = sfxOrganItemExpire;
         events[AudioEvent.sfxCoinItem] = sfxCoinItem;
         events[AudioEvent.sfxAlcoholItem] = sfxAlcoholItem;
         events[AudioEvent.sfxAlcoholItemEffect] = sfxAlcoholItemEffect;
@@ -575,12 +582,15 @@ public enum AudioEvent
         sfxGenerelItem,
         sfxKnifeItem,
         sfxCrossItem,
+        sfxCrossItemEffect,
         sfxScissorsItem,
+        sfxScissorsItemPickup,
         sfxFanItem,
         sfxCigarettesItem,
         sfxNFTItem,
         sfxNFTItemEmitter,
         sfxOrganItem,
+        sfxOrganItemExpire,
         sfxCoinItem,
         sfxAlcoholItem,
         sfxAlcoholItemEffect,

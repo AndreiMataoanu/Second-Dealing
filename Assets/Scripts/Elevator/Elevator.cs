@@ -50,6 +50,7 @@ public class Elevator : MonoBehaviour
 
         AudioManager.instance.Play("ElevatorAmbience"); //DELETE LATER
         AudioManagerFMOD.Play(AudioEvent.ambElevatorMain);
+        AudioManagerFMOD.Play(AudioEvent.musElevator1);
     }
 
     public void BlackjackButton()
@@ -86,6 +87,7 @@ public class Elevator : MonoBehaviour
 
         AudioManager.instance.Play("DoorOpen"); //DELETE LATER
         AudioManagerFMOD.Play(AudioEvent.sfxElevatorDoorOpen);
+        AudioManagerFMOD.SetGlobalParameter("parElevatorDoorOpen", 1);
 
         Vector3 rightDoorGoToPos = new Vector3(rightDoor.transform.localPosition.x + 2f, rightDoor.transform.localPosition.y, rightDoor.transform.localPosition.z);
         Vector3 leftDoorGoToPos = new Vector3(leftDoor.transform.localPosition.x - 2f, leftDoor.transform.localPosition.y, leftDoor.transform.localPosition.z);
@@ -117,6 +119,7 @@ public class Elevator : MonoBehaviour
 
         AudioManager.instance.Play("DoorSlam"); //DELETE LATER ? Is this different from Door Close?
         AudioManagerFMOD.Play(AudioEvent.sfxElevatorDoorClose);
+        
 
         StartCoroutine(ShakeCamera(idleAmplitude, idleFrequency, doorDuration));
     }
@@ -127,6 +130,7 @@ public class Elevator : MonoBehaviour
 
         AudioManager.instance.Play("DoorClose"); //DELETE LATER
         AudioManagerFMOD.Play(AudioEvent.sfxElevatorDoorClose);
+        AudioManagerFMOD.SetGlobalParameter("parElevatorDoorOpen", 0);
 
         Vector3 rightDoorGoToPos = new Vector3(rightDoor.transform.localPosition.x - 2f, rightDoor.transform.localPosition.y, rightDoor.transform.localPosition.z);
         Vector3 leftDoorGoToPos = new Vector3(leftDoor.transform.localPosition.x + 2f, leftDoor.transform.localPosition.y, leftDoor.transform.localPosition.z);
@@ -210,6 +214,7 @@ public class Elevator : MonoBehaviour
 
         AudioManager.instance.Stop("ElevatorAmbience"); //DELETE LATER
         AudioManagerFMOD.Stop(AudioEvent.ambElevatorMain);
+        AudioManagerFMOD.Stop(AudioEvent.musElevator1);
         AudioManager.instance.Play("MainTheme"); //DELETE LATER
         AudioManagerFMOD.Play(AudioEvent.musMainGame);
     }
@@ -291,7 +296,6 @@ public class Elevator : MonoBehaviour
         AudioManager.instance.Play("ElevatorTravel"); //DELETE LATER
         AudioManagerFMOD.Play(AudioEvent.sfxElevatorDrive);
         AudioManager.instance.Play("ElevatorMusic"); //DELETE LATER
-        AudioManagerFMOD.Play(AudioEvent.musElevator1);
 
         StartCoroutine(ShakeCamera(moveAmplitude, moveFrequency, 0.5f));
 

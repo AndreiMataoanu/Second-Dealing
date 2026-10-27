@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{6245934d-0349-43fe-ab24-e8cc472af1ae}">
+		<property name="name">
+			<value>parElevatorDoorOpen</value>
+		</property>
+		<relationship name="folder">
+			<destination>{e5e8729b-61d0-45e5-a9ae-3634f7ced5a8}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{e9f57bd7-356d-4ac5-aaaf-964bd63349e1}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{e9f57bd7-356d-4ac5-aaaf-964bd63349e1}">
+		<property name="isGlobal">
+			<value>true</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+		<property name="isExposedRecursively">
+			<value>false</value>
+		</property>
+		<relationship name="modulators">
+			<destination>{e361fe30-c8ec-4816-8d3f-81dd5c2833c9}</destination>
+		</relationship>
+	</object>
+	<object class="SeekModulator" id="{e361fe30-c8ec-4816-8d3f-81dd5c2833c9}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>cursorPosition</value>
+		</property>
+		<property name="speedAscending">
+			<value>0.61000001430511475</value>
+		</property>
+		<property name="speedDescending">
+			<value>2.2000000476837158</value>
+		</property>
+		<property name="asymmetric">
+			<value>true</value>
+		</property>
+	</object>
+</objects>
