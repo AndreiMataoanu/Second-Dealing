@@ -56,6 +56,8 @@ public class Elevator : MonoBehaviour
     public void BlackjackButton()
     {
         if(isMoving) return;
+        AudioManagerFMOD.Play(AudioEvent.sfxElevatorButton);
+        AudioManagerFMOD.Stop(AudioEvent.musElevator1);
 
         StartCoroutine(BlackjackCoroutine());
     }
@@ -63,6 +65,7 @@ public class Elevator : MonoBehaviour
     public void OptionsButton()
     {
         if(isMoving) return;
+        AudioManagerFMOD.Play(AudioEvent.sfxElevatorButton);
 
         StartCoroutine(OptionsCoroutine());
     }
@@ -70,6 +73,7 @@ public class Elevator : MonoBehaviour
     public void KeepsakesButton()
     {
         if(isMoving) return;
+        AudioManagerFMOD.Play(AudioEvent.sfxElevatorButton);
 
         StartCoroutine(KeepsakesCoroutine());
     }
@@ -77,6 +81,8 @@ public class Elevator : MonoBehaviour
     public void QuitButton()
     {
         if(isMoving) return;
+        AudioManagerFMOD.Play(AudioEvent.sfxElevatorButton);
+        
 
         Application.Quit();
     }
@@ -118,7 +124,6 @@ public class Elevator : MonoBehaviour
         noise.FrequencyGain = doorFrequency;
 
         AudioManager.instance.Play("DoorSlam"); //DELETE LATER ? Is this different from Door Close?
-        AudioManagerFMOD.Play(AudioEvent.sfxElevatorDoorClose);
         
 
         StartCoroutine(ShakeCamera(idleAmplitude, idleFrequency, doorDuration));
@@ -161,7 +166,6 @@ public class Elevator : MonoBehaviour
         noise.FrequencyGain = doorFrequency;
 
         AudioManager.instance.Play("DoorSlam"); //DELETE LATER
-        AudioManagerFMOD.Play(AudioEvent.sfxElevatorDoorClose);
 
         StartCoroutine(ShakeCamera(idleAmplitude, idleFrequency, doorDuration));
     }
