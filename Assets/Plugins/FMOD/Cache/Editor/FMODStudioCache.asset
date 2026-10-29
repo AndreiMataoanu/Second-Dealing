@@ -1,29 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-9089322426629019499
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/parElevatorDoorOpen
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
-  Name: parElevatorDoorOpen
-  StudioPath: parameter:/parElevatorDoorOpen
-  Min: 0
-  Max: 1
-  Default: 0
-  ID:
-    data1: 3999063415
-    data2: 695227649
-  Type: 0
-  IsGlobal: 1
-  Labels: []
-  Exists: 1
 --- !u!114 &-9089024730033455348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -308,19 +284,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
   Path: event:/SFX/PLAYER/sfxPlayerLose
   Guid:
-    Data1: 1823125786
-    Data2: 1119785929
-    Data3: 1075968159
-    Data4: -1912637612
+    Data1: 1804758504
+    Data2: 1278872462
+    Data3: -1413476421
+    Data4: -1641937035
   Banks:
   - {fileID: -1251548946588217503}
   IsStream: 0
   Is3D: 0
-  IsOneShot: 0
+  IsOneShot: 1
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 3909
+  Length: 0
 --- !u!114 &-7498800841229914995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -455,7 +431,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 4125
+  Length: 0
 --- !u!114 &-7162846972054271706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -483,60 +459,6 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
---- !u!114 &-7153027833402218287
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/EVENT/sfxRouletteEventNewTarget
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/SFX/EVENT/sfxRouletteEventNewTarget
-  Guid:
-    Data1: -1167094380
-    Data2: 1181816234
-    Data3: 1365545662
-    Data4: -8227970
-  Banks:
-  - {fileID: -1251548946588217503}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 1651
---- !u!114 &-6989797111778338044
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/EVENT/sfxDartRemoveEvent
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/SFX/EVENT/sfxDartRemoveEvent
-  Guid:
-    Data1: -177475035
-    Data2: 1209351179
-    Data3: -499837019
-    Data4: -720042050
-  Banks:
-  - {fileID: -1251548946588217503}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 1750
 --- !u!114 &-6936022153396644372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -671,7 +593,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 4000
+  Length: 0
 --- !u!114 &-6321475347290010717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1086,33 +1008,6 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 4625
---- !u!114 &-4868306337127443199
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/ITEMS/sfxCrossItemEffect
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/SFX/ITEMS/sfxCrossItemEffect
-  Guid:
-    Data1: -1570289192
-    Data2: 1169542735
-    Data3: -998167908
-    Data4: -740457005
-  Banks:
-  - {fileID: -1251548946588217503}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 1750
 --- !u!114 &-4864363331334207876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1194,30 +1089,6 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1000
---- !u!114 &-4647680739880092656
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/ambElevatorMain/parElevatorDoorOpen
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
-  Name: parElevatorDoorOpen
-  StudioPath: 
-  Min: 0
-  Max: 1
-  Default: 0
-  ID:
-    data1: 3999063415
-    data2: 695227649
-  Type: 0
-  IsGlobal: 1
-  Labels: []
-  Exists: 1
 --- !u!114 &-4613113876592329369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1407,33 +1278,6 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1906
---- !u!114 &-4171410520247713668
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/EVENT/sfxRemoveSuitEvent
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/SFX/EVENT/sfxRemoveSuitEvent
-  Guid:
-    Data1: 1507030895
-    Data2: 1151812857
-    Data3: 1043141043
-    Data4: 1133681146
-  Banks:
-  - {fileID: -1251548946588217503}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 2201
 --- !u!114 &-4023754099002956512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1515,33 +1359,6 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 3281
---- !u!114 &-3739472677103057497
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/EVENT/sfxDartAddEvent
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/SFX/EVENT/sfxDartAddEvent
-  Guid:
-    Data1: -573290034
-    Data2: 1275638001
-    Data3: 925155977
-    Data4: -1211953311
-  Banks:
-  - {fileID: -1251548946588217503}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 2250
 --- !u!114 &-3733746134692340636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1769,7 +1586,7 @@ MonoBehaviour:
   Path: Assets/Plugins/SecondDealing_Fmod_Project/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639288011463609418
+  lastModified: 639287167004277123
   FileSizes:
   - Name: Desktop
     Value: 7274
@@ -2167,10 +1984,10 @@ MonoBehaviour:
   Path: Assets/Plugins/SecondDealing_Fmod_Project/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639288011463566041
+  lastModified: 639287167004259082
   FileSizes:
   - Name: Desktop
-    Value: 7687712
+    Value: 5990528
   Exists: 1
 --- !u!114 &-1185908955002791401
 MonoBehaviour:
@@ -2225,7 +2042,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 5625
+  Length: 0
 --- !u!114 &-1094929858070056848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2280,87 +2097,6 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
---- !u!114 &-1033437380584773815
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/CARDS/sfxCardAddToDeck
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/SFX/CARDS/sfxCardAddToDeck
-  Guid:
-    Data1: -1842339646
-    Data2: 1265339254
-    Data3: -513416304
-    Data4: -1016219961
-  Banks:
-  - {fileID: -1251548946588217503}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 305
---- !u!114 &-900415440275474128
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/EVENT/sfxHalfSixAboveEvent
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/SFX/EVENT/sfxHalfSixAboveEvent
-  Guid:
-    Data1: 969584439
-    Data2: 1093878172
-    Data3: -719171183
-    Data4: 1116218529
-  Banks:
-  - {fileID: -1251548946588217503}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 0
---- !u!114 &-855479938148916341
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/EVENT/sfxPowerballHit
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/SFX/EVENT/sfxPowerballHit
-  Guid:
-    Data1: 430115890
-    Data2: 1091839169
-    Data3: -1222955363
-    Data4: -656840302
-  Banks:
-  - {fileID: -1251548946588217503}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 1066
 --- !u!114 &-736773816528528451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2656,27 +2392,27 @@ MonoBehaviour:
   - {fileID: -4361894065234647578}
   - {fileID: -7716314000609591198}
   - {fileID: -7418429441482021446}
-  - {fileID: -6989797111778338044}
-  - {fileID: -855479938148916341}
-  - {fileID: 3228448706633117086}
-  - {fileID: 4821808778064318190}
-  - {fileID: -4171410520247713668}
-  - {fileID: -7153027833402218287}
-  - {fileID: 5307769096320062259}
-  - {fileID: -1033437380584773815}
-  - {fileID: -3739472677103057497}
-  - {fileID: -4868306337127443199}
-  - {fileID: 7205172047124736978}
+  - {fileID: 2480940562363286207}
+  - {fileID: -4023754099002956512}
+  - {fileID: 1816226339404535827}
+  - {fileID: -1680953356584931414}
+  - {fileID: 9178467700073428598}
+  - {fileID: 169923922122830695}
+  - {fileID: 6221912897530527244}
+  - {fileID: 8801541467490476685}
+  - {fileID: 6292495264690283943}
+  - {fileID: -1455802443856093547}
+  - {fileID: -4733615011527139492}
   EditorParameters:
   - {fileID: 5973432139935727812}
   - {fileID: -8091403143882354314}
-  - {fileID: -9089322426629019499}
+  - {fileID: -2679635544797344588}
   MasterBanks:
   - {fileID: -1251548946588217503}
   StringsBanks:
   - {fileID: -2570264501736390697}
   cacheVersion: 131859
-  cacheTime: 639288011463609418
+  cacheTime: 639287167004277123
   SerializableEventsDict:
   - key: event:/MUS/musElevator
     index: 0
@@ -2918,21 +2654,21 @@ MonoBehaviour:
     index: 118
   - key: event:/SFX/EVENT/sfxHalveSixAboveEvent
     index: 119
-  - key: event:/SFX/ITEMS/sfxOrganItemExpire
-    index: 120
   - key: event:/SFX/EVENT/sfxRemoveSuitEvent
-    index: 121
+    index: 120
   - key: event:/SFX/EVENT/sfxRouletteEventNewTarget
-    index: 122
+    index: 121
   - key: event:/SFX/EVENT/sfxRemoveValueEvent
-    index: 123
+    index: 122
   - key: event:/SFX/CARDS/sfxCardAddToDeck
-    index: 124
+    index: 123
   - key: event:/SFX/EVENT/sfxDartAddEvent
+    index: 124
+  - key: event:/SFX/GENEREL/sfxBlackJackHand
     index: 125
   - key: event:/SFX/ITEMS/sfxCrossItemEffect
     index: 126
-  - key: event:/SFX/GENEREL/sfxBlackJackHand
+  - key: event:/SFX/ITEMS/sfxOrganItemExpire
     index: 127
 --- !u!114 &152451932833194479
 MonoBehaviour:
@@ -3008,7 +2744,7 @@ MonoBehaviour:
     Data4: -619384630
   Banks:
   - {fileID: -1251548946588217503}
-  IsStream: 1
+  IsStream: 0
   Is3D: 0
   IsOneShot: 0
   Parameters: []
@@ -3266,30 +3002,6 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
---- !u!114 &1630373502336141754
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/musElevator/parElevatorDoorOpen
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
-  Name: parElevatorDoorOpen
-  StudioPath: 
-  Min: 0
-  Max: 1
-  Default: 0
-  ID:
-    data1: 3999063415
-    data2: 695227649
-  Type: 0
-  IsGlobal: 1
-  Labels: []
-  Exists: 1
 --- !u!114 &1799524724217621035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3422,7 +3134,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 1630373502336141754}
+  - {fileID: 3810889612455770863}
   MinDistance: 1
   MaxDistance: 20
   Length: 8000
@@ -3453,41 +3165,6 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
---- !u!114 &2692518922380188866
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/musMainGame/parGameSpeed
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
-  Name: parGameSpeed
-  StudioPath: 
-  Min: 0
-  Max: 10
-  Default: 2
-  ID:
-    data1: 1045619119
-    data2: 3036032578
-  Type: 2
-  IsGlobal: 1
-  Labels:
-  - 0.50
-  - 0.75
-  - 1.00
-  - 1.25
-  - 1.50
-  - 1.75
-  - 2.00
-  - 2.25
-  - 2.50
-  - 2.75
-  - 3.00
-  Exists: 1
 --- !u!114 &2959580013717645206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3543,33 +3220,6 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 6.8
   Length: 5250
---- !u!114 &3228448706633117086
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/EVENT/sfxHalveSixAboveEvent
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/SFX/EVENT/sfxHalveSixAboveEvent
-  Guid:
-    Data1: 969584439
-    Data2: 1093878172
-    Data3: -719171183
-    Data4: 1116218529
-  Banks:
-  - {fileID: -1251548946588217503}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 3853
 --- !u!114 &3378344599992089161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3596,7 +3246,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 750
+  Length: 0
 --- !u!114 &3578330032974721663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3846,33 +3496,6 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
---- !u!114 &4821808778064318190
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/ITEMS/sfxOrganItemExpire
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/SFX/ITEMS/sfxOrganItemExpire
-  Guid:
-    Data1: 1528626531
-    Data2: 1153614782
-    Data3: 2139883655
-    Data4: 100135787
-  Banks:
-  - {fileID: -1251548946588217503}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 1000
 --- !u!114 &4936334265792227377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3962,33 +3585,6 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1640
---- !u!114 &5307769096320062259
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/EVENT/sfxRemoveValueEvent
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/SFX/EVENT/sfxRemoveValueEvent
-  Guid:
-    Data1: 1946061735
-    Data2: 1105201254
-    Data3: 1648021665
-    Data4: 221218225
-  Banks:
-  - {fileID: -1251548946588217503}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 2201
 --- !u!114 &5439725364951088849
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4491,33 +4087,6 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 2636
---- !u!114 &7205172047124736978
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/GENEREL/sfxBlackJackHand
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/SFX/GENEREL/sfxBlackJackHand
-  Guid:
-    Data1: -219114519
-    Data2: 1089588432
-    Data3: -375504751
-    Data4: -766739356
-  Banks:
-  - {fileID: -1251548946588217503}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 1100
 --- !u!114 &7684222729518791402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4729,12 +4298,11 @@ MonoBehaviour:
   - {fileID: -1251548946588217503}
   IsStream: 0
   Is3D: 0
-  IsOneShot: 0
-  Parameters:
-  - {fileID: -4647680739880092656}
+  IsOneShot: 1
+  Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 4000
+  Length: 0
 --- !u!114 &8442828677574997163
 MonoBehaviour:
   m_ObjectHideFlags: 0
