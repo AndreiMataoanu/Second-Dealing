@@ -431,7 +431,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 4125
 --- !u!114 &-7162846972054271706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -593,7 +593,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 4000
 --- !u!114 &-6321475347290010717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1586,7 +1586,7 @@ MonoBehaviour:
   Path: Assets/Plugins/SecondDealing_Fmod_Project/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639287167004277123
+  lastModified: 639288675661706318
   FileSizes:
   - Name: Desktop
     Value: 7274
@@ -1984,10 +1984,10 @@ MonoBehaviour:
   Path: Assets/Plugins/SecondDealing_Fmod_Project/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639287167004259082
+  lastModified: 639288675661680115
   FileSizes:
   - Name: Desktop
-    Value: 5990528
+    Value: 7572640
   Exists: 1
 --- !u!114 &-1185908955002791401
 MonoBehaviour:
@@ -2042,7 +2042,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 5625
 --- !u!114 &-1094929858070056848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2412,7 +2412,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: -2570264501736390697}
   cacheVersion: 131859
-  cacheTime: 639287167004277123
+  cacheTime: 639288675661706318
   SerializableEventsDict:
   - key: event:/MUS/musElevator
     index: 0
@@ -2744,13 +2744,13 @@ MonoBehaviour:
     Data4: -619384630
   Banks:
   - {fileID: -1251548946588217503}
-  IsStream: 0
+  IsStream: 1
   Is3D: 0
   IsOneShot: 0
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 151578
+  Length: 45176
 --- !u!114 &371284694102735546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3056,6 +3056,30 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 3853
+--- !u!114 &1830546685802670526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/ambElevatorMain/parElevatorDoorOpen
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
+  Name: parElevatorDoorOpen
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 3999063415
+    data2: 695227649
+  Type: 0
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
 --- !u!114 &2404849795544841901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3246,7 +3270,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 750
 --- !u!114 &3578330032974721663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4298,11 +4322,12 @@ MonoBehaviour:
   - {fileID: -1251548946588217503}
   IsStream: 0
   Is3D: 0
-  IsOneShot: 1
-  Parameters: []
+  IsOneShot: 0
+  Parameters:
+  - {fileID: 1830546685802670526}
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 4000
 --- !u!114 &8442828677574997163
 MonoBehaviour:
   m_ObjectHideFlags: 0

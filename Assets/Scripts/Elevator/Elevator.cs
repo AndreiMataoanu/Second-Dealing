@@ -58,11 +58,15 @@ public class Elevator : MonoBehaviour
         if(isMoving) return;
 
         StartCoroutine(BlackjackCoroutine());
+        AudioManagerFMOD.Play(AudioEvent.sfxElevatorButton);
+        AudioManagerFMOD.Stop(AudioEvent.ambElevatorMain);
+        AudioManagerFMOD.Stop(AudioEvent.musElevator1);
     }
 
     public void OptionsButton()
     {
         if(isMoving) return;
+        AudioManagerFMOD.Play(AudioEvent.sfxElevatorButton);
 
         StartCoroutine(OptionsCoroutine());
     }
@@ -70,6 +74,7 @@ public class Elevator : MonoBehaviour
     public void KeepsakesButton()
     {
         if(isMoving) return;
+        AudioManagerFMOD.Play(AudioEvent.sfxElevatorButton);
 
         StartCoroutine(KeepsakesCoroutine());
     }
@@ -77,6 +82,7 @@ public class Elevator : MonoBehaviour
     public void QuitButton()
     {
         if(isMoving) return;
+        AudioManagerFMOD.Play(AudioEvent.sfxElevatorButton);
 
         Application.Quit();
     }
@@ -118,7 +124,6 @@ public class Elevator : MonoBehaviour
         noise.FrequencyGain = doorFrequency;
 
         AudioManager.instance.Play("DoorSlam"); //DELETE LATER ? Is this different from Door Close?
-        AudioManagerFMOD.Play(AudioEvent.sfxElevatorDoorClose);
         
 
         StartCoroutine(ShakeCamera(idleAmplitude, idleFrequency, doorDuration));
@@ -161,7 +166,6 @@ public class Elevator : MonoBehaviour
         noise.FrequencyGain = doorFrequency;
 
         AudioManager.instance.Play("DoorSlam"); //DELETE LATER
-        AudioManagerFMOD.Play(AudioEvent.sfxElevatorDoorClose);
 
         StartCoroutine(ShakeCamera(idleAmplitude, idleFrequency, doorDuration));
     }
@@ -295,7 +299,6 @@ public class Elevator : MonoBehaviour
 
         AudioManager.instance.Play("ElevatorTravel"); //DELETE LATER
         AudioManagerFMOD.Play(AudioEvent.sfxElevatorDrive);
-        AudioManager.instance.Play("ElevatorMusic"); //DELETE LATER
 
         StartCoroutine(ShakeCamera(moveAmplitude, moveFrequency, 0.5f));
 
@@ -318,7 +321,6 @@ public class Elevator : MonoBehaviour
         transform.position = nextFloorPos;
 
         AudioManager.instance.Play("ElevatorDing"); //DELETE LATER
-        AudioManagerFMOD.Play(AudioEvent.sfxElevatorButton);
 
         StartCoroutine(ShakeCamera(idleAmplitude, idleFrequency, 0.5f));
     }
