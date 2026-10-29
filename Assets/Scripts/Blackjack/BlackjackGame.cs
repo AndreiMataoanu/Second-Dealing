@@ -609,6 +609,7 @@ public class BlackjackGame : MonoBehaviour
         }
 
         hitHandAnimator.SetTrigger("hitTrigger");
+        //AudioManagerFMOD.SetGlobalParameter("parCurrentHandCount", tableCards.CurrentHand.Count);
         AudioManagerFMOD.Play(AudioEvent.sfxHit);
 
         yield return GameUtils.WaitForSecondsScaled(1f);

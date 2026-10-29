@@ -563,7 +563,8 @@ MonoBehaviour:
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
-  Parameters: []
+  Parameters:
+  - {fileID: -2590447335458273662}
   MinDistance: 1
   MaxDistance: 20
   Length: 242823
@@ -1413,6 +1414,30 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-3379572956699407786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/parCurrentHandCount
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
+  Name: parCurrentHandCount
+  StudioPath: parameter:/parCurrentHandCount
+  Min: 0
+  Max: 7
+  Default: 0
+  ID:
+    data1: 4241797032
+    data2: 3740953483
+  Type: 1
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
 --- !u!114 &-3343589101006688369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1595,6 +1620,30 @@ MonoBehaviour:
   IsGlobal: 1
   Labels: []
   Exists: 1
+--- !u!114 &-2590447335458273662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/musMainGame/parCurrentHandCount
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
+  Name: parCurrentHandCount
+  StudioPath: 
+  Min: 0
+  Max: 7
+  Default: 0
+  ID:
+    data1: 4241797032
+    data2: 3740953483
+  Type: 1
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
 --- !u!114 &-2570264501736390697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1610,10 +1659,10 @@ MonoBehaviour:
   Path: Assets/Plugins/SecondDealing_Fmod_Project/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639288722975765916
+  lastModified: 639288738471560948
   FileSizes:
   - Name: Desktop
-    Value: 7320
+    Value: 7378
   Exists: 1
 --- !u!114 &-2562978601402148915
 MonoBehaviour:
@@ -2008,10 +2057,10 @@ MonoBehaviour:
   Path: Assets/Plugins/SecondDealing_Fmod_Project/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639288722975728039
+  lastModified: 639288738471505132
   FileSizes:
   - Name: Desktop
-    Value: 7749856
+    Value: 7751424
   Exists: 1
 --- !u!114 &-1185908955002791401
 MonoBehaviour:
@@ -2456,12 +2505,13 @@ MonoBehaviour:
   - {fileID: -8091403143882354314}
   - {fileID: -2679635544797344588}
   - {fileID: 1733359218439841761}
+  - {fileID: -3379572956699407786}
   MasterBanks:
   - {fileID: -1251548946588217503}
   StringsBanks:
   - {fileID: -2570264501736390697}
   cacheVersion: 131859
-  cacheTime: 639288722975765916
+  cacheTime: 639288738471560948
   SerializableEventsDict:
   - key: event:/MUS/musElevator
     index: 0
@@ -3291,6 +3341,30 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 3500
+--- !u!114 &2972098334157809339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/sfxHit/parCurrentHandCount
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
+  Name: parCurrentHandCount
+  StudioPath: 
+  Min: 0
+  Max: 7
+  Default: 0
+  ID:
+    data1: 4241797032
+    data2: 3740953483
+  Type: 1
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
 --- !u!114 &3226171383673049516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3396,10 +3470,11 @@ MonoBehaviour:
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
-  Parameters: []
+  Parameters:
+  - {fileID: 2972098334157809339}
   MinDistance: 1
   MaxDistance: 20
-  Length: 2578
+  Length: 0
 --- !u!114 &3810889612455770863
 MonoBehaviour:
   m_ObjectHideFlags: 0

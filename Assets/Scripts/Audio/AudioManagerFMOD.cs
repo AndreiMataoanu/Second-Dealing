@@ -32,6 +32,7 @@ public class AudioManagerFMOD : MonoBehaviour
     [SerializeField] [ParamRef] private string parGameSpeed;
     [SerializeField] [ParamRef] private string parCoinFlipResult;
     [SerializeField] [ParamRef] private string parElevatorDoorOpen;
+    [SerializeField] [ParamRef] private string parCurrentHandCount;
     
     #endregion
     
