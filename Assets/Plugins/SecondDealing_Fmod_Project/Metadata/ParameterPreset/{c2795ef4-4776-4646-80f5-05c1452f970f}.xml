@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{c2795ef4-4776-4646-80f5-05c1452f970f}">
+		<property name="name">
+			<value>parBlackjackEntrance</value>
+		</property>
+		<relationship name="folder">
+			<destination>{e5e8729b-61d0-45e5-a9ae-3634f7ced5a8}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{eb6ef116-6e15-4ca2-b069-7886fe5447cc}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{eb6ef116-6e15-4ca2-b069-7886fe5447cc}">
+		<property name="isGlobal">
+			<value>true</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+		<property name="isExposedRecursively">
+			<value>false</value>
+		</property>
+		<relationship name="modulators">
+			<destination>{a5946cb4-8b49-4e99-ba41-bb2fafbf4063}</destination>
+		</relationship>
+	</object>
+	<object class="SeekModulator" id="{a5946cb4-8b49-4e99-ba41-bb2fafbf4063}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>cursorPosition</value>
+		</property>
+		<property name="speedAscending">
+			<value>0.29999998211860657</value>
+		</property>
+		<property name="asymmetric">
+			<value>true</value>
+		</property>
+	</object>
+</objects>

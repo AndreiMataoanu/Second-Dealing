@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4375733557009657759}
   - component: {fileID: 1966843140165819095}
   - component: {fileID: 6783201524656525989}
-  - component: {fileID: 583701980104234528}
   - component: {fileID: 1428309926756368847}
   m_Layer: 0
   m_Name: AudioManager
@@ -409,7 +408,7 @@ AudioLowPassFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5036363664628651963}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_LowpassResonanceQ: 1
   lowpassLevelCustomCurve:
@@ -427,20 +426,6 @@ AudioLowPassFilter:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &583701980104234528
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5036363664628651963}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: FMODUnity::FMODUnity.StudioListener
-  nonRigidbodyVelocity: 0
-  attenuationObject: {fileID: 0}
 --- !u!114 &1428309926756368847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -455,7 +440,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AudioManagerFMOD
   parGameSpeed: parGameSpeed
   parCoinFlipResult: parCoinFlipResult
-  parDoubledDown: 
+  parElevatorDoorOpen: parElevatorDoorOpen
   TEST:
     Guid:
       Data1: 109322525
@@ -463,6 +448,20 @@ MonoBehaviour:
       Data3: 1680033712
       Data4: 505945103
     Path: event:/TEST
+  sfxBlackJackHand:
+    Guid:
+      Data1: -219114519
+      Data2: 1089588432
+      Data3: -375504751
+      Data4: -766739356
+    Path: event:/SFX/GENEREL/sfxBlackJackHand
+  sfxCardAddToDeck:
+    Guid:
+      Data1: -1842339646
+      Data2: 1265339254
+      Data3: -513416304
+      Data4: -1016219961
+    Path: event:/SFX/CARDS/sfxCardAddToDeck
   sfxJokerCard:
     Guid:
       Data1: 299895232
@@ -645,13 +644,13 @@ MonoBehaviour:
       Data3: 1778177673
       Data4: -1364936933
     Path: event:/SFX/ELEVATOR/sfxElevatorButton
-  sfxFootstepsPlayer:
+  sfxElevatorEntrance:
     Guid:
       Data1: -45117230
       Data2: 1286299815
       Data3: -2084707967
       Data4: 815724616
-    Path: event:/SFX/ELEVATOR/sfxElevatorFootsteps
+    Path: event:/SFX/ELEVATOR/sfxElevatorEntrace
   sfxCantUseItem:
     Guid:
       Data1: -84890825
@@ -785,6 +784,20 @@ MonoBehaviour:
       Data3: -1782982010
       Data4: -735727698
     Path: event:/SFX/EVENT/sfxGenerelEvent
+  sfxDartRemoveEvent:
+    Guid:
+      Data1: -177475035
+      Data2: 1209351179
+      Data3: -499837019
+      Data4: -720042050
+    Path: event:/SFX/EVENT/sfxDartRemoveEvent
+  sfxDartAddEvent:
+    Guid:
+      Data1: -573290034
+      Data2: 1275638001
+      Data3: 925155977
+      Data4: -1211953311
+    Path: event:/SFX/EVENT/sfxDartAddEvent
   sfxDartEventHit:
     Guid:
       Data1: 29006480
@@ -806,6 +819,13 @@ MonoBehaviour:
       Data3: -781652035
       Data4: 2130505091
     Path: event:/SFX/EVENT/sfxPowerballEvent
+  sfxPowerBallHit:
+    Guid:
+      Data1: 430115890
+      Data2: 1091839169
+      Data3: -1222955363
+      Data4: -656840302
+    Path: event:/SFX/EVENT/sfxPowerballHit
   sfxAceSetEventOne:
     Guid:
       Data1: -702841242
@@ -855,6 +875,20 @@ MonoBehaviour:
       Data3: -1540504130
       Data4: 703141947
     Path: event:/SFX/EVENT/sfxJokerEvent
+  sfxRemoveSuitEvent:
+    Guid:
+      Data1: 1507030895
+      Data2: 1151812857
+      Data3: 1043141043
+      Data4: 1133681146
+    Path: event:/SFX/EVENT/sfxRemoveSuitEvent
+  sfxRemoveValueEvent:
+    Guid:
+      Data1: 1946061735
+      Data2: 1105201254
+      Data3: 1648021665
+      Data4: 221218225
+    Path: event:/SFX/EVENT/sfxRemoveValueEvent
   sfxRouletteEvent:
     Guid:
       Data1: -375970361
@@ -862,6 +896,13 @@ MonoBehaviour:
       Data3: -1853400157
       Data4: 208185287
     Path: event:/SFX/EVENT/sfxRouletteEvent
+  sfxRouletteEventNewTarget:
+    Guid:
+      Data1: -1167094380
+      Data2: 1181816234
+      Data3: 1365545662
+      Data4: -8227970
+    Path: event:/SFX/EVENT/sfxRouletteEventNewTarget
   sfxDoubleFiveBelowEvent:
     Guid:
       Data1: -1451082669
@@ -869,13 +910,13 @@ MonoBehaviour:
       Data3: -916509299
       Data4: 124962705
     Path: event:/SFX/EVENT/sfxDoubleFiveBelowEvent
-  sfxHalfSixAboveEvent:
+  sfxHalveSixAboveEvent:
     Guid:
       Data1: 969584439
       Data2: 1093878172
       Data3: -719171183
       Data4: 1116218529
-    Path: event:/SFX/EVENT/sfxHalfSixAboveEvent
+    Path: event:/SFX/EVENT/sfxHalveSixAboveEvent
   sfxGenerelItem:
     Guid:
       Data1: -1357766250
@@ -897,6 +938,13 @@ MonoBehaviour:
       Data3: 1309802893
       Data4: 1591309479
     Path: event:/SFX/ITEMS/sfxCrossItem
+  sfxCrossItemEffect:
+    Guid:
+      Data1: -1570289192
+      Data2: 1169542735
+      Data3: -998167908
+      Data4: -740457005
+    Path: event:/SFX/ITEMS/sfxCrossItemEffect
   sfxScissorsItem:
     Guid:
       Data1: 1046077657
@@ -904,6 +952,13 @@ MonoBehaviour:
       Data3: 1307000478
       Data4: -80851655
     Path: event:/SFX/ITEMS/sfxScissorsItem
+  sfxScissorsItemPickup:
+    Guid:
+      Data1: 1695664696
+      Data2: 1145425728
+      Data3: 1343913648
+      Data4: 1912318359
+    Path: event:/SFX/ITEMS/sfxScissorsItemPickUp
   sfxFanItem:
     Guid:
       Data1: -1159421675
@@ -939,6 +994,13 @@ MonoBehaviour:
       Data3: -1276933701
       Data4: 2025079228
     Path: event:/SFX/ITEMS/sfxOrganItem
+  sfxOrganItemExpire:
+    Guid:
+      Data1: 1528626531
+      Data2: 1153614782
+      Data3: 2139883655
+      Data4: 100135787
+    Path: event:/SFX/ITEMS/sfxOrganItemExpire
   sfxCoinItem:
     Guid:
       Data1: 981179579
