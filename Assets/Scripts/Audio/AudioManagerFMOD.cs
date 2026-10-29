@@ -67,7 +67,7 @@ public class AudioManagerFMOD : MonoBehaviour
     [SerializeField] private EventReference sfxElevatorDoorClose;
     [SerializeField] private EventReference sfxElevatorDrive;
     [SerializeField] private EventReference sfxElevatorButton;
-    [SerializeField] private EventReference sfxFootstepsPlayer;
+    [SerializeField] private EventReference sfxElevatorEntrance;
     [SerializeField] private EventReference sfxCantUseItem;
     [SerializeField] private EventReference sfxEventSelect;
     [SerializeField] private EventReference sfxEventRerolled;
@@ -266,7 +266,7 @@ public class AudioManagerFMOD : MonoBehaviour
         events[AudioEvent.sfxElevatorDoorClose] = sfxElevatorDoorClose;
         events[AudioEvent.sfxElevatorDrive] = sfxElevatorDrive;
         events[AudioEvent.sfxElevatorButton] = sfxElevatorButton;
-        events[AudioEvent.sfxFootstepsPlayer] = sfxFootstepsPlayer;
+        events[AudioEvent.sfxElevatorEntrance] = sfxElevatorEntrance;
         events[AudioEvent.sfxCantUseItem] = sfxCantUseItem;
         events[AudioEvent.sfxEventSelect] = sfxEventSelect;
         events[AudioEvent.sfxEventRerolled] = sfxEventRerolled;
@@ -540,7 +540,7 @@ public enum AudioEvent
         sfxElevatorDoorClose,
         sfxElevatorDrive,
         sfxElevatorButton,
-        sfxFootstepsPlayer,
+        sfxElevatorEntrance,
         sfxCantUseItem,
         sfxEventSelect,
         sfxEventRerolled,

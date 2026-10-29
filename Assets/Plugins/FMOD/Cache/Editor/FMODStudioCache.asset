@@ -1493,6 +1493,30 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 4403
+--- !u!114 &-2868185314258777938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/sfxElevatorEntrace/parBlackjackEntrance
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
+  Name: parBlackjackEntrance
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 552669519
+    data2: 3828027614
+  Type: 0
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
 --- !u!114 &-2778604417996769294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1586,10 +1610,10 @@ MonoBehaviour:
   Path: Assets/Plugins/SecondDealing_Fmod_Project/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639288675661706318
+  lastModified: 639288717784972192
   FileSizes:
   - Name: Desktop
-    Value: 7274
+    Value: 7320
   Exists: 1
 --- !u!114 &-2562978601402148915
 MonoBehaviour:
@@ -1984,10 +2008,10 @@ MonoBehaviour:
   Path: Assets/Plugins/SecondDealing_Fmod_Project/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639288675661680115
+  lastModified: 639288717784918505
   FileSizes:
   - Name: Desktop
-    Value: 7572640
+    Value: 7749664
   Exists: 1
 --- !u!114 &-1185908955002791401
 MonoBehaviour:
@@ -2151,6 +2175,30 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-626774313899322265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/musElevator/parBlackjackEntrance
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
+  Name: parBlackjackEntrance
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 552669519
+    data2: 3828027614
+  Type: 0
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
 --- !u!114 &-548984496627126293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2352,7 +2400,6 @@ MonoBehaviour:
   - {fileID: -679022546222643425}
   - {fileID: 7856307074246212735}
   - {fileID: 7179352506589244070}
-  - {fileID: 5075737421701566705}
   - {fileID: -1303186827310073102}
   - {fileID: 6789138531004134150}
   - {fileID: 5606880486265848034}
@@ -2403,16 +2450,18 @@ MonoBehaviour:
   - {fileID: 6292495264690283943}
   - {fileID: -1455802443856093547}
   - {fileID: -4733615011527139492}
+  - {fileID: 3367857899832310608}
   EditorParameters:
   - {fileID: 5973432139935727812}
   - {fileID: -8091403143882354314}
   - {fileID: -2679635544797344588}
+  - {fileID: 1733359218439841761}
   MasterBanks:
   - {fileID: -1251548946588217503}
   StringsBanks:
   - {fileID: -2570264501736390697}
   cacheVersion: 131859
-  cacheTime: 639288675661706318
+  cacheTime: 639288717784972192
   SerializableEventsDict:
   - key: event:/MUS/musElevator
     index: 0
@@ -2568,107 +2617,107 @@ MonoBehaviour:
     index: 75
   - key: event:/SFX/GENEREL/sfxShopOpen
     index: 76
-  - key: event:/SFX/ELEVATOR/sfxElevatorFootsteps
-    index: 77
   - key: event:/SFX/EVENT/sfxRageEventThreshold
-    index: 78
+    index: 77
   - key: event:/SFX/KEEPSAKES/sfxSecondDealingKeepsake
-    index: 79
+    index: 78
   - key: event:/SFX/ITEMS/sfxKnifeItem
-    index: 80
+    index: 79
   - key: event:/SFX/KEEPSAKES/sfxWeddingRingKeepsake
-    index: 81
+    index: 80
   - key: event:/MUS/musWinGame
-    index: 82
+    index: 81
   - key: event:/SFX/ITEMS/sfxScissorsItem
-    index: 83
+    index: 82
   - key: event:/SFX/CARDS/sfxDeal
-    index: 84
+    index: 83
   - key: event:/MUS/musLoseGame
-    index: 85
+    index: 84
   - key: event:/SFX/CARDS/sfxStand
-    index: 86
+    index: 85
   - key: event:/SFX/KEEPSAKES/sfxGlassEyeKeepsake
-    index: 87
+    index: 86
   - key: event:/SFX/GENEREL/sfxShopSell
-    index: 88
+    index: 87
   - key: event:/SFX/PLAYER/sfxPlayerLose
-    index: 89
+    index: 88
   - key: event:/SFX/EVENT/sfxRageEventIncrease
-    index: 90
+    index: 89
   - key: event:/SFX/GENEREL/sfxDealerTalk
-    index: 91
+    index: 90
   - key: event:/SFX/EVENT/sfxDartEventBurn
-    index: 92
+    index: 91
   - key: event:/SFX/EVENT/sfxGenerelEvent
-    index: 93
+    index: 92
   - key: event:/SFX/KEEPSAKES/sfxSnowGlobeKeepsake
-    index: 94
+    index: 93
   - key: event:/SFX/KEEPSAKES/sfxTarotKeepsake
-    index: 95
+    index: 94
   - key: event:/SFX/ITEMS/sfxAlcoholItem
-    index: 96
+    index: 95
   - key: event:/SFX/KEEPSAKES/sfx777Keepsake
-    index: 97
+    index: 96
   - key: event:/SFX/CARDS/sfxDoubleDCard
-    index: 98
+    index: 97
   - key: event:/AMB/ambElevatorMain
-    index: 99
+    index: 98
   - key: event:/TEST
-    index: 100
+    index: 99
   - key: event:/UI/uiSettingsDialTurn
-    index: 101
+    index: 100
   - key: event:/SFX/CARDS/sfxFlip
-    index: 102
+    index: 101
   - key: event:/SFX/KEEPSAKES/sfxKeepsakeUnlock
-    index: 103
+    index: 102
   - key: event:/SFX/CARDS/sfxTarotCard
-    index: 104
+    index: 103
   - key: event:/SFX/CARDS/sfxCutCutCard
-    index: 105
+    index: 104
   - key: event:/SFX/CARDS/sfxJokerCard
-    index: 106
+    index: 105
   - key: event:/SFX/CARDS/sfxDoubleDoubleCard
-    index: 107
+    index: 106
   - key: event:/SFX/ITEMS/sfxScissorsItemPickUp
-    index: 108
+    index: 107
   - key: event:/SFX/ITEMS/sfxAlcoholItemEffect
-    index: 109
+    index: 108
   - key: snapshot:/AlcoholActive
-    index: 110
+    index: 109
   - key: event:/SFX/GENEREL/sfxRoundStart
-    index: 111
+    index: 110
   - key: snapshot:/DoubleDownActive
-    index: 112
+    index: 111
   - key: event:/SFX/ITEMS/sfxAcidItemEmitter
-    index: 113
+    index: 112
   - key: snapshot:/OrganActive
-    index: 114
+    index: 113
   - key: event:/SFX/ITEMS/sfxAcidItemPickup
-    index: 115
+    index: 114
   - key: event:/SFX/ITEMS/sfxNFTItemEmitter
-    index: 116
+    index: 115
   - key: event:/SFX/EVENT/sfxDartRemoveEvent
-    index: 117
+    index: 116
   - key: event:/SFX/EVENT/sfxPowerballHit
-    index: 118
+    index: 117
   - key: event:/SFX/EVENT/sfxHalveSixAboveEvent
-    index: 119
+    index: 118
   - key: event:/SFX/EVENT/sfxRemoveSuitEvent
-    index: 120
+    index: 119
   - key: event:/SFX/EVENT/sfxRouletteEventNewTarget
-    index: 121
+    index: 120
   - key: event:/SFX/EVENT/sfxRemoveValueEvent
-    index: 122
+    index: 121
   - key: event:/SFX/CARDS/sfxCardAddToDeck
-    index: 123
+    index: 122
   - key: event:/SFX/EVENT/sfxDartAddEvent
-    index: 124
+    index: 123
   - key: event:/SFX/GENEREL/sfxBlackJackHand
-    index: 125
+    index: 124
   - key: event:/SFX/ITEMS/sfxCrossItemEffect
-    index: 126
+    index: 125
   - key: event:/SFX/ITEMS/sfxOrganItemExpire
+    index: 126
+  - key: event:/SFX/ELEVATOR/sfxElevatorEntrace
     index: 127
 --- !u!114 &152451932833194479
 MonoBehaviour:
@@ -3002,6 +3051,30 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &1733359218439841761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/parBlackjackEntrance
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
+  Name: parBlackjackEntrance
+  StudioPath: parameter:/parBlackjackEntrance
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 552669519
+    data2: 3828027614
+  Type: 0
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
 --- !u!114 &1799524724217621035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3159,6 +3232,7 @@ MonoBehaviour:
   IsOneShot: 0
   Parameters:
   - {fileID: 3810889612455770863}
+  - {fileID: -626774313899322265}
   MinDistance: 1
   MaxDistance: 20
   Length: 8000
@@ -3244,6 +3318,34 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 6.8
   Length: 5250
+--- !u!114 &3367857899832310608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/ELEVATOR/sfxElevatorEntrace
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/SFX/ELEVATOR/sfxElevatorEntrace
+  Guid:
+    Data1: -45117230
+    Data2: 1286299815
+    Data3: -2084707967
+    Data4: 815724616
+  Banks:
+  - {fileID: -1251548946588217503}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters:
+  - {fileID: -2868185314258777938}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 9125
 --- !u!114 &3378344599992089161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3555,33 +3657,6 @@ MonoBehaviour:
   - 2.75
   - 3.00
   Exists: 1
---- !u!114 &5075737421701566705
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/ELEVATOR/sfxElevatorFootsteps
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/SFX/ELEVATOR/sfxElevatorFootsteps
-  Guid:
-    Data1: -45117230
-    Data2: 1286299815
-    Data3: -2084707967
-    Data4: 815724616
-  Banks:
-  - {fileID: -1251548946588217503}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 0
 --- !u!114 &5307672645578301145
 MonoBehaviour:
   m_ObjectHideFlags: 0

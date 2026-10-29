@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1966843140165819095}
   - component: {fileID: 6783201524656525989}
   - component: {fileID: 1428309926756368847}
-  - component: {fileID: 3789229651844162752}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -645,13 +644,13 @@ MonoBehaviour:
       Data3: 1778177673
       Data4: -1364936933
     Path: event:/SFX/ELEVATOR/sfxElevatorButton
-  sfxFootstepsPlayer:
+  sfxElevatorEntrance:
     Guid:
       Data1: -45117230
       Data2: 1286299815
       Data3: -2084707967
       Data4: 815724616
-    Path: event:/SFX/ELEVATOR/sfxElevatorFootsteps
+    Path: event:/SFX/ELEVATOR/sfxElevatorEntrace
   sfxCantUseItem:
     Guid:
       Data1: -84890825
@@ -1303,17 +1302,3 @@ MonoBehaviour:
       Data3: -828502877
       Data4: 1971820944
     Path: event:/MUS/musWinGame
---- !u!114 &3789229651844162752
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5036363664628651963}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: FMODUnity::FMODUnity.StudioListener
-  nonRigidbodyVelocity: 0
-  attenuationObject: {fileID: 0}

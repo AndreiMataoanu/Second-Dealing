@@ -61,6 +61,7 @@ public class Elevator : MonoBehaviour
         AudioManagerFMOD.Play(AudioEvent.sfxElevatorButton);
         AudioManagerFMOD.Stop(AudioEvent.ambElevatorMain);
         AudioManagerFMOD.Stop(AudioEvent.musElevator1);
+        AudioManagerFMOD.Play(AudioEvent.sfxElevatorEntrance);
     }
 
     public void OptionsButton()

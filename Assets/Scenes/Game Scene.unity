@@ -2047,11 +2047,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1342744952}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &340177428 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5036363664628651963, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
-  m_PrefabInstance: {fileID: 1853208364}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &359171767
 GameObject:
   m_ObjectHideFlags: 0
@@ -9367,11 +9362,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 432340907}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1527133377 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 870466495774129076, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
-  m_PrefabInstance: {fileID: 431888115}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1540073900 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3470410137321538314, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
@@ -9784,7 +9774,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7543387147897294295, guid: 065b5f44b50c18f40b22529b1fe96ae7, type: 3}
   m_PrefabInstance: {fileID: 431888115}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1527133377}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
@@ -10531,6 +10521,150 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1823405866}
     m_Modifications:
+    - target: {fileID: 1428309926756368847, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: TEST.Guid.Data1
+      value: 109322525
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428309926756368847, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: TEST.Guid.Data2
+      value: 1125541714
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428309926756368847, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: TEST.Guid.Data3
+      value: 1680033712
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428309926756368847, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: TEST.Guid.Data4
+      value: 505945103
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428309926756368847, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: sfxFlip.Guid.Data1
+      value: 155697924
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428309926756368847, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: sfxFlip.Guid.Data2
+      value: 1133795338
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428309926756368847, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: sfxFlip.Guid.Data3
+      value: 1706039477
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428309926756368847, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: sfxFlip.Guid.Data4
+      value: -1962448717
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428309926756368847, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: sfxJokerCard.Guid.Data1
+      value: 299895232
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428309926756368847, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: sfxJokerCard.Guid.Data2
+      value: 1135168979
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428309926756368847, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: sfxJokerCard.Guid.Data3
+      value: -1744832095
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428309926756368847, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: sfxJokerCard.Guid.Data4
+      value: -694193036
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428309926756368847, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: sfxTarotCard.Guid.Data1
+      value: 618583354
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428309926756368847, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: sfxTarotCard.Guid.Data2
+      value: 1154439453
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428309926756368847, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: sfxTarotCard.Guid.Data3
+      value: 165328776
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428309926756368847, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: sfxTarotCard.Guid.Data4
+      value: -1480171504
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428309926756368847, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: sfxCutCutCard.Guid.Data1
+      value: -394443684
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428309926756368847, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: sfxCutCutCard.Guid.Data2
+      value: 1244870817
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428309926756368847, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: sfxCutCutCard.Guid.Data3
+      value: -529533017
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428309926756368847, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: sfxCutCutCard.Guid.Data4
+      value: -1850309755
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428309926756368847, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: sfxBlackJackHand.Guid.Data1
+      value: -219114519
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428309926756368847, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: sfxBlackJackHand.Guid.Data2
+      value: 1089588432
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428309926756368847, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: sfxBlackJackHand.Guid.Data3
+      value: -375504751
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428309926756368847, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: sfxBlackJackHand.Guid.Data4
+      value: -766739356
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428309926756368847, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: sfxCardAddToDeck.Guid.Data1
+      value: -1842339646
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428309926756368847, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: sfxCardAddToDeck.Guid.Data2
+      value: 1265339254
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428309926756368847, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: sfxCardAddToDeck.Guid.Data3
+      value: -513416304
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428309926756368847, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: sfxCardAddToDeck.Guid.Data4
+      value: -1016219961
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428309926756368847, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: sfxKeepsakeUnlock.Guid.Data1
+      value: 1525463058
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428309926756368847, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: sfxKeepsakeUnlock.Guid.Data2
+      value: 1267989661
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428309926756368847, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: sfxKeepsakeUnlock.Guid.Data3
+      value: -612704858
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428309926756368847, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: sfxKeepsakeUnlock.Guid.Data4
+      value: -1655670465
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428309926756368847, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: sfxDoubleDoubleCard.Guid.Data1
+      value: -1962302728
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428309926756368847, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: sfxDoubleDoubleCard.Guid.Data2
+      value: 1330860895
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428309926756368847, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: sfxDoubleDoubleCard.Guid.Data3
+      value: -2013322588
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428309926756368847, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
+      propertyPath: sfxDoubleDoubleCard.Guid.Data4
+      value: -1749050546
+      objectReference: {fileID: 0}
     - target: {fileID: 5036363664628651963, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
       propertyPath: m_Name
       value: AudioManager
@@ -10578,30 +10712,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5036363664628651963, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1853208368}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
 --- !u!4 &1853208367 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5549978102516293586, guid: ff0774aa4f4e65644a0abe96c423cecd, type: 3}
   m_PrefabInstance: {fileID: 1853208364}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1853208368
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 340177428}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: FMODUnity::FMODUnity.StudioListener
-  nonRigidbodyVelocity: 0
-  attenuationObject: {fileID: 1527133377}
 --- !u!1 &1855082937
 GameObject:
   m_ObjectHideFlags: 0
