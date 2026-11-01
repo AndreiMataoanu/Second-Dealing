@@ -52,7 +52,7 @@ public class OrganBagItem : Item
     public static void Expire(ShopManager shopManager)
     {
         AudioManager.instance.Play("OrganExpire"); //DELETE LATER
-        AudioManagerFMOD.Play(AudioEvent.sfxOrganItem);
+        AudioManagerFMOD.Play(AudioEvent.sfxOrganItemExpire);
         shopManager.RemoveFromInventory(ItemType.Organ);
         isOrganActive = false;
     }

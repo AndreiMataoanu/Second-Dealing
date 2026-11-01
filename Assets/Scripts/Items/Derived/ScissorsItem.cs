@@ -20,6 +20,7 @@ public class ScissorsItem : Item
         isScissorsActive = true;
         cardEffect.SelectCard();
         cardEffect.AddItemCardEffectAction(OnCutCard);
+        AudioManagerFMOD.Play(AudioEvent.sfxScissorsItemPickup);
         
         return true;
     }
@@ -63,6 +64,7 @@ public class ScissorsItem : Item
         if (Input.GetMouseButtonDown(1))
         {
             OnCancelCardEffect();
+            AudioManagerFMOD.Play(AudioEvent.sfxScissorsItemPickup);
         }
     }
 }

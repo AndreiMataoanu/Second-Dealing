@@ -143,6 +143,7 @@ public class TableCards : MonoBehaviour
         playerHands.ForEach(hand => hand.Clear());
         playerHands.Clear();
         dealerHand.Clear();
+        AudioManagerFMOD.SetGlobalParameter("parCurrentHandCount", 0);
 
         isDealerCardFlipped = false;
     }
@@ -301,6 +302,7 @@ public class TableCards : MonoBehaviour
             }
             KeepsakeManager.instance.OnDealPlayerCard(newCardInstance);
             UpdateSplitOutlines();
+           
         }
     }
     

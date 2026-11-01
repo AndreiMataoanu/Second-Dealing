@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{cdb34a34-82a1-4a85-8d4c-838d892ceea2}">
+		<property name="assetPath">
+			<value>SFX/ELEVATOR/sfxElevatorDrive-001.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>5.5</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{d1f39583-eca1-45a4-8cf5-854b4158d316}</destination>
+		</relationship>
+	</object>
+</objects>

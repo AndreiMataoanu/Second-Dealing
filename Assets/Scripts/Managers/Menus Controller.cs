@@ -96,13 +96,16 @@ public class MenusController : MonoBehaviour
         //volume.profile = menuVolume;
         isPaused = true;
 
+        FMODUnity.RuntimeManager.PauseAllEvents(true);
         AudioManagerFMOD.Play(AudioEvent.uiPauseGame);
-
+        
         Time.timeScale = 0;
     }
 
     public void ResumeGame()
     {
+        
+        
         pausePanel.SetActive(false);
         darkImage.SetActive(false);
         optionsPanel.SetActive(false);
@@ -110,6 +113,7 @@ public class MenusController : MonoBehaviour
         isPaused = false;
         
         AudioManagerFMOD.Play(AudioEvent.uiPauseResumeGame);
+        FMODUnity.RuntimeManager.PauseAllEvents(false);
 
         Time.timeScale = 1;
     }

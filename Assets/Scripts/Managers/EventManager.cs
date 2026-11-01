@@ -137,7 +137,9 @@ public class EventManager : MonoBehaviour
 
         var hand = tableCards.CurrentHand;
         int handValue = Mathf.Abs(tableCards.CalculateHandValue(hand, true));
-        powerballNumbers.RemoveAll(number => number == handValue);
+        int removed = powerballNumbers.RemoveAll(number => number == handValue);
+        
+        if (removed > 0) AudioManagerFMOD.Play(AudioEvent.sfxPowerBallHit);
 
         if (powerballNumbers.Count == 0)
         {
@@ -226,7 +228,7 @@ public class EventManager : MonoBehaviour
         
         var removeCards = blackjackEvent as RemoveCardsEvent;
         if (removeCards) return removeCardChoiceEvent;
-
+        
         return null;
     }
     

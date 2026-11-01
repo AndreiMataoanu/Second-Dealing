@@ -33,6 +33,7 @@ public class AddCardChoiceEvent : CardChoiceEvent
         AudioManager.instance.Play("CardHit"); //DELETE LATER
         AudioManagerFMOD.Play(AudioEvent.sfxDartEventHit);
         TableCards.GameDeck.AddCardCopies(cardInstance.cardData, currentCopyCount);
+        PlayMultipleAddSound(currentCopyCount, (float)0.2);
         UpdateCopyCount();
 
         CardEffects.OnCardSelected();
@@ -58,6 +59,21 @@ public class AddCardChoiceEvent : CardChoiceEvent
         currentCopyCount = addCardsEvent.GenerateCopyCount();
         cardText.text = currentCopyCount + " ";
         cardText.text += currentCopyCount > 0 ? "copies" : "copy";
+    }
+    
+    public void PlayMultipleAddSound(int count, float delay)
+    {
+        StartCoroutine(PlayRoutineCardAddSound(count, delay));
+    }
+
+    private IEnumerator PlayRoutineCardAddSound(int count, float delay)
+    {
+        yield return new WaitForSeconds((float)0.3); 
+        for (int i = 0; i < count; i++)
+        {
+            AudioManagerFMOD.Play(AudioEvent.sfxCardAddToDeck);
+            yield return new WaitForSeconds(delay);
+        }
     }
     
     #endregion
