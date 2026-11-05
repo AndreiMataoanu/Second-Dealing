@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 152006869610446000}
   - component: {fileID: 752010697212828273}
   - component: {fileID: 369307294511997388}
+  - component: {fileID: 818796316016900278}
+  - component: {fileID: 5511474774236074068}
   m_Layer: 0
   m_Name: EventActionManager
   m_TagString: Untagged
@@ -30,7 +32,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8484452016917810135}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &752010697212828273
@@ -48,7 +51,7 @@ MonoBehaviour:
   blackjackGame: {fileID: 0}
   cardsPosition: {fileID: 0}
   radius: 0.18
-  dartSelection: {fileID: 0}
+  dartSelection: {fileID: 5216080436602347376}
   dartNumber: 3
   isChoosing: 0
   cardText: {fileID: 0}
@@ -67,7 +70,117 @@ MonoBehaviour:
   blackjackGame: {fileID: 0}
   cardsPosition: {fileID: 0}
   radius: 0.18
-  dartSelection: {fileID: 0}
+  dartSelection: {fileID: 5216080436602347376}
   dartNumber: 1
   isChoosing: 0
   particleSystem: {fileID: 1458591839492578532, guid: 88bf20cb6f7be934d99edbf12b253f4a, type: 3}
+--- !u!114 &818796316016900278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 69835914741500865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d9a0850c0d67ad428729aba890fe3ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NegativeSuitChoiceEvent
+  blackjackGame: {fileID: 0}
+  cardsPosition: {fileID: 0}
+  radius: 0.15
+  dartSelection: {fileID: 5216080436602347376}
+  dartNumber: 1
+  isChoosing: 0
+--- !u!114 &5511474774236074068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 69835914741500865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 418ce470e92af364890fee537f79517c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RemoveSuitChoiceEvent
+  blackjackGame: {fileID: 0}
+  cardsPosition: {fileID: 0}
+  radius: 0.15
+  dartSelection: {fileID: 5216080436602347376}
+  dartNumber: 1
+  isChoosing: 0
+  particleSystem: {fileID: 1458591839492578532, guid: 88bf20cb6f7be934d99edbf12b253f4a, type: 3}
+--- !u!1001 &4150930075538583228
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 152006869610446000}
+    m_Modifications:
+    - target: {fileID: 751069970076850678, guid: 7e059bded45d3b746a6ac638b87d589d, type: 3}
+      propertyPath: m_Name
+      value: SelectDarts
+      objectReference: {fileID: 0}
+    - target: {fileID: 5487008054661473643, guid: 7e059bded45d3b746a6ac638b87d589d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 20.9496
+      objectReference: {fileID: 0}
+    - target: {fileID: 5487008054661473643, guid: 7e059bded45d3b746a6ac638b87d589d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 9.667
+      objectReference: {fileID: 0}
+    - target: {fileID: 5487008054661473643, guid: 7e059bded45d3b746a6ac638b87d589d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.2303
+      objectReference: {fileID: 0}
+    - target: {fileID: 5487008054661473643, guid: 7e059bded45d3b746a6ac638b87d589d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5487008054661473643, guid: 7e059bded45d3b746a6ac638b87d589d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5487008054661473643, guid: 7e059bded45d3b746a6ac638b87d589d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5487008054661473643, guid: 7e059bded45d3b746a6ac638b87d589d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5487008054661473643, guid: 7e059bded45d3b746a6ac638b87d589d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5487008054661473643, guid: 7e059bded45d3b746a6ac638b87d589d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5487008054661473643, guid: 7e059bded45d3b746a6ac638b87d589d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7e059bded45d3b746a6ac638b87d589d, type: 3}
+--- !u!114 &5216080436602347376 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8212363863874236876, guid: 7e059bded45d3b746a6ac638b87d589d, type: 3}
+  m_PrefabInstance: {fileID: 4150930075538583228}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28f3d1e47f5fd3c4eb49d86f91108e6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DartSelection
+--- !u!4 &8484452016917810135 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5487008054661473643, guid: 7e059bded45d3b746a6ac638b87d589d, type: 3}
+  m_PrefabInstance: {fileID: 4150930075538583228}
+  m_PrefabAsset: {fileID: 0}
