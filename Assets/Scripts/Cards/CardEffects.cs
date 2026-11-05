@@ -168,11 +168,22 @@ public static class CardEffects
     public static void SetVisualEffects(CardInstance cardInstance, bool isHidden, bool countAlcohol, bool countScissors)
     {
         bool isNegative = IsCardNegative(cardInstance.cardData);
+        if (isNegative) AudioManagerFMOD.Play(AudioEvent.sfxNegativeCard); //Might not be the right place to place audio events for card effects. We need to only check when a card is dealt/flipped
+        
         bool isColorSwapped = IsColorSwapped(cardInstance.cardData);
+        
         bool isDoubledOnce = IsCardDoubled(cardInstance.cardData) || (countAlcohol && AlcoholItem.isAlcoholActive);
+        if (isDoubledOnce) AudioManagerFMOD.Play(AudioEvent.sfxDoubledCard);
+        
         bool isDoubledTwice = IsCardDoubled(cardInstance.cardData) && (countAlcohol && AlcoholItem.isAlcoholActive);
+        if (isDoubledTwice) AudioManagerFMOD.Play(AudioEvent.sfxDoubleDoubleCard);
+        
         bool isCutOnce = IsCardHalved(cardInstance.cardData) || (countScissors && IsCardCut(cardInstance));
+        if (isCutOnce) AudioManagerFMOD.Play(AudioEvent.sfxCutCard);
+        
         bool isCutTwice = IsCardHalved(cardInstance.cardData) && (countScissors && IsCardCut(cardInstance));
+        if(isCutTwice) AudioManagerFMOD.Play(AudioEvent.sfxCutCutCard);
+        
         var display = cardInstance.displayComponent;
 
         display?.SetHidden(isHidden);

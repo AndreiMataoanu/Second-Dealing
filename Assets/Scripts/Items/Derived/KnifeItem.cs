@@ -7,6 +7,7 @@ public class KnifeItem : Item
         if(!blackjackGame.isRoundActive || isKnifeActive || blackjackGame.CheckItemAfterStand()) return false;
     
         isKnifeActive = true;
+        AudioManagerFMOD.Play(AudioEvent.sfxKnifeItem);
     
         return true;
     }

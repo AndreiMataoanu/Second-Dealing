@@ -67,7 +67,6 @@ public class ItemManager : MonoBehaviour
         }
 
         AudioManager.instance.Play("ItemBuy"); //DELETE LATER
-        AudioManagerFMOD.Play(AudioEvent.sfxShopBuy);
         KeepsakeUnlockProgression.instance.AddStat(ChallengeType.UseItems);
 
         if (!item.delayDestroy)
@@ -83,7 +82,7 @@ public class ItemManager : MonoBehaviour
             blackjackGame.SellItem(item.GetResalePrice());
             
             AudioManager.instance.Play("ItemBuy"); //DELETE LATER
-            AudioManagerFMOD.Play(AudioEvent.sfxShopBuy);
+            AudioManagerFMOD.Play(AudioEvent.sfxShopSell);
 
             item.delayDestroy = false;
 

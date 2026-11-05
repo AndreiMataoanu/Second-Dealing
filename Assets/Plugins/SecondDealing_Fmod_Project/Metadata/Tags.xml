@@ -4,5 +4,19 @@
 		<property name="name">
 			<value>Master</value>
 		</property>
+		<relationship name="items">
+			<destination>{3502208f-be97-470a-9a8f-ea94a3c07826}</destination>
+			<destination>{d4159506-c1f3-41a2-a053-e5cb30923d01}</destination>
+		</relationship>
+	</object>
+	<object class="Tag" id="{3502208f-be97-470a-9a8f-ea94a3c07826}">
+		<property name="name">
+			<value>RED</value>
+		</property>
+	</object>
+	<object class="Tag" id="{d4159506-c1f3-41a2-a053-e5cb30923d01}">
+		<property name="name">
+			<value>GREEN</value>
+		</property>
 	</object>
 </objects>

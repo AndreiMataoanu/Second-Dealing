@@ -31,7 +31,7 @@ public class RemoveCardChoiceEvent : CardChoiceEvent
         dartSelection.ThrowDart(SelectIndex, cardInstance.CardObject.transform.position);
         
         AudioManager.instance.Play("CardHit"); //DELETE LATER
-        AudioManagerFMOD.Play(AudioEvent.sfxDeal);
+        AudioManagerFMOD.Play(AudioEvent.sfxDartEventBurn);
         RemoveCardGroup(cardInstance);
         
         CardEffects.OnCardSelected();

@@ -1,4 +1,5 @@
 using System.Collections;
+using FMODUnity;
 using Managers;
 using UnityEngine;
 
@@ -35,6 +36,7 @@ public class AcidItem : Item
         isCardSelecting = true;
         cardEffect.SelectCard();
         cardEffect.AddItemCardEffectAction(OnDissolveCard);
+        AudioManagerFMOD.Play(AudioEvent.sfxAcidItemPickup);
 
         return true;
     }
@@ -87,6 +89,7 @@ public class AcidItem : Item
         if (Input.GetMouseButtonDown(1))
         {
             OnCancelCardEffect();
+            AudioManagerFMOD.Play(AudioEvent.sfxAcidItemPickup);
         }
     }
 }
