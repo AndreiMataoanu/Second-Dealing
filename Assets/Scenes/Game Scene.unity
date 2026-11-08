@@ -5900,17 +5900,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2284112897349612800, guid: 206a1c8c9668124468a1b9606f11f922, type: 3}
   m_PrefabInstance: {fileID: 907230614}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &914054724 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8212363863874236876, guid: 7e059bded45d3b746a6ac638b87d589d, type: 3}
-  m_PrefabInstance: {fileID: 7076323545677057467}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28f3d1e47f5fd3c4eb49d86f91108e6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DartSelection
 --- !u!1 &916109535
 GameObject:
   m_ObjectHideFlags: 0
@@ -13478,6 +13467,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4109581827045791217}
     - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
+      propertyPath: removeSuitChoiceEvent
+      value: 
+      objectReference: {fileID: 4109581827045791218}
+    - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
+      propertyPath: negativeSuitChoiceEvent
+      value: 
+      objectReference: {fileID: 4109581827045791219}
+    - target: {fileID: 4738729559518161186, guid: 54d25d7cdf05b3d4eae7c2b414d6f9b2, type: 3}
       propertyPath: mediumSeverityEvents.Array.size
       value: 6
       objectReference: {fileID: 0}
@@ -14196,10 +14193,6 @@ PrefabInstance:
       propertyPath: cardsPosition
       value: 
       objectReference: {fileID: 826400919}
-    - target: {fileID: 369307294511997388, guid: 541ae4e7ca2db504bbc8df49b7ce8558, type: 3}
-      propertyPath: dartSelection
-      value: 
-      objectReference: {fileID: 914054724}
     - target: {fileID: 752010697212828273, guid: 541ae4e7ca2db504bbc8df49b7ce8558, type: 3}
       propertyPath: cardText
       value: 
@@ -14212,10 +14205,22 @@ PrefabInstance:
       propertyPath: cardsPosition
       value: 
       objectReference: {fileID: 826400919}
-    - target: {fileID: 752010697212828273, guid: 541ae4e7ca2db504bbc8df49b7ce8558, type: 3}
-      propertyPath: dartSelection
+    - target: {fileID: 818796316016900278, guid: 541ae4e7ca2db504bbc8df49b7ce8558, type: 3}
+      propertyPath: blackjackGame
       value: 
-      objectReference: {fileID: 914054724}
+      objectReference: {fileID: 1343293108}
+    - target: {fileID: 818796316016900278, guid: 541ae4e7ca2db504bbc8df49b7ce8558, type: 3}
+      propertyPath: cardsPosition
+      value: 
+      objectReference: {fileID: 826400919}
+    - target: {fileID: 5511474774236074068, guid: 541ae4e7ca2db504bbc8df49b7ce8558, type: 3}
+      propertyPath: blackjackGame
+      value: 
+      objectReference: {fileID: 1343293108}
+    - target: {fileID: 5511474774236074068, guid: 541ae4e7ca2db504bbc8df49b7ce8558, type: 3}
+      propertyPath: cardsPosition
+      value: 
+      objectReference: {fileID: 826400919}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -14243,6 +14248,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14961791e61e4884fa389fb6e514b546, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RemoveCardChoiceEvent
+--- !u!114 &4109581827045791218 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5511474774236074068, guid: 541ae4e7ca2db504bbc8df49b7ce8558, type: 3}
+  m_PrefabInstance: {fileID: 4109581827045791215}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 418ce470e92af364890fee537f79517c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RemoveSuitChoiceEvent
+--- !u!114 &4109581827045791219 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 818796316016900278, guid: 541ae4e7ca2db504bbc8df49b7ce8558, type: 3}
+  m_PrefabInstance: {fileID: 4109581827045791215}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d9a0850c0d67ad428729aba890fe3ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NegativeSuitChoiceEvent
 --- !u!4 &4196823323493360381 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7643244776236736907, guid: 86ed570a28ed8fe458f082ff2d7912d7, type: 3}
@@ -14657,7 +14684,7 @@ PrefabInstance:
     - target: {fileID: 2531318046483965639, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
       propertyPath: milestones.Array.data[0].gameEvent
       value: 
-      objectReference: {fileID: 11400000, guid: a2dca14c25396c349a5b91b853ba2209, type: 2}
+      objectReference: {fileID: 11400000, guid: be1edcce2a7b8944cbde04bf697172e6, type: 2}
     - target: {fileID: 2531318046483965639, guid: d7acc82f61ec5794ba42ab7ecafdfb95, type: 3}
       propertyPath: milestones.Array.data[0].milestoneType
       value: 0
@@ -15034,63 +15061,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6004f10e25c169418ca5976a6011a82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableKnob
---- !u!1001 &7076323545677057467
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 751069970076850678, guid: 7e059bded45d3b746a6ac638b87d589d, type: 3}
-      propertyPath: m_Name
-      value: SelectDarts
-      objectReference: {fileID: 0}
-    - target: {fileID: 5487008054661473643, guid: 7e059bded45d3b746a6ac638b87d589d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 20.9496
-      objectReference: {fileID: 0}
-    - target: {fileID: 5487008054661473643, guid: 7e059bded45d3b746a6ac638b87d589d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 9.667
-      objectReference: {fileID: 0}
-    - target: {fileID: 5487008054661473643, guid: 7e059bded45d3b746a6ac638b87d589d, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.2303
-      objectReference: {fileID: 0}
-    - target: {fileID: 5487008054661473643, guid: 7e059bded45d3b746a6ac638b87d589d, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5487008054661473643, guid: 7e059bded45d3b746a6ac638b87d589d, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5487008054661473643, guid: 7e059bded45d3b746a6ac638b87d589d, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5487008054661473643, guid: 7e059bded45d3b746a6ac638b87d589d, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5487008054661473643, guid: 7e059bded45d3b746a6ac638b87d589d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5487008054661473643, guid: 7e059bded45d3b746a6ac638b87d589d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5487008054661473643, guid: 7e059bded45d3b746a6ac638b87d589d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 7e059bded45d3b746a6ac638b87d589d, type: 3}
 --- !u!1001 &7195570629954288261
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15916,4 +15886,3 @@ SceneRoots:
   - {fileID: 884163235}
   - {fileID: 2092757937}
   - {fileID: 7147485}
-  - {fileID: 7076323545677057467}

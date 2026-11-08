@@ -1,14 +1,28 @@
+using System.Collections;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NegativeSuit", menuName = "Events/Negative Suit")]
 public class NegativeSuitEvent : BlackjackEvent
 {
-    [SerializeField] Card.Suit suitToTarget;
+    public override IEnumerator GiveChoiceToPlayer(GameCamera gameCamera, CardChoiceEvent cardChoiceEvent)
+    {
+        var negativeSuitEvent = cardChoiceEvent as NegativeSuitChoiceEvent;
+        negativeSuitEvent?.SetDartsActive(true);
+        
+        gameCamera.ChangeToCamera(CameraType.Playing);
+        
+        yield return new WaitForSeconds(1.5f);
+
+        negativeSuitEvent?.DealOptions();
+    }
+    
+    public override void ExplainChoiceDialogue(DialogueSystem dialogue)
+    {
+        dialogue.ShowNegativeSuitText();
+    }
 
     public override void Apply(EventManager events)
     {
-        events.SetNegativeSuit(suitToTarget);
-        
         KeepsakeUnlockProgression.instance.AddStat(ChallengeType.TriggerNegativeEvent);
     }
 }
