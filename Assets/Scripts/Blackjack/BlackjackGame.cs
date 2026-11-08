@@ -540,7 +540,12 @@ public class BlackjackGame : MonoBehaviour
         handBets.Add(isTutorialActive ? 0 : currentBet);
         buttonAnimator.SetBool("StartActive", false);
 
-        AudioManager.instance.Play("Button"); //DELETE LATER
+        if(!AudioManagerFMOD.IsPlaying(AudioEvent.musMainGame))
+        {
+            Debug.Log("Started first round");
+            AudioManagerFMOD.SetGlobalParameter("parMusicChanger",1);
+            AudioManagerFMOD.Play(AudioEvent.musMainGame);
+        }
         AudioManagerFMOD.Play(AudioEvent.sfxRoundStart);
 
         yield return GameUtils.WaitForSecondsScaled(0.5f);

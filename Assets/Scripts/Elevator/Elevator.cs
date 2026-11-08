@@ -216,12 +216,10 @@ public class Elevator : MonoBehaviour
         isMoving = false;
         isElevatorActive = false;
         hands.SetActive(true);
-
-        AudioManager.instance.Stop("ElevatorAmbience"); //DELETE LATER
+        
         AudioManagerFMOD.Stop(AudioEvent.ambElevatorMain);
         AudioManagerFMOD.Stop(AudioEvent.musElevator1);
-        AudioManager.instance.Play("MainTheme"); //DELETE LATER
-        AudioManagerFMOD.Play(AudioEvent.musMainGame);
+        AudioManagerFMOD.Play(AudioEvent.ambCasinoMain);
     }
 
     private IEnumerator OptionsCoroutine()
