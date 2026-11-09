@@ -8,7 +8,7 @@
 			<value>sfxGoFishKeepsake</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{6151156b-dfc3-4aba-a689-62bf5d11559d}</destination>
@@ -62,11 +62,18 @@
 	<object class="EventAutomatableProperties" id="{ef4ee227-8cb8-4e2a-b6a4-a1eeb687af1d}" />
 	<object class="MarkerTrack" id="{b0ebf50a-18b9-49d0-b920-bf08bcda3564}" />
 	<object class="GroupTrack" id="{0223e4ae-7e2b-4b57-bb14-e5cbc5d9d171}">
+		<relationship name="modules">
+			<destination>{b917a289-2a45-4843-9814-5b74b9434a95}</destination>
+		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{22cb7af7-cc30-4af7-877f-f683bf7646df}</destination>
 		</relationship>
 	</object>
-	<object class="Timeline" id="{7165d27a-8bcc-47db-ade8-de708606cd8c}" />
+	<object class="Timeline" id="{7165d27a-8bcc-47db-ade8-de708606cd8c}">
+		<relationship name="modules">
+			<destination>{b917a289-2a45-4843-9814-5b74b9434a95}</destination>
+		</relationship>
+	</object>
 	<object class="EventMixerMaster" id="{2fef8007-17eb-4b22-adb0-accc201e4e43}">
 		<relationship name="effectChain">
 			<destination>{c5ccb98f-55ec-4b22-8b0b-3de0ae72e6f0}</destination>
@@ -84,6 +91,14 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{18a217ff-8292-4d56-b864-d28da0f412bb}" />
+	<object class="SingleSound" id="{b917a289-2a45-4843-9814-5b74b9434a95}">
+		<property name="length">
+			<value>3.5</value>
+		</property>
+		<relationship name="audioFile">
+			<destination>{f9f60477-a6e8-412e-85a7-64b61f39b57e}</destination>
+		</relationship>
+	</object>
 	<object class="EventMixerGroup" id="{22cb7af7-cc30-4af7-877f-f683bf7646df}">
 		<property name="name">
 			<value>Audio 1</value>
