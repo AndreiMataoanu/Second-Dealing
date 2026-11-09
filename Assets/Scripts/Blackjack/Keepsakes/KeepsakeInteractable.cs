@@ -89,7 +89,7 @@ public class KeepsakeInteractable : Clickable
         {
             KeepsakeManager.instance.UnequipKeepsake(keepsake);
             AudioManager.instance.Play("ItemBuy"); //DELETE LATER
-            //AudioManagerFMOD.Play(AudioEvent.sfxKeepsakeGenerel);
+            AudioManagerFMOD.Play(AudioEvent.sfxKeepsakeGenerel);
 
             UpdateVisuals();
         }
@@ -100,7 +100,7 @@ public class KeepsakeInteractable : Clickable
             if(equipped)
             {
                 AudioManager.instance.Play("ItemBuy"); //DELETE LATER
-                AudioManagerFMOD.Play(AudioEvent.sfxKeepsakeGenerel);
+                //AudioManagerFMOD.Play(AudioEvent.sfxKeepsakeGenerel);
                 RuntimeManager.PlayOneShot(sfxKeepsakeEvent);
 
                 keepsake.ApplyInheritance(blackjackGame);
