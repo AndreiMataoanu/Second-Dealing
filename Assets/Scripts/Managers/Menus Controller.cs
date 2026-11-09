@@ -34,6 +34,8 @@ public class MenusController : MonoBehaviour
     VCA masterVCA;
     VCA sfxVCA;
     VCA musicVCA;
+    private Bus sfxBus;
+    private Bus musBus; 
 
     private bool isPaused;
 
@@ -43,6 +45,8 @@ public class MenusController : MonoBehaviour
         masterVCA = FMODUnity.RuntimeManager.GetVCA("vca:/MASTER");
         sfxVCA = FMODUnity.RuntimeManager.GetVCA("vca:/SFX");
         musicVCA = FMODUnity.RuntimeManager.GetVCA("vca:/MUSIC");
+        sfxBus = FMODUnity.RuntimeManager.GetBus("bus:/SFX");
+        musBus = FMODUnity.RuntimeManager.GetBus("bus:/MUS");
 
         if(darkImage == null || pausePanel == null || mainMenuPanel == null) return;
     }
@@ -96,7 +100,9 @@ public class MenusController : MonoBehaviour
         //volume.profile = menuVolume;
         isPaused = true;
 
-        FMODUnity.RuntimeManager.PauseAllEvents(true);
+        sfxBus.setPaused(true);
+        musBus.setPaused(true);
+        
         AudioManagerFMOD.Play(AudioEvent.uiPauseGame);
         
         Time.timeScale = 0;
@@ -113,7 +119,8 @@ public class MenusController : MonoBehaviour
         isPaused = false;
         
         AudioManagerFMOD.Play(AudioEvent.uiPauseResumeGame);
-        FMODUnity.RuntimeManager.PauseAllEvents(false);
+        sfxBus.setPaused(false);
+        musBus.setPaused(false);
 
         Time.timeScale = 1;
     }

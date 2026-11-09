@@ -421,9 +421,7 @@ public class TableCards : MonoBehaviour
 
             UpdateHandVisuals(playerHands[i], true);
         }
-
-        AudioManager.instance.Play("CardHit"); //DELETE LATER
-        AudioManagerFMOD.Play(AudioEvent.sfxSplit);
+        
         
         Transform targetPosition = playerCardPositions[currentHandIndex + 1];
 

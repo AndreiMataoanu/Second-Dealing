@@ -261,8 +261,9 @@ public class BlackjackGame : MonoBehaviour
         float elapsedTime = 0;
         int startingAmount = PlayerMoney;
 
+        
         AudioManager.instance.Play("MoneyCounter"); //Change so Different Sound on Win Or Lose
-        AudioManagerFMOD.Play(AudioEvent.sfxPlayerWin);
+        //AudioManagerFMOD.Play(AudioEvent.sfxPlayerWin);
 
         while(elapsedTime < duration)
         {
@@ -279,6 +280,7 @@ public class BlackjackGame : MonoBehaviour
 
         playerMoney = targetAmount;
         AudioManagerFMOD.Stop(AudioEvent.sfxPlayerWin);
+        AudioManagerFMOD.Stop(AudioEvent.sfxPlayerLose);
 
         UpdateBettingUI();
     }
@@ -309,7 +311,7 @@ public class BlackjackGame : MonoBehaviour
         int targetBalance = playerMoney + moneyGained;
 
         AudioManager.instance.Play("MoneyGained"); //DELETE LATER
-        //AudioManagerFMOD.Play(AudioEvent.sfxPlayerWin);
+        AudioManagerFMOD.Play(AudioEvent.sfxPlayerWin);
 
         StartCoroutine(AnimateBetChange(targetBalance, 3f / GameUtils.gameSpeedMultiplier));
     }
@@ -318,7 +320,7 @@ public class BlackjackGame : MonoBehaviour
     {
         var targetBalance = playerMoney + moneyAmount;
         AudioManager.instance.Play("MoneyGained"); //DELETE LATER
-        //AudioManagerFMOD.Play(AudioEvent.sfxPlayerWin);
+        AudioManagerFMOD.Play(AudioEvent.sfxPlayerWin);
         StartCoroutine(AnimateBetChange(targetBalance, 3f / GameUtils.gameSpeedMultiplier));
     }
 
@@ -544,7 +546,6 @@ public class BlackjackGame : MonoBehaviour
 
         if(!AudioManagerFMOD.IsPlaying(AudioEvent.musMainGame))
         {
-            Debug.Log("Started first round");
             AudioManagerFMOD.SetGlobalParameter("parMusicChanger",1);
             AudioManagerFMOD.Play(AudioEvent.musMainGame);
         }
@@ -616,7 +617,7 @@ public class BlackjackGame : MonoBehaviour
         }
 
         hitHandAnimator.SetTrigger("hitTrigger");
-        //AudioManagerFMOD.SetGlobalParameter("parCurrentHandCount", tableCards.CurrentHand.Count);
+        AudioManagerFMOD.SetGlobalParameter("parCurrentHandCount", tableCards.CurrentHand.Count);
         AudioManagerFMOD.Play(AudioEvent.sfxHit);
 
         yield return GameUtils.WaitForSecondsScaled(1f);
@@ -714,8 +715,8 @@ public class BlackjackGame : MonoBehaviour
 
         KeepsakeUnlockProgression.instance.AddStat(ChallengeType.Split);
 
-        AudioManager.instance.Play("BetUp"); //DELETE LATER
-        AudioManagerFMOD.Play(AudioEvent.sfxIncreasingBet);
+        
+        AudioManagerFMOD.Play(AudioEvent.sfxSplit);
 
         standHandAnimator.SetTrigger("splitTrigger");
 
@@ -932,7 +933,7 @@ public class BlackjackGame : MonoBehaviour
             targetMoneyBalance = playerMoney + KeepsakeManager.instance.ApplyPayoutModifiers(betAmount, currentHand, allHands);
 
             AudioManager.instance.Play("MoneyGained"); //DELETE LATER
-            //AudioManagerFMOD.Play(AudioEvent.sfxPlayerWin);
+            AudioManagerFMOD.Play(AudioEvent.sfxPlayerWin);
 
             Instantiate(greenParticlePrefab, particleSpawnPoint.position, particleSpawnPoint.rotation);
             if(eventManager.IsDealerRageActive)
@@ -1056,7 +1057,7 @@ public class BlackjackGame : MonoBehaviour
 
         if (dealerBust)
         {
-            //AudioManagerFMOD.Play(AudioEvent.sfxPlayerWin);
+            AudioManagerFMOD.Play(AudioEvent.sfxPlayerWin);
             return "Dealer busts... You win";
         }
 
