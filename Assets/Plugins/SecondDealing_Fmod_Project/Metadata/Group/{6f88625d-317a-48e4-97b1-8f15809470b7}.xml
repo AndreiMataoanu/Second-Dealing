@@ -31,8 +31,28 @@
 	<object class="MixerBusEffectChain" id="{b720eeb0-dc90-4d76-b9e5-5d8d5a008cae}">
 		<relationship name="effects">
 			<destination>{40cf13b0-1f3c-4cdb-b791-f5605e5c2e0f}</destination>
+			<destination>{accd8a82-446e-40f6-b6b5-de5afe532b50}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{fc8bfdc7-8b64-4976-84fb-81ddd07cdec9}" />
 	<object class="MixerBusFader" id="{40cf13b0-1f3c-4cdb-b791-f5605e5c2e0f}" />
+	<object class="GainEffect" id="{accd8a82-446e-40f6-b6b5-de5afe532b50}">
+		<relationship name="modulators">
+			<destination>{7f8c7f89-4c0b-459e-bf0f-46cbc8b9a566}</destination>
+		</relationship>
+	</object>
+	<object class="SidechainModulator" id="{7f8c7f89-4c0b-459e-bf0f-46cbc8b9a566}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>gain</value>
+		</property>
+		<property name="amount">
+			<value>20</value>
+		</property>
+		<property name="releaseTime">
+			<value>300</value>
+		</property>
+		<relationship name="sidechains">
+			<destination>{d2bca851-bc5a-48cd-bdb7-c572746a35b8}</destination>
+		</relationship>
+	</object>
 </objects>

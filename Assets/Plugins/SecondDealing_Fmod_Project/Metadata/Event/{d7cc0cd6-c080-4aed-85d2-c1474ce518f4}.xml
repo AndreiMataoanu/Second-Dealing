@@ -8,7 +8,7 @@
 			<value>sfxWeddingRingKeepsake</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{6151156b-dfc3-4aba-a689-62bf5d11559d}</destination>
@@ -59,14 +59,31 @@
 			<destination>{8068146b-6b47-4ac5-96dd-bd1a940f2d05}</destination>
 		</relationship>
 	</object>
-	<object class="EventAutomatableProperties" id="{c0f19491-f866-4887-9fdc-f798c20a02bd}" />
+	<object class="EventAutomatableProperties" id="{c0f19491-f866-4887-9fdc-f798c20a02bd}">
+		<property name="maxVoices">
+			<value>1</value>
+		</property>
+		<property name="voiceStealing">
+			<value>3</value>
+		</property>
+		<property name="triggerCooldown">
+			<value>100</value>
+		</property>
+	</object>
 	<object class="MarkerTrack" id="{991bfde5-6975-4319-afc6-3358b638d5bf}" />
 	<object class="GroupTrack" id="{e60282d5-b17b-4af5-98c8-20d331462bf6}">
+		<relationship name="modules">
+			<destination>{09241dfc-1a42-4e8e-aa24-1026a2c685f4}</destination>
+		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{0ab063e0-0e53-4ef2-a158-998885f2a95b}</destination>
 		</relationship>
 	</object>
-	<object class="Timeline" id="{28b7c38c-9a07-454d-b4a6-f0c4660475ef}" />
+	<object class="Timeline" id="{28b7c38c-9a07-454d-b4a6-f0c4660475ef}">
+		<relationship name="modules">
+			<destination>{09241dfc-1a42-4e8e-aa24-1026a2c685f4}</destination>
+		</relationship>
+	</object>
 	<object class="EventMixerMaster" id="{57fac360-d02c-4aa5-9f9d-21a38384b81b}">
 		<relationship name="effectChain">
 			<destination>{10dadc99-da52-4471-b666-f98befafe952}</destination>
@@ -84,6 +101,14 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{b1b1d5a4-2d0f-4709-ac05-1c9f401c00b5}" />
+	<object class="SingleSound" id="{09241dfc-1a42-4e8e-aa24-1026a2c685f4}">
+		<property name="length">
+			<value>8</value>
+		</property>
+		<relationship name="audioFile">
+			<destination>{761d1f4f-703e-4696-abf6-240ec62b46eb}</destination>
+		</relationship>
+	</object>
 	<object class="EventMixerGroup" id="{0ab063e0-0e53-4ef2-a158-998885f2a95b}">
 		<property name="name">
 			<value>Audio 1</value>

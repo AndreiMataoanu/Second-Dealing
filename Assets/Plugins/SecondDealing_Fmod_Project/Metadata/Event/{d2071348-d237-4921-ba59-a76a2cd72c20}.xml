@@ -8,7 +8,7 @@
 			<value>sfxPyroKeepsake</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{6151156b-dfc3-4aba-a689-62bf5d11559d}</destination>
@@ -59,14 +59,28 @@
 			<destination>{8068146b-6b47-4ac5-96dd-bd1a940f2d05}</destination>
 		</relationship>
 	</object>
-	<object class="EventAutomatableProperties" id="{a67f9e34-8c4c-4d51-bb5c-adabf0cfd752}" />
+	<object class="EventAutomatableProperties" id="{a67f9e34-8c4c-4d51-bb5c-adabf0cfd752}">
+		<property name="maxVoices">
+			<value>1</value>
+		</property>
+		<property name="voiceStealing">
+			<value>3</value>
+		</property>
+	</object>
 	<object class="MarkerTrack" id="{0a361fef-a220-4015-8284-1ff7e908b04a}" />
 	<object class="GroupTrack" id="{e7d5ae77-1779-4af9-adfe-ccf30a97a8c1}">
+		<relationship name="modules">
+			<destination>{98829bb1-7b26-489f-a9cd-adb0d2273564}</destination>
+		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{2385b971-921d-4417-9eb4-29516c3a62a1}</destination>
 		</relationship>
 	</object>
-	<object class="Timeline" id="{e21ed1c9-738b-42a1-bb8c-4b3771a83c06}" />
+	<object class="Timeline" id="{e21ed1c9-738b-42a1-bb8c-4b3771a83c06}">
+		<relationship name="modules">
+			<destination>{98829bb1-7b26-489f-a9cd-adb0d2273564}</destination>
+		</relationship>
+	</object>
 	<object class="EventMixerMaster" id="{50610047-059b-46cb-af58-c23549b56a6a}">
 		<relationship name="effectChain">
 			<destination>{ed2ed13d-96ee-4867-aed1-a774f5f41cd1}</destination>
@@ -84,6 +98,14 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{f9a945d9-67f5-49c1-a229-a533aeb7cf6e}" />
+	<object class="SingleSound" id="{98829bb1-7b26-489f-a9cd-adb0d2273564}">
+		<property name="length">
+			<value>2.5</value>
+		</property>
+		<relationship name="audioFile">
+			<destination>{0b0b5ccf-9d9e-44bb-a8d1-5884ed9d92f2}</destination>
+		</relationship>
+	</object>
 	<object class="EventMixerGroup" id="{2385b971-921d-4417-9eb4-29516c3a62a1}">
 		<property name="name">
 			<value>Audio 1</value>

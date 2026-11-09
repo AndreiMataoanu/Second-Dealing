@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using FMODUnity;
 using UnityEngine;
 
 public class KeepsakeInteractable : Clickable
@@ -11,6 +12,8 @@ public class KeepsakeInteractable : Clickable
     [SerializeField] private Color outlineDeselect = Color.purple;
     [SerializeField] public Vector3 rotationInHand;
     [SerializeField] public Vector3 scaleInHand;
+    
+    [SerializeField] private EventReference sfxKeepsakeEvent;
 
     private Renderer[] allRenderers;
     private Dictionary<Renderer, Material[]> originalMaterialsDict = new Dictionary<Renderer, Material[]>();
@@ -97,7 +100,8 @@ public class KeepsakeInteractable : Clickable
             if(equipped)
             {
                 AudioManager.instance.Play("ItemBuy"); //DELETE LATER
-                AudioManagerFMOD.Play(AudioEvent.sfxKeepsakeGenerel);
+                //AudioManagerFMOD.Play(AudioEvent.sfxKeepsakeGenerel);
+                RuntimeManager.PlayOneShot(sfxKeepsakeEvent);
 
                 keepsake.ApplyInheritance(blackjackGame);
 

@@ -8,7 +8,7 @@
 			<value>sfxDivorcePaperKeepsake</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{6151156b-dfc3-4aba-a689-62bf5d11559d}</destination>
@@ -59,14 +59,28 @@
 			<destination>{8068146b-6b47-4ac5-96dd-bd1a940f2d05}</destination>
 		</relationship>
 	</object>
-	<object class="EventAutomatableProperties" id="{54b0c476-1c94-44df-8f07-6423af25e76c}" />
+	<object class="EventAutomatableProperties" id="{54b0c476-1c94-44df-8f07-6423af25e76c}">
+		<property name="maxVoices">
+			<value>1</value>
+		</property>
+		<property name="voiceStealing">
+			<value>3</value>
+		</property>
+	</object>
 	<object class="MarkerTrack" id="{637d925c-8deb-48df-ad99-c080a85a9dbc}" />
 	<object class="GroupTrack" id="{4ef1001f-8881-41b6-9305-3c3b4def6432}">
+		<relationship name="modules">
+			<destination>{873c7ce3-8f27-487f-9708-de738186b20d}</destination>
+		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{b299c6e4-83ae-4b27-9542-6715281650ea}</destination>
 		</relationship>
 	</object>
-	<object class="Timeline" id="{4357068f-6942-42fa-aa68-fd949c1c0305}" />
+	<object class="Timeline" id="{4357068f-6942-42fa-aa68-fd949c1c0305}">
+		<relationship name="modules">
+			<destination>{873c7ce3-8f27-487f-9708-de738186b20d}</destination>
+		</relationship>
+	</object>
 	<object class="EventMixerMaster" id="{f7680c56-3b74-43a9-8ba5-23b0487aea85}">
 		<relationship name="effectChain">
 			<destination>{dc5c7dba-cca5-48c8-aaef-ecb5c067f816}</destination>
@@ -84,6 +98,14 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{2ae2b32a-e5af-4389-9b7e-cbb10abee5f4}" />
+	<object class="SingleSound" id="{873c7ce3-8f27-487f-9708-de738186b20d}">
+		<property name="length">
+			<value>3</value>
+		</property>
+		<relationship name="audioFile">
+			<destination>{45f2351d-1c04-41b9-84fb-130a96713ab2}</destination>
+		</relationship>
+	</object>
 	<object class="EventMixerGroup" id="{b299c6e4-83ae-4b27-9542-6715281650ea}">
 		<property name="name">
 			<value>Audio 1</value>
