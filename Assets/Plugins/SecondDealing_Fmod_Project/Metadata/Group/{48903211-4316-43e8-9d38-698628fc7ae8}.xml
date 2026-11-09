@@ -25,6 +25,7 @@
 			<destination>{456f27f9-4469-4b71-a964-9ef8a21da7dd}</destination>
 			<destination>{85942b0a-9870-4426-b0ec-6e04397eec95}</destination>
 			<destination>{1724ae97-813f-4185-8b86-d95fec325c38}</destination>
+			<destination>{425a9c03-529f-4a50-9bd2-df6f887c1c94}</destination>
 			<destination>{26edf904-9e66-42bf-a50e-43e6f186b2ee}</destination>
 		</relationship>
 	</object>
@@ -62,5 +63,27 @@
 			<value>-80</value>
 		</property>
 	</object>
+	<object class="GainEffect" id="{425a9c03-529f-4a50-9bd2-df6f887c1c94}">
+		<relationship name="modulators">
+			<destination>{fff95c6e-4fee-41d0-960c-a7473b852f39}</destination>
+		</relationship>
+	</object>
 	<object class="MixerBusFader" id="{26edf904-9e66-42bf-a50e-43e6f186b2ee}" />
+	<object class="SidechainModulator" id="{fff95c6e-4fee-41d0-960c-a7473b852f39}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>gain</value>
+		</property>
+		<property name="amount">
+			<value>10</value>
+		</property>
+		<property name="attackTime">
+			<value>80</value>
+		</property>
+		<property name="releaseTime">
+			<value>100</value>
+		</property>
+		<relationship name="sidechains">
+			<destination>{d2bca851-bc5a-48cd-bdb7-c572746a35b8}</destination>
+		</relationship>
+	</object>
 </objects>

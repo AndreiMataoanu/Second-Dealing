@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,6 +12,8 @@ public class CardSelectorButton : Clickable
         if(!IsActive) return;
 
         base.OnClick(mouseButton);
+        
+        
 
         if(isDummyButton)
         {
@@ -18,10 +21,16 @@ public class CardSelectorButton : Clickable
             AudioManagerFMOD.Play(AudioEvent.sfxCantUseItem);
             return;
         }
-
-        AudioManager.instance.Play("BetUp"); //DELETE LATER
-        AudioManagerFMOD.Play(AudioEvent.sfxIncreasingBet);
+        
+        AudioManagerFMOD.Play(AudioEvent.sfxCardSelectorPress);
 
         onClickAction.Invoke();
+    }
+    
+    protected virtual void OnMouseEnter()
+    {
+        if(!IsActive) return;
+
+        AudioManagerFMOD.Play(AudioEvent.uiMenuButtonHover);
     }
 }

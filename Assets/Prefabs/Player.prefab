@@ -5792,6 +5792,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4048953677687508500, guid: f19a3c00cfc594b17bd63ad541917bae, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 366214202151878708}
     - targetCorrespondingSourceObject: {fileID: 3065172155344379581, guid: f19a3c00cfc594b17bd63ad541917bae, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3781399002905546207}
@@ -5860,11 +5863,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
+  defaultOutlineColor: {r: 1, g: 1, b: 1, a: 1}
   tooltipHeader: 
   tooltipContent: 
-  gameReference: {fileID: 0}
-  standardHitTooltip: 'Left-click: Stand'
+  showTooltip: 1
+  blackjackManager: {fileID: 0}
+  standardStandTooltip: 
   splitTooltip: 'Left-click: Stand
 
     Right-click: Split'
@@ -5890,6 +5894,23 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4408329027317500268, guid: f6331d9e0b3944360815972f37c04249, type: 3}
+--- !u!1 &2055499912540668084 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4048953677687508500, guid: f19a3c00cfc594b17bd63ad541917bae, type: 3}
+  m_PrefabInstance: {fileID: 2645407029040385696}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &366214202151878708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2055499912540668084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 088b239bd8e184daf8dc22fb36642b24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioPlayerBoredSfx
 --- !u!1001 &6389158421477193587
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6198,6 +6219,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3508904863322234594, guid: 4a9c2b1a218624b4fa3d7066dc6aeccd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2597499083965477541}
     - targetCorrespondingSourceObject: {fileID: 7415141701075606676, guid: 4a9c2b1a218624b4fa3d7066dc6aeccd, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3384233393079924373}
@@ -6254,10 +6278,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  outline: {fileID: 2100000, guid: ced829ebf2e9cfc4d924d2535d7edfd8, type: 2}
+  defaultOutlineColor: {r: 1, g: 1, b: 1, a: 1}
   tooltipHeader: 
   tooltipContent: 
-  gameReference: {fileID: 0}
+  showTooltip: 1
+  blackjackManager: {fileID: 0}
   standardHitTooltip: 'Left-click: Hit'
   doubleDownTooltip: 'Left-click: Hit
 
@@ -6284,3 +6309,20 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4408329027317500268, guid: f6331d9e0b3944360815972f37c04249, type: 3}
+--- !u!1 &7501022095072143761 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3508904863322234594, guid: 4a9c2b1a218624b4fa3d7066dc6aeccd, type: 3}
+  m_PrefabInstance: {fileID: 6389158421477193587}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2597499083965477541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7501022095072143761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 088b239bd8e184daf8dc22fb36642b24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioPlayerBoredSfx

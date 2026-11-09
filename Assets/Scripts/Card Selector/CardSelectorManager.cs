@@ -137,7 +137,7 @@ public class CardSelectorManager : MonoBehaviour
         hasPrintedThisTurn = true;
 
         AudioManager.instance.Play("CardHit"); //DELETE LATER
-        AudioManagerFMOD.Play(AudioEvent.sfxDeal);
+        AudioManagerFMOD.Play(AudioEvent.sfxCardSelectorPrint);
         CloseCardSelector();
     }
 
@@ -154,7 +154,7 @@ public class CardSelectorManager : MonoBehaviour
             blackjackManager.HandleNewCardInPlayerHand(instance);
 
             AudioManager.instance.Play("CardHit"); //DELETE LATER
-            AudioManagerFMOD.Play(AudioEvent.sfxDeal);
+            AudioManagerFMOD.Play(AudioEvent.sfxCardSelectorPrint);
             CloseCardSelector();
         }
         else

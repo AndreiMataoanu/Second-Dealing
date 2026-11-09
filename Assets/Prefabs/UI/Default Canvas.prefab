@@ -565,6 +565,7 @@ GameObject:
   - component: {fileID: 4131892965470582618}
   - component: {fileID: 8715197724809331898}
   - component: {fileID: 6102027674380290559}
+  - component: {fileID: 3982545080864981971}
   m_Layer: 5
   m_Name: Resume Button
   m_TagString: Untagged
@@ -686,6 +687,37 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3982545080864981971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2135425297585172341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FMODUnity::FMODUnity.StudioEventEmitter
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -170900388
+      Data2: 1079127863
+      Data3: -1516216908
+      Data4: -1591831222
+    Path: event:/UI/uiMenuButtonHover
+  Event: 
+  EventPlayTrigger: 17
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &2200931366519666060
 GameObject:
   m_ObjectHideFlags: 0
@@ -1260,6 +1292,7 @@ GameObject:
   - component: {fileID: 7384764068382104259}
   - component: {fileID: 1327398704638319611}
   - component: {fileID: 8114233855863258529}
+  - component: {fileID: 5471257436645351403}
   m_Layer: 5
   m_Name: Restart Button
   m_TagString: Untagged
@@ -1381,6 +1414,37 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5471257436645351403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3905770416602717905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FMODUnity::FMODUnity.StudioEventEmitter
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -170900388
+      Data2: 1079127863
+      Data3: -1516216908
+      Data4: -1591831222
+    Path: event:/UI/uiMenuButtonHover
+  Event: 
+  EventPlayTrigger: 17
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &4584163305547367604
 GameObject:
   m_ObjectHideFlags: 0
@@ -2203,6 +2267,7 @@ GameObject:
   - component: {fileID: 2934120529167049372}
   - component: {fileID: 1755142768747106105}
   - component: {fileID: 7326460548927513894}
+  - component: {fileID: 6136445063642521484}
   m_Layer: 5
   m_Name: Main Menu Button
   m_TagString: Untagged
@@ -2324,6 +2389,37 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &6136445063642521484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6624080998780849035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FMODUnity::FMODUnity.StudioEventEmitter
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -170900388
+      Data2: 1079127863
+      Data3: -1516216908
+      Data4: -1591831222
+    Path: event:/UI/uiMenuButtonHover
+  Event: 
+  EventPlayTrigger: 17
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &7122265333218698119
 GameObject:
   m_ObjectHideFlags: 0
@@ -2336,6 +2432,7 @@ GameObject:
   - component: {fileID: 5397825612340340554}
   - component: {fileID: 6588912892815286451}
   - component: {fileID: 6716003709983998545}
+  - component: {fileID: 8395408814139679}
   m_Layer: 5
   m_Name: Options Button
   m_TagString: Untagged
@@ -2457,6 +2554,37 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8395408814139679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7122265333218698119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FMODUnity::FMODUnity.StudioEventEmitter
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -170900388
+      Data2: 1079127863
+      Data3: -1516216908
+      Data4: -1591831222
+    Path: event:/UI/uiMenuButtonHover
+  Event: 
+  EventPlayTrigger: 17
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &7129165141223849142
 GameObject:
   m_ObjectHideFlags: 0
@@ -2545,6 +2673,7 @@ GameObject:
   - component: {fileID: 5378225139018098390}
   - component: {fileID: 8703278931451437350}
   - component: {fileID: 5936979337328146060}
+  - component: {fileID: 356752112982730040}
   m_Layer: 5
   m_Name: Quit Button
   m_TagString: Untagged
@@ -2666,6 +2795,37 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &356752112982730040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7159136893752098801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FMODUnity::FMODUnity.StudioEventEmitter
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -170900388
+      Data2: 1079127863
+      Data3: -1516216908
+      Data4: -1591831222
+    Path: event:/UI/uiMenuButtonHover
+  Event: 
+  EventPlayTrigger: 17
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &7621718788724435213
 GameObject:
   m_ObjectHideFlags: 0

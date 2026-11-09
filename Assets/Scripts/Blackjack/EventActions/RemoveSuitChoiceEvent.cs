@@ -26,7 +26,7 @@ public class RemoveSuitChoiceEvent : CardChoiceEvent
     {
         dartSelection.ThrowDart(SelectIndex, cardInstance.CardObject.transform.position);
         
-        AudioManagerFMOD.Play(AudioEvent.sfxDeal);
+        AudioManagerFMOD.Play(AudioEvent.sfxDartEventHit);
 
         TableCards.GameDeck.AddRemovedSuit(cardInstance.cardData.suit);
         CardEffects.OnCardSelected();
