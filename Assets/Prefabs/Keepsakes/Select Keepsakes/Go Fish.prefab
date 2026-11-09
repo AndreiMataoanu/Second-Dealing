@@ -155,7 +155,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7496131108363805494}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.4212606, y: 0.09992677, z: -0.35031554, w: -0.83056194}
+  m_LocalRotation: {x: 0.4212606, y: 0.099926785, z: -0.35031554, w: -0.83056206}
   m_LocalPosition: {x: 19.8941, y: 0.991, z: 0.0066}
   m_LocalScale: {x: 200, y: 200, z: 200}
   m_ConstrainProportionsScale: 1
@@ -246,6 +246,13 @@ MonoBehaviour:
   outlineDeselect: {r: 1, g: 0, b: 0.7744977, a: 1}
   rotationInHand: {x: -1.3, y: -2.89, z: 76.05}
   scaleInHand: {x: 20, y: 20, z: 20}
+  sfxKeepsakeEvent:
+    Guid:
+      Data1: -1771509397
+      Data2: 1336154110
+      Data3: -665028949
+      Data4: -680241243
+    Path: event:/SFX/KEEPSAKES/sfxGoFishKeepsake
 --- !u!64 &166613686936768490
 MeshCollider:
   m_ObjectHideFlags: 0

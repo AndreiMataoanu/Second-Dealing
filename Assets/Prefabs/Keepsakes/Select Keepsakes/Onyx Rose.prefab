@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 537214790957888662}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.964774, y: 0.14663906, z: 0.092454836, w: 0.19788922}
+  m_LocalRotation: {x: -0.964774, y: 0.14663905, z: 0.092454836, w: 0.1978892}
   m_LocalPosition: {x: 19.899, y: -0.381, z: -0.053}
   m_LocalScale: {x: 200, y: 200, z: 200}
   m_ConstrainProportionsScale: 1
@@ -120,6 +120,13 @@ MonoBehaviour:
   outlineDeselect: {r: 1, g: 0, b: 0.7744977, a: 1}
   rotationInHand: {x: 17.31, y: 150, z: 0}
   scaleInHand: {x: 20, y: 20, z: 20}
+  sfxKeepsakeEvent:
+    Guid:
+      Data1: -400795030
+      Data2: 1287559167
+      Data3: 1150325660
+      Data4: 1284352827
+    Path: event:/SFX/KEEPSAKES/sfxOnyxRoseKeepsake
 --- !u!64 &4985903042083848812
 MeshCollider:
   m_ObjectHideFlags: 0
