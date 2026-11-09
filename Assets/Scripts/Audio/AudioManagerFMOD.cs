@@ -40,6 +40,8 @@ public class AudioManagerFMOD : MonoBehaviour
     [Header("EventRefrences")]
     
     [SerializeField] private EventReference TEST;
+    [SerializeField] private EventReference sfxDartHitNegativeSuit;
+    [SerializeField] private EventReference sfxDartHitRemoveSuit;
     [SerializeField] private EventReference sfxBlackJackHand;
     [SerializeField] private EventReference sfxCardAddToDeck;
     [SerializeField] private EventReference sfxJokerCard;
@@ -182,18 +184,12 @@ public class AudioManagerFMOD : MonoBehaviour
         { "Powerball!",            AudioEvent.sfxPowerBall },
         { "Ace is always 1",       AudioEvent.sfxAceSetEventOne },
         { "Ace is always 11",      AudioEvent.sfxAceSetEventEleven },
-        { "Negative Spades",       AudioEvent.sfxNegativeSuitEvent },
-        { "Negative Clubs",        AudioEvent.sfxNegativeSuitEvent },
-        { "Negative Hearts",       AudioEvent.sfxNegativeSuitEvent },
-        { "Negative Diamonds",     AudioEvent.sfxNegativeSuitEvent },
+        { "Negative Suit",         AudioEvent.sfxNegativeSuitEvent },
         { "Dealer got ragebaited", AudioEvent.sfxRageEventStart },
         { "Roulette Blackjack",    AudioEvent.sfxRouletteEvent },
         { "Low values doubled",    AudioEvent.sfxDoubleFiveBelowEvent },
         { "High values halved",    AudioEvent.sfxHalveSixAboveEvent },
-        { "Removed Spades",        AudioEvent.sfxRemoveSuitEvent },
-        { "Removed Clubs",         AudioEvent.sfxRemoveSuitEvent },
-        { "Removed Hearts",        AudioEvent.sfxRemoveSuitEvent },
-        { "Removed Diamonds",      AudioEvent.sfxRemoveSuitEvent },
+        { "Remove Suit",           AudioEvent.sfxRemoveSuitEvent },
         
         { "Removed Value: 2",      AudioEvent.sfxRemoveValueEvent },
         { "Removed Value: 3",      AudioEvent.sfxRemoveValueEvent },
@@ -239,6 +235,8 @@ public class AudioManagerFMOD : MonoBehaviour
     {
         #region RegisteredEvents
         events[AudioEvent.TEST] = TEST;
+        events[AudioEvent.sfxDartHitRemoveSuit] = sfxDartHitRemoveSuit;
+        events[AudioEvent.sfxDartHitNegativeSuit] = sfxDartHitNegativeSuit;
         events[AudioEvent.sfxBlackJackHand] = sfxBlackJackHand;
         events[AudioEvent.sfxCardAddToDeck] = sfxCardAddToDeck;
         events[AudioEvent.sfxJokerCard] = sfxJokerCard;
@@ -513,6 +511,8 @@ public class AudioManagerFMOD : MonoBehaviour
 public enum AudioEvent
 {
         TEST,
+        sfxDartHitNegativeSuit,
+        sfxDartHitRemoveSuit,
         sfxBlackJackHand,
         sfxCardAddToDeck,
         sfxJokerCard,

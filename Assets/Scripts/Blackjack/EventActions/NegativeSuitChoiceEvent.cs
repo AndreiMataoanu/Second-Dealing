@@ -24,7 +24,7 @@ public class NegativeSuitChoiceEvent : CardChoiceEvent
     {
         dartSelection.ThrowDart(SelectIndex, cardInstance.CardObject.transform.position);
         
-        AudioManagerFMOD.Play(AudioEvent.sfxDeal);
+        AudioManagerFMOD.Play(AudioEvent.sfxDartEventHit);
         
         StartCoroutine(MakeSuitNegative(cardInstance));
     }

@@ -124,10 +124,12 @@ public class BlackjackGame : MonoBehaviour
         if(Input.mouseScrollDelta.y > 0f && Time.timeScale != 0f)
         {
             IncreaseBet();
+            //PLACE SOUND SCROLL HERE
         }
         else if(Input.mouseScrollDelta.y < 0f && Time.timeScale != 0f)
         {
             DecreaseBet();
+            //PLACE SOUND SCROLL HERE
         }
     }
     #endregion
