@@ -12,6 +12,8 @@ public class CardSelectorButton : Clickable
         if(!IsActive) return;
 
         base.OnClick(mouseButton);
+        
+        
 
         if(isDummyButton)
         {
@@ -24,9 +26,11 @@ public class CardSelectorButton : Clickable
 
         onClickAction.Invoke();
     }
-
-    public void OnMouseOver()
+    
+    protected virtual void OnMouseEnter()
     {
+        if(!IsActive) return;
+
         AudioManagerFMOD.Play(AudioEvent.uiMenuButtonHover);
     }
 }

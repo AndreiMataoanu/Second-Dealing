@@ -65,6 +65,8 @@ public class Clickable : MonoBehaviour
         if(!showTooltip) return;
 
         TooltipManager.instance.ShowTooltip(GetTooltipContent(), GetTooltipHeader());
+
+        AudioManagerFMOD.Play(AudioEvent.uiMenuButtonHover);
     }
 
     protected virtual void OnMouseExit()
